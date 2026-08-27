@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOXIT Academia • iSKILLS | Build Skills. Prove Your Ability. Grow Your Career.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy-deep: #050814;
+            --navy-card: #0c1226;
+            --navy-border: rgba(255, 255, 255, 0.08);
+            --electric-blue: #2563eb;
+            --cyan-glow: #06b6d4;
+            --purple-accent: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(12, 18, 38, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--navy-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Typography Helper */
+        h1, h2, h3, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(5, 8, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--navy-border);
+            padding: 16px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--electric-blue), var(--cyan-glow));
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-main);
+        }
+
+        .nav-links a.active {
+            position: relative;
+            color: var(--cyan-glow);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--cyan-glow);
+            border-radius: 2px;
+            box-shadow: 0 0 8px var(--cyan-glow);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .search-btn:hover {
+            color: var(--text-main);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--electric-blue), #1d4ed8);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid var(--navy-border);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Buttons Small Adjustments */
+        .badge-pill {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: var(--cyan-glow);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #cbd5e1 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            max-width: 540px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* 3D Visual Stage */
+        .visual-stage {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            display: grid;
+            place-items: center;
+            perspective: 1000px;
+        }
+
+        .visual-center {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--navy-card), rgba(37,99,235,0.3));
+            border: 2px solid var(--cyan-glow);
+            border-radius: 30px;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 50px rgba(6, 182, 212, 0.3);
+            animation: float 6s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        /* Orbit System */
+        .orbit-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+        }
+
+        .orbit-node {
+            position: absolute;
+            background: var(--navy-card);
+            border: 1px solid var(--glass-border);
+            padding: 10px 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease;
+            animation: float 4s ease-in-out infinite alternate;
+        }
+
+        .orbit-node svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Keyframe Animations */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Floating Positions */
+        .node-1 { top: 10%; left: 15%; animation-delay: 0s; }
+        .node-2 { top: 15%; right: 10%; animation-delay: 0.5s; }
+        .node-3 { top: 45%; left: 2%; animation-delay: 1s; }
+        .node-4 { top: 50%; right: 2%; animation-delay: 1.5s; }
+        .node-5 { bottom: 15%; left: 12%; animation-delay: 2s; }
+        .node-6 { bottom: 10%; right: 15%; animation-delay: 2.5s; }
+
+        /* SVG Overlay Lines */
+        .connections-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .connection-line {
+            stroke: url(#line-grad);
+            stroke-width: 1.5;
+            stroke-dasharray: 4 4;
+            animation: dash 30s linear infinite;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -1000; }
+        }
+
+        /* Section Layouts */
+        .section-padding {
+            padding: 90px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Cards Grid */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* Glass Card */
+        .card {
+            background: var(--navy-card);
+            border: 1px solid var(--navy-border);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(6, 182, 212, 0.1);
+        }
+
+        .card-icon-wrapper {
+            width: 54px;
+            height: 54px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--navy-border);
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 24px;
+            color: var(--cyan-glow);
+        }
+
+        .card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: var(--cyan-glow);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s;
+        }
+
+        .card:hover .card-link {
+            gap: 12px;
+        }
+
+        /* 3D Mini Canvas Visuals in Cards */
+        .card-visual-3d {
+            height: 100px;
+            width: 100%;
+            background: radial-gradient(circle at center, rgba(37,99,235,0.1), transparent 70%);
+            margin-bottom: 20px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            position: relative;
+        }
+
+        /* Timeline / Journey Section */
+        .journey-container {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .journey-line {
+            position: absolute;
+            top: 40px;
+            left: 5%;
+            width: 90%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--electric-blue), var(--cyan-glow), var(--purple-accent));
+            z-index: 1;
+        }
+
+        .journey-step {
+            position: relative;
+            z-index: 2;
+            background: var(--navy-deep);
+            padding: 0 10px;
+            text-align: center;
+            width: 18%;
+        }
+
+        .step-node {
+            width: 80px;
+            height: 80px;
+            background: var(--navy-card);
+            border: 2px solid var(--electric-blue);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+            color: var(--cyan-glow);
+            transition: all 0.3s;
+        }
+
+        .journey-step:hover .step-node {
+            transform: scale(1.1);
+            border-color: var(--cyan-glow);
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.6);
+        }
+
+        .step-num {
+            font-size: 0.8rem;
+            color: var(--cyan-glow);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Assessment Interactive Section */
+        .assessment-wrapper {
+            background: linear-gradient(135deg, rgba(12,18,38,0.9), rgba(5,8,20,0.95));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .assessment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--navy-border);
+            padding-bottom: 20px;
+        }
+
+        .custom-select {
+            background: var(--navy-deep);
+            color: var(--text-main);
+            border: 1px solid var(--navy-border);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .skill-meter {
+            margin-bottom: 20px;
+        }
+
+        .meter-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
+            height: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--electric-blue), var(--cyan-glow));
+            border-radius: 5px;
+            transition: width 1s ease-in-out;
+        }
+
+        /* Level Cards Colors */
+        .card-level-beginner { border-top: 4px solid var(--electric-blue); }
+        .card-level-intermediate { border-top: 4px solid var(--purple-accent); }
+        .card-level-advanced { border-top: 4px solid var(--cyan-glow); }
+
+        /* Skill Badges Display Grid */
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .badge-item {
+            background: rgba(12, 18, 38, 0.6);
+            border: 1px solid var(--navy-border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .badge-item:hover {
+            border-color: var(--cyan-glow);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
+        }
+
+        .badge-hexagon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--electric-blue), var(--purple-accent));
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            margin: 0 auto 16px;
+            display: grid;
+            place-items: center;
+            color: white;
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Portfolio Split Section */
+        .portfolio-split {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .profile-card-preview {
+            background: linear-gradient(145deg, var(--navy-card), rgba(6, 182, 212, 0.05));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .profile-avatar-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .avatar-placeholder {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan-glow), var(--purple-accent));
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .profile-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            background: rgba(0,0,0,0.2);
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--cyan-glow);
+        }
+
+        .stat-lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Ecosystem CSS Radial Graph */
+        .ecosystem-container {
+            width: 100%;
+            height: 450px;
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+
+        .eco-center {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--electric-blue), var(--purple-accent));
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 0 50px rgba(37, 99, 235, 0.5);
+            z-index: 3;
+            text-align: center;
+        }
+
+        .eco-satellite {
+            position: absolute;
+            background: var(--navy-card);
+            border: 1px solid var(--navy-border);
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            z-index: 2;
+            transition: all 0.3s;
+        }
+
+        .eco-satellite:hover {
+            border-color: var(--cyan-glow);
+            color: var(--cyan-glow);
+            transform: scale(1.1);
+        }
+
+        /* Positioning Orbit Nodes precisely */
+        .sat-1 { transform: rotate(0deg) translate(180px) rotate(0deg); }
+        .sat-2 { transform: rotate(45deg) translate(180px) rotate(-45deg); }
+        .sat-3 { transform: rotate(90deg) translate(180px) rotate(-90deg); }
+        .sat-4 { transform: rotate(135deg) translate(180px) rotate(-135deg); }
+        .sat-5 { transform: rotate(180deg) translate(180px) rotate(-180deg); }
+        .sat-6 { transform: rotate(225deg) translate(180px) rotate(-225deg); }
+        .sat-7 { transform: rotate(270deg) translate(180px) rotate(-270deg); }
+        .sat-8 { transform: rotate(315deg) translate(180px) rotate(-315deg); }
+
+        /* Final CTA Card */
+        .final-cta-box {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15), rgba(139, 92, 246, 0.15));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 32px;
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta-box h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .final-cta-box p {
+            max-width: 600px;
+            margin: 0 auto 36px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--navy-border);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .grid-3, .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-content p {
+                margin: 0 auto 36px;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            .portfolio-split {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-3, .grid-2, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .journey-container {
+                flex-direction: column;
+                gap: 30px;
+                align-items: center;
+            }
+            .journey-line {
+                display: none;
+            }
+            .journey-step {
+                width: 100%;
+            }
+            .ecosystem-container {
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="brand-logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                SOXIT ACADEMIA
+            </a>
+            <ul class="nav-links">
+                <li><a href="#">Learning</a></li>
+                <li><a href="#">Role-Based Programs</a></li>
+                <li><a href="#">Internship & Projects</a></li>
+                <li><a href="#">LMS</a></li>
+                <li><a href="#" class="active">iSkills</a></li>
+                <li><a href="#">College Partnerships</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="search-btn" aria-label="Search">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+                <a href="#" class="btn-primary">Enroll Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <span class="badge-pill">SOXIT ACADEMIA • iSKILLS</span>
+                    <h1>Build Skills. Prove Your Ability. Grow Your Career.</h1>
+                    <p>Develop practical technical and professional skills through focused learning, hands-on practice, assessments, and real-world challenges.</p>
+                    <div class="hero-cta">
+                        <a href="#explore" class="btn-primary">Explore Skills →</a>
+                        <a href="#assess" class="btn-secondary">Assess Your Skills →</a>
+                    </div>
+                </div>
+                <div class="visual-stage">
+                    <!-- SVG lines connecting orbiting elements -->
+                    <svg class="connections-svg">
+                        <defs>
+                            <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2563eb" stop-opacity="0.2"/>
+                                <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.8"/>
+                            </linearGradient>
+                        </defs>
+                        <line x1="50%" y1="50%" x2="20%" y2="15%" class="connection-line" />
+                        <line x1="50%" y1="50%" x2="80%" y2="20%" class="connection-line" />
+                        <line x1="50%" y1="50%" x2="10%" y2="50%" class="connection-line" />
+                        <line x1="50%" y1="50%" x2="90%" y2="52%" class="connection-line" />
+                        <line x1="50%" y1="50%" x2="20%" y2="80%" class="connection-line" />
+                        <line x1="50%" y1="50%" x2="80%" y2="85%" class="connection-line" />
+                    </svg>
+
+                    <div class="visual-center">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+
+                    <div class="orbit-container">
+                        <div class="orbit-node node-1">
+                            <svg fill="none" stroke="#06b6d4" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+                            <span>Code Window</span>
+                        </div>
+                        <div class="orbit-node node-2">
+                            <svg fill="none" stroke="#8b5cf6" stroke-width="2" viewBox="0 0 24 24"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44L2.04 12.5a2.5 2.5 0 0 1 2.5-2.5h4.96z"/></svg>
+                            <span>AI Brain</span>
+                        </div>
+                        <div class="orbit-node node-3">
+                            <svg fill="none" stroke="#2563eb" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                            <span>Data Chart</span>
+                        </div>
+                        <div class="orbit-node node-4">
+                            <svg fill="none" stroke="#06b6d4" stroke-width="2" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                            <span>Cloud</span>
+                        </div>
+                        <div class="orbit-node node-5">
+                            <svg fill="none" stroke="#8b5cf6" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <span>Shield Security</span>
+                        </div>
+                        <div class="orbit-node node-6">
+                            <svg fill="none" stroke="#2563eb" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                            <span>Skill Badge</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: EXPLORE SKILLS -->
+    <section class="section-padding" id="explore">
+        <div class="container">
+            <div class="section-header">
+                <h2>Explore Your Skills</h2>
+                <p>Discover the skills that help you learn, build, solve, and grow.</p>
+            </div>
+            <div class="grid-3">
+                <!-- Card 1 -->
+                <div class="card">
+                    <div>
+                        <div class="card-visual-3d">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </div>
+                        <h3>AI & Machine Learning</h3>
+                        <p>Build skills in artificial intelligence, machine learning, data, and intelligent applications.</p>
+                        <div class="tag-cloud">
+                            <span class="tag">Python</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Deep Learning</span>
+                            <span class="tag">Generative AI</span>
+                        </div>
+                    </div>
+                    <a href="#" class="card-link">Explore Skills →</a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card">
+                    <div>
+                        <div class="card-visual-3d">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        </div>
+                        <h3>Software Development</h3>
+                        <p>Develop modern programming and application development skills.</p>
+                        <div class="tag-cloud">
+                            <span class="tag">Python</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">React</span>
+                            <span class="tag">APIs</span>
+                            <span class="tag">Git</span>
+                        </div>
+                    </div>
+                    <a href="#" class="card-link">Explore Skills →</a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card">
+                    <div>
+                        <div class="card-visual-3d">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        </div>
+                        <h3>Data & Analytics</h3>
+                        <p>Learn to work with data, analyze information, visualize insights, and support decisions.</p>
+                        <div class="tag-cloud">
+                            <span class="tag">SQL</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Excel</span>
+                            <span class="tag">Data Viz</span>
+                            <span class="tag">Power BI</span>
+                        </div>
+                    </div>
+                    <a href="#" class="card-link">Explore Skills →</a>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="card">
+                    <div>
+                        <div class="card-visual-3d">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="1.5"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                        </div>
+                        <h3>Cloud & DevOps</h3>
+                        <p>Develop practical skills in cloud platforms, deployment, infrastructure, and automation.</p>
+                        <div class="tag-cloud">
+                            <span class="tag">Cloud</span>
+                            <span class="tag">Linux</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">CI/CD</span>
+                        </div>
+                    </div>
+                    <a href="#" class="card-link">Explore Skills →</a>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="card">
+                    <div>
+                        <div class="card-visual-3d">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <h3>Cybersecurity</h3>
+                        <p>Build foundational skills for understanding secure systems, networks, and digital security.</p>
+                        <div class="tag-cloud">
+                            <span class="tag">Networking</span>
+                            <span class="tag">Linux</span>
+                            <span class="tag">Security</span>
+                            <span class="tag">Web Security</span>
+                        </div>
+                    </div>
+                    <a href="#" class="card-link">Explore Skills →</a>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="card">
+                    <div>
+                        <div class="card-visual-3d">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <h3>Professional Skills</h3>
+                        <p>Strengthen the communication, teamwork, problem-solving, and leadership skills needed in modern work.</p>
+                        <div class="tag-cloud">
+                            <span class="tag">Communication</span>
+                            <span class="tag">Teamwork</span>
+                            <span class="tag">Problem Solving</span>
+                            <span class="tag">Leadership</span>
+                        </div>
+                    </div>
+                    <a href="#" class="card-link">Explore Skills →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: HOW ISKILLS WORKS -->
+    <section class="section-padding" style="background: rgba(0,0,0,0.2);">
+        <div class="container">
+            <div class="section-header">
+                <h2>How iSkills Works</h2>
+                <p>A futuristic 5-step skill-development journey designed to move you forward.</p>
+            </div>
+            <div class="journey-container">
+                <div class="journey-line"></div>
+                
+                <div class="journey-step">
+                    <div class="step-node">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    </div>
+                    <span class="step-num">01</span>
+                    <div class="step-title">Discover</div>
+                    <div class="step-desc">Identify the skills you want to develop.</div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="step-node">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    </div>
+                    <span class="step-num">02</span>
+                    <div class="step-title">Learn</div>
+                    <div class="step-desc">Build your understanding through focused learning.</div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="step-node">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <span class="step-num">03</span>
+                    <div class="step-title">Practice</div>
+                    <div class="step-desc">Apply the skill through exercises and challenges.</div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="step-node">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <span class="step-num">04</span>
+                    <div class="step-title">Assess</div>
+                    <div class="step-desc">Test your understanding and identify areas to improve.</div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="step-node">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                    </div>
+                    <span class="step-num">05</span>
+                    <div class="step-title">Demonstrate</div>
+                    <div class="step-desc">Showcase your skills through projects & real work.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: SKILL LEVELS -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Learn at Your Level</h2>
+                <p>Tailored mastery routes designed for every stage of your skill development.</p>
+            </div>
+            <div class="grid-3">
+                <div class="card card-level-beginner">
+                    <div class="card-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22v-9"/><path d="M12 13a7 7 0 0 0 7-7 7 7 0 0 0-7 7z"/><path d="M12 13a7 7 0 0 1-7-7 7 7 0 0 1 7 7z"/></svg>
+                    </div>
+                    <span class="badge-pill" style="margin-bottom: 8px;">BEGINNER</span>
+                    <h3>Build your foundation.</h3>
+                    <p>Start with essential concepts and develop a strong understanding of the skill core.</p>
+                </div>
+
+                <div class="card card-level-intermediate">
+                    <div class="card-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    </div>
+                    <span class="badge-pill" style="margin-bottom: 8px; color: var(--purple-accent); border-color: var(--purple-accent);">INTERMEDIATE</span>
+                    <h3>Strengthen your ability.</h3>
+                    <p>Practice core concepts, solve realistic problems, and apply skills through practical activities.</p>
+                </div>
+
+                <div class="card card-level-advanced">
+                    <div class="card-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-3.05 11a22.35 22.35 0 0 1-3.95 2z"/></svg>
+                    </div>
+                    <span class="badge-pill" style="margin-bottom: 8px; color: var(--cyan-glow); border-color: var(--cyan-glow);">ADVANCED</span>
+                    <h3>Demonstrate your expertise.</h3>
+                    <p>Work on challenging complex scenarios and demonstrate capabilities through advanced projects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: SKILL ASSESSMENT -->
+    <section class="section-padding" id="assess" style="background: rgba(0,0,0,0.2);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Know Where You Stand</h2>
+                <p>Assess your current skills and identify opportunities to improve.</p>
+            </div>
+
+            <div class="assessment-wrapper">
+                <div class="assessment-header">
+                    <div>
+                        <h3 style="font-size: 1.4rem;">Skill Assessment Panel</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Interactive preview UI environment</p>
+                    </div>
+                    <div>
+                        <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Choose a skill:</label>
+                        <select class="custom-select">
+                            <option>Python Programming</option>
+                            <option>Data Analytics</option>
+                            <option>Cloud Infrastructure</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 24px;">
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">Current Level:</span>
+                    <span style="font-weight: 700; color: var(--cyan-glow); margin-left: 8px;">Intermediate</span>
+                </div>
+
+                <div class="skill-meter">
+                    <div class="meter-label">
+                        <span>Fundamentals</span>
+                        <span style="color: var(--cyan-glow);">80%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 80%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-meter">
+                    <div class="meter-label">
+                        <span>Problem Solving</span>
+                        <span style="color: var(--cyan-glow);">70%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 70%;"></div>
+                    </div>
+                </div>
+
+                <div class="skill-meter" style="margin-bottom: 32px;">
+                    <div class="meter-label">
+                        <span>Practical Application</span>
+                        <span style="color: var(--cyan-glow);">60%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 60%;"></div>
+                    </div>
+                </div>
+
+                <div style="text-align: right;">
+                    <a href="#" class="btn-primary">Start Assessment →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: SKILL CHALLENGES -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Practice With Skill Challenges</h2>
+                <p>Sharpen your real-world capability with hands-on scenario assessments.</p>
+            </div>
+            <div class="grid-4">
+                <div class="card">
+                    <div>
+                        <span class="tag" style="margin-bottom: 12px; display: inline-block;">Intermediate</span>
+                        <h3>Coding Challenge</h3>
+                        <p>Test your programming logic and algorithmic problem-solving skills.</p>
+                    </div>
+                    <a href="#" class="card-link">Try Challenge →</a>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <span class="tag" style="margin-bottom: 12px; display: inline-block;">Beginner</span>
+                        <h3>Data Challenge</h3>
+                        <p>Analyze datasets and discover actionable business insights.</p>
+                    </div>
+                    <a href="#" class="card-link">Try Challenge →</a>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <span class="tag" style="margin-bottom: 12px; display: inline-block;">Advanced</span>
+                        <h3>AI Challenge</h3>
+                        <p>Apply modern machine learning models to practical problems.</p>
+                    </div>
+                    <a href="#" class="card-link">Try Challenge →</a>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <span class="tag" style="margin-bottom: 12px; display: inline-block;">Intermediate</span>
+                        <h3>Design Challenge</h3>
+                        <p>Create functional, accessible, and user-centric web applications.</p>
+                    </div>
+                    <a href="#" class="card-link">Try Challenge →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: SKILL PROGRESS -->
+    <section class="section-padding" style="background: rgba(0,0,0,0.2);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Track Your Skill Growth</h2>
+                <p>Real-time performance analytics tailored to your learning pace.</p>
+            </div>
+
+            <div class="assessment-wrapper" style="max-width: 700px;">
+                <h3 style="margin-bottom: 24px; font-size: 1.2rem;">Skills Developing Overview</h3>
+                
+                <div class="skill-meter">
+                    <div class="meter-label"><span>Python</span><span>72%</span></div>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 72%;"></div></div>
+                </div>
+
+                <div class="skill-meter">
+                    <div class="meter-label"><span>JavaScript</span><span>64%</span></div>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 64%;"></div></div>
+                </div>
+
+                <div class="skill-meter">
+                    <div class="meter-label"><span>Data Analytics</span><span>58%</span></div>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 58%;"></div></div>
+                </div>
+
+                <div class="skill-meter">
+                    <div class="meter-label"><span>Artificial Intelligence</span><span>48%</span></div>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 48%;"></div></div>
+                </div>
+
+                <div class="skill-meter" style="margin-bottom: 30px;">
+                    <div class="meter-label"><span>Communication</span><span>76%</span></div>
+                    <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 76%;"></div></div>
+                </div>
+
+                <div style="text-align: center;">
+                    <a href="#" class="btn-secondary">View Skill Progress →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: SKILL BADGES -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Show What You Can Do</h2>
+                <p>Earn verified digital badges as tangible proof of technical mastery.</p>
+            </div>
+
+            <div class="badges-grid">
+                <div class="badge-item">
+                    <div class="badge-hexagon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+                    </div>
+                    <h4>Python Foundations</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Core syntax and logic structures.</p>
+                </div>
+
+                <div class="badge-item">
+                    <div class="badge-hexagon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+                    </div>
+                    <h4>AI Fundamentals</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Neural networks & basics.</p>
+                </div>
+
+                <div class="badge-item">
+                    <div class="badge-hexagon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/></svg>
+                    </div>
+                    <h4>Web Development</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Full-stack application building.</p>
+                </div>
+
+                <div class="badge-item">
+                    <div class="badge-hexagon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <h4>Data Analytics</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Extract insights from raw datasets.</p>
+                </div>
+
+                <div class="badge-item">
+                    <div class="badge-hexagon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                    </div>
+                    <h4>Cloud Foundations</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Cloud platform management.</p>
+                </div>
+
+                <div class="badge-item">
+                    <div class="badge-hexagon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h4>Cybersecurity Basics</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">System security principles.</p>
+                </div>
+
+                <div class="badge-item">
+                    <div class="badge-hexagon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    </div>
+                    <h4>Communication</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Professional workplace skills.</p>
+                </div>
+
+                <div class="badge-item">
+                    <div class="badge-hexagon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/></svg>
+                    </div>
+                    <h4>Problem Solving</h4>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Structured analytical thinking.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: SKILL PORTFOLIO -->
+    <section class="section-padding" style="background: rgba(0,0,0,0.2);">
+        <div class="container">
+            <div class="portfolio-split">
+                <div class="profile-card-preview">
+                    <div class="profile-avatar-row">
+                        <div class="avatar-placeholder">LX</div>
+                        <div>
+                            <h4 style="font-size: 1.1rem;">Learner Profile</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-muted);">Verified iSkills Candidate</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 12px;">
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Primary Skills:</span>
+                        <div class="tag-cloud" style="margin-top: 6px;">
+                            <span class="tag">Python</span>
+                            <span class="tag">AI</span>
+                            <span class="tag">Web Dev</span>
+                            <span class="tag">Data Analytics</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-stats-grid">
+                        <div>
+                            <div class="stat-val">4</div>
+                            <div class="stat-lbl">Projects</div>
+                        </div>
+                        <div>
+                            <div class="stat-val">8</div>
+                            <div class="stat-lbl">Badges</div>
+                        </div>
+                        <div>
+                            <div class="stat-val">3</div>
+                            <div class="stat-lbl">Certificates</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="badge-pill">SKILL PORTFOLIO</span>
+                    <h2 style="font-size: 2.5rem; margin-bottom: 16px;">Turn Skills Into Proof</h2>
+                    <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 28px;">Bring your skills, projects, achievements, and learning progress together in one comprehensive, shareable professional profile.</p>
+                    <a href="#" class="btn-primary">Create Skill Profile →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: PRACTICAL LEARNING -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Skills Become Stronger When You Practice</h2>
+                <p>An applied methodology focused on practical application over theory.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card" style="text-align: center;">
+                    <div style="margin: 20px auto;">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    </div>
+                    <h3>Practice</h3>
+                    <p>Apply what you learn through continuous hands-on sandbox activities.</p>
+                </div>
+
+                <div class="card" style="text-align: center;">
+                    <div style="margin: 20px auto;">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <h3>Build</h3>
+                    <p>Turn your individual skills into functional real-world practical projects.</p>
+                </div>
+
+                <div class="card" style="text-align: center;">
+                    <div style="margin: 20px auto;">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <h3>Showcase</h3>
+                    <p>Demonstrate your practical capabilities publicly through your portfolio work.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: SKILL ECOSYSTEM -->
+    <section class="section-padding" style="background: rgba(0,0,0,0.2); overflow: hidden;">
+        <div class="container">
+            <div class="section-header">
+                <h2>One Skill Ecosystem. Many Possibilities.</h2>
+                <p>An interconnected matrix designed to scale your technical growth.</p>
+            </div>
+
+            <div class="ecosystem-container">
+                <div class="eco-center">iSKILLS</div>
+                
+                <div class="eco-satellite sat-1">AI</div>
+                <div class="eco-satellite sat-2">Development</div>
+                <div class="eco-satellite sat-3">Data</div>
+                <div class="eco-satellite sat-4">Cloud</div>
+                <div class="eco-satellite sat-5">Cybersecurity</div>
+                <div class="eco-satellite sat-6">Design</div>
+                <div class="eco-satellite sat-7">Communication</div>
+                <div class="eco-satellite sat-8">Problem Solving</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 11: WHY ISKILLS -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Build Your Skills With iSkills?</h2>
+                <p>Purpose-built tools for modern career development.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/></svg>
+                    </div>
+                    <h3>Practical Learning</h3>
+                    <p>Learn by applying active concepts directly in code and practice panels.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
+                    <h3>Skill Assessment</h3>
+                    <p>Accurately map your baseline understanding and pinpoint exact growth gaps.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    </div>
+                    <h3>Hands-On Challenges</h3>
+                    <p>Practice continuously through industry-modeled problem statements.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <h3>Skill Progress</h3>
+                    <p>Track your technical evolution visualised across comprehensive dashboard stats.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                    </div>
+                    <h3>Digital Badges</h3>
+                    <p>Showcase verifiable digital credentials on LinkedIn and professional resumes.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon-wrapper">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                    <h3>Skill Portfolio</h3>
+                    <p>Automatically generate undeniable proof of your technical build capabilities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="final-cta-box">
+                <h2>Ready to Build Your Skills?</h2>
+                <p>Discover your strengths, develop new capabilities, practice what you learn, and build a profile that demonstrates what you can do.</p>
+                <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                    <a href="#" class="btn-primary">Explore iSkills →</a>
+                    <a href="#assess" class="btn-secondary">Start Skill Assessment →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>© 2026 SOXIT Academia • iSKILLS Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTION LOGIC -->
+    <script>
+        // Simple smooth scrolling for internal anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Dynamic Card Tilt Hover Effect
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+            });
+        });
+    </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

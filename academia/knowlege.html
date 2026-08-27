@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOXIT Academia — Knowledge Hub</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & RESET
+           ========================================================================== */
+        :root {
+            --bg-dark: #030712;
+            --bg-card: rgba(15, 23, 42, 0.65);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --border-glow: rgba(56, 189, 248, 0.25);
+            --border-glow-hover: rgba(168, 85, 247, 0.6);
+            --primary-blue: #38bdf8;
+            --primary-cyan: #06b6d4;
+            --primary-purple: #a855f7;
+            --electric-blue: #2563eb;
+            --accent-orange: #f97316;
+            --accent-green: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        body {
+            position: relative;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Ambient Background Overlay */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 60%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 90%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+        }
+
+        .ambient-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ==========================================================================
+           2. TYPOGRAPHY & BUTTONS
+           ========================================================================== */
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--primary-blue);
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            color: #ffffff;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 40%, var(--primary-blue));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.85rem 1.75rem;
+            border-radius: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--electric-blue), var(--primary-cyan));
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.5);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text-main);
+            border-color: var(--border-glow);
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: var(--primary-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .svg-icon {
+            width: 1.25em;
+            height: 1.25em;
+            fill: currentColor;
+            display: inline-block;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        /* ==========================================================================
+           3. RIGHT → LEFT ANIMATION FRAMEWORK
+           ========================================================================== */
+        .anim-reveal {
+            opacity: 0;
+            transform: translateX(70px);
+            transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1), transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+        }
+
+        .anim-reveal.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Stagger Delays */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+        .delay-6 { transition-delay: 0.6s; }
+
+        /* ==========================================================================
+           4. HERO SECTION
+           ========================================================================== */
+        .hero {
+            padding: 7rem 0 5rem 0;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 4.5vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 1.25rem;
+            background: linear-gradient(135deg, #ffffff 40%, var(--primary-blue) 80%, var(--primary-purple));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 540px;
+        }
+
+        .hero-btn-group {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-3d-wrapper {
+            width: 100%;
+            height: 480px;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            background: radial-gradient(circle at center, rgba(15, 23, 42, 0.8) 0%, rgba(3, 7, 18, 0.95) 100%);
+        }
+
+        #hero-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .hero-canvas-overlay {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            padding: 1rem 1.25rem;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .overlay-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-cyan);
+        }
+
+        /* ==========================================================================
+           5. RESOURCE SEARCH
+           ========================================================================== */
+        .search-section {
+            padding: 4rem 0 3rem 0;
+            position: relative;
+        }
+
+        .search-container {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-glow);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .search-title {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            margin-bottom: 2rem;
+            color: #ffffff;
+        }
+
+        .search-box-wrapper {
+            position: relative;
+            max-width: 720px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .search-icon-btn {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-cyan);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.1rem 1.25rem 1.1rem 3.5rem;
+            background: rgba(3, 7, 18, 0.8);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 14px;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-family: var(--font-body);
+            outline: none;
+            transition: var(--transition-smooth);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.3), inset 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+
+        .filter-btn {
+            padding: 0.55rem 1.2rem;
+            border-radius: 9999px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 500;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .filter-btn:hover {
+            color: #ffffff;
+            border-color: rgba(56, 189, 248, 0.4);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(168, 85, 247, 0.2));
+            border-color: var(--primary-cyan);
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+        }
+
+        /* ==========================================================================
+           6. RESOURCE CATEGORIES (6 LARGE CARDS)
+           ========================================================================== */
+        .categories-section {
+            padding: 5rem 0;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 18px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 520px;
+            position: relative;
+            backdrop-filter: blur(12px);
+            transition: var(--transition-smooth);
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--card-accent, var(--primary-blue)), transparent);
+            opacity: 0.5;
+            transition: var(--transition-smooth);
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--card-accent, var(--primary-cyan));
+            box-shadow: 0 16px 40px -10px var(--card-glow, rgba(6, 182, 212, 0.3));
+            background: var(--bg-card-hover);
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-visual-area {
+            height: 140px;
+            width: 100%;
+            background: radial-gradient(circle at center, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-visual-svg {
+            width: 64px;
+            height: 64px;
+            color: var(--card-accent, var(--primary-blue));
+            filter: drop-shadow(0 0 12px var(--card-accent, var(--primary-blue)));
+            transition: var(--transition-smooth);
+        }
+
+        .category-card:hover .card-visual-svg {
+            transform: scale(1.15) rotate(4deg);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-icon-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--card-accent, var(--primary-blue));
+        }
+
+        .card-title {
+            font-size: 1.35rem;
+            color: #ffffff;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-include-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem 0.8rem;
+            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .card-include-item {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .card-include-item::before {
+            content: '✦';
+            color: var(--card-accent, var(--primary-cyan));
+            font-size: 0.7rem;
+        }
+
+        .card-btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glow);
+            color: #ffffff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .category-card:hover .card-btn {
+            background: var(--card-accent, var(--primary-blue));
+            border-color: var(--card-accent, var(--primary-blue));
+            color: #030712;
+            box-shadow: 0 0 15px var(--card-glow, rgba(56, 189, 248, 0.4));
+        }
+
+        /* Accent Variants */
+        .card-accent-blue { --card-accent: #38bdf8; --card-glow: rgba(56, 189, 248, 0.35); }
+        .card-accent-cyan { --card-accent: #06b6d4; --card-glow: rgba(6, 182, 212, 0.35); }
+        .card-accent-purple { --card-accent: #a855f7; --card-glow: rgba(168, 85, 247, 0.35); }
+        .card-accent-orange { --card-accent: #f97316; --card-glow: rgba(249, 115, 22, 0.35); }
+        .card-accent-green { --card-accent: #10b981; --card-glow: rgba(16, 185, 129, 0.35); }
+
+        /* ==========================================================================
+           7. KNOWLEDGE ARTICLES
+           ========================================================================== */
+        .articles-section {
+            padding: 5rem 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.3) 50%, transparent 100%);
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+        }
+
+        .article-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary-purple);
+            box-shadow: 0 12px 30px -10px rgba(168, 85, 247, 0.3);
+            background: var(--bg-card-hover);
+        }
+
+        .article-thumb {
+            height: 140px;
+            border-radius: 10px;
+            background: radial-gradient(circle at 30% 30%, rgba(168, 85, 247, 0.25) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .article-cat-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary-cyan);
+            background: rgba(3, 7, 18, 0.85);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+        }
+
+        .article-title {
+            font-size: 1.15rem;
+            color: #ffffff;
+            margin-bottom: 0.6rem;
+            line-height: 1.35;
+        }
+
+        .article-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+        }
+
+        .article-btn {
+            background: none;
+            border: none;
+            color: var(--primary-cyan);
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            padding: 0;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .article-card:hover .article-btn {
+            color: var(--primary-purple);
+            transform: translateX(4px);
+        }
+
+        /* ==========================================================================
+           8. LEARNING JOURNEY
+           ========================================================================== */
+        .journey-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .journey-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 3.5rem;
+            position: relative;
+        }
+
+        .journey-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .journey-num {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--primary-cyan);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .journey-node {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+            margin-bottom: 0.8rem;
+            transition: var(--transition-smooth);
+        }
+
+        .journey-step:hover .journey-node {
+            transform: scale(1.15);
+            border-color: var(--primary-purple);
+            color: var(--primary-purple);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+        }
+
+        .journey-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+        }
+
+        .journey-connector {
+            flex-grow: 1;
+            height: 2px;
+            background: rgba(56, 189, 248, 0.15);
+            position: relative;
+            top: -20px;
+            margin: 0 0.5rem;
+            overflow: hidden;
+        }
+
+        .journey-line-pulse {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary-cyan), transparent);
+            animation: flowLine 2.5s infinite linear;
+        }
+
+        @keyframes flowLine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* ==========================================================================
+           9. FEATURED RESOURCE & STATS
+           ========================================================================== */
+        .featured-section {
+            padding: 4rem 0 6rem 0;
+        }
+
+        .featured-panel {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-glow);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 3.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            box-shadow: 0 0 50px rgba(56, 189, 248, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-title {
+            font-size: clamp(2rem, 3.5vw, 2.75rem);
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .featured-desc {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .featured-3d-box {
+            height: 320px;
+            border-radius: 16px;
+            background: radial-gradient(circle at center, rgba(30, 41, 59, 0.8) 0%, rgba(3, 7, 18, 0.95) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #featured-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Resource Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 14px;
+            padding: 1.75rem 1.25rem;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            transition: var(--transition-smooth);
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary-cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.2);
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            margin: 0 auto 1rem auto;
+            border-radius: 10px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-cyan);
+        }
+
+        .stat-label {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           10. WHY USE THE KNOWLEDGE HUB & FAQ
+           ========================================================================== */
+        .why-section {
+            padding: 4rem 0;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .why-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 14px;
+            padding: 1.75rem;
+            transition: var(--transition-smooth);
+        }
+
+        .why-card:hover {
+            border-color: var(--primary-purple);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.2);
+        }
+
+        .why-title {
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-bottom: 0.6rem;
+        }
+
+        .why-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* FAQ Accordion */
+        .faq-section {
+            padding: 5rem 0;
+        }
+
+        .faq-accordion {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .faq-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 14px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: var(--transition-smooth);
+        }
+
+        .faq-header {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            font-family: var(--font-body);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .faq-header:hover {
+            color: var(--primary-cyan);
+        }
+
+        .faq-toggle-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+            color: var(--primary-cyan);
+        }
+
+        .faq-card.open .faq-toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+            padding: 0 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .faq-card.open .faq-content {
+            max-height: 200px;
+            padding: 0 1.5rem 1.25rem 1.5rem;
+            transition: max-height 0.35s cubic-bezier(1, 0, 1, 0);
+        }
+
+        /* ==========================================================================
+           11. FINAL CTA SECTION
+           ========================================================================== */
+        .final-cta {
+            margin: 4rem 0 6rem 0;
+            background: radial-gradient(circle at center, rgba(30, 41, 59, 0.7) 0%, rgba(3, 7, 18, 0.95) 100%);
+            border: 1px solid var(--border-glow-hover);
+            border-radius: 24px;
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(168, 85, 247, 0.15);
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: clamp(2.2rem, 4vw, 3.25rem);
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .cta-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.25rem;
+        }
+
+        .cta-btn-group {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ==========================================================================
+           12. RESPONSIVE BREAKPOINTS
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .cards-grid, .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .why-grid, .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .featured-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-desc {
+                margin: 0 auto 2rem auto;
+            }
+            .hero-btn-group {
+                justify-content: center;
+            }
+            .hero-3d-wrapper {
+                height: 360px;
+            }
+            .cards-grid, .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            .why-grid, .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .journey-wrapper {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .journey-connector {
+                width: 2px;
+                height: 30px;
+                top: 0;
+                margin: 0;
+            }
+            .journey-line-pulse {
+                animation: flowLineVert 2.5s infinite linear;
+            }
+            @keyframes flowLineVert {
+                0% { top: -100%; left: 0; }
+                100% { top: 100%; left: 0; }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg"></div>
+    <div class="ambient-grid"></div>
+
+    <svg style="display: none;">
+        <defs>
+            <g id="icon-search">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </g>
+            <g id="icon-arrow">
+                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+            </g>
+            <g id="icon-book">
+                <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+            </g>
+            <g id="icon-grad">
+                <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+            </g>
+            <g id="icon-code">
+                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+            </g>
+            <g id="icon-cloud">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+            </g>
+            <g id="icon-data">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+            </g>
+            <g id="icon-ai">
+                <path d="M21 11.5v-1c0-.83-.67-1.5-1.5-1.5H18V7c0-1.1-.9-2-2-2h-3V3.5C13 2.67 12.33 2 11.5 2S10 2.67 10 3.5V5H7c-1.1 0-2 .9-2 2v2H3.5C2.67 9 2 9.67 2 10.5v1c0 .83.67 1.5 1.5 1.5H5v2H3.5C2.67 15 2 15.67 2 16.5v1c0 .83.67 1.5 1.5 1.5H5v1c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2v-1h1.5c.83 0 1.5-.67 1.5-1.5v-1c0-.83-.67-1.5-1.5-1.5H18v-2h1.5c.83 0 1.5-.67 1.5-1.5z"/>
+            </g>
+            <g id="icon-shield">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-5.45 9-12V5l-9-4z"/>
+            </g>
+            <g id="icon-briefcase">
+                <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
+            </g>
+            <g id="icon-target">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+            </g>
+            <g id="icon-tools">
+                <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.6C.4 7-.1 10 1.9 12c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l3.4-3.4c.4-.3.4-1 0-1.2z"/>
+            </g>
+            <g id="icon-folder">
+                <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+            </g>
+            <g id="icon-chevron">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            </g>
+        </defs>
+    </svg>
+
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content anim-reveal delay-1">
+                <div class="section-tag">
+                    <svg class="svg-icon"><use href="#icon-book"/></svg>
+                    SOXIT ACADEMIA • KNOWLEDGE HUB
+                </div>
+                <h1 class="hero-title">Learn More. Explore More. Build Better.</h1>
+                <p class="hero-desc">
+                    Explore curated learning resources, technology guides, project references, career knowledge, and practical materials designed to support your learning journey.
+                </p>
+                <div class="hero-btn-group">
+                    <a href="#categories" class="btn btn-primary">
+                        Explore Resources
+                        <svg class="svg-icon"><use href="#icon-arrow"/></svg>
+                    </a>
+                    <a href="#articles" class="btn btn-secondary">
+                        Browse Knowledge
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-3d-wrapper anim-reveal delay-3">
+                <canvas id="hero-canvas"></canvas>
+                <div class="hero-canvas-overlay">
+                    <span class="overlay-tag">
+                        <svg class="svg-icon"><use href="#icon-ai"/></svg>
+                        3D Knowledge Network
+                    </span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">Interactive Scene</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="search-section" id="search-area">
+        <div class="container">
+            <div class="search-container anim-reveal">
+                <h2 class="search-title">Find the Knowledge You Need</h2>
+                
+                <div class="search-box-wrapper">
+                    <span class="search-icon-btn">
+                        <svg class="svg-icon"><use href="#icon-search"/></svg>
+                    </span>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search resources, topics, guides, projects...">
+                </div>
+
+                <div class="filter-buttons" id="filterButtons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="learning">Learning</button>
+                    <button class="filter-btn" data-filter="technology">Technology</button>
+                    <button class="filter-btn" data-filter="projects">Projects</button>
+                    <button class="filter-btn" data-filter="internship">Internship</button>
+                    <button class="filter-btn" data-filter="career">Career</button>
+                    <button class="filter-btn" data-filter="articles">Articles</button>
+                    <button class="filter-btn" data-filter="tools">Tools & References</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <div class="anim-reveal">
+                <h2 class="section-title">Explore Resources</h2>
+                <p class="section-subtitle">Discover useful resources to support every stage of your learning journey.</p>
+            </div>
+
+            <div class="cards-grid" id="categoryCardsGrid">
+                
+                <article class="category-card card-accent-blue anim-reveal delay-1" data-category="learning" data-search="learning resources course notes tutorials study materials">
+                    <div>
+                        <div class="card-visual-area">
+                            <svg class="card-visual-svg"><use href="#icon-book"/></svg>
+                        </div>
+                        <div class="card-header">
+                            <div class="card-icon-badge"><svg class="svg-icon"><use href="#icon-grad"/></svg></div>
+                            <h3 class="card-title">Learning Resources</h3>
+                        </div>
+                        <p class="card-desc">Build your understanding through structured learning materials, topic explanations, guides, tutorials, and reference content.</p>
+                        
+                        <ul class="card-include-list">
+                            <li class="card-include-item">Course Notes</li>
+                            <li class="card-include-item">Learning Guides</li>
+                            <li class="card-include-item">Tutorials</li>
+                            <li class="card-include-item">Study Materials</li>
+                            <li class="card-include-item">Topic Explanations</li>
+                        </ul>
+                    </div>
+                    
+                </article>
+
+                <article class="category-card card-accent-cyan anim-reveal delay-2" data-category="technology" data-search="technology resources programming cloud data ai cybersecurity devops">
+                    <div>
+                        <div class="card-visual-area">
+                            <svg class="card-visual-svg"><use href="#icon-code"/></svg>
+                        </div>
+                        <div class="card-header">
+                            <div class="card-icon-badge"><svg class="svg-icon"><use href="#icon-code"/></svg></div>
+                            <h3 class="card-title">Technology Resources</h3>
+                        </div>
+                        <p class="card-desc">Explore technology-focused references across programming, cloud, data, AI, cybersecurity, DevOps, and digital technologies.</p>
+                        
+                        <ul class="card-include-list">
+                            <li class="card-include-item">Programming</li>
+                            <li class="card-include-item">Web Development</li>
+                            <li class="card-include-item">Cloud</li>
+                            <li class="card-include-item">Data & Analytics</li>
+                            <li class="card-include-item">AI</li>
+                            <li class="card-include-item">Cybersecurity</li>
+                            <li class="card-include-item">DevOps</li>
+                        </ul>
+                    </div>
+                    
+                </article>
+
+                <article class="category-card card-accent-purple anim-reveal delay-3" data-category="projects" data-search="project resources project ideas mini projects documentation guides">
+                    <div>
+                        <div class="card-visual-area">
+                            <svg class="card-visual-svg"><use href="#icon-folder"/></svg>
+                        </div>
+                        <div class="card-header">
+                            <div class="card-icon-badge"><svg class="svg-icon"><use href="#icon-folder"/></svg></div>
+                            <h3 class="card-title">Project Resources</h3>
+                        </div>
+                        <p class="card-desc">Move from learning to building with project ideas, practical guides, documentation, workflows, and development references.</p>
+                        
+                        <ul class="card-include-list">
+                            <li class="card-include-item">Project Ideas</li>
+                            <li class="card-include-item">Mini Projects</li>
+                            <li class="card-include-item">Project Guides</li>
+                            <li class="card-include-item">Documentation</li>
+                            <li class="card-include-item">Development References</li>
+                            <li class="card-include-item">Project Workflows</li>
+                        </ul>
+                    </div>
+                   
+                </article>
+
+                <article class="category-card card-accent-orange anim-reveal delay-4" data-category="internship" data-search="internship resources preparation project guidance skill checklists workplace">
+                    <div>
+                        <div class="card-visual-area">
+                            <svg class="card-visual-svg"><use href="#icon-briefcase"/></svg>
+                        </div>
+                        <div class="card-header">
+                            <div class="card-icon-badge"><svg class="svg-icon"><use href="#icon-briefcase"/></svg></div>
+                            <h3 class="card-title">Internship Resources</h3>
+                        </div>
+                        <p class="card-desc">Prepare for practical industry experiences with internship guidance, skill checklists, project preparation, and professional learning.</p>
+                        
+                        <ul class="card-include-list">
+                            <li class="card-include-item">Internship Prep</li>
+                            <li class="card-include-item">Project Guidance</li>
+                            <li class="card-include-item">Skill Checklists</li>
+                            <li class="card-include-item">Documentation</li>
+                            <li class="card-include-item">Professional Skills</li>
+                            <li class="card-include-item">Workplace Learning</li>
+                        </ul>
+                    </div>
+                   
+                </article>
+
+                <article class="category-card card-accent-green anim-reveal delay-5" data-category="career" data-search="career resources career guides skill roadmaps resume guidance interview prep portfolio">
+                    <div>
+                        <div class="card-visual-area">
+                            <svg class="card-visual-svg"><use href="#icon-target"/></svg>
+                        </div>
+                        <div class="card-header">
+                            <div class="card-icon-badge"><svg class="svg-icon"><use href="#icon-target"/></svg></div>
+                            <h3 class="card-title">Career Resources</h3>
+                        </div>
+                        <p class="card-desc">Prepare for your technology career with role guides, skill roadmaps, resume guidance, interview preparation, and portfolio resources.</p>
+                        
+                        <ul class="card-include-list">
+                            <li class="card-include-item">Career Guides</li>
+                            <li class="card-include-item">Role Explanations</li>
+                            <li class="card-include-item">Skill Roadmaps</li>
+                            <li class="card-include-item">Resume Guidance</li>
+                            <li class="card-include-item">Interview Prep</li>
+                            <li class="card-include-item">Portfolio Guidance</li>
+                        </ul>
+                    </div>
+                   
+                </article> 
+
+                <article class="category-card card-accent-blue anim-reveal delay-6" data-category="tools" data-search="tools references documentation coding references technical glossary templates practice">
+                    <div>
+                        <div class="card-visual-area">
+                            <svg class="card-visual-svg"><use href="#icon-tools"/></svg>
+                        </div>
+                        <div class="card-header">
+                            <div class="card-icon-badge"><svg class="svg-icon"><use href="#icon-tools"/></svg></div>
+                            <h3 class="card-title">Tools & References</h3>
+                        </div>
+                        <p class="card-desc">Access useful technical references, documentation, templates, checklists, development resources, and learning tools.</p>
+                        
+                        <ul class="card-include-list">
+                            <li class="card-include-item">Documentation</li>
+                            <li class="card-include-item">Coding References</li>
+                            <li class="card-include-item">Technical Glossary</li>
+                            <li class="card-include-item">Templates</li>
+                            <li class="card-include-item">Checklists</li>
+                            <li class="card-include-item">Practice Resources</li>
+                        </ul>
+                    </div>
+                   
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="articles-section" id="articles">
+        <div class="container">
+            <div class="anim-reveal">
+                <h2 class="section-title">Knowledge Articles</h2>
+                <p class="section-subtitle">Short and practical articles that make technology and career concepts easy to understand.</p>
+            </div>
+
+            <div class="articles-grid" id="articlesGrid">
+                
+                <article class="article-card anim-reveal delay-1" data-category="articles technology" data-search="what is cloud computing concepts modern applications">
+                    <div>
+                        <div class="article-thumb">
+                            <span class="article-cat-badge">Technology</span>
+                            <svg class="svg-icon" style="width: 48px; height: 48px; color: var(--primary-blue);"><use href="#icon-cloud"/></svg>
+                        </div>
+                        <h3 class="article-title">What is Cloud Computing?</h3>
+                        <p class="article-desc">Understand the basic concepts of cloud computing and how modern applications use cloud environments.</p>
+                    </div>
+                    
+                </article>
+
+                <article class="article-card anim-reveal delay-2" data-category="articles data" data-search="how does a data analyst work role useful insights">
+                    <div>
+                        <div class="article-thumb">
+                            <span class="article-cat-badge">Data</span>
+                            <svg class="svg-icon" style="width: 48px; height: 48px; color: var(--primary-cyan);"><use href="#icon-data"/></svg>
+                        </div>
+                        <h3 class="article-title">How Does a Data Analyst Work?</h3>
+                        <p class="article-desc">Explore the role of a data analyst and how data is transformed into useful insights.</p>
+                    </div>
+                    
+                </article>
+
+                <article class="article-card anim-reveal delay-3" data-category="articles software" data-search="backend developer skills apis databases server-side">
+                    <div>
+                        <div class="article-thumb">
+                            <span class="article-cat-badge">Software Dev</span>
+                            <svg class="svg-icon" style="width: 48px; height: 48px; color: var(--primary-purple);"><use href="#icon-code"/></svg>
+                        </div>
+                        <h3 class="article-title">What Skills Does a Backend Developer Need?</h3>
+                        <p class="article-desc">Explore the foundational skills involved in backend development, APIs, databases, and server-side applications.</p>
+                    </div>
+                    
+                </article>
+
+                <article class="article-card anim-reveal delay-4" data-category="articles cybersecurity" data-search="understanding cybersecurity roles career directions security roles">
+                    <div>
+                        <div class="article-thumb">
+                            <span class="article-cat-badge">Cybersecurity</span>
+                            <svg class="svg-icon" style="width: 48px; height: 48px; color: var(--accent-orange);"><use href="#icon-shield"/></svg>
+                        </div>
+                        <h3 class="article-title">Understanding Cybersecurity Roles</h3>
+                        <p class="article-desc">Explore different cybersecurity career directions and the skills associated with security-focused technology roles.</p>
+                    </div>
+                   
+                </article>
+
+                <article class="article-card anim-reveal delay-5" data-category="articles ai" data-search="ai career paths learning directions modern ai technologies">
+                    <div>
+                        <div class="article-thumb">
+                            <span class="article-cat-badge">Artificial Intelligence</span>
+                            <svg class="svg-icon" style="width: 48px; height: 48px; color: var(--accent-green);"><use href="#icon-ai"/></svg>
+                        </div>
+                        <h3 class="article-title">AI Career Paths</h3>
+                        <p class="article-desc">Explore different learning and career directions connected with modern AI technologies.</p>
+                    </div>
+                
+                </article>
+
+                <article class="article-card anim-reveal delay-6" data-category="articles career" data-search="building technology portfolio projects practical work demonstrate skills">
+                    <div>
+                        <div class="article-thumb">
+                            <span class="article-cat-badge">Career</span>
+                            <svg class="svg-icon" style="width: 48px; height: 48px; color: var(--primary-cyan);"><use href="#icon-target"/></svg>
+                        </div>
+                        <h3 class="article-title">Building Your Technology Portfolio</h3>
+                        <p class="article-desc">Understand how projects and practical work can help demonstrate your technology skills.</p>
+                    </div>
+                    
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="journey-section">
+        <div class="container">
+            <div style="text-align: center;" class="anim-reveal">
+                <h2 class="section-title">Your Knowledge Journey</h2>
+                <p class="section-subtitle" style="margin: 0 auto;">A structured progression to turn curiosity into practical skill.</p>
+            </div>
+
+            <div class="journey-wrapper">
+                <div class="journey-step anim-reveal delay-1">
+                    <span class="journey-num">01</span>
+                    <div class="journey-node"><svg class="svg-icon"><use href="#icon-book"/></svg></div>
+                    <span class="journey-label">LEARN</span>
+                </div>
+                <div class="journey-connector"><div class="journey-line-pulse"></div></div>
+
+                <div class="journey-step anim-reveal delay-2">
+                    <span class="journey-num">02</span>
+                    <div class="journey-node"><svg class="svg-icon"><use href="#icon-search"/></svg></div>
+                    <span class="journey-label">EXPLORE</span>
+                </div>
+                <div class="journey-connector"><div class="journey-line-pulse"></div></div>
+
+                <div class="journey-step anim-reveal delay-3">
+                    <span class="journey-num">03</span>
+                    <div class="journey-node"><svg class="svg-icon"><use href="#icon-code"/></svg></div>
+                    <span class="journey-label">PRACTICE</span>
+                </div>
+                <div class="journey-connector"><div class="journey-line-pulse"></div></div>
+
+                <div class="journey-step anim-reveal delay-4">
+                    <span class="journey-num">04</span>
+                    <div class="journey-node"><svg class="svg-icon"><use href="#icon-folder"/></svg></div>
+                    <span class="journey-label">BUILD</span>
+                </div>
+                <div class="journey-connector"><div class="journey-line-pulse"></div></div>
+
+                <div class="journey-step anim-reveal delay-5">
+                    <span class="journey-num">05</span>
+                    <div class="journey-node"><svg class="svg-icon"><use href="#icon-briefcase"/></svg></div>
+                    <span class="journey-label">PREPARE</span>
+                </div>
+                <div class="journey-connector"><div class="journey-line-pulse"></div></div>
+
+                <div class="journey-step anim-reveal delay-6">
+                    <span class="journey-num">06</span>
+                    <div class="journey-node"><svg class="svg-icon"><use href="#icon-target"/></svg></div>
+                    <span class="journey-label">GROW</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-section">
+        <div class="container">
+            <div class="featured-panel anim-reveal">
+                <div>
+                    <div class="section-tag" style="margin-bottom: 1rem;">
+                        <svg class="svg-icon"><use href="#icon-book"/></svg> FEATURED KNOWLEDGE
+                    </div>
+                    <h2 class="featured-title">Technology Learning Hub</h2>
+                    <p class="featured-desc">
+                        Explore learning concepts, practical references, project guidance, and career-focused knowledge in one place.
+                    </p>
+                    <a href="#search-area" class="btn btn-primary">
+                        Explore Knowledge
+                        <svg class="svg-icon"><use href="#icon-arrow"/></svg>
+                    </a>
+                </div>
+
+                <div class="featured-3d-box">
+                    <canvas id="featured-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card anim-reveal delay-1">
+                    <div class="stat-icon"><svg class="svg-icon"><use href="#icon-book"/></svg></div>
+                    <div class="stat-label">Learning Guides</div>
+                </div>
+                <div class="stat-card anim-reveal delay-2">
+                    <div class="stat-icon"><svg class="svg-icon"><use href="#icon-code"/></svg></div>
+                    <div class="stat-label">Technology Topics</div>
+                </div>
+                <div class="stat-card anim-reveal delay-3">
+                    <div class="stat-icon"><svg class="svg-icon"><use href="#icon-folder"/></svg></div>
+                    <div class="stat-label">Project References</div>
+                </div>
+                <div class="stat-card anim-reveal delay-4">
+                    <div class="stat-icon"><svg class="svg-icon"><use href="#icon-target"/></svg></div>
+                    <div class="stat-label">Career Resources</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-section">
+        <div class="container">
+            <div class="anim-reveal">
+                <h2 class="section-title">Why Explore the Knowledge Hub?</h2>
+            </div>
+
+            <div class="why-grid" style="margin-top: 2.5rem;">
+                <div class="why-card anim-reveal delay-1">
+                    <h3 class="why-title">Easy to Explore</h3>
+                    <p class="why-desc">Find learning resources organized around clear categories.</p>
+                </div>
+
+                <div class="why-card anim-reveal delay-2">
+                    <h3 class="why-title">Practical Knowledge</h3>
+                    <p class="why-desc">Connect concepts with practical learning and project applications.</p>
+                </div>
+
+                <div class="why-card anim-reveal delay-3">
+                    <h3 class="why-title">Career Support</h3>
+                    <p class="why-desc">Explore resources that support technology skill and career preparation.</p>
+                </div>
+
+                <div class="why-card anim-reveal delay-4">
+                    <h3 class="why-title">Continuous Learning</h3>
+                    <p class="why-desc">Keep developing your knowledge beyond individual courses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container">
+            <div style="text-align: center;" class="anim-reveal">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle" style="margin: 0 auto 3rem auto;">Everything you need to know about the Knowledge Hub.</p>
+            </div>
+
+            <div class="faq-accordion">
+                <div class="faq-card anim-reveal delay-1">
+                    <button class="faq-header">
+                        What is the SOXIT Academia Knowledge Hub?
+                        <svg class="faq-toggle-icon"><use href="#icon-chevron"/></svg>
+                    </button>
+                    <div class="faq-content">
+                        It is a resource area designed to organize learning materials, technology references, project resources, career guidance, articles, and useful tools.
+                    </div>
+                </div>
+
+                <div class="faq-card anim-reveal delay-2">
+                    <button class="faq-header">
+                        What type of resources can I find?
+                        <svg class="faq-toggle-icon"><use href="#icon-chevron"/></svg>
+                    </button>
+                    <div class="faq-content">
+                        You can explore learning resources, technology resources, project resources, internship resources, career resources, knowledge articles, tools, and references.
+                    </div>
+                </div>
+
+                <div class="faq-card anim-reveal delay-3">
+                    <button class="faq-header">
+                        Can I use the resources while learning a program?
+                        <svg class="faq-toggle-icon"><use href="#icon-chevron"/></svg>
+                    </button>
+                    <div class="faq-content">
+                        Design the page so resources can support learners alongside their structured learning and practical activities.
+                    </div>
+                </div>
+
+                <div class="faq-card anim-reveal delay-4">
+                    <button class="faq-header">
+                        Are project resources included?
+                        <svg class="faq-toggle-icon"><use href="#icon-chevron"/></svg>
+                    </button>
+                    <div class="faq-content">
+                        Yes. Include project ideas, project guides, documentation, workflows, and development references.
+                    </div>
+                </div>
+
+                <div class="faq-card anim-reveal delay-5">
+                    <button class="faq-header">
+                        Are career resources included?
+                        <svg class="faq-toggle-icon"><use href="#icon-chevron"/></svg>
+                    </button>
+                    <div class="faq-content">
+                        Yes. Include career guides, role explanations, skill roadmaps, resume guidance, interview preparation, and portfolio guidance.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="final-cta anim-reveal">
+            <div class="cta-content">
+                <h2 class="cta-title">Keep Learning. Keep Building.</h2>
+                <p class="cta-desc">
+                    Explore knowledge, strengthen your skills, build practical projects, and continue growing throughout your technology journey.
+                </p>
+                <div class="cta-btn-group">
+                    <a href="#search-area" class="btn btn-primary">
+                        Explore Resources
+                        <svg class="svg-icon"><use href="#icon-arrow"/></svg>
+                    </a>
+                    <a href="#categories" class="btn btn-secondary">
+                        Explore Programs
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            /* ------------------------------------------------------------------
+               1. IntersectionObserver for RIGHT -> LEFT Animation
+               ------------------------------------------------------------------ */
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.anim-reveal').forEach(el => observer.observe(el));
+
+            /* ------------------------------------------------------------------
+               2. Search & Category Filter Engine
+               ------------------------------------------------------------------ */
+            const searchInput = document.getElementById('searchInput');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const categoryCards = document.querySelectorAll('.category-card');
+            const articleCards = document.querySelectorAll('.article-card');
+
+            let currentCategory = 'all';
+            let searchQuery = '';
+
+            function updateFiltering() {
+                const query = searchQuery.toLowerCase().trim();
+
+                // Filter Category Cards
+                categoryCards.forEach(card => {
+                    const cat = card.getAttribute('data-category') || '';
+                    const searchData = card.getAttribute('data-search') || '';
+                    
+                    const matchesCategory = (currentCategory === 'all' || currentCategory === cat);
+                    const matchesSearch = !query || searchData.toLowerCase().includes(query) || card.textContent.toLowerCase().includes(query);
+
+                    if (matchesCategory && matchesSearch) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Filter Article Cards
+                articleCards.forEach(card => {
+                    const cat = card.getAttribute('data-category') || '';
+                    const searchData = card.getAttribute('data-search') || '';
+                    
+                    const matchesCategory = (currentCategory === 'all' || currentCategory === 'articles' || cat.includes(currentCategory));
+                    const matchesSearch = !query || searchData.toLowerCase().includes(query) || card.textContent.toLowerCase().includes(query);
+
+                    if (matchesCategory && matchesSearch) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCategory = btn.getAttribute('data-filter');
+                    updateFiltering();
+                });
+            });
+
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                updateFiltering();
+            });
+
+            /* ------------------------------------------------------------------
+               3. FAQ Accordion Logic
+               ------------------------------------------------------------------ */
+            const faqCards = document.querySelectorAll('.faq-card');
+            faqCards.forEach(card => {
+                const header = card.querySelector('.faq-header');
+                header.addEventListener('click', () => {
+                    const isOpen = card.classList.contains('open');
+                    faqCards.forEach(c => c.classList.remove('open'));
+                    if (!isOpen) {
+                        card.classList.add('open');
+                    }
+                });
+            });
+
+            /* ------------------------------------------------------------------
+               4. Three.js Hero Scene (3D Futuristic Knowledge Network)
+               ------------------------------------------------------------------ */
+            const initHeroScene = () => {
+                const canvas = document.getElementById('hero-canvas');
+                if (!canvas) return;
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+                camera.position.z = 18;
+
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+                // Lights
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                scene.add(ambientLight);
+
+                const pointLight = new THREE.PointLight(0x06b6d4, 2, 50);
+                pointLight.position.set(10, 10, 10);
+                scene.add(pointLight);
+
+                const purpleLight = new THREE.PointLight(0xa855f7, 2, 50);
+                purpleLight.position.set(-10, -10, -10);
+                scene.add(purpleLight);
+
+                // Central Futuristic Knowledge Book Construct
+                const bookGroup = new THREE.Group();
+
+                const coverGeo = new THREE.BoxGeometry(4.5, 6, 0.4);
+                const coverMat = new THREE.MeshPhongMaterial({ color: 0x0f172a, emissive: 0x1e293b });
+                const cover = new THREE.Mesh(coverGeo, coverMat);
+                bookGroup.add(cover);
+
+                // Glowing Wireframe Nodes around core
+                const nodesGeo = new THREE.IcosahedronGeometry(6, 1);
+                const nodesMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true, transparent: true, opacity: 0.25 });
+                const nodesMesh = new THREE.Mesh(nodesGeo, nodesMat);
+                scene.add(nodesMesh);
+
+                // Particle Ring
+                const particlesCount = 300;
+                const posArray = new Float32Array(particlesCount * 3);
+                for(let i=0; i<particlesCount*3; i++) {
+                    posArray[i] = (Math.random() - 0.5) * 20;
+                }
+                const particlesGeo = new THREE.BufferGeometry();
+                particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+                const particlesMat = new THREE.PointsMaterial({
+                    size: 0.08,
+                    color: 0x06b6d4,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+                scene.add(particlesMesh);
+
+                scene.add(bookGroup);
+
+                // Mouse Parallax Interaction
+                let mouseX = 0, mouseY = 0;
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+                });
+
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    bookGroup.rotation.y += 0.005;
+                    bookGroup.rotation.x = mouseY * 0.2;
+                    nodesMesh.rotation.y -= 0.002;
+                    nodesMesh.rotation.z += 0.001;
+                    particlesMesh.rotation.y += 0.001;
+                    renderer.render(scene, camera);
+                };
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+                });
+            };
+
+            /* ------------------------------------------------------------------
+               5. Three.js Featured Section Scene
+               ------------------------------------------------------------------ */
+            const initFeaturedScene = () => {
+                const canvas = document.getElementById('featured-canvas');
+                if (!canvas) return;
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+                camera.position.z = 12;
+
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+                const torusGeo = new THREE.TorusKnotGeometry(3, 0.8, 100, 16);
+                const torusMat = new THREE.MeshStandardMaterial({ 
+                    color: 0x38bdf8, 
+                    wireframe: true, 
+                    emissive: 0x0f172a 
+                });
+                const torusKnot = new THREE.Mesh(torusGeo, torusMat);
+                scene.add(torusKnot);
+
+                const light = new THREE.DirectionalLight(0xa855f7, 2);
+                light.position.set(5, 5, 5);
+                scene.add(light);
+
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    torusKnot.rotation.x += 0.01;
+                    torusKnot.rotation.y += 0.01;
+                    renderer.render(scene, camera);
+                };
+                animate();
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+                });
+            };
+
+            initHeroScene();
+            initFeaturedScene();
+        });
+    </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

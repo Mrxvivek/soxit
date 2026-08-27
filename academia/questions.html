@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Program Questions and Structure</title>
+	<style>
+		:root {
+			--ink: #172033;
+			--muted: #5f6b7a;
+			--paper: #f4f7fb;
+			--card: #ffffff;
+			--accent: #0e7490;
+			--accent-light: #cffafe;
+			--line: #dbe4ee;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			margin: 0;
+			color: var(--ink);
+			background: var(--paper);
+			font-family: "Trebuchet MS", Arial, sans-serif;
+			line-height: 1.6;
+		}
+
+		header {
+			padding: 72px 24px 58px;
+			color: #fff;
+			text-align: center;
+			background: linear-gradient(135deg, #123047, #0e7490);
+		}
+
+		header p { max-width: 650px; margin: 14px auto 0; color: #d9f7fb; }
+
+		main { max-width: 1050px; margin: 0 auto; padding: 64px 24px 90px; }
+
+		section { margin-bottom: 72px; }
+
+		h1, h2, h3 { line-height: 1.2; }
+		h1 { margin: 0; font-size: clamp(2.2rem, 6vw, 4.2rem); }
+		h2 { margin: 0 0 12px; font-size: 2rem; }
+		.section-intro { margin: 0 0 28px; color: var(--muted); }
+
+		.program-cards {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 18px;
+			margin-bottom: 72px;
+		}
+
+		.program-card {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 72px;
+			padding: 14px 20px;
+			color: var(--ink);
+			text-align: center;
+			text-decoration: none;
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 8px;
+			box-shadow: 0 4px 12px rgba(23, 32, 51, 0.06);
+			font-size: 1.08rem;
+			font-weight: 700;
+			transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+		}
+
+		.program-card:first-child,
+		.program-card:hover,
+		.program-card:focus {
+			color: #fff;
+			background: #42a5f5;
+			border-color: #42a5f5;
+		}
+
+		.program-card:hover,
+		.program-card:focus { transform: translateY(-2px); outline: none; }
+
+		.faq-list { display: grid; gap: 12px; }
+
+		details {
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 10px;
+		}
+
+		summary {
+			padding: 20px 22px;
+			cursor: pointer;
+			font-weight: 700;
+		}
+
+		summary::marker { color: var(--accent); }
+		details p { margin: 0; padding: 0 22px 20px; color: var(--muted); }
+
+		.steps {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 16px;
+		}
+
+		.step {
+			display: flex;
+			gap: 16px;
+			padding: 22px;
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 10px;
+		}
+
+		.number {
+			display: grid;
+			place-items: center;
+			flex: 0 0 42px;
+			width: 42px;
+			height: 42px;
+			border-radius: 50%;
+			color: #fff;
+			font-weight: 700;
+			background: var(--accent);
+		}
+
+		.step h3 { margin: 0 0 6px; font-size: 1.08rem; }
+		.step p { margin: 0; color: var(--muted); }
+
+		.info-grid {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 16px;
+		}
+
+		.info-card {
+			padding: 22px;
+			background: var(--card);
+			border: 1px solid var(--line);
+			border-radius: 10px;
+		}
+
+		.info-card h3 { margin-bottom: 8px; font-size: 1.1rem; }
+		.info-card p { margin: 0; color: var(--muted); }
+
+		.outcomes {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 12px 28px;
+			margin: 20px 0 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.outcomes li {
+			position: relative;
+			padding: 14px 16px 14px 38px;
+			color: #d9f7fb;
+			border: 1px solid rgba(207, 250, 254, 0.16);
+			border-radius: 8px;
+			background: rgba(255, 255, 255, 0.04);
+		}
+
+		.outcomes li::before {
+			position: absolute;
+			left: 15px;
+			color: #67e8f9;
+			content: "✓";
+			font-weight: 700;
+		}
+
+		.result {
+			padding: 32px;
+			color: #e7faff;
+			border-radius: 14px;
+			background: #102a43;
+		}
+
+		.result h2 { color: #fff; }
+		.result p { color: #b9d5df; }
+
+		.result-code {
+			margin: 24px 0 0;
+			padding: 22px;
+			overflow-x: auto;
+			color: #d9f7fb;
+			border: 1px solid rgba(207, 250, 254, 0.2);
+			border-radius: 8px;
+			background: #091b2d;
+			font: 0.95rem/1.8 Consolas, "Courier New", monospace;
+			white-space: pre-wrap;
+		}
+
+		@media (max-width: 700px) {
+			.program-cards { grid-template-columns: 1fr; margin-bottom: 48px; }
+			.steps { grid-template-columns: 1fr; }
+			.info-grid, .outcomes { grid-template-columns: 1fr; }
+			main { padding-top: 44px; }
+			.result { padding: 24px; }
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Questions and Program Structure</h1>
+		<p>Understand the learning path, review common questions, and see the complete result of the program structure.</p>
+	</header>
+
+	<main>
+		<section class="program-cards" aria-label="Program information">
+			<a class="program-card" href="#program-structure">Program Structure &amp; Value</a>
+			<a class="program-card" href="#enrollment-prerequisites">Enrollment &amp; Prerequisites</a>
+			<a class="program-card" href="#learning-outcomes">Learning Outcomes</a>
+		</section>
+
+		<section aria-labelledby="faq-title">
+			<h2 id="faq-title">Frequently Asked Questions</h2>
+			<p class="section-intro">Everything learners need to know before starting a role-based program.</p>
+			<div class="faq-list">
+				<details><summary>Who can join the program?</summary><p>Students, beginners, and career switchers can join and select a path that matches their goals.</p></details>
+				<details><summary>Do I need previous experience?</summary><p>No. Each path starts with the required foundations and builds toward practical work.</p></details>
+				<details><summary>How do I choose a role?</summary><p>Compare the role descriptions, skills, and projects, then choose the direction that interests you most.</p></details>
+				<details><summary>What will I build?</summary><p>You will complete exercises, mini projects, and a final capstone related to your chosen role.</p></details>
+				<details><summary>Can I learn at my own pace?</summary><p>Yes. Complete the steps in order and set a weekly schedule that works for you.</p></details>
+				<details><summary>Will I get feedback?</summary><p>Project reviews help you improve your technical work, documentation, and presentation.</p></details>
+				<details><summary>Does the program help with interviews?</summary><p>Yes. It develops project evidence, role skills, portfolio material, and professional communication.</p></details>
+				<details><summary>What happens after completion?</summary><p>Publish your strongest work and apply for internships, entry-level roles, or advanced learning.</p></details>
+			</div>
+		</section>
+
+		<section id="program-structure" aria-labelledby="steps-title">
+			<h2 id="steps-title">Program Steps 1 to 10</h2>
+			<p class="section-intro">A clear progression from choosing a role to becoming industry ready.</p>
+			<div class="steps">
+				<article class="step"><span class="number">1</span><div><h3>Choose Your Role</h3><p>Select a career direction that matches your interests.</p></div></article>
+				<article class="step"><span class="number">2</span><div><h3>Set Your Goals</h3><p>Define the skills and outcomes you want to achieve.</p></div></article>
+				<article class="step"><span class="number">3</span><div><h3>Learn the Foundations</h3><p>Study the essential concepts, tools, and terminology.</p></div></article>
+				<article class="step"><span class="number">4</span><div><h3>Practice Core Skills</h3><p>Strengthen understanding through guided exercises.</p></div></article>
+				<article class="step"><span class="number">5</span><div><h3>Use Industry Tools</h3><p>Work with technologies and workflows used by real teams.</p></div></article>
+				<article class="step"><span class="number">6</span><div><h3>Complete Mini Projects</h3><p>Apply each new skill in a focused practical project.</p></div></article>
+				<article class="step"><span class="number">7</span><div><h3>Build the Capstone</h3><p>Combine your skills in one substantial role-based project.</p></div></article>
+				<article class="step"><span class="number">8</span><div><h3>Review and Improve</h3><p>Use testing and feedback to raise the quality of your work.</p></div></article>
+				<article class="step"><span class="number">9</span><div><h3>Prepare Your Portfolio</h3><p>Present your projects, skills, and results professionally.</p></div></article>
+				<article class="step"><span class="number">10</span><div><h3>Become Industry Ready</h3><p>Prepare for internships, interviews, and your next opportunity.</p></div></article>
+			</div>
+		</section>
+
+		<section id="enrollment-prerequisites" aria-labelledby="enrollment-title">
+			<h2 id="enrollment-title">Enrollment &amp; Prerequisites</h2>
+			<p class="section-intro">SOXIT Academia is designed for learners who want practical, role-focused technology skills.</p>
+			<div class="info-grid">
+				<article class="info-card">
+					<h3>Who can enroll?</h3>
+					<p>Students, graduates, beginners, working professionals, and career switchers can choose a program that matches their goals.</p>
+				</article>
+				<article class="info-card">
+					<h3>Prerequisites</h3>
+					<p>No advanced experience is required. Bring basic computer skills, curiosity, and the commitment to practice regularly.</p>
+				</article>
+				<article class="info-card">
+					<h3>How to enroll</h3>
+					<p>Choose a role, submit your details through the enrollment form, and our team will guide you through the next steps.</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="learning-outcomes" class="result" aria-labelledby="result-title">
+			<h2 id="result-title">Learning Outcomes</h2>
+			<p>By completing a SOXIT Academia program, you will build evidence of practical ability and become better prepared for internships, interviews, and entry-level opportunities.</p>
+			<ul class="outcomes">
+				<li>Understand the tools and foundations for your chosen role</li>
+				<li>Apply skills through exercises and real-world projects</li>
+				<li>Complete a role-based capstone project</li>
+				<li>Build a portfolio that demonstrates your work</li>
+				<li>Improve communication and professional presentation</li>
+				<li>Prepare for internships, interviews, and next steps</li>
+			</ul>
+			<pre class="result-code"><code>Program Result
+|
+|-- Role selected
+|-- Technical foundations completed
+|-- Core skills practiced
+|-- Mini projects completed
+|-- Capstone project delivered
+|-- Portfolio prepared
+|-- Interview readiness improved
+`-- Industry-ready learner</code></pre>
+		</section>
+	</main>
+<script src="../site-shell.js"></script>
+</body>
+</html>

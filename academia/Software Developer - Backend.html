@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOXIT Academia — Software Developer — Backend Program</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        :root {
+            --navy-deep: #070913;
+            --navy-surface: #0e1225;
+            --navy-card: #151b36;
+            --navy-card-hover: #1c2447;
+            
+            --blue-primary: #2563eb;
+            --blue-accent: #3b82f6;
+            --cyan-accent: #06b6d4;
+            --cyan-glow: #22d3ee;
+            --purple-accent: #8b5cf6;
+            
+            --text-white: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(6, 182, 212, 0.3);
+            
+            --glass-bg: rgba(21, 27, 54, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-blur: blur(16px);
+            
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+            
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-family: var(--font-main);
+            background-color: var(--navy-deep);
+            color: var(--text-white);
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: var(--navy-deep);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Mesh Grid */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.1), transparent 35%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #8b5cf6 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: var(--cyan-glow);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .section-subheading {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 48px auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--blue-primary) 0%, var(--cyan-accent) 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.5);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            border-color: var(--glass-border);
+            color: var(--text-white);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--cyan-accent);
+            transform: translateY(-2px);
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7, 9, 19, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 16px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--blue-primary), var(--purple-accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 900;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: var(--glass-blur);
+            border-radius: 16px;
+            padding: 28px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(6, 182, 212, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(6, 182, 212, 0.1);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 60px 0 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-visual-wrapper {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            border-radius: 20px;
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.15) 0%, transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #hero-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        .visual-tag {
+            position: absolute;
+            padding: 8px 14px;
+            background: rgba(14, 18, 37, 0.85);
+            border: 1px solid var(--cyan-accent);
+            border-radius: 8px;
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            color: var(--cyan-glow);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            pointer-events: none;
+            backdrop-filter: blur(8px);
+            animation: float 4s ease-in-out infinite alternate;
+        }
+
+        .tag-api { top: 15%; left: 10%; animation-delay: 0s; }
+        .tag-db { bottom: 20%; left: 15%; animation-delay: 1s; }
+        .tag-auth { top: 25%; right: 10%; animation-delay: 2s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-10px); }
+        }
+
+        /* Program Info Card */
+        .info-card-section {
+            margin-top: -30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .info-card-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            background: rgba(14, 18, 37, 0.85);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 24px 32px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-right: 1px solid var(--border-subtle);
+            padding-right: 12px;
+        }
+
+        .info-item:last-child { border-right: none; }
+
+        .info-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: rgba(37, 99, 235, 0.15);
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan-glow);
+            flex-shrink: 0;
+        }
+
+        .info-icon svg { width: 22px; height: 22px; }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-white);
+        }
+
+        /* Overview Section */
+        .overview-section { padding: 100px 0; }
+        .overview-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .overview-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .overview-bullets {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .overview-bullets li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+
+        .overview-bullets svg {
+            color: var(--cyan-glow);
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .overview-visual {
+            height: 400px;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--navy-surface);
+            border: 1px solid var(--border-subtle);
+        }
+
+        #overview-canvas { width: 100%; height: 100%; }
+
+        /* Learn Grid */
+        .learn-section { padding: 80px 0; }
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .learn-card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(6, 182, 212, 0.2));
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan-glow);
+            margin-bottom: 20px;
+        }
+
+        .learn-card-icon svg { width: 26px; height: 26px; }
+
+        .learn-card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .learn-card-desc {
+            font-size: 0.925rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Roadmap Section */
+        .roadmap-section { padding: 100px 0; position: relative; }
+        .roadmap-container { position: relative; margin-top: 60px; }
+        .roadmap-line {
+            position: absolute;
+            top: 40px;
+            left: 5%;
+            right: 5%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .roadmap-line-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, var(--blue-primary), var(--cyan-accent), var(--purple-accent));
+            box-shadow: 0 0 12px var(--cyan-accent);
+        }
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .roadmap-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .roadmap-step {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--navy-surface);
+            border: 2px solid var(--cyan-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-code);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--cyan-glow);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+            margin-bottom: 20px;
+            transition: var(--transition-smooth);
+        }
+
+        .roadmap-node:hover .roadmap-step {
+            transform: scale(1.1);
+            background: var(--blue-primary);
+            color: #fff;
+        }
+
+        .roadmap-title { font-size: 1rem; font-weight: 700; }
+
+        /* Tech Section */
+        .tech-section { padding: 80px 0; }
+        .tech-disclaimer {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            text-align: center;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .tech-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .tech-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan-accent);
+            flex-shrink: 0;
+        }
+
+        .tech-icon svg { width: 28px; height: 28px; }
+
+        .tech-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+        .tech-desc { font-size: 0.875rem; color: var(--text-muted); }
+
+        /* Project Section */
+        .project-section { padding: 100px 0; }
+        .project-card {
+            background: linear-gradient(135deg, rgba(14, 18, 37, 0.9), rgba(21, 27, 54, 0.9));
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .project-info h3 { font-size: 2rem; margin-bottom: 16px; font-weight: 700; }
+        .project-info p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 32px; line-height: 1.7; }
+
+        .flow-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 24px;
+            background: rgba(7, 9, 19, 0.6);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+        }
+
+        .flow-node {
+            width: 100%;
+            padding: 14px;
+            background: var(--navy-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            text-align: center;
+            font-family: var(--font-code);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .flow-arrow { color: var(--cyan-glow); font-size: 1.2rem; }
+
+        /* Outcomes & Values */
+        .outcomes-section { padding: 80px 0; }
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .outcome-card { display: flex; align-items: flex-start; gap: 16px; }
+        .outcome-card svg { width: 24px; height: 24px; color: var(--cyan-glow); flex-shrink: 0; margin-top: 2px; }
+        .outcome-card span { font-size: 1.05rem; font-weight: 600; }
+
+        .values-section, .audience-section { padding: 80px 0; }
+        .values-grid, .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .requirements-section { padding: 80px 0; }
+        .req-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .req-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--navy-card);
+            border: 1px solid var(--border-subtle);
+            padding: 16px 20px;
+            border-radius: 12px;
+        }
+
+        .req-item svg { width: 20px; height: 20px; color: var(--cyan-glow); flex-shrink: 0; }
+
+        /* FAQ */
+        .faq-section { padding: 100px 0; }
+        .faq-accordion {
+            max-width: 840px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item {
+            background: var(--navy-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .faq-item.active { border-color: rgba(6, 182, 212, 0.4); }
+
+        .faq-header {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .faq-icon { width: 24px; height: 24px; transition: transform 0.3s ease; color: var(--cyan-glow); }
+        .faq-item.active .faq-icon { transform: rotate(180deg); }
+
+        .faq-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 24px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .faq-item.active .faq-body {
+            max-height: 200px;
+            padding: 0 24px 20px 24px;
+        }
+
+        /* Final CTA */
+        .cta-section { padding: 100px 0 120px 0; position: relative; }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(14, 18, 37, 0.95), rgba(37, 99, 235, 0.2));
+            border: 1px solid var(--cyan-accent);
+            border-radius: 28px;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(6, 182, 212, 0.2);
+        }
+
+        #cta-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .cta-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+        .cta-title { font-size: 2.75rem; font-weight: 800; margin-bottom: 20px; }
+        .cta-desc { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 36px; }
+
+        .footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 2.75rem; }
+            .info-card-grid { grid-template-columns: repeat(3, 1fr); }
+            .learn-grid, .tech-grid, .values-grid, .audience-grid { grid-template-columns: repeat(2, 1fr); }
+            .roadmap-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+            .roadmap-line { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-cta { justify-content: center; }
+            .info-card-grid { grid-template-columns: repeat(2, 1fr); }
+            .overview-split, .project-card { grid-template-columns: 1fr; }
+            .outcomes-grid, .learn-grid, .tech-grid, .values-grid, .audience-grid, .req-list, .roadmap-grid { grid-template-columns: 1fr; }
+            .cta-title { font-size: 2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .info-card-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content reveal">
+                        <div class="section-tag">
+                            <span>SOXIT ACADEMIA</span> • <span>ROLE-BASED PROGRAM</span>
+                        </div>
+                        <h1 class="hero-title">Software Developer — <span class="gradient-text">Backend</span></h1>
+                        <p class="hero-subtitle">
+                            Build strong backend development skills and learn how modern applications work behind the scenes.
+                        </p>
+                        <div class="hero-cta">
+                            <a href="#enroll" class="btn btn-primary">Enroll Now &rarr;</a>
+                            <a href="#overview" class="btn btn-secondary">Explore Program &rarr;</a>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual-wrapper reveal">
+                        <canvas id="hero-canvas"></canvas>
+                        <div class="visual-tag tag-api">&lt;API Connection /&gt;</div>
+                        <div class="visual-tag tag-db">SQL :: Database</div>
+                        <div class="visual-tag tag-auth">Auth :: JWT</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-card-section">
+            <div class="container">
+                <div class="info-card-grid reveal">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        <div>
+                            <div class="info-label">Program</div>
+                            <div class="info-value">Software Developer — Backend</div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="info-label">Level</div>
+                            <div class="info-value">Intermediate</div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="info-label">Duration</div>
+                            <div class="info-value">40+ Hours</div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="info-label">Mode</div>
+                            <div class="info-value">Practical Learning</div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        </div>
+                        <div>
+                            <div class="info-label">Format</div>
+                            <div class="info-value">Learning + Practice + Projects</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="overview-section" id="overview">
+            <div class="container">
+                <div class="overview-split">
+                    <div class="overview-text reveal">
+                        <div class="section-tag">Program Overview</div>
+                        <h2 class="section-heading">Master Modern Backend Infrastructure</h2>
+                        <p>
+                            Develop the skills needed to understand, build, and work with backend systems. Learn how applications communicate with servers, databases, APIs, authentication systems, and other backend components.
+                        </p>
+                        <ul class="overview-bullets">
+                            <li>
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Robust API Architecture & Data Routing
+                            </li>
+                            <li>
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Database Management & Scalable Storage
+                            </li>
+                            <li>
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Secure Authentication & Token Handling
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="overview-visual glass-card reveal">
+                        <canvas id="overview-canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="learn-section">
+            <div class="container">
+                <div style="text-align: center;">
+                    <div class="section-tag">Curriculum Matrix</div>
+                    <h2 class="section-heading">What You Will Learn</h2>
+                    <p class="section-subheading">Comprehensive modules designed to provide hands-on experience across critical backend concepts.</p>
+                </div>
+
+                <div class="learn-grid">
+                    <div class="glass-card learn-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        </div>
+                        <h3 class="learn-card-title">1. Programming Fundamentals</h3>
+                        <p class="learn-card-desc">Build a strong foundation in programming concepts and problem solving.</p>
+                    </div>
+
+                    <div class="glass-card learn-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                        </div>
+                        <h3 class="learn-card-title">2. Backend Development</h3>
+                        <p class="learn-card-desc">Understand how backend applications are structured and developed.</p>
+                    </div>
+
+                    <div class="glass-card learn-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="learn-card-title">3. APIs</h3>
+                        <p class="learn-card-desc">Learn how applications communicate using APIs and backend services.</p>
+                    </div>
+
+                    <div class="glass-card learn-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                        </div>
+                        <h3 class="learn-card-title">4. Databases</h3>
+                        <p class="learn-card-desc">Understand how application data is stored, managed, and retrieved.</p>
+                    </div>
+
+                    <div class="glass-card learn-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        </div>
+                        <h3 class="learn-card-title">5. Authentication</h3>
+                        <p class="learn-card-desc">Learn the fundamentals of user authentication and secure application access.</p>
+                    </div>
+
+                    <div class="glass-card learn-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+                        </div>
+                        <h3 class="learn-card-title">6. Server-Side Development</h3>
+                        <p class="learn-card-desc">Understand server-side application logic and request handling.</p>
+                    </div>
+
+                    <div class="glass-card learn-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        </div>
+                        <h3 class="learn-card-title">7. Git & Version Control</h3>
+                        <p class="learn-card-desc">Learn how to manage and collaborate on code using version control.</p>
+                    </div>
+
+                    <div class="glass-card learn-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 001-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                        </div>
+                        <h3 class="learn-card-title">8. Deployment Fundamentals</h3>
+                        <p class="learn-card-desc">Understand the basic concepts involved in deploying backend applications.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="roadmap-section">
+            <div class="container">
+                <div style="text-align: center;">
+                    <div class="section-tag">Learning Path</div>
+                    <h2 class="section-heading">Program Structure</h2>
+                    <p class="section-subheading">A structured step-by-step roadmap to guide your learning experience.</p>
+                </div>
+
+                <div class="roadmap-container reveal">
+                    <div class="roadmap-line">
+                        <div class="roadmap-line-progress"></div>
+                    </div>
+
+                    <div class="roadmap-grid">
+                        <div class="roadmap-node">
+                            <div class="roadmap-step">01</div>
+                            <div class="roadmap-title">Programming Foundations</div>
+                        </div>
+
+                        <div class="roadmap-node">
+                            <div class="roadmap-step">02</div>
+                            <div class="roadmap-title">Backend Fundamentals</div>
+                        </div>
+
+                        <div class="roadmap-node">
+                            <div class="roadmap-step">03</div>
+                            <div class="roadmap-title">APIs & Services</div>
+                        </div>
+
+                        <div class="roadmap-node">
+                            <div class="roadmap-step">04</div>
+                            <div class="roadmap-title">Databases</div>
+                        </div>
+
+                        <div class="roadmap-node">
+                            <div class="roadmap-step">05</div>
+                            <div class="roadmap-title">Authentication</div>
+                        </div>
+
+                        <div class="roadmap-node">
+                            <div class="roadmap-step">06</div>
+                            <div class="roadmap-title">Backend Project</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tech-section">
+            <div class="container">
+                <div style="text-align: center;">
+                    <div class="section-tag">Developer Toolkit</div>
+                    <h2 class="section-heading">Technology & Tools</h2>
+                    <p class="tech-disclaimer">Technologies/tools presented below represent industry standards that may be used for educational demonstration and learning.</p>
+                </div>
+
+                <div class="tech-grid">
+                    <div class="glass-card tech-card reveal">
+                        <div class="tech-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        </div>
+                        <div>
+                            <div class="tech-name">Python</div>
+                            <div class="tech-desc">Versatile programming language for writing server logic and data processing scripts.</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card tech-card reveal">
+                        <div class="tech-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="tech-name">Java</div>
+                            <div class="tech-desc">Robust enterprise-grade programming language powering scalable backend services.</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card tech-card reveal">
+                        <div class="tech-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="tech-name">Node.js</div>
+                            <div class="tech-desc">Event-driven JavaScript runtime environment for building fast network applications.</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card tech-card reveal">
+                        <div class="tech-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="tech-name">REST APIs</div>
+                            <div class="tech-desc">Standard architectural style for designing networked HTTP communication endpoints.</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card tech-card reveal">
+                        <div class="tech-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg>
+                        </div>
+                        <div>
+                            <div class="tech-name">SQL</div>
+                            <div class="tech-desc">Domain-specific language used for querying and managing relational database tables.</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card tech-card reveal">
+                        <div class="tech-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        </div>
+                        <div>
+                            <div class="tech-name">Git</div>
+                            <div class="tech-desc">Distributed version control system to track source code changes during development.</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card tech-card reveal">
+                        <div class="tech-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        </div>
+                        <div>
+                            <div class="tech-name">GitHub</div>
+                            <div class="tech-desc">Cloud-based platform for version control hosting, code review, and project collaboration.</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card tech-card reveal">
+                        <div class="tech-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"></path></svg>
+                        </div>
+                        <div>
+                            <div class="tech-name">Databases</div>
+                            <div class="tech-desc">Structured storage systems designed to persist application data reliably.</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card tech-card reveal">
+                        <div class="tech-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 001-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="tech-name">Cloud</div>
+                            <div class="tech-desc">Infrastructure servers providing remote computing power and application hosting.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <div class="container">
+                <div style="text-align: center;">
+                    <div class="section-tag">Hands-on Experience</div>
+                    <h2 class="section-heading">Build a Real-World Backend Project</h2>
+                    <p class="section-subheading">Gain practical knowledge by integrating key architectural layers into an end-to-end backend solution.</p>
+                </div>
+
+                <div class="project-card reveal">
+                    <div class="project-info">
+                        <div style="color: var(--cyan-glow); font-family: var(--font-code); font-weight: 600; margin-bottom: 8px;">FEATURED CAPSTONE</div>
+                        <h3>Backend Application Project</h3>
+                        <p>Apply your backend development knowledge by building a practical application involving APIs, database operations, authentication, and backend logic.</p>
+                        <a href="#enroll" class="btn btn-primary">Explore Project &rarr;</a>
+                    </div>
+
+                    <div class="flow-diagram">
+                        <div class="flow-node">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            Frontend Interface
+                        </div>
+                        <div class="flow-arrow">&darr;</div>
+                        <div class="flow-node" style="border-color: var(--cyan-accent); background: rgba(6, 182, 212, 0.1);">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            API Connection Layer
+                        </div>
+                        <div class="flow-arrow">&darr;</div>
+                        <div class="flow-node" style="border-color: var(--blue-primary); background: rgba(37, 99, 235, 0.15);">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2"></path></svg>
+                            Backend Logic & Auth Server
+                        </div>
+                        <div class="flow-arrow">&darr;</div>
+                        <div class="flow-node">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s-8-1.79-8-4"></path></svg>
+                            Database Storage Engine
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="outcomes-section">
+            <div class="container">
+                <div style="text-align: center;">
+                    <div class="section-tag">Key Competencies</div>
+                    <h2 class="section-heading">Learning Outcomes</h2>
+                    <p class="section-subheading">Upon completing the program, learners develop clear operational understanding across key areas:</p>
+                </div>
+
+                <div class="outcomes-grid">
+                    <div class="glass-card outcome-card reveal">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Backend application architecture</span>
+                    </div>
+
+                    <div class="glass-card outcome-card reveal">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Server-side programming</span>
+                    </div>
+
+                    <div class="glass-card outcome-card reveal">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 0 0118 0z"></path></svg>
+                        <span>API development</span>
+                    </div>
+
+                    <div class="glass-card outcome-card reveal">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Database integration</span>
+                    </div>
+
+                    <div class="glass-card outcome-card reveal">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Authentication concepts</span>
+                    </div>
+
+                    <div class="glass-card outcome-card reveal">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span>Version control and development workflow</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="values-section">
+            <div class="container">
+                <div style="text-align: center;">
+                    <div class="section-tag">Educational Core</div>
+                    <h2 class="section-heading">Program Structure & Values</h2>
+                    <p class="section-subheading">Our instructional methodology is built upon core principles that drive skill acquisition.</p>
+                </div>
+
+                <div class="values-grid">
+                    <div class="glass-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Practical Learning</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Focus on applying concepts through hands-on activities.</p>
+                    </div>
+
+                    <div class="glass-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-4a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        </div>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Problem Solving</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Develop logical thinking and structured problem-solving skills.</p>
+                    </div>
+
+                    <div class="glass-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        </div>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Project-Based Development</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Use projects to apply backend concepts in practical scenarios.</p>
+                    </div>
+
+                    <div class="glass-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 8px;">Continuous Growth</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Build a foundation for continued technical learning.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="audience-section">
+            <div class="container">
+                <div style="text-align: center;">
+                    <div class="section-tag">Target Audience</div>
+                    <h2 class="section-heading">Who Is This Program For?</h2>
+                    <p class="section-subheading">Designed for learners seeking clarity and practical skill building in server-side engineering.</p>
+                </div>
+
+                <div class="audience-grid">
+                    <div class="glass-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg>
+                        </div>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Students</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Students who want to develop backend programming skills.</p>
+                    </div>
+
+                    <div class="glass-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        </div>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Beginners in Development</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Learners who want to understand how applications work behind the scenes.</p>
+                    </div>
+
+                    <div class="glass-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Aspiring Backend Developers</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Learners preparing to explore backend development as a career direction.</p>
+                    </div>
+
+                    <div class="glass-card reveal">
+                        <div class="learn-card-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 style="font-size: 1.1rem; margin-bottom: 8px;">Technology Enthusiasts</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Learners interested in programming, APIs, databases, and application development.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="requirements-section">
+            <div class="container">
+                <div style="text-align: center;">
+                    <div class="section-tag">Prerequisites</div>
+                    <h2 class="section-heading">Enrollment & Requirements</h2>
+                    <p class="section-subheading">Recommended prerequisites to ensure an effective learning experience.</p>
+                </div>
+
+                <div class="req-list reveal">
+                    <div class="req-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Basic computer knowledge</span>
+                    </div>
+
+                    <div class="req-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Interest in programming</span>
+                    </div>
+
+                    <div class="req-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Willingness to practice</span>
+                    </div>
+
+                    <div class="req-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Basic logical thinking</span>
+                    </div>
+
+                    <div class="req-item" style="grid-column: span 2;">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                        <span>Commitment to learning</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="container">
+                <div style="text-align: center;">
+                    <div class="section-tag">Got Questions?</div>
+                    <h2 class="section-heading">Frequently Asked Questions</h2>
+                    <p class="section-subheading">Find clear answers regarding program layout, expectations, and focus areas.</p>
+                </div>
+
+                <div class="faq-accordion reveal">
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            <span>What is the Software Developer — Backend program?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-body">
+                            It is a structured learning program focused on developing an understanding of backend development, APIs, databases, server-side logic, and practical application development.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            <span>Is this program suitable for beginners?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-body">
+                            The program is designed around progressive learning, but learners should review the stated requirements before enrolling.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            <span>What will I learn?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-body">
+                            Learners explore backend development concepts, APIs, databases, authentication, programming, and practical project development.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            <span>Does the program include projects?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-body">
+                            Include a practical project component that allows learners to apply backend concepts.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-header">
+                            <span>What technologies can I learn?</span>
+                            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-body">
+                            Technology exposure can include programming languages, APIs, databases, Git, and backend development tools depending on the program curriculum.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; SOXIT Academia. All rights reserved. Role-Based Learning Program.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            revealElements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const header = item.querySelector('.faq-header');
+            header.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        // 3D Hero Scene
+        (function initHeroThree() {
+            const container = document.querySelector('.hero-visual-wrapper');
+            const canvas = document.getElementById('hero-canvas');
+            if (!container || !canvas) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 18;
+
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            const mainGroup = new THREE.Group();
+            scene.add(mainGroup);
+
+            // Server Rack Stack
+            const serverGroup = new THREE.Group();
+            const serverGeo = new THREE.BoxGeometry(4, 0.8, 4);
+            const serverMat = new THREE.MeshPhongMaterial({
+                color: 0x151b36,
+                emissive: 0x06b6d4,
+                emissiveIntensity: 0.1,
+                specular: 0x22d3ee,
+                shininess: 30,
+                transparent: true,
+                opacity: 0.85
+            });
+
+            for (let i = 0; i < 4; i++) {
+                const serverMesh = new THREE.Mesh(serverGeo, serverMat);
+                serverMesh.position.y = (i - 1.5) * 1.2;
+                serverGroup.add(serverMesh);
+
+                const ledGeo = new THREE.SphereGeometry(0.08, 8, 8);
+                const ledMatCyan = new THREE.MeshBasicMaterial({ color: 0x06b6d4 });
+                const ledMatBlue = new THREE.MeshBasicMaterial({ color: 0x3b82f6 });
+
+                for (let j = 0; j < 3; j++) {
+                    const led = new THREE.Mesh(ledGeo, j % 2 === 0 ? ledMatCyan : ledMatBlue);
+                    led.position.set(-1.5 + j * 0.4, (i - 1.5) * 1.2, 2.02);
+                    serverGroup.add(led);
+                }
+            }
+            mainGroup.add(serverGroup);
+
+            // Rotating Rings
+            const ringGeo = new THREE.TorusGeometry(5, 0.05, 16, 100);
+            const ringMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6, wireframe: true });
+            const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+            ringMesh.rotation.x = Math.PI / 3;
+            mainGroup.add(ringMesh);
+
+            const ringGeo2 = new THREE.TorusGeometry(6.5, 0.03, 16, 100);
+            const ringMat2 = new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true });
+            const ringMesh2 = new THREE.Mesh(ringGeo2, ringMat2);
+            ringMesh2.rotation.x = -Math.PI / 4;
+            mainGroup.add(ringMesh2);
+
+            // Particles
+            const particleGeo = new THREE.BufferGeometry();
+            const count = 120;
+            const positions = new Float32Array(count * 3);
+            for (let i = 0; i < count * 3; i++) positions[i] = (Math.random() - 0.5) * 20;
+            particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const particleMat = new THREE.PointsMaterial({ color: 0x22d3ee, size: 0.15, transparent: true, opacity: 0.8 });
+            const particles = new THREE.Points(particleGeo, particleMat);
+            mainGroup.add(particles);
+
+            // Lights
+            scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+            const pointLight = new THREE.PointLight(0x06b6d4, 2, 50);
+            pointLight.position.set(10, 10, 10);
+            scene.add(pointLight);
+
+            let mouseX = 0, mouseY = 0;
+            window.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
+            });
+
+            let clock = new THREE.Clock();
+            function animate() {
+                requestAnimationFrame(animate);
+                const elapsedTime = clock.getElapsedTime();
+                mainGroup.rotation.y = elapsedTime * 0.3;
+                mainGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.3;
+                ringMesh.rotation.z = elapsedTime * 0.2;
+                ringMesh2.rotation.z = -elapsedTime * 0.15;
+                mainGroup.rotation.x += (mouseY - mainGroup.rotation.x) * 0.05;
+                mainGroup.rotation.z += (mouseX - mainGroup.rotation.z) * 0.05;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        })();
+
+        // 3D Overview Scene
+        (function initOverviewThree() {
+            const container = document.querySelector('.overview-visual');
+            const canvas = document.getElementById('overview-canvas');
+            if (!container || !canvas) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 10;
+
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            const globeGeo = new THREE.IcosahedronGeometry(3.5, 2);
+            const globeMat = new THREE.MeshStandardMaterial({ color: 0x2563eb, wireframe: true, transparent: true, opacity: 0.5 });
+            const globe = new THREE.Mesh(globeGeo, globeMat);
+            scene.add(globe);
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+
+            function animate() {
+                requestAnimationFrame(animate);
+                globe.rotation.y += 0.005;
+                globe.rotation.x += 0.002;
+                renderer.render(scene, camera);
+            }
+            animate();
+        })();
+
+        // CTA Particle Field
+        (function initCtaThree() {
+            const canvas = document.getElementById('cta-canvas');
+            if (!canvas) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            camera.position.z = 12;
+
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+            const geo = new THREE.BufferGeometry();
+            const count = 200;
+            const pos = new Float32Array(count * 3);
+            for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 30;
+            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            const mat = new THREE.PointsMaterial({ color: 0x06b6d4, size: 0.12, transparent: true, opacity: 0.6 });
+            const points = new THREE.Points(geo, mat);
+            scene.add(points);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                points.rotation.y += 0.001;
+                renderer.render(scene, camera);
+            }
+            animate();
+        })();
+    </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

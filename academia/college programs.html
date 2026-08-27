@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOXIT Academia — College Partnerships</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-dark: #030712;
+            --bg-card: rgba(15, 23, 42, 0.65);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --border-glow: rgba(56, 189, 248, 0.25);
+            --border-glow-hover: rgba(168, 85, 247, 0.6);
+            --primary-cyan: #38bdf8;
+            --primary-blue: #3b82f6;
+            --primary-purple: #a855f7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient Glows */
+        .ambient-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Typography Styles */
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #a855f7 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Buttons & Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: var(--primary-cyan);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--primary-cyan);
+            box-shadow: 0 0 8px var(--primary-cyan);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(168, 85, 247, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Layout Structure */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Card Component Styling */
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            padding: 32px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.01) !important;
+            border-color: var(--border-glow-hover);
+            box-shadow: 0 12px 40px rgba(168, 85, 247, 0.15);
+            background: var(--bg-card-hover);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 60px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .hero-visual {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        #hero-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* SECTION 1: WHY PARTNER */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .why-card {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-cyan);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover .card-icon {
+            transform: rotate(5deg) scale(1.1);
+            background: rgba(168, 85, 247, 0.2);
+            color: #fff;
+            border-color: var(--primary-purple);
+        }
+
+        .why-card h3 {
+            font-size: 1.25rem;
+        }
+
+        .why-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* SECTION 2: PARTNERSHIP MODELS */
+        .models-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .model-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 320px;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0.4) 100%);
+        }
+
+        .model-visual-preview {
+            height: 120px;
+            width: 100%;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .model-cta {
+            margin-top: 24px;
+            color: var(--primary-cyan);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: gap 0.3s ease;
+        }
+
+        .glass-card:hover .model-cta {
+            gap: 14px;
+            color: var(--primary-purple);
+        }
+
+        /* SECTION 3: WHAT STUDENTS GAIN */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .gain-card {
+            position: relative;
+        }
+
+        .gain-num {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.08);
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .glass-card:hover .gain-num {
+            color: rgba(56, 189, 248, 0.25);
+        }
+
+        /* SECTION 4: COLLEGE BENEFITS */
+        .split-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .benefit-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--primary-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        /* SECTION 5: PARTNERSHIP JOURNEY TIMELINE */
+        .timeline-wrapper {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
+            transform: translateY(-50%);
+            z-index: 0;
+            box-shadow: 0 0 12px var(--primary-cyan);
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-step {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-step:hover {
+            border-color: var(--primary-purple);
+            transform: translateY(-5px) !important;
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+        }
+
+        .step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 12px auto;
+            font-size: 0.9rem;
+        }
+
+        /* SECTION 6: ECOSYSTEM */
+        .ecosystem-container {
+            height: 450px;
+            width: 100%;
+            position: relative;
+            border-radius: 24px;
+            background: radial-gradient(circle at center, rgba(30, 41, 59, 0.5) 0%, rgba(3, 7, 18, 0.9) 100%);
+            border: 1px solid var(--border-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #ecosystem-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* SECTION 7: PARTNERSHIP OUTCOMES */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .metric-indicator {
+            height: 8px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 20px 0 12px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .metric-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.1, 0.5, 0.1, 1);
+        }
+
+        /* FIXED PARTNER CONTACT SECTION */
+        .partner-contact-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 48px;
+            backdrop-filter: blur(12px);
+        }
+
+        .partner-contact {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 52px;
+            align-items: start;
+            text-align: left;
+        }
+
+        .partner-contact-info h2 {
+            margin-bottom: 18px;
+            font-size: 2.5rem;
+        }
+
+        .partner-contact-info > p {
+            margin-bottom: 32px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .partner-details {
+            display: grid;
+            gap: 20px;
+            justify-items: start;
+        }
+
+        .partner-detail {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: var(--text-main);
+            font-size: 1.05rem;
+        }
+
+        .partner-detail-icon {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border-radius: 10px;
+            color: var(--primary-cyan);
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            font-weight: 700;
+        }
+
+        .partner-form-card {
+            padding: 36px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .partner-form-card h3 {
+            margin-bottom: 24px;
+            font-size: 1.55rem;
+        }
+
+        .partner-form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .partner-form label {
+            display: block;
+            text-align: left;
+        }
+
+        .partner-form input,
+        .partner-form select,
+        .partner-form textarea {
+            width: 100%;
+            padding: 14px 16px;
+            color: var(--text-main);
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            background: rgba(3, 7, 18, 0.6);
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .partner-form input::placeholder,
+        .partner-form textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .partner-form input:focus,
+        .partner-form select:focus,
+        .partner-form textarea:focus {
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+        }
+
+        .partner-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .partner-form button {
+            padding: 14px 28px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border: 0;
+            border-radius: 10px;
+            font-family: var(--font-main);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .partner-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(168, 85, 247, 0.6);
+        }
+
+        .partner-form-status {
+            color: var(--primary-cyan);
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1024px) {
+            .hero-content h1 { font-size: 2.8rem; }
+            .grid-4, .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .timeline-grid { grid-template-columns: 1fr; gap: 20px; }
+            .timeline-line { display: none; }
+            .split-section { grid-template-columns: 1fr; }
+            .partner-contact { grid-template-columns: 1fr; gap: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .btn-group { justify-content: center; }
+            .grid-4, .grid-3, .models-grid, .metrics-grid, .benefits-list { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2.2rem; }
+            section { padding: 60px 0; }
+            .partner-contact-wrapper { padding: 24px; }
+        }
+
+        /* ENTRANCE & SCROLL ANIMATION STYLES */
+        .anim-element {
+            opacity: 0;
+            transform: translateX(80px);
+            transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1), 
+                        transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+        }
+
+        .anim-element.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+        .delay-6 { transition-delay: 0.6s; }
+
+        .card-anim {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1), 
+                        transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+        }
+
+        .card-anim.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .card-delay-1 { transition-delay: 0.00s; }
+        .card-delay-2 { transition-delay: 0.15s; }
+        .card-delay-3 { transition-delay: 0.30s; }
+        .card-delay-4 { transition-delay: 0.45s; }
+        .card-delay-5 { transition-delay: 0.60s; }
+        .card-delay-6 { transition-delay: 0.75s; }
+
+        .reveal-section {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1), 
+                        transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-section.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow" style="top: -100px; left: -100px; width: 500px; height: 500px; background: rgba(56, 189, 248, 0.15);"></div>
+    <div class="ambient-glow" style="top: 40%; right: -100px; width: 600px; height: 600px; background: rgba(168, 85, 247, 0.12);"></div>
+
+    <section class="hero reveal-section">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="badge anim-element delay-5">
+                        <span class="badge-dot"></span>
+                        SOXIT ACADEMIA • COLLEGE PARTNERSHIPS
+                    </div>
+                    <h1 class="anim-element delay-1">Empowering Colleges.<br><span class="gradient-text">Building Industry-Ready Talent.</span></h1>
+                    <p class="anim-element delay-2">Partner with SOXIT Academia to create practical learning experiences, strengthen student skills, and connect academic learning with industry requirements.</p>
+                    <div class="btn-group anim-element delay-3">
+                        <a href="#partner" class="btn btn-primary">Partner With Us →</a>
+                        <a href="#models" class="btn btn-secondary">Explore Partnership →</a>
+                    </div>
+                </div>
+                <div class="hero-visual glass-card anim-element delay-4">
+                    <div id="hero-canvas"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal-section">
+        <div class="container">
+            <div class="section-header anim-element delay-6">
+                <h2>Why Partner With <span class="gradient-text">SOXIT Academia?</span></h2>
+                <p>Create a stronger bridge between academic learning and real-world technology skills.</p>
+            </div>
+            <div class="grid-4">
+                <div class="glass-card why-card card-anim card-delay-1">
+                    <div class="card-icon anim-element delay-6">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    </div>
+                    <h3>Industry-Ready Learning</h3>
+                    <p>Help students develop practical technical skills aligned with modern industry expectations.</p>
+                </div>
+                <div class="glass-card why-card card-anim card-delay-2">
+                    <div class="card-icon anim-element delay-6">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                    </div>
+                    <h3>Student Skill Development</h3>
+                    <p>Provide structured learning experiences that help students build confidence and practical capabilities.</p>
+                </div>
+                <div class="glass-card why-card card-anim card-delay-3">
+                    <div class="card-icon anim-element delay-6">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                    </div>
+                    <h3>Projects & Experience</h3>
+                    <p>Give students opportunities to work on practical projects and gain valuable experience.</p>
+                </div>
+                <div class="glass-card why-card card-anim card-delay-4">
+                    <div class="card-icon anim-element delay-6">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4m-4.93-4.93l-2.83 2.83m-4.24 4.24l-2.83 2.83m0-9.9l2.83 2.83m4.24 4.24l2.83 2.83"/></svg>
+                    </div>
+                    <h3>Industry Connection</h3>
+                    <p>Create meaningful connections between students, colleges, technology, and industry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="models" class="reveal-section">
+        <div class="container">
+            <div class="section-header anim-element delay-6">
+                <h2>Choose the Right <span class="gradient-text">Partnership Model</span></h2>
+                <p>Build a partnership that matches your institution's goals.</p>
+            </div>
+            <div class="models-grid">
+                <div class="glass-card model-card card-anim card-delay-1">
+                    <div>
+                        <div class="model-visual-preview anim-element delay-6">
+                            <svg width="48" height="48" fill="none" stroke="var(--primary-cyan)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M12 6l-2 4h4l-2 4"/></svg>
+                        </div>
+                        <h3>Academic Skill Programs</h3>
+                        <p style="color: var(--text-muted); margin-top: 8px;">Structured technology learning programs designed to complement academic education.</p>
+                    </div>
+                    <a href="#partner" class="model-cta">Explore Program →</a>
+                </div>
+                <div class="glass-card model-card card-anim card-delay-2">
+                    <div>
+                        <div class="model-visual-preview anim-element delay-6">
+                            <svg width="48" height="48" fill="none" stroke="var(--primary-purple)" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+                        </div>
+                        <h3>Internship & Training</h3>
+                        <p style="color: var(--text-muted); margin-top: 8px;">Enable students to gain practical experience through internships and real-world projects.</p>
+                    </div>
+                    <a href="#partner" class="model-cta">Explore Opportunities →</a>
+                </div>
+                <div class="glass-card model-card card-anim card-delay-3">
+                    <div>
+                        <div class="model-visual-preview anim-element delay-6">
+                            <svg width="48" height="48" fill="none" stroke="var(--primary-cyan)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <h3>Faculty Development</h3>
+                        <p style="color: var(--text-muted); margin-top: 8px;">Support faculty with modern technology knowledge, tools, and industry-oriented learning.</p>
+                    </div>
+                    <a href="#partner" class="model-cta">Explore Faculty Programs →</a>
+                </div>
+                <div class="glass-card model-card card-anim card-delay-4">
+                    <div>
+                        <div class="model-visual-preview anim-element delay-6">
+                            <svg width="48" height="48" fill="none" stroke="var(--primary-blue)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1zM2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10M12 3v18"/></svg>
+                        </div>
+                        <h3>Industry Connect</h3>
+                        <p style="color: var(--text-muted); margin-top: 8px;">Build stronger connections between your institution, students, and industry opportunities.</p>
+                    </div>
+                    <a href="#partner" class="model-cta">Build Industry Connect →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal-section">
+        <div class="container">
+            <div class="section-header anim-element delay-6">
+                <h2>Better Learning. Better Experience. <br><span class="gradient-text">Better Opportunities.</span></h2>
+            </div>
+            <div class="grid-3">
+                <div class="glass-card gain-card card-anim card-delay-1">
+                    <span class="gain-num">01</span>
+                    <div class="card-icon anim-element delay-6" style="margin-bottom: 16px;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+                    <h3>Practical Skills</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Students learn by applying concepts through practical activities.</p>
+                </div>
+                <div class="glass-card gain-card card-anim card-delay-2">
+                    <span class="gain-num">02</span>
+                    <div class="card-icon anim-element delay-6" style="margin-bottom: 16px;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                    <h3>Industry Exposure</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Students understand how technology is applied in real-world environments.</p>
+                </div>
+                <div class="glass-card gain-card card-anim card-delay-3">
+                    <span class="gain-num">03</span>
+                    <div class="card-icon anim-element delay-6" style="margin-bottom: 16px;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+                    <h3>Project Experience</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Students build projects that demonstrate their capabilities.</p>
+                </div>
+                <div class="glass-card gain-card card-anim card-delay-4">
+                    <span class="gain-num">04</span>
+                    <div class="card-icon anim-element delay-6" style="margin-bottom: 16px;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+                    <h3>Professional Skills</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Students strengthen communication, teamwork, problem-solving, and presentation skills.</p>
+                </div>
+                <div class="glass-card gain-card card-anim card-delay-5">
+                    <span class="gain-num">05</span>
+                    <div class="card-icon anim-element delay-6" style="margin-bottom: 16px;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                    <h3>Career Readiness</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Students become more prepared for internships and future career opportunities.</p>
+                </div>
+                <div class="glass-card gain-card card-anim card-delay-6">
+                    <span class="gain-num">06</span>
+                    <div class="card-icon anim-element delay-6" style="margin-bottom: 16px;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 11-.57-8.38l5.67-5.67"/></svg></div>
+                    <h3>Continuous Learning</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Students develop a mindset of continuous learning and improvement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal-section">
+        <div class="container">
+            <div class="split-section">
+                <div class="glass-card anim-element delay-4" style="height: 400px; display: flex; align-items: center; justify-content: center; position: relative;">
+                    <svg width="80%" height="80%" viewBox="0 0 200 200" class="anim-element delay-8">
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:var(--primary-cyan);stop-opacity:0.8" />
+                                <stop offset="100%" style="stop-color:var(--primary-purple);stop-opacity:0.8" />
+                            </linearGradient>
+                        </defs>
+                        <polygon points="100,20 170,60 170,140 100,180 30,140 30,60" fill="none" stroke="url(#grad1)" stroke-width="3"/>
+                        <polygon points="100,40 150,70 150,130 100,160 50,130 50,70" fill="rgba(56, 189, 248, 0.05)" stroke="var(--primary-blue)" stroke-width="1.5"/>
+                        <circle cx="100" cy="100" r="25" fill="none" stroke="var(--primary-cyan)" stroke-width="2"/>
+                        <path d="M100 20 L100 180 M30 60 L170 140 M30 140 L170 60" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="anim-element delay-6">Benefits for <span class="gradient-text">Your Institution</span></h2>
+                    <div class="benefits-list">
+                        <div class="benefit-item anim-element delay-6"><div class="benefit-check">✓</div> Structured technology programs</div>
+                        <div class="benefit-item anim-element delay-6"><div class="benefit-check">✓</div> Practical student learning</div>
+                        <div class="benefit-item anim-element delay-6"><div class="benefit-check">✓</div> Project-based development</div>
+                        <div class="benefit-item anim-element delay-6"><div class="benefit-check">✓</div> Industry-oriented curriculum support</div>
+                        <div class="benefit-item anim-element delay-6"><div class="benefit-check">✓</div> Student skill development</div>
+                        <div class="benefit-item anim-element delay-6"><div class="benefit-check">✓</div> Faculty development opportunities</div>
+                        <div class="benefit-item anim-element delay-6"><div class="benefit-check">✓</div> Technology ecosystem exposure</div>
+                        <div class="benefit-item anim-element delay-6"><div class="benefit-check">✓</div> Stronger student career preparation</div>
+                    </div>
+                    <a href="#partner" class="btn btn-primary anim-element delay-3" style="margin-top: 10px;">Discuss Partnership →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal-section">
+        <div class="container">
+            <div class="section-header anim-element delay-6">
+                <h2>How the <span class="gradient-text">Partnership Works</span></h2>
+            </div>
+            <div class="timeline-wrapper">
+                <div class="timeline-line"></div>
+                <div class="timeline-grid">
+                    <div class="timeline-step card-anim card-delay-1">
+                        <div class="step-num">01</div>
+                        <h4>Connect</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Understand the institution's goals and requirements.</p>
+                    </div>
+                    <div class="timeline-step card-anim card-delay-2">
+                        <div class="step-num">02</div>
+                        <h4>Plan</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Design a suitable partnership model.</p>
+                    </div>
+                    <div class="timeline-step card-anim card-delay-3">
+                        <div class="step-num">03</div>
+                        <h4>Launch</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Introduce the learning program to students.</p>
+                    </div>
+                    <div class="timeline-step card-anim card-delay-4">
+                        <div class="step-num">04</div>
+                        <h4>Build</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Students learn, practice, and work on projects.</p>
+                    </div>
+                    <div class="timeline-step card-anim card-delay-5">
+                        <div class="step-num">05</div>
+                        <h4>Grow</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Track progress and continue developing the partnership.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal-section">
+        <div class="container">
+            <div class="section-header anim-element delay-6">
+                <h2>Connecting Education <span class="gradient-text">With Industry</span></h2>
+            </div>
+            <div class="ecosystem-container anim-element delay-4">
+                <canvas id="ecosystem-canvas"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal-section">
+        <div class="container">
+            <div class="section-header anim-element delay-6">
+                <h2>Measure <span class="gradient-text">the Impact</span></h2>
+            </div>
+            <div class="metrics-grid">
+                <div class="glass-card metric-card card-anim card-delay-1">
+                    <h4>Student Skill Growth</h4>
+                    <div class="metric-indicator"><div class="metric-progress" style="width: 85%;"></div></div>
+                    <span style="font-size: 0.85rem; color: var(--primary-cyan);">High Progression Rate</span>
+                </div>
+                <div class="glass-card metric-card card-anim card-delay-2">
+                    <h4>Projects Completed</h4>
+                    <div class="metric-indicator"><div class="metric-progress" style="width: 92%;"></div></div>
+                    <span style="font-size: 0.85rem; color: var(--primary-purple);">Active Execution</span>
+                </div>
+                <div class="glass-card metric-card card-anim card-delay-3">
+                    <h4>Learning Programs</h4>
+                    <div class="metric-indicator"><div class="metric-progress" style="width: 78%;"></div></div>
+                    <span style="font-size: 0.85rem; color: var(--primary-cyan);">Structured Curriculum</span>
+                </div>
+                <div class="glass-card metric-card card-anim card-delay-4">
+                    <h4>Industry Engagement</h4>
+                    <div class="metric-indicator"><div class="metric-progress" style="width: 88%;"></div></div>
+                    <span style="font-size: 0.85rem; color: var(--primary-purple);">Active Network</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="partner" class="reveal-section">
+        <div class="container">
+            <div class="partner-contact-wrapper">
+                <div class="partner-contact" aria-labelledby="partner-contact-title">
+                    <div class="partner-contact-info anim-element delay-2">
+                        <h2 id="partner-contact-title">Get in <span class="gradient-text">Touch</span></h2>
+                        <p>Whether you are looking for strategic advisory, workforce solutions, or creative infrastructure, our team is ready to help.</p>
+                        <div class="partner-details">
+                            <div class="partner-detail anim-element delay-6">
+                                <span class="partner-detail-icon">@</span>
+                                <span>info@soxit.com</span>
+                            </div>
+                            <div class="partner-detail anim-element delay-6">
+                                <span class="partner-detail-icon">&#9742;</span>
+                                <span>+1 (555) 123-4567</span>
+                            </div>
+                            <div class="partner-detail anim-element delay-6">
+                                <span class="partner-detail-icon">&#9678;</span>
+                                <span>Global HQ, Tech Park, Metropolis</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="partner-form-card card-anim card-delay-3">
+                        <form class="partner-form" id="partner-form">
+                            <label><input name="name" type="text" autocomplete="name" placeholder="Name" aria-label="Name" required></label>
+                            <label><input name="email" type="email" autocomplete="email" placeholder="Email" aria-label="Email" required></label>
+                            <label><textarea name="message" placeholder="Message" aria-label="Message" required minlength="10" maxlength="2000"></textarea></label>
+                            <button type="submit">Send Message</button>
+                            <p class="partner-form-status" id="partner-form-status" role="status" aria-live="polite"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('partner-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('partner-form-status').textContent = 'Thank you. Our partnerships team will contact you soon.';
+            this.reset();
+        });
+    </script>
+
+    <script>
+        // Hero Three.js Canvas
+        const initHeroScene = () => {
+            const container = document.getElementById('hero-canvas');
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+
+            // Create Ecosystem Central Sphere
+            const geometry = new THREE.IcosahedronGeometry(2, 2);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x38bdf8, 
+                wireframe: true,
+                transparent: true,
+                opacity: 0.6
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+
+            // Orbiting Nodes
+            const nodesGroup = new THREE.Group();
+            const nodeGeo = new THREE.SphereGeometry(0.2, 16, 16);
+            const nodeMat = new THREE.MeshBasicMaterial({ color: 0xa855f7 });
+
+            for(let i = 0; i < 6; i++) {
+                const node = new THREE.Mesh(nodeGeo, nodeMat);
+                const angle = (i / 6) * Math.PI * 2;
+                node.position.x = Math.cos(angle) * 3.5;
+                node.position.z = Math.sin(angle) * 3.5;
+                nodesGroup.add(node);
+            }
+            scene.add(nodesGroup);
+
+            camera.position.z = 6;
+
+            // Mouse Interactive Parallax
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
+            });
+
+            const animate = () => {
+                requestAnimationFrame(animate);
+                sphere.rotation.x += 0.003;
+                sphere.rotation.y += 0.005;
+                nodesGroup.rotation.y -= 0.008;
+
+                camera.position.x += (mouseX - camera.position.x) * 0.05;
+                camera.position.y += (-mouseY - camera.position.y) * 0.05;
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        };
+
+        // Ecosystem 2D Dynamic Canvas
+        const initEcosystemCanvas = () => {
+            const canvas = document.getElementById('ecosystem-canvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const resize = () => {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            };
+            resize();
+
+            const nodes = [
+                { label: 'INDUSTRY', x: 0.5, y: 0.2, color: '#38bdf8' },
+                { label: 'SOXIT ACADEMIA', x: 0.5, y: 0.5, color: '#a855f7' },
+                { label: 'STUDENTS', x: 0.3, y: 0.8, color: '#3b82f6' },
+                { label: 'FACULTY', x: 0.7, y: 0.8, color: '#38bdf8' }
+            ];
+
+            let offset = 0;
+
+            const draw = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                offset += 0.5;
+
+                const cx = canvas.width;
+                const cy = canvas.height;
+
+                // Draw connection paths
+                const connections = [
+                    [0, 1], [1, 2], [1, 3], [2, 3]
+                ];
+
+                connections.forEach(([from, to]) => {
+                    const startX = nodes[from].x * cx;
+                    const startY = nodes[from].y * cy;
+                    const endX = nodes[to].x * cx;
+                    const endY = nodes[to].y * cy;
+
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(endX, endY);
+                    ctx.strokeStyle = 'rgba(56, 189, 248, 0.2)';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    // Animated Glowing Dots
+                    ctx.beginPath();
+                    ctx.arc(startX + (endX - startX) * ((offset % 100) / 100), 
+                            startY + (endY - startY) * ((offset % 100) / 100), 4, 0, Math.PI * 2);
+                    ctx.fillStyle = '#a855f7';
+                    ctx.fill();
+                });
+
+                // Render Nodes
+                nodes.forEach(node => {
+                    const nx = node.x * cx;
+                    const ny = node.y * cy;
+
+                    ctx.beginPath();
+                    ctx.arc(nx, ny, 30, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+                    ctx.fill();
+                    ctx.strokeStyle = node.color;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '12px "Space Grotesk", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(node.label, nx, ny + 4);
+                });
+
+                requestAnimationFrame(draw);
+            };
+
+            draw();
+            window.addEventListener('resize', resize);
+        };
+
+        // Scroll Observer for Right → Left Animations
+        const initScrollAnimations = () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50px 0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+
+                        // Animate inner elements if applicable
+                        const innerElements = entry.target.querySelectorAll('.anim-element, .card-anim');
+                        innerElements.forEach(el => el.classList.add('animated'));
+
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all reveal elements and sections
+            document.querySelectorAll('.reveal-section, .anim-element, .card-anim').forEach(el => {
+                observer.observe(el);
+            });
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initHeroScene();
+            initEcosystemCanvas();
+            initScrollAnimations();
+        });
+    </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

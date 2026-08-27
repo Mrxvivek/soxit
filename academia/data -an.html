@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Analyst Program | SOXIT Academia</title>
+  <style>
+    /* ==========================================================================
+       1. VARIABLES & RESET
+       ========================================================================== */
+    :root {
+      --bg-dark: #070913;
+      --bg-card: rgba(15, 23, 42, 0.65);
+      --bg-card-hover: rgba(30, 41, 59, 0.8);
+      --border-color: rgba(56, 189, 248, 0.15);
+      --border-glow: rgba(56, 189, 248, 0.4);
+      
+      --primary-blue: #2563eb;
+      --electric-blue: #3b82f6;
+      --cyan: #06b6d4;
+      --purple: #8b5cf6;
+      --white: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--white);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Standard Utilities */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-padding {
+      padding: 5rem 0;
+    }
+
+    .text-center { text-align: center; }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, var(--cyan) 50%, var(--electric-blue) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    /* Glassmorphism Card Style */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.75rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.25);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-blue), var(--cyan));
+      color: var(--white);
+      border: none;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 25px rgba(6, 182, 212, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--white);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    /* Icons */
+    .svg-icon {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: var(--cyan);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* Dynamic Canvas Background */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       2. HERO SECTION
+       ========================================================================== */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 0 3rem;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      line-height: 1.1;
+      font-weight: 800;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 540px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* 3D Visual Stage (Right Side) */
+    .visual-stage {
+      position: relative;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 420px;
+    }
+
+    .flow-pipeline {
+      position: absolute;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      z-index: 2;
+    }
+
+    .pipeline-step {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--cyan);
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+    }
+
+    .hero-3d-card {
+      width: 280px;
+      height: 320px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border-glow);
+      border-radius: 1.25rem;
+      transform: rotateY(-15deg) rotateX(10deg);
+      transition: transform 0.5s ease;
+      box-shadow: -20px 20px 50px rgba(0,0,0,0.5), inset 0 0 15px rgba(6, 182, 212, 0.2);
+      display: flex;
+      flex-direction: column;
+      padding: 1.25rem;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .hero-3d-card:hover {
+      transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+    }
+
+    .floating-element {
+      position: absolute;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-glow);
+      padding: 0.6rem 0.9rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .fl-1 { top: -10px; right: 20px; animation-delay: 0s; }
+    .fl-2 { bottom: 20px; right: -20px; animation-delay: 1.3s; }
+    .fl-3 { bottom: -15px; left: 40px; animation-delay: 2.6s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Mock Dashboard Component inside Hero Card */
+    .mock-chart-bar {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.4rem;
+      height: 80px;
+      margin-top: auto;
+    }
+    .bar {
+      flex: 1;
+      background: linear-gradient(to top, var(--primary-blue), var(--cyan));
+      border-radius: 3px 3px 0 0;
+      animation: grow 2s ease-in-out infinite alternate;
+    }
+    @keyframes grow {
+      0% { height: 30%; }
+      100% { height: 90%; }
+    }
+
+    /* ==========================================================================
+       3. PROGRAM INFORMATION BAR
+       ========================================================================== */
+    .info-bar {
+      margin-top: -2rem;
+      position: relative;
+      z-index: 10;
+    }
+    .info-bar-inner {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.5rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-glow);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      backdrop-filter: blur(16px);
+    }
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .info-item-text span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .info-item-text strong {
+      font-size: 0.95rem;
+      color: var(--white);
+    }
+
+    /* ==========================================================================
+       4. PROGRAM OVERVIEW
+       ========================================================================== */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .overview-3d-box {
+      height: 300px;
+      border-radius: 1rem;
+      border: 1px solid var(--border-color);
+      background: linear-gradient(135deg, rgba(13, 27, 42, 0.6), rgba(27, 38, 59, 0.6));
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      gap: 1rem;
+    }
+    .line-chart-svg {
+      width: 100%;
+      height: 120px;
+    }
+    .line-path {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: dash 5s linear infinite;
+    }
+    @keyframes dash {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* ==========================================================================
+       5. WHAT YOU WILL LEARN
+       ========================================================================== */
+    .learn-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .learn-card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(56, 189, 248, 0.1);
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+    .learn-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    .learn-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       6. ROADMAP SECTION
+       ========================================================================== */
+    .roadmap-wrapper {
+      position: relative;
+      padding: 2rem 0;
+    }
+    .roadmap-horizontal {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+    .roadmap-line-bg {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 1;
+    }
+    .roadmap-line-progress {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--cyan), var(--purple));
+      z-index: 1;
+      box-shadow: 0 0 10px var(--cyan);
+    }
+    .roadmap-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 110px;
+    }
+    .node-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      border: 2px solid var(--cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+      color: var(--white);
+    }
+    .node-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       7. TOOLS & TECHNOLOGIES
+       ========================================================================== */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .tool-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ==========================================================================
+       8. WORKFLOW SECTION
+       ========================================================================== */
+    .workflow-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      position: relative;
+    }
+    .workflow-step {
+      flex: 1;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      cursor: pointer;
+      position: relative;
+    }
+    .workflow-step:hover {
+      transform: translateY(-5px) scale(1.03);
+    }
+    .workflow-step h4 {
+      color: var(--cyan);
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .workflow-step p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       9. PRACTICAL PROJECT & OUTCOMES
+       ========================================================================== */
+    .project-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.6));
+      border: 1px solid var(--border-glow);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .kpi-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .kpi-card {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .outcome-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    /* ==========================================================================
+       10. STRUCTURE, VALUES & AUDIENCE
+       ========================================================================== */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* Checklist */
+    .checklist {
+      list-style: none;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--bg-card);
+      padding: 1rem 1.25rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+    }
+
+    /* ==========================================================================
+       11. FAQ ACCORDION
+       ========================================================================== */
+    .faq-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .faq-item {
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+    .faq-question {
+      width: 100%;
+      padding: 1.25rem;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 1.25rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding: 0 1.25rem 1.25rem 1.25rem;
+    }
+    .faq-icon {
+      transition: transform 0.3s ease;
+    }
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    /* ==========================================================================
+       12. FINAL CTA & FOOTER
+       ========================================================================== */
+    .cta-box {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(139, 92, 246, 0.2));
+      border: 1px solid var(--border-glow);
+      border-radius: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-box h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .cta-box p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 2rem 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       13. RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .learn-grid { grid-template-columns: repeat(2, 1fr); }
+      .tools-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .info-bar-inner { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-title { font-size: 2.5rem; }
+      .hero-subtitle { margin: 0 auto 2rem auto; }
+      .hero-buttons { justify-content: center; }
+      .overview-grid { grid-template-columns: 1fr; }
+      .project-grid { grid-template-columns: 1fr; }
+      
+      .info-bar-inner { grid-template-columns: 1fr 1fr; }
+      
+      /* Mobile Timeline */
+      .roadmap-horizontal {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding-left: 2rem;
+      }
+      .roadmap-line-bg {
+        width: 3px;
+        height: 100%;
+        left: 35px;
+        top: 0;
+      }
+      .roadmap-line-progress {
+        width: 3px;
+        height: 100%;
+        left: 35px;
+        top: 0;
+      }
+      .roadmap-node {
+        flex-direction: row;
+        width: 100%;
+        gap: 1rem;
+        text-align: left;
+      }
+      .node-number { margin-bottom: 0; }
+
+      .workflow-container {
+        flex-direction: column;
+      }
+      
+      .learn-grid, .tools-grid, .grid-4, .outcomes-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .info-bar-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-label">SOXIT ACADEMIA • ROLE-BASED PROGRAM</div>
+        <h1 class="hero-title">Data Analyst</h1>
+        <p class="hero-subtitle">Develop practical data analysis skills to collect, organize, analyze, visualize, and communicate meaningful insights from data.</p>
+        <div class="hero-buttons">
+          <a href="#enroll" class="btn btn-primary">Enroll Now →</a>
+          <a href="#overview" class="btn btn-secondary">Explore Program →</a>
+        </div>
+      </div>
+      
+      <div class="visual-stage">
+        <div class="flow-pipeline">
+          <div class="pipeline-step">DATA</div>
+          <div class="pipeline-step">ANALYSIS</div>
+          <div class="pipeline-step">VISUALIZATION</div>
+          <div class="pipeline-step">INSIGHTS</div>
+          <div class="pipeline-step">DECISION</div>
+        </div>
+
+        <div class="hero-3d-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.75rem; color:var(--text-muted);">LIVE ANALYTICS</span>
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div style="font-weight:700; font-size:1.1rem; color:var(--cyan);">Dataset Matrix</div>
+          
+          <div class="mock-chart-bar">
+            <div class="bar" style="animation-delay: 0.1s;"></div>
+            <div class="bar" style="animation-delay: 0.4s;"></div>
+            <div class="bar" style="animation-delay: 0.2s;"></div>
+            <div class="bar" style="animation-delay: 0.6s;"></div>
+            <div class="bar" style="animation-delay: 0.3s;"></div>
+          </div>
+        </div>
+
+        <div class="floating-element fl-1">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>SQL & Python</span>
+        </div>
+        <div class="floating-element fl-2">
+          <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+          <span>BI Dashboards</span>
+        </div>
+        <div class="floating-element fl-3">
+          <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <span>Spreadsheets</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container info-bar">
+    <div class="info-bar-inner">
+      <div class="info-item">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <div class="info-item-text">
+          <span>Program</span>
+          <strong>Data Analyst</strong>
+        </div>
+      </div>
+      <div class="info-item">
+        <svg class="svg-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <div class="info-item-text">
+          <span>Level</span>
+          <strong>Intermediate</strong>
+        </div>
+      </div>
+      <div class="info-item">
+        <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="info-item-text">
+          <span>Duration</span>
+          <strong>40+ Hours</strong>
+        </div>
+      </div>
+      <div class="info-item">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        <div class="info-item-text">
+          <span>Mode</span>
+          <strong>Practical Learning</strong>
+        </div>
+      </div>
+      <div class="info-item">
+        <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <div class="info-item-text">
+          <span>Format</span>
+          <strong>Learn + Practice + Projects</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="overview" class="section-padding">
+    <div class="container">
+      <h2 class="section-title">Program Overview</h2>
+      <div class="overview-grid">
+        <div class="glass-card">
+          <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--cyan);">Build a Strong Data Foundation</h3>
+          <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.8;">
+            Build a practical foundation in data analysis by learning how to work with data, identify patterns, create visualizations, and communicate insights clearly.
+          </p>
+        </div>
+        
+        <div class="overview-3d-box">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.85rem; font-weight:700;">REAL-TIME INSIGHTS METRIC</span>
+            <span style="font-size:0.75rem; color:var(--cyan);">+24.8% YoY</span>
+          </div>
+          <svg class="line-chart-svg" viewBox="0 0 300 100">
+            <path class="line-path" d="M 0 80 Q 50 20, 100 60 T 200 30 T 300 10" fill="none" stroke="var(--cyan)" stroke-width="3"/>
+            <path d="M 0 80 Q 50 20, 100 60 T 200 30 T 300 10 L 300 100 L 0 100 Z" fill="rgba(6, 182, 212, 0.1)"/>
+          </svg>
+          <div style="display:flex; gap:1rem; margin-top:auto;">
+            <div style="flex:1; background:rgba(255,255,255,0.05); padding:0.5rem; border-radius:0.4rem; text-align:center;">
+              <div style="font-size:0.7rem; color:var(--text-muted);">Queries</div>
+              <div style="font-size:0.9rem; font-weight:700;">12,450</div>
+            </div>
+            <div style="flex:1; background:rgba(255,255,255,0.05); padding:0.5rem; border-radius:0.4rem; text-align:center;">
+              <div style="font-size:0.7rem; color:var(--text-muted);">Accuracy</div>
+              <div style="font-size:0.9rem; font-weight:700; color:var(--cyan);">99.2%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">What You Will Learn</h2>
+      <div class="learn-grid">
+        
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3>1. Data Analysis Fundamentals</h3>
+          <p>Understand the basic concepts, processes, and workflow involved in analyzing data.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+          </div>
+          <h3>2. Excel & Spreadsheets</h3>
+          <p>Work with spreadsheets to organize, clean, calculate, and analyze data.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          </div>
+          <h3>3. SQL</h3>
+          <p>Learn how to retrieve, filter, organize, and analyze data from databases.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3>4. Python for Data Analysis</h3>
+          <p>Explore Python-based approaches for working with and analyzing data.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          </div>
+          <h3>5. Data Cleaning</h3>
+          <p>Understand how to prepare datasets and handle common data-quality issues.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+          </div>
+          <h3>6. Data Visualization</h3>
+          <p>Turn data into clear visual representations that help communicate insights.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          </div>
+          <h3>7. Dashboard Development</h3>
+          <p>Create dashboards that present useful information in an accessible format.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15 14a5 5 0 1 0-6 0c.34.42.69 1 1 2h4c.31-1 .66-1.58 1-2z"/></svg>
+          </div>
+          <h3>8. Business Insights</h3>
+          <p>Interpret analytical results and communicate meaningful insights.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="section-title">Data Analyst Learning Roadmap</h2>
+      <div class="roadmap-wrapper">
+        <div class="roadmap-line-bg"></div>
+        <div class="roadmap-line-progress"></div>
+        <div class="roadmap-horizontal">
+          
+          <div class="roadmap-node">
+            <div class="node-number">01</div>
+            <div class="node-title">Data Fundamentals</div>
+          </div>
+          
+          <div class="roadmap-node">
+            <div class="node-number">02</div>
+            <div class="node-title">Excel & Spreadsheets</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">03</div>
+            <div class="node-title">SQL</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">04</div>
+            <div class="node-title">Python</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">05</div>
+            <div class="node-title">Data Cleaning</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">06</div>
+            <div class="node-title">Data Visualization</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">07</div>
+            <div class="node-title">Dashboards</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">08</div>
+            <div class="node-title">Data Insights</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">Tools & Technologies</h2>
+      <div class="tools-grid">
+        
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+            <h3 style="font-size: 1.1rem;">Excel</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore essential tools for organizing and calculating structured data efficiently.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            <h3 style="font-size: 1.1rem;">SQL</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore database querying techniques to filter and extract key information.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <h3 style="font-size: 1.1rem;">Python</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore programmatic methods for data handling, analysis, and automation.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+            <h3 style="font-size: 1.1rem;">Power BI</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore visual dashboard platforms to assemble business intelligence reports.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+            <h3 style="font-size: 1.1rem;">Data Visualization</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore plotting concepts to turn dense numbers into intuitive graphical reports.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            <h3 style="font-size: 1.1rem;">Databases</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore fundamental storage architectures and data management principles.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="section-title">From Data to Insight</h2>
+      <div class="workflow-container">
+        
+        <div class="glass-card workflow-step">
+          <h4>COLLECT</h4>
+          <p>Gathering raw datasets from varied sources.</p>
+        </div>
+
+        <div class="glass-card workflow-step">
+          <h4>CLEAN</h4>
+          <p>Filtering noise, missing values, and formatting errors.</p>
+        </div>
+
+        <div class="glass-card workflow-step">
+          <h4>ANALYZE</h4>
+          <p>Applying metrics to discover core distributions.</p>
+        </div>
+
+        <div class="glass-card workflow-step">
+          <h4>VISUALIZE</h4>
+          <p>Designing interactive charts and trend lines.</p>
+        </div>
+
+        <div class="glass-card workflow-step">
+          <h4>INTERPRET</h4>
+          <p>Translating statistical findings into contextual meaning.</p>
+        </div>
+
+        <div class="glass-card workflow-step">
+          <h4>COMMUNICATE</h4>
+          <p>Presenting findings clearly to key stakeholders.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">Build a Practical Data Analytics Project</h2>
+      <div class="project-card">
+        <div class="project-grid">
+          <div>
+            <span style="color:var(--cyan); font-weight:700; font-size:0.85rem; letter-spacing:1px;">CAPSTONE PROJECT</span>
+            <h3 style="font-size: 1.8rem; margin: 0.5rem 0 1rem 0;">Data Analysis & Visualization Project</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+              Apply data analysis concepts by working with a dataset, preparing the data, analyzing patterns, creating visualizations, and communicating insights.
+            </p>
+            <a href="#enroll" class="btn btn-primary">Explore Project →</a>
+          </div>
+
+          <div style="background: rgba(7, 9, 19, 0.6); border-radius: 1rem; padding: 1.25rem; border: 1px solid var(--border-color);">
+            <div class="kpi-row">
+              <div class="kpi-card">
+                <div style="font-size:0.7rem; color:var(--text-muted);">Total Volume</div>
+                <div style="font-size:1.1rem; font-weight:700;">84,210</div>
+              </div>
+              <div class="kpi-card">
+                <div style="font-size:0.7rem; color:var(--text-muted);">Conversion</div>
+                <div style="font-size:1.1rem; font-weight:700; color:var(--cyan);">4.8%</div>
+              </div>
+            </div>
+            
+            <div style="display:flex; gap:1rem; align-items:flex-end; height:100px; padding-top:1rem;">
+              <div style="flex:1; background:var(--primary-blue); height:60%; border-radius:3px;"></div>
+              <div style="flex:1; background:var(--cyan); height:85%; border-radius:3px;"></div>
+              <div style="flex:1; background:var(--purple); height:45%; border-radius:3px;"></div>
+              <div style="flex:1; background:var(--electric-blue); height:95%; border-radius:3px;"></div>
+            </div>
+            
+            <div style="margin-top: 1rem; font-size: 0.75rem; background: rgba(56, 189, 248, 0.1); padding: 0.5rem; border-radius: 0.4rem; color: var(--cyan);">
+              Insight Panel: Key operational efficiency improved by 18% following structural optimization.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="section-title">Learning Outcomes</h2>
+      <div class="outcomes-grid">
+        
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Understand fundamental data analysis concepts</div>
+        </div>
+
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Work with structured datasets</div>
+        </div>
+
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Perform basic data cleaning and preparation</div>
+        </div>
+
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Query data using SQL concepts</div>
+        </div>
+
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Create meaningful data visualizations</div>
+        </div>
+
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Communicate analytical insights</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">Program Structure & Values</h2>
+      <div class="grid-4">
+        
+        <div class="glass-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cyan);">Practical Learning</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Apply analytical concepts through hands-on activities.</p>
+        </div>
+
+        <div class="glass-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cyan);">Data-Driven Thinking</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Develop a structured approach to understanding information through data.</p>
+        </div>
+
+        <div class="glass-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cyan);">Problem Solving</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Use analytical thinking to explore questions and identify meaningful patterns.</p>
+        </div>
+
+        <div class="glass-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cyan);">Continuous Growth</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Build a foundation for continued learning in data and analytics.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="section-title">Who Is This Program For?</h2>
+      <div class="grid-4">
+        
+        <div class="glass-card">
+          <div style="margin-bottom: 0.75rem;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Students</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Learners interested in data and analytics.</p>
+        </div>
+
+        <div class="glass-card">
+          <div style="margin-bottom: 0.75rem;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Aspiring Data Analysts</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Learners who want to explore data analysis as a career direction.</p>
+        </div>
+
+        <div class="glass-card">
+          <div style="margin-bottom: 0.75rem;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Business & Tech Learners</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Learners interested in using data to understand problems and support decisions.</p>
+        </div>
+
+        <div class="glass-card">
+          <div style="margin-bottom: 0.75rem;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Data Enthusiasts</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Learners who want to develop practical data analysis skills.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">Enrollment & Requirements</h2>
+      <ul class="checklist">
+        
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Basic computer knowledge</span>
+        </li>
+
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Interest in data and technology</span>
+        </li>
+
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Willingness to learn</span>
+        </li>
+
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Basic logical thinking</span>
+        </li>
+
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Commitment to practical learning</span>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-wrapper">
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What is the Data Analyst program?</span>
+            <svg class="svg-icon faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            It is a structured learning experience focused on understanding data, analyzing information, creating visualizations, and communicating insights.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What will I learn?</span>
+            <svg class="svg-icon faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            Learners explore data analysis fundamentals, spreadsheets, SQL, Python, data cleaning, visualization, dashboards, and analytical thinking.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Does the program include practical projects?</span>
+            <svg class="svg-icon faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            Include practical activities and a project component where learners can apply data analysis concepts.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do I need previous data analysis experience?</span>
+            <svg class="svg-icon faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            Keep the learning progression clear and communicate recommended prerequisites without inventing unsupported requirements.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Which tools can be explored?</span>
+            <svg class="svg-icon faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            Tools may include spreadsheets, SQL, Python, visualization platforms, and database technologies depending on the curriculum.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© SOXIT Academia. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Interactive FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const faqItem = button.parentElement;
+        const isActive = faqItem.classList.contains('active');
+        
+        // Close all items
+        document.querySelectorAll('.faq-item').forEach(item => {
+          item.classList.remove('active');
+        });
+
+        // Open clicked item if it wasn't already active
+        if (!isActive) {
+          faqItem.classList.add('active');
+        }
+      });
+    });
+
+    // 2. Animated Background Data Particles Canvas
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let particles = [];
+    const particleCount = 40;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.size = Math.random() * 2 + 1;
+        this.alpha = Math.random() * 0.5 + 0.1;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(6, 182, 212, ${this.alpha})`;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#06b6d4';
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      // Draw faint connections between nearby points
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 * (1 - dist / 120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOXIT Academia</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #07111f;
+            background-image: radial-gradient(circle at 12% 18%, rgba(6, 182, 212, 0.14), transparent 28%), radial-gradient(circle at 88% 52%, rgba(16, 185, 129, 0.1), transparent 30%), linear-gradient(145deg, #07111f 0%, #0b1220 48%, #071b25 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+        }
+
+        /* Navigation Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            background-color: #0f172a;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #10b981;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        /* Right-aligned Header Actions Container */
+        .nav-right-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: auto;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            margin: 0;
+            text-decoration: none;
+            color: #cbd5e1;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: #10b981;
+        }
+
+        .explore-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .explore-menu summary {
+            cursor: pointer;
+            color: #cbd5e1;
+            font-weight: 500;
+            list-style: none;
+            white-space: nowrap;
+        }
+
+        .explore-menu summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .explore-menu summary:hover {
+            color: #10b981;
+        }
+
+        .explore-links {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            z-index: 5;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(250px, 1fr));
+            column-gap: 34px;
+            row-gap: 24px;
+            width: min(1000px, calc(100vw - 20px));
+            padding: 0 18px 24px;
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0 0 14px 14px;
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.16);
+            transform: translateX(-50%);
+        }
+
+        .explore-group {
+            display: grid;
+            gap: 8px;
+        }
+
+        .explore-group-title {
+            padding: 0 0 8px;
+            color: #172036;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .explore-links a {
+            margin: 0;
+            padding: 9px 14px;
+            color: #3c4b63;
+            white-space: nowrap;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .explore-links a:hover {
+            color: #172036;
+            background-color: #f1f5f9;
+        }
+
+        /* Search Box with SVG Icon */
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-results {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            z-index: 20;
+            display: none;
+            width: min(320px, 80vw);
+            max-height: 360px;
+            overflow-y: auto;
+            padding: 6px;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        .search-results.is-visible {
+            display: grid;
+            gap: 2px;
+        }
+
+        .search-result {
+            display: block;
+            padding: 10px 12px;
+            color: #e2e8f0;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .search-result:hover,
+        .search-result:focus {
+            color: #ffffff;
+            background-color: #1e293b;
+            outline: none;
+        }
+
+        .search-result-title {
+            display: block;
+            font-weight: 600;
+        }
+
+        .search-result-type {
+            display: block;
+            margin-top: 2px;
+            color: #94a3b8;
+            font-size: 0.78rem;
+        }
+
+        .search-empty {
+            padding: 10px 12px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            width: 16px;
+            height: 16px;
+            color: #94a3b8;
+            pointer-events: none;
+        }
+
+        .search-bar {
+            padding: 9px 14px 9px 36px;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            color: #ffffff;
+            outline: none;
+            font-size: 0.9rem;
+            transition: border-color 0.2s ease;
+            width: 180px;
+        }
+
+        .search-bar:focus {
+            border-color: #10b981;
+        }
+
+        .search-bar::placeholder {
+            color: #94a3b8;
+        }
+
+        /* Action Buttons */
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-hire {
+            background-color: #10b981;
+            color: #ffffff;
+            padding: 9px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-hire:hover {
+            background-color: #059669;
+            transform: translateY(-1px);
+        }
+
+        .btn-enroll {
+            background-color: transparent;
+            color: #38bdf8;
+            padding: 8px 18px;
+            border: 1.5px solid #38bdf8;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-enroll:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: #7dd3fc;
+            border-color: #7dd3fc;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 5%;
+            text-align: center;
+            background: transparent;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero::after {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: rgba(3, 10, 24, 0.42);
+            content: '';
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span {
+            color: #10b981;
+            display: block;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: #94a3b8;
+            margin: 1.5rem auto 2.5rem;
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            margin-bottom: 1.25rem;
+            font-size: clamp(2.6rem, 6vw, 5.2rem);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-content h1 span {
+            color: #10b981;
+        }
+
+        .hero-content p {
+            max-width: 980px;
+            color: #cbd5e1;
+            font-size: clamp(1rem, 2vw, 1.35rem);
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2.25rem;
+        }
+
+        .hero-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 230px;
+            padding: 0.95rem 1.75rem;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .hero-action:hover {
+            transform: translateY(-2px);
+        }
+
+        .hero-action-primary {
+            background: #10b981;
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+        }
+
+        .hero-action-primary:hover {
+            background: #059669;
+        }
+
+        .hero-action-secondary {
+            background: rgba(15, 23, 42, 0.45);
+            border-color: rgba(148, 163, 184, 0.5);
+        }
+
+        .hero-action-secondary:hover {
+            background: rgba(30, 41, 59, 0.75);
+            border-color: #cbd5e1;
+        }
+
+        /* Role Ticker Banner */
+        .role-ticker {
+            overflow: hidden;
+            padding: 1rem 0;
+            background-color: #10b981;
+            color: #062c22;
+            white-space: nowrap;
+        }
+
+        .role-ticker-track {
+            display: inline-flex;
+            gap: 2.5rem;
+            min-width: max-content;
+            padding-left: 2.5rem;
+            animation: role-ticker-scroll 28s linear infinite;
+        }
+
+        .role-ticker span {
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .role-ticker span::after {
+            content: '◆';
+            margin-left: 2.5rem;
+            color: #f59e0b;
+        }
+
+        .impact-section {
+            padding: 34px 5%;
+            background: linear-gradient(110deg, #effcf8, #f8fafc 52%, #eef8ff);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .impact-card {
+            min-height: 174px;
+            padding: 28px 30px;
+            background: #ffffff;
+            border: 1px solid #dce5ee;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(26, 53, 80, .06);
+        }
+
+        .impact-icon {
+            width: 38px;
+            height: 38px;
+            margin-bottom: 18px;
+            color: #079b6f;
+        }
+
+        .impact-card h2 {
+            color: #07152d;
+            font-size: 2.15rem;
+            line-height: 1;
+        }
+
+        .impact-card p {
+            margin-top: 8px;
+            color: #48617d;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .impact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 520px) {
+            .impact-grid { grid-template-columns: 1fr; }
+        }
+
+        @keyframes role-ticker-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* Centered Carousel Section */
+        .carousel-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 70px 0;
+            background: #ffffff;
+            position: relative;
+        }
+
+        .carousel-viewport {
+            width: min(1320px, 88vw);
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-container-outer {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 22px;
+            box-shadow: 0 20px 40px rgba(11, 15, 25, 0.15);
+        }
+
+        .carousel-track {
+            display: flex;
+            width: 100%;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+
+        .landscape-card {
+            width: 100%;
+            aspect-ratio: 3 / 1;
+            min-height: 320px;
+            max-height: 430px;
+            border-radius: 22px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 0 4rem;
+        }
+
+        .theme-purple {
+            background: linear-gradient(115deg, #3a0ca3 0%, #1a0033 100%);
+            --accent-color: #c77dff;
+            --btn-bg: #7209b7;
+            --btn-hover: #560bad;
+        }
+
+        .theme-blue {
+            background: linear-gradient(115deg, #023e8a 0%, #001233 100%);
+            --accent-color: #38bdf8;
+            --btn-bg: #0077b6;
+            --btn-hover: #03045e;
+        }
+
+        .theme-green {
+            background: linear-gradient(115deg, #065f46 0%, #022c22 100%);
+            --accent-color: #34d399;
+            --btn-bg: #059669;
+            --btn-hover: #047857;
+        }
+
+        .theme-orange {
+            background: linear-gradient(115deg, #9a3412 0%, #290e05 100%);
+            --accent-color: #fb923c;
+            --btn-bg: #ea580c;
+            --btn-hover: #c2410c;
+        }
+
+        .card-grid-lines {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+        }
+
+        .card-shapes-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .diagonal-bar {
+            position: absolute;
+            height: 180%;
+            width: 70px;
+            background: rgba(255, 255, 255, 0.04);
+            transform: rotate(-35deg);
+            border-radius: 40px;
+            top: -40%;
+            animation: floatBar 8s ease-in-out infinite alternate;
+        }
+
+        .bar-1 { right: 15%; animation-delay: 0s; }
+        .bar-2 { right: 28%; animation-delay: 1.5s; width: 45px; }
+        .bar-3 { right: 40%; animation-delay: 3s; width: 90px; }
+
+        @keyframes floatBar {
+            0% { transform: rotate(-35deg) translateY(0); }
+            100% { transform: rotate(-35deg) translateY(-30px); }
+        }
+
+        .geo-triangle {
+            position: absolute;
+            right: 8%;
+            bottom: 15%;
+            width: 0;
+            height: 0;
+            border-left: 35px solid transparent;
+            border-right: 35px solid transparent;
+            border-bottom: 60px solid rgba(255, 255, 255, 0.06);
+            transform: rotate(15deg);
+        }
+
+        .geo-circle {
+            position: absolute;
+            right: 22%;
+            top: 15%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .card-body {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            color: #ffffff;
+        }
+
+        .tag-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .tag-label {
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        .tag-line {
+            height: 2px;
+            width: 40px;
+            background: var(--accent-color);
+            opacity: 0.6;
+        }
+
+        .carousel-section .card-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            line-height: 1.1;
+        }
+
+        .card-description {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.82);
+            margin-bottom: 1.8rem;
+            max-width: 540px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 26px;
+            background-color: var(--btn-bg);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.98rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background-color: var(--btn-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button span {
+            transition: transform 0.2s ease;
+        }
+
+        .cta-button:hover span {
+            transform: translateX(4px);
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #ffffff;
+            color: #0f172a;
+            border: none;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            transition: all 0.25s ease;
+        }
+
+        .carousel-arrow:hover {
+            background: #f8fafc;
+            transform: translateY(-50%) scale(1.08);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-arrow.prev-arrow { left: -68px; }
+        .carousel-arrow.next-arrow { right: -68px; }
+
+        .carousel-pagination {
+            position: absolute;
+            bottom: -38px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .carousel-pagination .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.35s ease;
+        }
+
+        .carousel-pagination .dot.active {
+            width: 32px;
+            border-radius: 20px;
+            background-color: #3a0ca3;
+        }
+
+        /* ==================================================
+           1. MOVING PARTNER / LEARNING STRIP
+        ================================================== */
+        .middle-scroll-bar {
+            width: 100%;
+            background: linear-gradient(90deg, #0b0813 0%, #150d2a 50%, #0b0813 100%);
+            border-top: 1px solid rgba(199, 125, 255, 0.25);
+            border-bottom: 1px solid rgba(199, 125, 255, 0.25);
+            padding: 1.25rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .middle-scroll-bar::before,
+        .middle-scroll-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .middle-scroll-bar::before {
+            left: 0;
+            background: linear-gradient(to right, #0b0813 0%, transparent 100%);
+        }
+
+        .middle-scroll-bar::after {
+            right: 0;
+            background: linear-gradient(to left, #0b0813 0%, transparent 100%);
+        }
+
+        .middle-scroll-track {
+            display: flex;
+            width: max-content;
+            gap: 2.5rem;
+            animation: middleScrollContinuous 25s linear infinite;
+        }
+
+        .middle-scroll-bar:hover .middle-scroll-track {
+            animation-play-state: paused;
+        }
+
+        .scroll-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 0.65rem 1.4rem;
+            border-radius: 50px;
+            color: #e0aaff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+
+        .scroll-item:hover {
+            background: rgba(199, 125, 255, 0.2);
+            border-color: rgba(199, 125, 255, 0.5);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .scroll-item .badge-icon {
+            color: #10b981;
+            font-size: 1.05rem;
+        }
+
+        @keyframes middleScrollContinuous {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ==================================================
+           2, 3 & 4. CHOOSE YOUR LEARNING PATH SECTION
+           NEW COURSE-STYLE CARDS DESIGN
+        ================================================== */
+        .learning-path-section {
+            padding: 70px 5% 90px;
+            background-color: #0b0f19;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .learning-path-header {
+            max-width: 900px;
+            margin: 0 auto 3.5rem auto;
+            text-align: center;
+        }
+
+        .learning-path-header h2 {
+            font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+            margin-top: 10px;
+        }
+
+        .learning-path-header p.subtitle-quote {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 600;
+            color: #94a3b8;
+            font-style: italic;
+            margin-top: 12px;
+        }
+
+        /* Cards Grid Wrapper */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 360px));
+            gap: 1.75rem;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        /* Universal Course Card Styling */
+        .course-card {
+            background: #121824;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .course-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        .course-card.card-role:hover {
+            box-shadow: 0 15px 35px -10px rgba(139, 92, 246, 0.25);
+        }
+        .course-card.card-internship:hover {
+            box-shadow: 0 15px 35px -10px rgba(59, 130, 246, 0.25);
+        }
+        .course-card.card-college:hover {
+            box-shadow: 0 15px 35px -10px rgba(6, 182, 212, 0.25);
+        }
+
+        /* Media/Visual Area */
+        .card-visual-wrapper {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #0d111a;
+            overflow: hidden;
+        }
+
+        .card-visual-svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Floating Badge */
+        .floating-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(18, 24, 36, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .floating-badge svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Card Body Content Area */
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .program-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .card-role .program-label { color: #8b5cf6; }
+        .card-internship .program-label { color: #3b82f6; }
+        .card-college .program-label { color: #06b6d4; }
+
+        .card-content-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.6rem;
+            color: #ffffff;
+        }
+
+        .card-content-description {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #9ca3af;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        /* Bottom Info Layout */
+        .card-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 1.25rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.2rem;
+        }
+
+        .info-value {
+            font-size: 0.925rem;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+
+        /* CTA Button */
+        .card-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            color: #f3f4f6;
+        }
+
+        .card-role .card-cta:hover {
+            background: #8b5cf6;
+            border-color: #8b5cf6;
+            color: #ffffff;
+        }
+
+        .card-internship .card-cta:hover {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: #ffffff;
+        }
+
+        .card-college .card-cta:hover {
+            background: #06b6d4;
+            border-color: #06b6d4;
+            color: #0d111a;
+        }
+
+        .faq-section {
+            padding: 64px 5% 84px;
+            text-align: center;
+            background-color: #f8fafc;
+        }
+
+        .faq-section h2 {
+            margin-bottom: 14px;
+            color: #0f172a;
+            font-size: 2.4rem;
+        }
+
+        .faq-section p {
+            margin-bottom: 28px;
+            color: #475569;
+            font-size: 1.15rem;
+        }
+
+        .faq-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 190px;
+            padding: 16px 30px;
+            background-color: #0284c7;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .faq-button:hover {
+            background-color: #0369a1;
+            transform: translateY(-1px);
+        }
+
+        .site-footer {
+            padding: 64px 5% 20px;
+            color: #cbd5e1;
+            background-color: #0f172a;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr 1fr 1fr;
+            gap: 48px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-brand h2 {
+            margin-bottom: 18px;
+            color: #ffffff;
+            font-size: 1.8rem;
+        }
+
+        .footer-brand p {
+            max-width: 290px;
+            line-height: 1.6;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 18px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        .footer-column a {
+            display: block;
+            width: fit-content;
+            margin-bottom: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+        }
+
+        .footer-column a:hover,
+        .footer-bottom a:hover {
+            color: #38bdf8;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 18px;
+            margin-top: 26px;
+        }
+
+        .footer-socials a {
+            margin: 0;
+            color: #cbd5e1;
+            font-size: 1.15rem;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 58px auto 0;
+            padding-top: 28px;
+            border-top: 1px solid #263449;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-bottom a {
+            color: #cbd5e1;
+            text-decoration: none;
+        }
+
+        @media (max-width: 800px) {
+            .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 520px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; margin-top: 36px; }
+            .footer-bottom-links { flex-wrap: wrap; gap: 14px 24px; }
+        }
+
+        /* ==================================================
+           NEW SECTION: EXPLORE THE PROGRAM (3-CARD GRID)
+        ================================================== */
+        .explore-program-section {
+            background-color: #f8fafc; /* Light modern background */
+            padding: 80px 5%;
+            color: #0f172a;
+        }
+
+        .explore-program-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3.5rem auto;
+        }
+
+        .explore-program-header h2 {
+            font-size: clamp(2rem, 3.5vw, 2.75rem);
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .explore-program-header p {
+            font-size: 1.125rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* 3-Card Responsive Grid */
+        .explore-program-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 28px;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        /* Card Structural Base */
+        .ep-card {
+            background: #ffffff;
+            border-radius: 18px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.35s ease;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+            text-decoration: none;
+        }
+
+        /* Visual Banner Container */
+        .ep-card-visual {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: #0284c7;
+        }
+
+        .ep-card-visual svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, filter 0.35s ease;
+        }
+
+        /* Card Text Content Area */
+        .ep-card-content {
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .ep-card-subtitle {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0284c7;
+            line-height: 1.35;
+            margin-bottom: 0.75rem;
+        }
+
+        .ep-card-desc {
+            font-size: 0.975rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 1.75rem;
+            flex-grow: 1;
+        }
+
+        /* Link/CTA Button Area */
+        .ep-card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #0284c7;
+            margin-top: auto;
+        }
+
+        .ep-card-cta .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        /* CARD ANIMATION & HOVER STATES */
+        .ep-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px -10px rgba(2, 132, 199, 0.15);
+            border-color: #cbd5e1;
+        }
+
+        .ep-card:hover .ep-card-visual svg {
+            transform: scale(1.06);
+            filter: brightness(1.08);
+        }
+
+        .ep-card:hover .ep-card-cta .arrow {
+            transform: translateX(6px);
+        }
+
+        /* 6. SCROLL REVEAL ANIMATIONS */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-element.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.15s; }
+        .delay-2 { transition-delay: 0.3s; }
+        .delay-3 { transition-delay: 0.45s; }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1100px) {
+            .nav-right-container {
+                gap: 12px;
+            }
+            nav {
+                gap: 12px;
+            }
+            .search-bar {
+                width: 140px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .carousel-arrow.prev-arrow { left: 10px; }
+            .carousel-arrow.next-arrow { right: 10px; }
+            .landscape-card { padding: 0 3rem; }
+            .cards-container {
+                grid-template-columns: repeat(2, minmax(0, 360px));
+            }
+            .explore-program-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 24px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-right-container {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .search-bar {
+                width: 180px;
+            }
+
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+
+            .carousel-section { padding: 50px 0; }
+            .landscape-card {
+                aspect-ratio: auto;
+                min-height: 380px;
+                padding: 2.5rem 1.8rem;
+            }
+
+            .carousel-section .card-title { font-size: 1.8rem; }
+            .card-description { font-size: 0.95rem; }
+            .carousel-arrow { width: 42px; height: 42px; font-size: 1.1rem; }
+
+            .learning-path-section {
+                padding: 45px 5% 60px;
+            }
+
+            .explore-program-section {
+                padding: 60px 5%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-right-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .cards-container {
+                grid-template-columns: minmax(0, 1fr);
+                max-width: 380px;
+            }
+
+            .explore-program-grid {
+                grid-template-columns: minmax(0, 1fr);
+                max-width: 420px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .explore-links {
+                grid-template-columns: minmax(0, 1fr);
+                width: min(360px, calc(100vw - 24px));
+                right: 0;
+                left: auto;
+                transform: none;
+            }
+
+            .carousel-viewport { width: 92vw; }
+            .carousel-arrow { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo">Soxit</div>
+        <div class="nav-right-container">
+            <nav>
+                <details class="explore-menu">
+                    <summary>Explore</summary>
+                    <div class="explore-links">
+                        <div class="explore-group">
+                            <span class="explore-group-title">Digital Engineering</span>
+                            <a href="Software Developer - Backend.html">Software Developer - Backend</a>
+                            <a href="full stack.html">Software Developer - Full Stack</a>
+                            <a href="cloud Infrasture.html">Cloud-Native Engineer</a>
+                        </div>
+                        <div class="explore-group">
+                            <span class="explore-group-title">Cyber &amp; Digital Trust</span>
+                            <a href="soc-an.html">SOC Analyst L1-L2</a>
+                            <a href="app.html">App Security Engineer</a>
+                            <a href="cloud secutiy.html">Cloud Security Engineer</a>
+                        </div>
+                        <div class="explore-group">
+                            <span class="explore-group-title">Data &amp; AI Enablement</span>
+                            <a href="data -an.html">Data Analyst</a>
+                            <a href="data -en.html">Data Engineer</a>
+                            <a href="AI.html">AI Workflow Engineer</a>
+                        </div>
+                        <div class="explore-group">
+                            <span class="explore-group-title">Platform &amp; Operations</span>
+                            <a href="devpo-e.html">DevOps/SRE</a>
+                            <a href="it-set.html">IT Service Management Analyst</a>
+                        </div>
+                        <div class="explore-group">
+                            <span class="explore-group-title">Digital Growth &amp; Media Tech</span>
+                            <a href="Ditial market.html">Digital Marketing Technologist</a>
+                            <a href="media.html">Media Production Technologist</a>
+                        </div>
+                    </div>
+                </details>
+                <a href="career in.html">Career Insights</a>
+                <a href="knowlege.html">Knowledge Hub</a>
+            </nav>
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="search" class="search-bar" placeholder="Search this site..." aria-label="Search this site" aria-controls="site-search-results" autocomplete="off">
+                <div class="search-results" id="site-search-results" role="listbox" aria-label="Search results"></div>
+            </div>
+            <div class="header-actions">
+                <a href="heri from us.html" class="btn-hire">Hire from us</a>
+                <a href="enroll now.html" class="btn-enroll">Enroll now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline aria-hidden="true">
+            <source src="BG.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>Build the Future<br><span>of Work, Ready.</span></h1>
+            <p>We <strong>validate talent</strong> through a practical, <strong>role-based learning model</strong> that turns potential into measurable <strong>workforce readiness</strong>. From assessment to internship to deployment, every step is designed for <strong>real-world impact</strong>.</p>
+            <div class="hero-actions">
+                <a href="rri.html" class="hero-action hero-action-primary">Check Your RRI Score <span aria-hidden="true">&rarr;</span></a>
+                <a href="partner-college.html" class="hero-action hero-action-secondary">Partner as College</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Role Ticker Banner -->
+    <div class="role-ticker" aria-label="Career pathways">
+        <div class="role-ticker-track">
+            <span>Cyber Security Analyst</span>
+            <span>Data Scientist</span>
+            <span>Business Intelligence Analyst</span>
+            <span>Digital Marketing Specialist</span>
+            <span>UX Designer</span>
+            <span>Machine Learning Engineer</span>
+            <span>Social Media Specialist</span>
+            <span>Computer Support Specialist</span>
+            <span>Cyber Security Analyst</span>
+            <span>Data Scientist</span>
+            <span>Business Intelligence Analyst</span>
+            <span>Digital Marketing Specialist</span>
+            <span>UX Designer</span>
+            <span>Machine Learning Engineer</span>
+            <span>Social Media Specialist</span>
+            <span>Computer Support Specialist</span>
+        </div>
+    </div>
+
+    <section class="impact-section" aria-label="SOXIT impact metrics">
+        <div class="impact-grid">
+            <article class="impact-card">
+                <svg class="impact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <h2>5,000+</h2>
+                <p>Role-Ready Graduates</p>
+            </article>
+            <article class="impact-card">
+                <svg class="impact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.1 7 22l5-3 5 3-1.5-8.9"/></svg>
+                <h2>50+</h2>
+                <p>College Partnerships</p>
+            </article>
+            <article class="impact-card">
+                <svg class="impact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+                <h2>200+</h2>
+                <p>Industry Projects</p>
+            </article>
+            <article class="impact-card">
+                <svg class="impact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                <h2>82/100</h2>
+                <p>Avg. Role Readiness Index</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- CENTERED LANDSCAPE CAROUSEL SECTION -->
+    <section class="carousel-section" id="explore-carousel">
+        <div class="carousel-viewport">
+            
+            <button class="carousel-arrow prev-arrow" id="carouselPrev" aria-label="Previous Slide">&larr;</button>
+            
+            <div class="carousel-container-outer">
+                <div class="carousel-track" id="carouselTrack2">
+                    
+                    <!-- SLIDE 1: LEARNING (PURPLE) -->
+                    <div class="carousel-slide" data-slide-index="0" data-color="#7209b7">
+                        <article class="landscape-card theme-purple">
+                            <div class="card-grid-lines"></div>
+                            <div class="card-shapes-container">
+                                <div class="diagonal-bar bar-1"></div>
+                                <div class="diagonal-bar bar-2"></div>
+                                <div class="diagonal-bar bar-3"></div>
+                                <div class="geo-triangle"></div>
+                                <div class="geo-circle"></div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tag-wrapper">
+                                    <span class="tag-label">⏱ LEARNING</span>
+                                    <div class="tag-line"></div>
+                                </div>
+                                <h2 class="card-title">Learning</h2>
+                                <p class="card-description">Build future-ready skills with practical learning, expert guidance, and industry-focused courses.</p>
+                                <a href="leraning.html" class="cta-button">Explore Learning <span>&rarr;</span></a>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- SLIDE 2: INTERNSHIP (BLUE) -->
+                    <div class="carousel-slide" data-slide-index="1" data-color="#0077b6">
+                        <article class="landscape-card theme-blue">
+                            <div class="card-grid-lines"></div>
+                            <div class="card-shapes-container">
+                                <div class="diagonal-bar bar-1"></div>
+                                <div class="diagonal-bar bar-2"></div>
+                                <div class="geo-triangle"></div>
+                                <div class="geo-circle"></div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tag-wrapper">
+                                    <span class="tag-label">💻 PRACTICAL EXPERIENCE</span>
+                                    <div class="tag-line"></div>
+                                </div>
+                                <h2 class="card-title">Internship </h2>
+                                <p class="card-description">Gain hands-on industry exposure with live projects and structured corporate internship programs.</p>
+                                <a href="internships.html" class="cta-button">Explore Internships <span>&rarr;</span></a>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- SLIDE 3: LMS (GREEN) -->
+                    <div class="carousel-slide" data-slide-index="2" data-color="#059669">
+                        <article class="landscape-card theme-green">
+                            <div class="card-grid-lines"></div>
+                            <div class="card-shapes-container">
+                                <div class="diagonal-bar bar-2"></div>
+                                <div class="diagonal-bar bar-3"></div>
+                                <div class="geo-circle"></div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tag-wrapper">
+                                    <span class="tag-label">📚 PLATFORM</span>
+                                    <div class="tag-line"></div>
+                                </div>
+                                <h2 class="card-title">LMS</h2>
+                                <p class="card-description">Seamlessly track your progress, access course material, and attempt quizzes on our unified portal.</p>
+                                <a href="LMS.html" class="cta-button">Access LMS <span>&rarr;</span></a>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- SLIDE 4: iSKILLS (ORANGE) -->
+                    <div class="carousel-slide" data-slide-index="3" data-color="#ea580c">
+                        <article class="landscape-card theme-orange">
+                            <div class="card-grid-lines"></div>
+                            <div class="card-shapes-container">
+                                <div class="diagonal-bar bar-1"></div>
+                                <div class="diagonal-bar bar-3"></div>
+                                <div class="geo-triangle"></div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tag-wrapper">
+                                    <span class="tag-label">🚀 ASSESSMENT</span>
+                                    <div class="tag-line"></div>
+                                </div>
+                                <h2 class="card-title">iSkills</h2>
+                                <p class="card-description">Evaluate and certify your technical competency with real-time skill mapping and benchmarks.</p>
+                                <a href="ISkiil.html" class="cta-button">Discover iSkills <span>&rarr;</span></a>
+                            </div>
+                        </article>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="carousel-arrow next-arrow" id="carouselNext" aria-label="Next Slide">&rarr;</button>
+
+            <div class="carousel-pagination" id="carouselDots2" aria-hidden="true">
+                <div class="dot active" data-index="0"></div>
+                <div class="dot" data-index="1"></div>
+                <div class="dot" data-index="2"></div>
+                <div class="dot" data-index="3"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 1. MOVING PARTNER / LEARNING STRIP -->
+    <div class="middle-scroll-bar" aria-label="Partner Companies and Technologies">
+        <div class="middle-scroll-track">
+            <!-- FIRST SET OF ITEMS -->
+            <a href="https://trailhead.salesforce.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Salesforce Trailhead</a>
+            <a href="https://aws.amazon.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Amazon Web Services</a>
+            <a href="https://cloud.google.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Google Cloud</a>
+            <a href="https://azure.microsoft.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Microsoft Azure</a>
+            <a href="https://www.ibm.com/watson" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> IBM Watson</a>
+            <a href="https://about.meta.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Meta Academy</a>
+            <a href="https://www.cisco.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Cisco Networking</a>
+
+            <!-- DUPLICATE SET FOR INFINITE CONTINUOUS LOOP -->
+            <a href="https://trailhead.salesforce.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Salesforce Trailhead</a>
+            <a href="https://aws.amazon.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Amazon Web Services</a>
+            <a href="https://cloud.google.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Google Cloud</a>
+            <a href="https://azure.microsoft.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Microsoft Azure</a>
+            <a href="https://www.ibm.com/watson" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> IBM Watson</a>
+            <a href="https://about.meta.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Meta Academy</a>
+            <a href="https://www.cisco.com" target="_blank" rel="noopener" class="scroll-item"><span class="badge-icon">✦</span> Cisco Networking</a>
+        </div>
+    </div>
+
+    <!-- CHOOSE YOUR LEARNING PATH SECTION (UPDATED COURSE-STYLE CARDS) -->
+    <section class="learning-path-section">
+        
+        <!-- CENTERED MAIN HEADING AND QUOTE SUBTITLE -->
+        <div class="learning-path-header reveal-element">
+            <h2>Choose Your Learning Path</h2>
+            <p class="subtitle-quote">"From Curiosity to Capability"</p>
+        </div>
+
+        <!-- 3 COURSE-STYLE CARDS GRID -->
+        <div class="cards-container">
+            
+            <!-- CARD 1 — ROLE-BASED PROGRAMS -->
+            <article class="course-card card-role reveal-element delay-1">
+                <div class="card-visual-wrapper">
+                    <svg class="card-visual-svg" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#1e1b4b" />
+                                <stop offset="100%" stop-color="#311042" />
+                            </linearGradient>
+                            <radialGradient id="purpleGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.4" />
+                                <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0" />
+                            </radialGradient>
+                        </defs>
+                        <rect width="400" height="220" fill="url(#purpleGrad)" />
+                        <circle cx="200" cy="110" r="120" fill="url(#purpleGlow)" />
+                        <path d="M100 150 L200 70 L300 150" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>
+                        <circle cx="200" cy="70" r="8" fill="#a78bfa" />
+                        <circle cx="100" cy="150" r="6" fill="#8b5cf6" />
+                        <circle cx="300" cy="150" r="6" fill="#8b5cf6" />
+                        <polygon points="200,45 220,80 180,80" fill="none" stroke="#c4b5fd" stroke-width="1.5" opacity="0.8"/>
+                    </svg>
+                    <div class="floating-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="program-label">✦ ROLE-BASED PROGRAM</span>
+                    <h3 class="card-content-title">Role-Based Programs</h3>
+                    <p class="card-content-description">Build industry-ready skills through structured learning paths designed for your target career role.</p>
+                    <a href="role based program.html" class="card-cta">Explore Roles →</a>
+                </div>
+            </article>
+
+            <!-- CARD 2 — INTERNSHIP & PROJECTS -->
+            <article class="course-card card-internship reveal-element delay-2">
+                <div class="card-visual-wrapper">
+                    <svg class="card-visual-svg" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#0f172a" />
+                                <stop offset="50%" stop-color="#1e1b4b" />
+                                <stop offset="100%" stop-color="#1e293b" />
+                            </linearGradient>
+                            <radialGradient id="blueGlow" cx="50%" cy="50%" r="55%">
+                                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.45" />
+                                <stop offset="70%" stop-color="#6366f1" stop-opacity="0.1" />
+                                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+                            </radialGradient>
+                        </defs>
+                        <rect width="400" height="220" fill="url(#blueGrad)" />
+                        <circle cx="200" cy="110" r="130" fill="url(#blueGlow)" />
+                        <rect x="120" y="55" width="160" height="110" rx="8" fill="#0f172a" stroke="#3b82f6" stroke-width="1.5" opacity="0.9"/>
+                        <path d="M135 75 H200 M135 90 H245 M135 105 H180 M135 120 H225 M135 135 H195" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                        <circle cx="250" cy="75" r="4" fill="#38bdf8" />
+                        <circle cx="235" cy="105" r="4" fill="#818cf8" />
+                        <path d="M90 110 L120 110 M280 110 L310 110" stroke="#3b82f6" stroke-width="2" stroke-dasharray="3 3"/>
+                        <circle cx="90" cy="110" r="5" fill="#60a5fa" />
+                        <circle cx="310" cy="110" r="5" fill="#60a5fa" />
+                    </svg>
+                    <div class="floating-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="program-label">✦ INTERNSHIP & projects </span>
+                    <h3 class="card-content-title">Internship & projects</h3>
+                    <p class="card-content-description">Gain real-world experience through practical internships and industry-focused projects.</p>
+                    <a href="internships.html" class="card-cta">Explore Projects →</a>
+                </div>
+            </article>
+
+            <!-- CARD 3 — FAQ -->
+            <article class="course-card card-college reveal-element delay-3">
+                <div class="card-visual-wrapper">
+                    <svg class="card-visual-svg" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#042f2e" />
+                                <stop offset="50%" stop-color="#0f172a" />
+                                <stop offset="100%" stop-color="#064e3b" />
+                            </linearGradient>
+                            <radialGradient id="cyanGlow" cx="50%" cy="50%" r="55%">
+                                <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.4" />
+                                <stop offset="70%" stop-color="#10b981" stop-opacity="0.15" />
+                                <stop offset="100%" stop-color="#06b6d4" stop-opacity="0" />
+                            </radialGradient>
+                        </defs>
+                        <rect width="400" height="220" fill="url(#cyanGrad)" />
+                        <circle cx="200" cy="110" r="130" fill="url(#cyanGlow)" />
+                        <polygon points="200,60 270,95 200,130 130,95" fill="none" stroke="#22d3ee" stroke-width="2"/>
+                        <path d="M130 95 V125 C130 140 200 160 200 160 C200 160 270 140 270 125 V95" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 2"/>
+                        <circle cx="200" cy="60" r="5" fill="#67e8f9" />
+                        <circle cx="270" cy="95" r="5" fill="#34d399" />
+                        <circle cx="130" cy="95" r="5" fill="#34d399" />
+                        <circle cx="200" cy="130" r="5" fill="#67e8f9" />
+                        <line x1="270" y1="95" x2="310" y2="75" stroke="#06b6d4" stroke-width="1.5"/>
+                        <circle cx="310" cy="75" r="4" fill="#a7f3d0"/>
+                    </svg>
+                    <div class="floating-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <span class="program-label">✦ COLLEGE PARTNERSHIPS</span>
+                    <h3 class="card-content-title">College Partnerships</h3>
+                    <p class="card-content-description">Connect colleges, students, and industry through structured technology learning programs.</p>
+                    <a href="college programs.html" class="card-cta">Explore Partnerships →</a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">Have questions?</h2>
+        <p>Find answers about programs, enrollment, learning paths, and support.</p>
+        <a href="questions.html" class="faq-button">View FAQs &rarr;</a>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>SOXIT</h2>
+                <p>Unified enterprise platform delivering consulting, academia, and digital transformation solutions across industries.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Solutions</h3>
+                <a href="role based program.html">Role-Based Programs</a>
+                <a href="internships.html">Internships &amp; Projects</a>
+                <a href="leraning.html">Learning</a>
+                <a href="ISkiil.html">iSkills</a>
+                <a href="LMS.html">LMS</a>
+            </div>
+            <div class="footer-column">
+                <h3>Industries</h3>
+                <a href="college programs.html">College Partnerships</a>
+                <a href="Business Intelligence.html">Business Intelligence</a>
+                <a href="cybersecurity.html">Cybersecurity</a>
+                <a href="data scientist.html">Data &amp; Analytics</a>
+                <a href="Ditial market.html">Digital Marketing</a>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <a href="career in.html">Career Insights</a>
+                <a href="knowlege.html">Knowledge Hub</a>
+                <a href="heri from us.html">Hire from us</a>
+                <a href="questions.html">Contact &amp; FAQ</a>
+                <div class="footer-socials" aria-label="Social links">
+                    <a href="#linkedin" aria-label="LinkedIn">in</a>
+                    <a href="#twitter" aria-label="Twitter">X</a>
+                    <a href="mailto:academia@soxit.in" aria-label="Email">&#9993;</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 SOXIT. All rights reserved.</span>
+            <div class="footer-bottom-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function(){
+            const searchInput = document.querySelector('.search-bar');
+            const results = document.getElementById('site-search-results');
+            if (!searchInput || !results) return;
+
+            const pages = [
+                ['Data Analyst', 'data-analyst.html', 'data analysis, analytics, spreadsheets'],
+                ['Project Manager', 'project manager.html', 'project planning, management, leadership'],
+                ['Cyber Security Analyst', 'soc-an.html', 'cybersecurity, security, protection'],
+                ['Data Scientist', 'data scientist.html', 'data science, statistics, machine learning'],
+                ['Business Intelligence Analyst', 'Business Intelligence.html', 'business intelligence, dashboards, reporting'],
+                ['Digital Marketing Specialist', 'Digital marketing.html', 'digital marketing, campaigns, marketing'],
+                ['UI / UX Designer', 'ui designer.html', 'ui design, ux design, user experience'],
+                ['Machine Learning Engineer', 'machine-learning-engineer.html', 'machine learning, artificial intelligence, ai'],
+                ['Social Media Specialist', 'social-media-specialist.html', 'social media, content, community'],
+                ['Computer Support Specialist', 'computer-support-specialist.html', 'computer support, technical support, troubleshooting'],
+                ['Career Insights', 'career in.html', 'careers, career insights, jobs'],
+                ['Knowledge Hub', 'knowlege.html', 'knowledge, resources, learning'],
+                ['College Programs', 'college programs.html', 'college, programs, education'],
+                ['Internships', 'internships.html', 'internship, projects, experience'],
+                ['Role-Based Programs', 'role based program.html', 'role based programs, training'],
+                ['Learning', 'leraning.html', 'learning, courses, lessons'],
+                ['iSkills', 'ISkiil.html', 'skills, assessments, practice'],
+                ['LMS', 'LMS.html', 'lms, learning management, dashboard'],
+                ['Questions', 'questions.html', 'questions, faq, help'],
+                ['Hire from us', 'heri from us.html', 'hire, employers, talent'],
+                ['Enroll Now', 'enroll now.html', 'enrollment, application, join program']
+            ];
+
+            function showResults(query) {
+                const normalizedQuery = query.trim().toLowerCase();
+                if (!normalizedQuery) {
+                    results.innerHTML = '';
+                    results.classList.remove('is-visible');
+                    return;
+                }
+
+                const matches = pages.filter((page) =>
+                    `${page[0]} ${page[2]}`.toLowerCase().includes(normalizedQuery)
+                );
+
+                results.innerHTML = matches.length
+                    ? matches.map((page, index) => `
+                        <a class="search-result" href="${page[1]}" role="option" tabindex="${index === 0 ? '0' : '-1'}">
+                            <span class="search-result-title">${page[0]}</span>
+                            <span class="search-result-type">Open page</span>
+                        </a>`).join('')
+                    : '<span class="search-empty">No matching pages found.</span>';
+                results.classList.add('is-visible');
+            }
+
+            searchInput.addEventListener('input', () => showResults(searchInput.value));
+            searchInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    const firstResult = results.querySelector('.search-result');
+                    if (firstResult) window.location.href = firstResult.href;
+                }
+                if (event.key === 'Escape') {
+                    results.classList.remove('is-visible');
+                    searchInput.blur();
+                }
+            });
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.search-wrapper')) results.classList.remove('is-visible');
+            });
+        })();
+    </script>
+
+    <!-- Carousel Controller Script -->
+    <script>
+        (function(){
+            const track = document.getElementById('carouselTrack2');
+            if (!track) return;
+
+            const dots = document.querySelectorAll('#carouselDots2 .dot');
+            const prevBtn = document.getElementById('carouselPrev');
+            const nextBtn = document.getElementById('carouselNext');
+            const viewport = document.querySelector('.carousel-viewport');
+            
+            let currentIndex = 0;
+            const totalSlides = dots.length;
+            let slideInterval;
+            const slideSpeed = 3500;
+
+            function goToSlide(index) {
+                if (index < 0) index = totalSlides - 1;
+                if (index >= totalSlides) index = 0;
+                
+                currentIndex = index;
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                const activeSlide = track.children[currentIndex];
+                const activeColor = activeSlide.getAttribute('data-color') || '#3a0ca3';
+
+                dots.forEach((dot, idx) => {
+                    if (idx === currentIndex) {
+                        dot.classList.add('active');
+                        dot.style.backgroundColor = activeColor;
+                    } else {
+                        dot.classList.remove('active');
+                        dot.style.backgroundColor = '#cbd5e1';
+                    }
+                });
+            }
+
+            function nextSlide() { goToSlide(currentIndex + 1); }
+            function prevSlide() { goToSlide(currentIndex - 1); }
+
+            function startAutoSlide() { stopAutoSlide(); slideInterval = setInterval(nextSlide, slideSpeed); }
+            function stopAutoSlide() { clearInterval(slideInterval); }
+
+            if (nextBtn) nextBtn.addEventListener('click', () => { stopAutoSlide(); nextSlide(); startAutoSlide(); });
+            if (prevBtn) prevBtn.addEventListener('click', () => { stopAutoSlide(); prevSlide(); startAutoSlide(); });
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    stopAutoSlide();
+                    const targetIndex = parseInt(e.target.getAttribute('data-index'));
+                    goToSlide(targetIndex);
+                    startAutoSlide();
+                });
+            });
+
+            if (viewport) {
+                viewport.addEventListener('mouseenter', stopAutoSlide);
+                viewport.addEventListener('mouseleave', startAutoSlide);
+
+                let startX = 0;
+                viewport.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; stopAutoSlide(); }, { passive: true });
+                viewport.addEventListener('touchend', (e) => {
+                    let endX = e.changedTouches[0].clientX;
+                    if (startX - endX > 40) nextSlide();
+                    else if (endX - startX > 40) prevSlide();
+                    startAutoSlide();
+                }, { passive: true });
+            }
+
+            goToSlide(0);
+            startAutoSlide();
+        })();
+    </script>
+
+    <!-- Scroll Reveal Observer Script -->
+    <script>
+        (function(){
+            const revealElements = document.querySelectorAll('.reveal-element');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            revealElements.forEach(el => observer.observe(el));
+        })();
+    </script>
+
+    <!-- Video Autoplay Controller -->
+    <script>
+        (function(){
+            const vid = document.querySelector('.hero-video');
+            if (!vid) return;
+
+            function tryPlay(){
+                vid.play().catch(() => {
+                    document.addEventListener('click', () => vid.play().catch(() => {}), { once: true });
+                });
+            }
+
+            document.addEventListener('visibilitychange', () => { if (!document.hidden) tryPlay(); });
+            window.addEventListener('focus', tryPlay);
+            vid.addEventListener('ended', () => { vid.currentTime = 0; vid.play().catch(() => {}); });
+
+            if (document.readyState === 'complete' || document.readyState === 'interactive') tryPlay();
+            else document.addEventListener('DOMContentLoaded', tryPlay);
+        })();
+    </script>
+
+<script src="../site-shell.js"></script>
+</body>
+</html>

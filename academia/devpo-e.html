@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Engineer | SOXIT Academia</title>
+  <style>
+    /* ==========================================================================
+       1. VARIABLES & RESET
+       ========================================================================== */
+    :root {
+      --bg-dark: #070913;
+      --bg-card: rgba(15, 23, 42, 0.65);
+      --bg-card-hover: rgba(30, 41, 59, 0.8);
+      --border-color: rgba(56, 189, 248, 0.15);
+      --border-glow: rgba(56, 189, 248, 0.4);
+      
+      --primary-blue: #2563eb;
+      --electric-blue: #3b82f6;
+      --cyan: #06b6d4;
+      --purple: #8b5cf6;
+      --white: #f8fafc;
+      --text-muted: #94a3b8;
+      
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--white);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Standard Utilities */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-padding {
+      padding: 5rem 0;
+    }
+
+    .text-center { text-align: center; }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, var(--cyan) 50%, var(--purple) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    /* Glassmorphism Card Style */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.75rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.25);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.75rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-blue), var(--purple));
+      color: var(--white);
+      border: none;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 25px rgba(6, 182, 212, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--white);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    /* Icons */
+    .svg-icon {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: var(--cyan);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* Dynamic Canvas Background */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       2. HERO SECTION
+       ========================================================================== */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 0 3rem;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      line-height: 1.1;
+      font-weight: 800;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* 3D Visual Stage (Right Side) */
+    .visual-stage {
+      position: relative;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 420px;
+    }
+
+    .flow-pipeline {
+      position: absolute;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      z-index: 2;
+    }
+
+    .pipeline-step {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--cyan);
+      padding: 0.25rem 0.6rem;
+      border-radius: 0.4rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+    }
+
+    .hero-3d-card {
+      width: 290px;
+      height: 330px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border-glow);
+      border-radius: 1.25rem;
+      transform: rotateY(-15deg) rotateX(10deg);
+      transition: transform 0.5s ease;
+      box-shadow: -20px 20px 50px rgba(0,0,0,0.5), inset 0 0 15px rgba(56, 189, 248, 0.2);
+      display: flex;
+      flex-direction: column;
+      padding: 1.25rem;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .hero-3d-card:hover {
+      transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+    }
+
+    .floating-element {
+      position: absolute;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-glow);
+      padding: 0.6rem 0.9rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .fl-1 { top: -10px; right: 10px; animation-delay: 0s; }
+    .fl-2 { bottom: 20px; right: -25px; animation-delay: 1.3s; }
+    .fl-3 { bottom: -15px; left: 30px; animation-delay: 2.6s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Cloud & Gear Animations */
+    .hero-code-box {
+      background: rgba(7, 9, 19, 0.8);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .stream-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+
+    .stream-line {
+      height: 6px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stream-particle {
+      position: absolute;
+      top: 0;
+      left: -20%;
+      width: 30%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent);
+      animation: moveStream 2s linear infinite;
+    }
+
+    @keyframes moveStream {
+      0% { left: -30%; }
+      100% { left: 100%; }
+    }
+
+    /* ==========================================================================
+       3. PROGRAM INFORMATION BAR
+       ========================================================================== */
+    .info-bar {
+      margin-top: -2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .info-bar-inner {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.5rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border-glow);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      backdrop-filter: blur(16px);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .info-item-text span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-item-text strong {
+      font-size: 0.95rem;
+      color: var(--white);
+    }
+
+    /* ==========================================================================
+       4. PROGRAM OVERVIEW
+       ========================================================================== */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .overview-3d-box {
+      height: 300px;
+      border-radius: 1rem;
+      border: 1px solid var(--border-color);
+      background: linear-gradient(135deg, rgba(13, 27, 42, 0.6), rgba(27, 38, 59, 0.6));
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      gap: 1rem;
+    }
+
+    .pipeline-svg {
+      width: 100%;
+      height: 130px;
+    }
+
+    .flow-line {
+      stroke-dasharray: 10;
+      animation: flowDash 2s linear infinite;
+    }
+
+    @keyframes flowDash {
+      to { stroke-dashoffset: -20; }
+    }
+
+    /* ==========================================================================
+       5. WHAT YOU WILL LEARN
+       ========================================================================== */
+    .learn-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .learn-card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(6, 182, 212, 0.1);
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .learn-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .learn-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       6. ROADMAP SECTION
+       ========================================================================== */
+    .roadmap-wrapper {
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .roadmap-horizontal {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .roadmap-line-bg {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 1;
+    }
+
+    .roadmap-line-progress {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--cyan), var(--purple));
+      z-index: 1;
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    .roadmap-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 110px;
+    }
+
+    .node-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      border: 2px solid var(--cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+      color: var(--white);
+    }
+
+    .node-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       7. DEVOPS PIPELINE
+       ========================================================================== */
+    .arch-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .arch-layer {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .arch-layer:hover {
+      border-color: var(--cyan);
+      transform: scale(1.02);
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+      background: rgba(30, 41, 59, 0.9);
+    }
+
+    .arch-layer-title {
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      font-size: 0.95rem;
+    }
+
+    .arch-layer-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       8. TOOLS & TECHNOLOGIES
+       ========================================================================== */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* ==========================================================================
+       9. PRACTICAL PROJECT & OUTCOMES
+       ========================================================================== */
+    .project-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.6));
+      border: 1px solid var(--border-glow);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    /* Simulated DevOps Dashboard Panel */
+    .dashboard-panel {
+      background: rgba(7, 9, 19, 0.75);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      border: 1px solid var(--border-color);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .dash-widget {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .dash-widget-title {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .dash-widget-val {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    .dash-widget-full {
+      grid-column: span 2;
+    }
+
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .outcome-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    /* ==========================================================================
+       10. STRUCTURE, VALUES & AUDIENCE
+       ========================================================================== */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* Checklist */
+    .checklist {
+      list-style: none;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--bg-card);
+      padding: 1rem 1.25rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--border-color);
+    }
+
+    /* ==========================================================================
+       11. FAQ ACCORDION
+       ========================================================================== */
+    .faq-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .faq-item {
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 1.25rem;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 1.25rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding: 0 1.25rem 1.25rem 1.25rem;
+    }
+
+    .faq-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    /* ==========================================================================
+       12. FINAL CTA & FOOTER
+       ========================================================================== */
+    .cta-box {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(6, 182, 212, 0.2));
+      border: 1px solid var(--border-glow);
+      border-radius: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta-box p {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 2rem 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       13. RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .learn-grid { grid-template-columns: repeat(2, 1fr); }
+      .tools-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .info-bar-inner { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.5rem; }
+      .hero-buttons { justify-content: center; }
+      .overview-grid { grid-template-columns: 1fr; }
+      .project-grid { grid-template-columns: 1fr; }
+      
+      .info-bar-inner { grid-template-columns: 1fr 1fr; }
+      
+      /* Mobile Timeline */
+      .roadmap-horizontal {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding-left: 2rem;
+      }
+
+      .roadmap-line-bg {
+        width: 3px;
+        height: 100%;
+        left: 35px;
+        top: 0;
+      }
+
+      .roadmap-line-progress {
+        width: 3px;
+        height: 100%;
+        left: 35px;
+        top: 0;
+      }
+
+      .roadmap-node {
+        flex-direction: row;
+        width: 100%;
+        gap: 1rem;
+        text-align: left;
+      }
+
+      .node-number { margin-bottom: 0; }
+
+      .arch-layer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      
+      .learn-grid, .tools-grid, .grid-4, .outcomes-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .info-bar-inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1 class="hero-title">DevOps Engineer</h1>
+        <p class="hero-subtitle">Build practical foundations in software delivery, automation, CI/CD, cloud infrastructure, containers, monitoring, and modern DevOps workflows.</p>
+        <div class="hero-buttons">
+          <a href="#enroll" class="btn btn-primary">Enroll Now →</a>
+          <a href="#overview" class="btn btn-secondary">Explore Program →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container info-bar">
+    <div class="info-bar-inner">
+      <div class="info-item">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        <div class="info-item-text">
+          <span>Program</span>
+          <strong>DevOps Engineer</strong>
+        </div>
+      </div>
+      <div class="info-item">
+        <svg class="svg-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <div class="info-item-text">
+          <span>Level</span>
+          <strong>Intermediate</strong>
+        </div>
+      </div>
+      <div class="info-item">
+        <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="info-item-text">
+          <span>Duration</span>
+          <strong>40+ Hours</strong>
+        </div>
+      </div>
+      <div class="info-item">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        <div class="info-item-text">
+          <span>Mode</span>
+          <strong>Practical Learning</strong>
+        </div>
+      </div>
+      <div class="info-item">
+        <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v16"/></svg>
+        <div class="info-item-text">
+          <span>Format</span>
+          <strong>Learning + Practice + Projects</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="overview" class="section-padding">
+    <div class="container">
+      <h2 class="section-title">Program Overview</h2>
+      <div class="overview-grid">
+        <div class="glass-card">
+          <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--cyan);">Continuous Delivery &amp; Operational Excellence</h3>
+          <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.8;">
+            Develop a practical understanding of modern DevOps workflows by exploring version control, automation, CI/CD, containers, cloud infrastructure, deployment, monitoring, and collaboration between development and operations.
+          </p>
+        </div>
+        
+        <div class="overview-3d-box">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.85rem; font-weight:700;">DEVOPS PIPELINE VISUAL</span>
+            <span style="font-size:0.75rem; color:var(--cyan);">Automated</span>
+          </div>
+          <svg class="pipeline-svg" viewBox="0 0 300 100">
+            <line x1="10" y1="50" x2="290" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="6" stroke-linecap="round"/>
+            <line class="flow-line" x1="10" y1="50" x2="290" y2="50" stroke="var(--cyan)" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="30" cy="50" r="10" fill="var(--bg-dark)" stroke="var(--cyan)" stroke-width="2"/>
+            <circle cx="150" cy="50" r="10" fill="var(--bg-dark)" stroke="var(--purple)" stroke-width="2"/>
+            <circle cx="270" cy="50" r="10" fill="var(--bg-dark)" stroke="var(--cyan)" stroke-width="2"/>
+          </svg>
+          <div style="display:flex; gap:1rem; margin-top:auto;">
+            <div style="flex:1; background:rgba(255,255,255,0.05); padding:0.5rem; border-radius:0.4rem; text-align:center;">
+              <div style="font-size:0.7rem; color:var(--text-muted);">Source Build</div>
+              <div style="font-size:0.9rem; font-weight:700;">Git / CI</div>
+            </div>
+            <div style="flex:1; background:rgba(255,255,255,0.05); padding:0.5rem; border-radius:0.4rem; text-align:center;">
+              <div style="font-size:0.7rem; color:var(--text-muted);">Deployment Status</div>
+              <div style="font-size:0.9rem; font-weight:700; color:var(--cyan);">Success</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">What You Will Learn</h2>
+      <div class="learn-grid">
+        
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <h3>1. DevOps Fundamentals</h3>
+          <p>Understand DevOps principles, culture, collaboration, automation, and modern software delivery workflows.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+          </div>
+          <h3>2. Version Control</h3>
+          <p>Understand how source code and development changes can be managed using version-control concepts.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          </div>
+          <h3>3. Linux &amp; Command Line</h3>
+          <p>Explore foundational command-line and system concepts useful for development and operations.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>4. CI/CD</h3>
+          <p>Learn the fundamentals of continuous integration and continuous delivery for automated software workflows.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v16"/></svg>
+          </div>
+          <h3>5. Containers</h3>
+          <p>Understand containerization concepts and how applications can be packaged for consistent environments.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          </div>
+          <h3>6. Cloud &amp; Infrastructure</h3>
+          <p>Explore foundational cloud infrastructure and deployment concepts.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3>7. Monitoring &amp; Logging</h3>
+          <p>Understand how application and infrastructure activity can be monitored and analyzed.</p>
+        </div>
+
+        <div class="glass-card learn-card">
+          <div class="learn-card-icon">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-3.05 11a22.35 22.35 0 0 1-3.95 2z"/></svg>
+          </div>
+          <h3>8. DevOps Project</h3>
+          <p>Apply DevOps concepts through a practical software delivery and deployment project.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="section-title">DevOps Learning Roadmap</h2>
+      <div class="roadmap-wrapper">
+        <div class="roadmap-line-bg"></div>
+        <div class="roadmap-line-progress"></div>
+        <div class="roadmap-horizontal">
+          
+          <div class="roadmap-node">
+            <div class="node-number">01</div>
+            <div class="node-title">DevOps Fundamentals</div>
+          </div>
+          
+          <div class="roadmap-node">
+            <div class="node-number">02</div>
+            <div class="node-title">Linux &amp; CLI</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">03</div>
+            <div class="node-title">Version Control</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">04</div>
+            <div class="node-title">CI/CD</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">05</div>
+            <div class="node-title">Containers</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">06</div>
+            <div class="node-title">Cloud &amp; Infrastructure</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">07</div>
+            <div class="node-title">Monitoring</div>
+          </div>
+
+          <div class="roadmap-node">
+            <div class="node-number">08</div>
+            <div class="node-title">DevOps Project</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">From Code to Deployment</h2>
+      <div class="arch-container">
+        
+        <div class="arch-layer">
+          <div class="arch-layer-title">CODE</div>
+          <div class="arch-layer-desc">Write software features, fixes, and configuration code locally.</div>
+        </div>
+
+        <div style="text-align:center; color:var(--text-muted); font-size:0.8rem;">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">VERSION CONTROL</div>
+          <div class="arch-layer-desc">Track changes, manage branches, and collaborate securely via repositories.</div>
+        </div>
+
+        <div style="text-align:center; color:var(--text-muted); font-size:0.8rem;">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">BUILD</div>
+          <div class="arch-layer-desc">Compile code, manage dependencies, and package software artifacts automatically.</div>
+        </div>
+
+        <div style="text-align:center; color:var(--text-muted); font-size:0.8rem;">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">TEST</div>
+          <div class="arch-layer-desc">Execute automated unit, integration, and security checks on proposed builds.</div>
+        </div>
+
+        <div style="text-align:center; color:var(--text-muted); font-size:0.8rem;">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">CI/CD</div>
+          <div class="arch-layer-desc">Orchestrate continuous integration pipelines and deployment automation workflows.</div>
+        </div>
+
+        <div style="text-align:center; color:var(--text-muted); font-size:0.8rem;">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">CONTAINER</div>
+          <div class="arch-layer-desc">Encapsulate applications and their runtime dependencies into reproducible units.</div>
+        </div>
+
+        <div style="text-align:center; color:var(--text-muted); font-size:0.8rem;">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">DEPLOY</div>
+          <div class="arch-layer-desc">Release containerized applications onto target cloud infrastructure environments.</div>
+        </div>
+
+        <div style="text-align:center; color:var(--text-muted); font-size:0.8rem;">↓</div>
+
+        <div class="arch-layer">
+          <div class="arch-layer-title">MONITOR</div>
+          <div class="arch-layer-desc">Track operational telemetry, system logs, metrics, and application performance metrics.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="section-title">Tools &amp; Technologies</h2>
+      <div class="tools-grid">
+        
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+            <h3 style="font-size: 1.1rem;">Version Control</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore branch management, pull requests, and collaborative source code history tracking.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            <h3 style="font-size: 1.1rem;">Linux</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore shell scripting, system administration, permission structures, and command-line interfaces.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <h3 style="font-size: 1.1rem;">CI/CD</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore automated build systems, test runners, release triggers, and deployment pipelines.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v16"/></svg>
+            <h3 style="font-size: 1.1rem;">Containers</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore application packaging, container images, lightweight runtimes, and isolated environments.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+            <h3 style="font-size: 1.1rem;">Cloud</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore cloud compute platforms, virtual networks, scalable storage, and managed environments.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            <h3 style="font-size: 1.1rem;">Infrastructure</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore infrastructure concepts, automated provisioning, declaration files, and configuration management.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <h3 style="font-size: 1.1rem;">Monitoring</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore real-time performance tracking, centralized log aggregation, system health, and alerting.</p>
+        </div>
+
+        <div class="glass-card">
+          <div class="tool-header">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            <h3 style="font-size: 1.1rem;">Automation</h3>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Explore task automation scripts, repetitive workflow elimination, and continuous integration triggers.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">Build a DevOps Delivery Pipeline</h2>
+      <div class="project-card">
+        <div class="project-grid">
+          <div>
+            <span style="color:var(--cyan); font-weight:700; font-size:0.85rem; letter-spacing:1px;">HANDS-ON SHOWCASE</span>
+            <h3 style="font-size: 1.8rem; margin: 0.5rem 0 1rem 0;">DevOps CI/CD Project</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+              Apply DevOps concepts by creating a simulated software-delivery workflow that moves from source code through automated build, testing, deployment, and monitoring stages.
+            </p>
+            <a href="#enroll" class="btn btn-primary">Explore Project →</a>
+          </div>
+
+          <div class="dashboard-panel">
+            <div class="dash-widget">
+              <span class="dash-widget-title">Source Repository</span>
+              <span class="dash-widget-val" style="color:#10b981;">Main (Synced)</span>
+            </div>
+            <div class="dash-widget">
+              <span class="dash-widget-title">Build Status</span>
+              <span class="dash-widget-val">Passing (v1.2.4)</span>
+            </div>
+            <div class="dash-widget">
+              <span class="dash-widget-title">Test Status</span>
+              <span class="dash-widget-val">100% Passed</span>
+            </div>
+            <div class="dash-widget">
+              <span class="dash-widget-title">Container Deploy</span>
+              <span class="dash-widget-val">Active (Cluster)</span>
+            </div>
+            <div class="dash-widget dash-widget-full">
+              <span class="dash-widget-title">Monitoring Dashboard</span>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+                ✔ Continuous Delivery Active &nbsp; | &nbsp; ✔ Telemetry Nominal &nbsp; | &nbsp; ✔ Zero Downtime
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="section-title">Learning Outcomes</h2>
+      <div class="outcomes-grid">
+        
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Understand fundamental DevOps concepts</div>
+        </div>
+
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Understand version-control workflows</div>
+        </div>
+
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Explore Linux and command-line fundamentals</div>
+        </div>
+
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Understand CI/CD concepts</div>
+        </div>
+
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Explore container and cloud deployment concepts</div>
+        </div>
+
+        <div class="glass-card outcome-card">
+          <svg class="svg-icon" style="stroke:#22c55e;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>Apply DevOps concepts through a practical project</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">Program Structure &amp; Values</h2>
+      <div class="grid-4">
+        
+        <div class="glass-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cyan);">Automation First</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Understand how automation can improve software delivery workflows.</p>
+        </div>
+
+        <div class="glass-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cyan);">Practical Learning</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Apply DevOps concepts through guided and hands-on activities.</p>
+        </div>
+
+        <div class="glass-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cyan);">Collaboration</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Understand how development and operations can work together effectively.</p>
+        </div>
+
+        <div class="glass-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cyan);">Continuous Improvement</h3>
+          <p style="font-size: 0.875rem; color: var(--text-muted);">Build a mindset of continuously improving software delivery and operational workflows.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="section-title">Who Is This Program For?</h2>
+      <div class="grid-4">
+        
+        <div class="glass-card">
+          <div style="margin-bottom: 0.75rem;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Students</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Learners interested in software development, cloud, and infrastructure.</p>
+        </div>
+
+        <div class="glass-card">
+          <div style="margin-bottom: 0.75rem;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Aspiring DevOps Engineers</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Learners who want to explore DevOps as a career direction.</p>
+        </div>
+
+        <div class="glass-card">
+          <div style="margin-bottom: 0.75rem;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Developers</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Learners interested in automation, deployment, and modern software delivery.</p>
+        </div>
+
+        <div class="glass-card">
+          <div style="margin-bottom: 0.75rem;">
+            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><rect x="8" y="14" width="8" height="4" rx="1"/></svg>
+          </div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">IT &amp; Cloud Learners</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Learners interested in infrastructure, monitoring, and cloud technologies.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding" style="background: rgba(15, 23, 42, 0.3);">
+    <div class="container">
+      <h2 class="section-title">Enrollment &amp; Requirements</h2>
+      <ul class="checklist">
+        
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Basic computer knowledge</span>
+        </li>
+
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Interest in software and technology</span>
+        </li>
+
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Basic programming awareness</span>
+        </li>
+
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Interest in cloud or infrastructure</span>
+        </li>
+
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Willingness to learn</span>
+        </li>
+
+        <li class="checklist-item">
+          <svg class="svg-icon" style="stroke:var(--cyan);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Commitment to practical learning</span>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-wrapper">
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What is the DevOps Engineer program?</span>
+            <svg class="svg-icon faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            It is a structured learning experience focused on DevOps principles, version control, automation, CI/CD, containers, cloud infrastructure, monitoring, and modern software-delivery workflows.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>What will I learn?</span>
+            <svg class="svg-icon faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            Learners explore DevOps fundamentals, Linux, version control, CI/CD, containers, cloud infrastructure, monitoring, and practical DevOps projects.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Does the program include practical projects?</span>
+            <svg class="svg-icon faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            Include practical activities and a project component where learners can apply DevOps concepts.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Do I need previous DevOps experience?</span>
+            <svg class="svg-icon faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            Keep the learning progression clear and communicate recommended prerequisites without inventing unsupported requirements.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Will I learn cloud and containers?</span>
+            <svg class="svg-icon faq-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            Include foundational cloud and container concepts as part of the learning experience without claiming specific platforms unless officially confirmed.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© SOXIT Academia. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Interactive FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const faqItem = button.parentElement;
+        const isActive = faqItem.classList.contains('active');
+        
+        // Close all items
+        document.querySelectorAll('.faq-item').forEach(item => {
+          item.classList.remove('active');
+        });
+
+        // Open clicked item if it wasn't already active
+        if (!isActive) {
+          faqItem.classList.add('active');
+        }
+      });
+    });
+
+    // 2. Animated Background Particles Canvas
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let particles = [];
+    const particleCount = 45;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+        this.size = Math.random() * 2 + 1;
+        this.alpha = Math.random() * 0.5 + 0.1;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(6, 182, 212, ${this.alpha})`;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#06b6d4';
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      // Draw faint connections between points
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(6, 182, 212, ${0.15 * (1 - dist / 120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

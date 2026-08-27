@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Open Media — creative studio, digital marketing, camera rentals, workspace and AI Integrated Solutions.">
+  <title>Open Media — Creative Agency</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --panel:#101010;
+      --panel-2:#151515;
+      --line:#292929;
+      --text:#111111;
+      --muted:#666666;
+      --gold:#e0b461;
+      --gold-2:#f2cf85;
+      --max:1180px;
+      --radius:24px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:#ffffff;
+      color:var(--text);
+      font-family:Inter,Arial,sans-serif;
+      overflow-x:hidden;
+    }
+    body.modal-open{overflow:hidden}
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    h1,h2,h3,h4,p{margin-top:0}
+    h1,h2,h3{font-family:"Bricolage Grotesque",Inter,sans-serif}
+    section{position:relative}
+    section[id]{scroll-margin-top:24px}
+
+    .wrap{
+      width:min(var(--max),calc(100% - 40px));
+      margin-inline:auto;
+    }
+    .eyebrow{
+      margin:0 0 14px;
+      color:var(--gold-2);
+      text-transform:uppercase;
+      letter-spacing:.22em;
+      font-size:.76rem;
+      font-weight:700;
+    }
+    .section-head{margin-bottom:38px;max-width:760px}
+    .section-head h2{
+      margin:0 0 12px;
+      font-size:clamp(2rem,4.4vw,4.3rem);
+      line-height:.98;
+      letter-spacing:-.045em;
+    }
+    .section-head p:last-child{
+      color:var(--muted);
+      line-height:1.75;
+      font-size:1.02rem;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:50px;
+      padding:0 24px;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-weight:700;
+      cursor:pointer;
+      transition:.25s ease;
+    }
+    .btn-gold{background:var(--gold);color:#0b0b0b}
+    .btn-gold:hover{background:var(--gold-2);transform:translateY(-2px)}
+    .btn-outline{border-color:#c9c9c9;background:rgba(8,8,8,.2);color:#fff}
+    .btn-outline:hover{background:#fff;color:#111}
+    .hero-buttons{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+
+    /* HERO — no Open Media menu/navbar */
+.hero-brand {
+  position: absolute;
+  top: 32px;
+  left: 45px;
+
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.hero-brand {
+  position: absolute;
+  top: 28px;
+  left: 40px;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-brand-image {
+  width: 58px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.hero-brand-name {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 600px) {
+
+  .hero-brand {
+    top: 18px;
+    left: 20px;
+  }
+
+  .hero-brand-image {
+    width: 50px;
+    height: 36px;
+  }
+
+  .hero-brand-name {
+    font-size: 15px;
+  }
+}
+
+.hero-brand-name {
+  font-family: "Bricolage Grotesque", sans-serif;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  color: #ffffff;
+
+  letter-spacing: 0.02em;
+}
+
+.hero-brand-name strong {
+  font-weight: 700;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .hero-brand {
+    top: 20px;
+    left: 20px;
+  }
+
+  .hero-brand-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero-brand-name {
+    font-size: 15px;
+  }
+
+}
+    .hero{
+      min-height:100svh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .hero-video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:-3;
+    }
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      z-index:-2;
+      background:transparent;
+    }
+    .hero::after{
+      content:none;
+    }
+    .hero-inner{
+      width:min(1120px,calc(100% - 36px));
+      margin:auto;
+      text-align:center;
+      padding:100px 0 80px;
+    }
+    .hero h1{
+      margin:0 auto 24px;
+      max-width:1050px;
+      font-size:clamp(3rem,7vw,6.6rem);
+      line-height:.93;
+      letter-spacing:-.06em;
+      text-wrap:balance;
+    }
+    .hero-sub{
+      max-width:780px;
+      margin:0 auto 30px;
+      font-size:clamp(1rem,1.7vw,1.22rem);
+      line-height:1.75;
+      color:#dededb;
+    }
+
+    /* Generic sections */
+    .section{padding:110px 0}
+    .section.alt{background:#ffffff}
+    .divider{border-top:1px solid var(--line)}
+
+    /* STUDIO */
+    .studio-grid{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:48px;
+      align-items:center;
+    }
+    .studio-copy h2{
+      font-size:clamp(2.4rem,5vw,5rem);
+      line-height:.98;
+      letter-spacing:-.05em;
+      margin-bottom:22px;
+    }
+    .studio-copy p{
+      color:var(--muted);
+      font-size:1.04rem;
+      line-height:1.8;
+    }
+    .image-frame{
+      border-radius:var(--radius);
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#121212;
+      box-shadow:0 30px 80px rgba(0,0,0,.28);
+    }
+    .image-frame img{
+      width:100%;
+      height:100%;
+      min-height:480px;
+      object-fit:cover;
+    }
+
+    /* SERVICE CARDS */
+    .service-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background:linear-gradient(145deg,#151515,#0c0c0c);
+      border-radius:20px;
+      overflow:hidden;
+      min-width:0;
+      transition:transform .25s ease,border-color .25s ease;
+    }
+    .card:hover{transform:translateY(-5px);border-color:#50452f}
+    .card-media{
+      aspect-ratio:16/10;
+      overflow:hidden;
+      background:#090909;
+    }
+    .card-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform .5s ease;
+    }
+    .card:hover .card-media img{transform:scale(1.035)}
+    .card-body{padding:22px}
+    .card-tag{
+      display:inline-block;
+      margin-bottom:10px;
+      color:var(--gold-2);
+      font-size:.72rem;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+    .card h3{font-size:1.45rem;margin-bottom:10px}
+    .card p{margin:0;color:var(--muted);line-height:1.65}
+    .card-link{
+      display:inline-block;
+      margin-top:18px;
+      color:var(--gold-2);
+      font-weight:700;
+    }
+
+    /* PORTFOLIO */
+    .portfolio-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .project{
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#101010;
+    }
+    .project img{
+      width:100%;
+      aspect-ratio:4/3;
+      object-fit:cover;
+    }
+    .project-copy{padding:20px}
+    .project-copy small{color:var(--gold-2);text-transform:uppercase;letter-spacing:.13em}
+    .project-copy h3{margin:10px 0 8px;font-size:1.45rem}
+    .project-copy p{color:var(--muted);line-height:1.6;margin-bottom:0}
+
+    /* WORKSPACE */
+    .workspace-grid{
+      display:grid;
+      grid-template-columns:1.25fr .75fr;
+      gap:34px;
+      align-items:stretch;
+    }
+    .workspace-grid img{
+      width:100%;
+      height:100%;
+      min-height:520px;
+      object-fit:cover;
+    }
+    .workspace-panel{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:#111;
+      padding:38px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .workspace-panel h2{font-size:clamp(2.4rem,4vw,4.4rem);line-height:1;letter-spacing:-.05em}
+    .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .tags span{
+      border:1px solid #383838;
+      border-radius:999px;
+      padding:10px 14px;
+      color:#d2d2cf;
+      background:#171717;
+    }
+
+    /* RENTALS */
+    .rental-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:14px;
+    }
+    .rental{
+      border:1px solid var(--line);
+      border-radius:18px;
+      overflow:hidden;
+      background:#111;
+    }
+    .rental img{
+      width:100%;
+      height:230px;
+      object-fit:cover;
+    }
+    .rental-copy{padding:16px}
+    .rental-copy h3{font-size:1rem;margin:0 0 6px}
+    .rental-copy p{font-size:.88rem;color:var(--muted);line-height:1.5;margin:0}
+
+    /* AI */
+    .ai-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+    }
+    .ai-card{
+      position:relative;
+      overflow:hidden;
+      border:1px solid #253439;
+      border-radius:22px;
+      background:linear-gradient(150deg,#0d171a,#0c0c0c);
+    }
+    .ai-card img{
+      width:100%;
+      height:250px;
+      object-fit:cover;
+    }
+    .ai-copy{padding:20px}
+    .ai-pill{
+      display:inline-block;
+      padding:5px 9px;
+      border-radius:999px;
+      background:rgba(224,180,97,.13);
+      color:var(--gold-2);
+      font-weight:800;
+      font-size:.74rem;
+      margin-bottom:10px;
+    }
+    .ai-copy h3{font-size:1.3rem;margin-bottom:8px}
+    .ai-copy p{margin:0;color:var(--muted);line-height:1.6}
+
+    /* IMAGE STRIP to use remaining user-supplied visuals */
+    .visual-strip{
+      display:grid;
+      grid-template-columns:1.2fr .8fr 1fr;
+      gap:14px;
+    }
+    .visual-strip img{
+      width:100%;
+      height:320px;
+      object-fit:cover;
+      border-radius:18px;
+      border:1px solid var(--line);
+    }
+
+    /* CONTACT */
+    .contact-wrap{
+      display:grid;
+      grid-template-columns:.8fr 1.2fr;
+      gap:36px;
+    }
+    .contact-copy h2{
+      font-size:clamp(2.4rem,4.5vw,4.8rem);
+      line-height:.98;
+      letter-spacing:-.05em;
+    }
+    .contact-copy p{color:var(--muted);line-height:1.8}
+    form{
+      border:1px solid var(--line);
+      background:#101010;
+      border-radius:24px;
+      padding:28px;
+    }
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:16px;
+    }
+    .field.full{grid-column:1/-1}
+    label{
+      display:block;
+      color:#e4e4e0;
+      font-size:.9rem;
+      font-weight:700;
+    }
+    input,select,textarea{
+      width:100%;
+      margin-top:8px;
+      border:1px solid #333;
+      border-radius:12px;
+      padding:14px 15px;
+      background:#191919;
+      color:#fff;
+      outline:none;
+    }
+    input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+    textarea{min-height:150px;resize:vertical}
+    .submit-row{margin-top:18px}
+
+    .site-footer {
+      background: #061224;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: #94a3b8;
+      padding: 4rem 1.5rem 2rem;
+    }
+    .site-footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .site-footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 0.75fr 0.9fr 1.15fr;
+      gap: 3.75rem;
+      align-items: start;
+      margin-bottom: 4rem;
+    }
+    .site-footer-brand img {
+      display: block;
+      width: 118px;
+      height: 42px;
+      object-fit: contain;
+      object-position: left center;
+      filter: grayscale(1) brightness(2);
+      margin-bottom: 1.25rem;
+    }
+    .site-footer-brand p {
+      max-width: 20rem;
+      margin: 0;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    .site-footer-socials {
+      display: flex;
+      gap: 0.85rem;
+      margin-top: 2rem;
+    }
+    .site-footer-socials a {
+      width: 2.25rem;
+      height: 2.25rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      color: #cbd5e1;
+      text-decoration: none;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    .site-footer-socials a:hover {
+      background: var(--gold);
+      color: #061224;
+    }
+    .site-footer-column h4 {
+      margin: 0 0 1.25rem;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .site-footer-column a {
+      display: block;
+      width: fit-content;
+      margin-bottom: 0.85rem;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .site-footer-column a:hover {
+      color: var(--gold);
+    }
+    .site-footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #64748b;
+      font-size: 0.75rem;
+    }
+    .site-footer-bottom p {
+      margin: 0;
+    }
+    .site-footer-bottom a {
+      color: inherit;
+      text-decoration: none;
+    }
+    @media (max-width: 800px) {
+      .site-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+      }
+    }
+    @media (max-width: 520px) {
+      .site-footer {
+        padding: 3rem 1.25rem 1.5rem;
+      }
+      .site-footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 2.5rem;
+      }
+      .site-footer-bottom {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+    /* Modal */
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      background:rgba(0,0,0,.82);
+      padding:20px;
+      align-items:center;
+      justify-content:center;
+    }
+    .modal.open{display:flex}
+    .modal-card{
+      width:min(480px,100%);
+      background:#111;
+      border:1px solid #333;
+      border-radius:20px;
+      padding:28px;
+      box-shadow:0 28px 90px rgba(0,0,0,.6);
+    }
+    .modal-card h3{margin-bottom:10px;font-size:1.6rem}
+    .modal-card p{color:var(--muted);line-height:1.7}
+    .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+
+    /* Reveal */
+    .reveal{
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity .7s ease,transform .7s ease;
+    }
+    .reveal.in{opacity:1;transform:none}
+
+    @media (max-width:1050px){
+      .service-grid,.portfolio-grid{grid-template-columns:repeat(2,1fr)}
+      .ai-grid{grid-template-columns:repeat(2,1fr)}
+      .rental-grid{grid-template-columns:repeat(3,1fr)}
+    }
+    @media (max-width:800px){
+      .section{padding:78px 0}
+      .studio-grid,.workspace-grid,.contact-wrap{grid-template-columns:1fr}
+      .image-frame img,.workspace-grid img{min-height:360px}
+      .workspace-panel{padding:28px}
+      .visual-strip{grid-template-columns:1fr}
+      .visual-strip img{height:260px}
+    }
+    @media (max-width:620px){
+      .wrap{width:min(100% - 26px,var(--max))}
+      .hero-inner{padding:70px 0}
+      .hero-buttons{flex-direction:column;align-items:stretch}
+      .service-grid,.portfolio-grid,.ai-grid,.rental-grid,.form-grid{grid-template-columns:1fr}
+      .rental img,.ai-card img{height:240px}
+      .field.full{grid-column:auto}
+      .footer-inner{flex-direction:column}
+    }
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .reveal{opacity:1;transform:none;transition:none}
+      .card,.btn{transition:none}
+    }
+
+    /* UPDATED: video only in hero; remaining page is white */
+    body{
+      background:#ffffff;
+      color:#111111;
+    }
+
+    .hero{
+      background:#000;
+    }
+
+    .hero-video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      z-index:-3;
+    }
+
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      z-index:-2;
+      background:
+        radial-gradient(circle at 50% 45%,rgba(0,0,0,.2),rgba(0,0,0,.82) 78%),
+        linear-gradient(180deg,rgba(0,0,0,.36),rgba(0,0,0,.66));
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 0;
+      height:170px;
+      background:linear-gradient(transparent,#070707);
+      z-index:-1;
+    }
+
+    .section,
+    .section.alt{
+      background:#eeeeea;
+      color:#111111;
+    }
+
+    .section-head p:last-child,
+    .studio-copy p,
+    .card p,
+    .project-copy p,
+    .contact-copy p{
+      color:#666666;
+    }
+
+    .card,
+    .project,
+    .rental,
+    .ai-card,
+    .workspace-panel,
+    form{
+      background:#fafaf8;
+      color:#111111;
+      border-color:#dddddd;
+      box-shadow:none;
+    }
+
+    .card-media,
+    .rental,
+    .ai-card{
+      background:#ffffff;
+    }
+
+    .image-frame{
+      background:#fafaf8;
+      border-color:#dddddd;
+      box-shadow:0 20px 50px rgba(0,0,0,.08);
+    }
+
+    .tags span{
+      background:#f7f7f7;
+      color:#333333;
+      border-color:#dddddd;
+    }
+
+    input,select,textarea{
+      background:#ffffff;
+      color:#111111;
+      border-color:#cccccc;
+    }
+
+    label{
+      color:#222222;
+    }
+
+    .btn-outline{
+      border-color:#ffffff;
+      background:rgba(0,0,0,.25);
+      color:#ffffff;
+    }
+
+    /* HERO: preserve the original dark video appearance */
+    .hero{
+      background:#070707;
+      color:#f5f5f2;
+    }
+
+    .hero-brand-name{
+      color:#ffffff;
+    }
+
+    .hero-sub{
+      color:#dededb;
+    }
+
+
+    /* ALL CONTENT CARDS - BLACK THEME */
+    .card,
+    .project,
+    .rental,
+    .ai-card,
+    .workspace-panel,
+    form {
+      background: #0d0d0d !important;
+      color: #ffffff !important;
+      border-color: #292929 !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    }
+
+    .card-body,
+    .project-copy,
+    .rental-copy,
+    .ai-copy {
+      background: #0d0d0d;
+    }
+
+    .card h3,
+    .project-copy h3,
+    .rental-copy h3,
+    .ai-copy h3,
+    .workspace-panel h2 {
+      color: #ffffff;
+    }
+
+    .card p,
+    .project-copy p,
+    .rental-copy p,
+    .ai-copy p,
+    .workspace-panel p {
+      color: #b8b8b8 !important;
+    }
+
+    .project-copy small,
+    .card-tag,
+    .card-link,
+    .ai-pill {
+      color: #f2cf85;
+    }
+
+    .tags span {
+      background: #171717;
+      color: #d8d8d8;
+      border-color: #383838;
+    }
+
+    form label {
+      color: #ffffff;
+    }
+
+    form input,
+    form select,
+    form textarea {
+      background: #191919;
+      color: #ffffff;
+      border-color: #333333;
+    }
+
+    .card:hover,
+    .project:hover,
+    .rental:hover,
+    .ai-card:hover {
+      border-color: #e0b461 !important;
+    }
+
+    .site-nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 74px;
+      padding: 10px max(20px, calc((100% - 1180px) / 2));
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid #e5e7eb;
+      backdrop-filter: blur(14px);
+    }
+    .site-nav-logo img {
+      width: 118px;
+      height: 42px;
+      object-fit: contain;
+      filter: none;
+    }
+    .site-nav-links {
+      display: flex;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      align-items: center;
+      justify-content: center;
+      gap: clamp(12px, 2vw, 28px);
+      flex-wrap: wrap;
+    }
+    .site-nav-links a {
+      color: #475569;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+    .site-nav-links a:hover {
+      color: var(--gold-2);
+    }
+    .site-nav-links a[href="index.html"] {
+      color: var(--gold);
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 4px;
+    }
+    .site-nav-cta {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: var(--gold);
+      color: #0b0b0b;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .site-nav-cta:hover {
+      background: var(--gold-2);
+    }
+    @media (max-width: 900px) {
+      .site-nav {
+        gap: 12px;
+      }
+      .site-nav-links {
+        gap: 10px;
+      }
+      .site-nav-links a {
+        font-size: 0.72rem;
+      }
+      .site-nav-cta {
+        display: none;
+      }
+    }
+    @media (max-width: 600px) {
+      .site-nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 8px 16px 10px;
+      }
+      .site-nav-logo img {
+        width: 92px;
+        height: 32px;
+      }
+      .site-nav-links {
+        position: static;
+        transform: none;
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+      .site-nav-links a {
+        flex: 0 0 auto;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a class="site-nav-logo" href="../index.html" aria-label="SOXIT home">
+      <img src="../soxit.webp" alt="SOXIT Logo">
+    </a>
+    <div class="site-nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../consulting/index.html">Consulting</a>
+      <a href="../index.html#academia">Academia</a>
+      <a href="index.html">Open Media</a>
+      <a href="../index.html#about">About Us</a>
+    </div>
+    <a class="site-nav-cta" href="../index.html#contact">Let's Build Together</a>
+  </nav>
+  <main>
+    <section class="hero" id="home">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+        <source src="assets/video/bg-video.mp4" type="video/mp4">
+      </video>
+      <div class="hero-overlay"></div>
+      <div class="hero-inner">
+        <p class="eyebrow reveal">Premium Creative &amp; Digital Media</p>
+        <h1 class="reveal">We Create Visual Experiences That Build Powerful Brands</h1>
+        <p class="hero-sub reveal">Photography • Digital Marketing • Cinema Gear Rentals • Branding • Creative Workspace • AI Integrated Solutions.</p>
+        <div class="hero-buttons reveal">
+          <a class="btn btn-gold" href="#services">Explore Services</a>
+          <a class="btn btn-outline" href="#portfolio">View Portfolio</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="studio">
+      <div class="wrap studio-grid">
+        <div class="studio-copy reveal">
+          <p class="eyebrow">About Our Studio</p>
+          <h2>A creative powerhouse built for visual storytelling.</h2>
+          <p>Open Media combines photography, branding, technology, marketing and production under one roof. We create premium visual experiences and practical creative solutions for brands, businesses and creators.</p>
+          <a class="btn btn-gold" href="../index.html#contact">Start a Project</a>
+        </div>
+        <div class="image-frame reveal">
+          <img src="assets/images/studio.png" alt="Professional photography studio">
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt divider" id="services">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Core Disciplines</p>
+          <h2>World-Class Creative Services</h2>
+          <p>One team for production, design, digital growth, creative spaces and AI-powered solutions.</p>
+        </div>
+
+        <div class="service-grid">
+          <article class="card reveal">
+            <div class="card-media"><img src="assets/images/photography-studio.jpg" alt="Photography studio services"></div>
+            <div class="card-body"><span class="card-tag">Visual Arts</span><h3>Photography Studio</h3><p>Portraits, commercial shoots, product photography, fashion and corporate event coverage.</p><a class="card-link" href="../index.html#contact">Discuss a shoot →</a></div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-media"><img src="assets/images/camera-rental.jpg" alt="Professional camera rental"></div>
+            <div class="card-body"><span class="card-tag">Equipment</span><h3>Camera &amp; Lens Rental</h3><p>Cinema cameras, mirrorless bodies, lenses, lighting, tripods and creator-ready production kits.</p><a class="card-link" href="#rentals">Browse rentals →</a></div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-media"><img src="assets/images/graphic-design-ui.jpg" alt="Graphic design and user interface work"></div>
+            <div class="card-body"><span class="card-tag">Design</span><h3>Graphic Design &amp; UI</h3><p>Brand identity, social creatives, campaign design, print collateral and modern UI/UX experiences.</p><a class="card-link" href="../index.html#contact">Discuss design →</a></div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-media"><img src="assets/images/creative-team.png" alt="Creative marketing team"></div>
+            <div class="card-body"><span class="card-tag">Growth</span><h3>Digital Marketing</h3><p>Content strategy, campaign creative, advertising, brand growth and lead-generation support.</p><a class="card-link" href="../index.html#contact">Discuss marketing →</a></div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-media"><img src="assets/images/creative-coworking.jpg" alt="Creative coworking studio"></div>
+            <div class="card-body"><span class="card-tag">Space</span><h3>Creative Co-Working</h3><p>Flexible desks, collaboration spaces, editing environments and creator-friendly work areas.</p><a class="card-link" href="#workspace">View workspace →</a></div>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-media"><img src="assets/images/ai-solutions.jpg" alt="Artificial intelligence solutions"></div>
+            <div class="card-body"><span class="card-tag">Technology</span><h3>AI Integrated Solutions</h3><p>AI content, automation, conversational experiences and custom machine-learning solutions.</p><a class="card-link" href="#ai">Explore AI →</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section divider" id="portfolio">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Featured Portfolio</p>
+          <h2>Crafted with Precision</h2>
+          <p>A snapshot of the visual, brand and technology-driven work Open Media can deliver.</p>
+        </div>
+        <div class="portfolio-grid">
+          <article class="project reveal">
+            <img src="assets/images/studio.png" alt="Studio photography campaign">
+            <div class="project-copy"><small>Photography</small><h3>Studio Campaign</h3><p>Premium studio imagery built around controlled light, composition and brand consistency.</p></div>
+          </article>
+          <article class="project reveal">
+            <img src="assets/images/graphic-design.png" alt="Digital brand design project">
+            <div class="project-copy"><small>Branding</small><h3>Digital Brand Experience</h3><p>Modern visual identity and digital creative designed for a clear, premium brand presence.</p></div>
+          </article>
+          <article class="project reveal">
+            <img src="assets/images/creative-team.png" alt="Digital production project">
+            <div class="project-copy"><small>Digital Production</small><h3>Creative Production System</h3><p>Digital-first production workflows for fast, consistent, multi-channel content creation.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt divider" id="workspace">
+      <div class="wrap workspace-grid">
+        <div class="image-frame reveal">
+          <img src="assets/images/coworking.png" alt="Creative coworking space">
+        </div>
+        <div class="workspace-panel reveal">
+          <p class="eyebrow">Creative Space</p>
+          <h2>A workspace built for maximum output.</h2>
+          <p style="color:var(--muted);line-height:1.75">A flexible environment for focused work, editing, team collaboration and content production.</p>
+          <div class="tags">
+            <span>Flexible Work Desks</span>
+            <span>Private Editing Suites</span>
+            <span>Podcast &amp; Creator Space</span>
+            <span>Collaboration Areas</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section divider" id="rentals">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Equipment</p>
+          <h2>Camera &amp; Production Rentals</h2>
+          <p>Production-ready equipment and setups for professional shoots and creator projects.</p>
+        </div>
+        <div class="rental-grid">
+          <article class="rental reveal"><img src="assets/images/cameras.png" alt="Cinema camera kits"><div class="rental-copy"><h3>Cinema Camera Kits</h3><p>Camera bodies and production-ready camera packages.</p></div></article>
+          <article class="rental reveal"><img src="assets/images/studio.png" alt="Studio lighting equipment"><div class="rental-copy"><h3>Studio Lighting</h3><p>Lighting setups for controlled studio production.</p></div></article>
+          <article class="rental reveal"><img src="assets/images/coworking.png" alt="Creative production workspace"><div class="rental-copy"><h3>Production Setups</h3><p>Ready-to-use creative production environments.</p></div></article>
+          <article class="rental reveal"><img src="assets/images/creative-team.png" alt="Production team"><div class="rental-copy"><h3>Production Crew Kits</h3><p>Collaborative production solutions for teams.</p></div></article>
+          <article class="rental reveal"><img src="assets/images/graphic-design.png" alt="Digital creator production"><div class="rental-copy"><h3>Creator Kits</h3><p>Flexible setups for digital creators and campaigns.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt divider" id="ai">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <p class="eyebrow">Technology</p>
+          <h2>AI Integrated Solutions</h2>
+          <p>Creative technology designed to help brands generate, automate, engage and build smarter workflows.</p>
+        </div>
+        <div class="ai-grid">
+          <article class="ai-card reveal"><img src="assets/images/technology.png" alt="AI content technology"><div class="ai-copy"><span class="ai-pill">AI</span><h3>Custom Content Generation</h3><p>AI-assisted visual and copy generation tailored to your brand voice.</p></div></article>
+          <article class="ai-card reveal"><img src="assets/images/data-recovery.png" alt="Automated digital workflows"><div class="ai-copy"><span class="ai-pill">AI</span><h3>Automated Marketing Workflows</h3><p>Streamlined processes for campaign planning, execution and optimization.</p></div></article>
+          <article class="ai-card reveal"><img src="assets/images/chatbots.webp" alt="AI chatbot assistant"><div class="ai-copy"><span class="ai-pill">AI</span><h3>Intelligent Chatbots</h3><p>Always-on conversational support and lead-capture experiences.</p></div></article>
+          <article class="ai-card reveal"><img src="assets/images/machine-learning.jpg" alt="Machine learning technology"><div class="ai-copy"><span class="ai-pill">AI</span><h3>Custom ML Tools</h3><p>Machine-learning solutions designed around specific business and creative needs.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open Media contact form removed; use the homepage contact form. <section class="section alt divider" id="contact">
+      <div class="wrap contact-wrap">
+        <div class="contact-copy reveal">
+          <p class="eyebrow">Contact</p>
+          <h2>Let's build something extraordinary.</h2>
+          <p>Tell us what you want to create, promote, shoot or automate. This front-end form confirms your information on screen; connect it to your preferred backend or form service when you integrate the page into your main site.</p>
+        </div>
+
+        <form id="contactForm" class="reveal">
+          <div class="form-grid">
+            <div class="field"><label for="name">Full Name<input id="name" name="name" required placeholder="John Doe"></label></div>
+            <div class="field"><label for="email">Email Address<input id="email" name="email" type="email" required placeholder="john@example.com"></label></div>
+            <div class="field"><label for="phone">Phone Number<input id="phone" name="phone" type="tel" placeholder="+91 ..."></label></div>
+            <div class="field"><label for="service">Service<select id="service" name="service"><option>Photography</option><option>Digital Marketing</option><option>Branding &amp; UI</option><option>Camera Rental</option><option>Workspace</option><option>AI Integrated Solutions</option></select></label></div>
+            <div class="field full"><label for="details">Project Details<textarea id="details" name="details" placeholder="Tell us about your project, timeline and goals..."></textarea></label></div>
+          </div>
+          <div class="submit-row"><button class="btn btn-gold" type="submit">Submit Request</button></div>
+        </form>
+      </div>
+    </section> -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-grid">
+        <div class="site-footer-brand">
+          <img src="../soxit.webp" alt="SOXIT Logo">
+          <p>Unified enterprise platform delivering consulting solutions across industries.</p>
+          <div class="site-footer-socials">
+            <a href="#" aria-label="Website"><span aria-hidden="true">◎</span></a>
+            <a href="#" aria-label="LinkedIn"><span aria-hidden="true">in</span></a>
+            <a href="mailto:info@soxit.com" aria-label="Email"><span aria-hidden="true">✉</span></a>
+          </div>
+        </div>
+        <div class="site-footer-column">
+          <h4>Solutions</h4>
+          <a href="../consulting/index.html">Strategy &amp; Transformation</a>
+          <a href="../consulting/technology.html">Technology &amp; Digital</a>
+          <a href="../consulting/methodology.html">Operations &amp; Excellence</a>
+        </div>
+        <div class="site-footer-column">
+          <h4>Industries</h4>
+          <a href="../consulting/industries.html">BFSI</a>
+          <a href="../consulting/industries.html">Technology &amp; Digital</a>
+          <a href="../consulting/industries.html">Industrial &amp; Manufacturing</a>
+          <a href="../consulting/industries.html">Pharma &amp; Healthcare</a>
+          <a href="index.html#services">Creative &amp; Media</a>
+        </div>
+        <div class="site-footer-column">
+          <h4>Company</h4>
+          <a href="#portfolio">Our Work</a>
+          <a href="mailto:info@soxit.com">Contact</a>
+        </div>
+      </div>
+      <div class="site-footer-bottom">
+        <p>&copy; 2026 SOXIT. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> &nbsp; <a href="#">Terms of Service</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h3>Project request ready</h3>
+      <p id="modalText">Your details have been captured on this page. Connect this form to your backend, email service or form provider to send submissions.</p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="closeModal" type="button">Close</button>
+        <button class="btn btn-gold" id="confirmModal" type="button">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reveals = document.querySelectorAll('.reveal');
+
+      if (!reduced && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {threshold: 0.12});
+        reveals.forEach(el => observer.observe(el));
+      } else {
+        reveals.forEach(el => el.classList.add('in'));
+      }
+
+      const form = document.getElementById('contactForm');
+      const modal = document.getElementById('modal');
+      const modalText = document.getElementById('modalText');
+      if (!form || !modal || !modalText) return;
+
+      function closeModal(){
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden','true');
+        document.body.classList.remove('modal-open');
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        if(!form.reportValidity()) return;
+
+        const name = document.getElementById('name').value.trim();
+        const service = document.getElementById('service').value;
+        modalText.textContent = `Thanks ${name || 'there'}. Your ${service} request is ready. Connect this form to your backend or form provider when you place this page inside the main website.`;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+        document.body.classList.add('modal-open');
+      });
+
+      document.getElementById('closeModal').addEventListener('click', closeModal);
+      document.getElementById('confirmModal').addEventListener('click', function(){
+        form.reset();
+        closeModal();
+      });
+      modal.addEventListener('click', function(e){
+        if(e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape') closeModal();
+      });
+    })();
+  </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

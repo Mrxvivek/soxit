@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Role Readiness Index | SOXIT Academia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- jsPDF Library for Client-Side Report Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       RESET & BASE STYLES
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #F7F9FC;
+      color: #071A3D;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* 3D Background Animation */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #F7F9FC 0%, #E6F7F2 50%, #F0F4F8 100%);
+      z-index: -1;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        filter: hue-rotate(0deg);
+        transform: scale(1);
+      }
+      50% {
+        filter: hue-rotate(10deg);
+        transform: scale(1.05);
+      }
+      100% {
+        filter: hue-rotate(0deg);
+        transform: scale(1);
+      }
+    }
+
+    /* 3D Floating Shapes Background */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(10, 168, 120, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(10, 168, 120, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(100, 116, 139, 0.06) 0%, transparent 50%);
+      z-index: -1;
+      animation: floatBg 20s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatBg {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-30px) rotate(5deg);
+      }
+    }
+
+    /* 3D Floating Particles */
+    .page-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(10, 168, 120, 0.15) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(10, 168, 120, 0.15) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(100, 116, 139, 0.1) 1px, transparent 1px);
+      background-size: 200px 200px, 300px 300px, 250px 250px;
+      animation: particleMove 30s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes particleMove {
+      0% {
+        background-position: 0 0, 0 0, 0 0;
+      }
+      100% {
+        background-position: 200px 200px, -300px 300px, 250px -250px;
+      }
+    }
+
+    /* ==========================================================================
+       1. HEADER (EXACT SOXIT SPEC)
+       ========================================================================== */
+    .soxit-header {
+      width: 100%;
+      height: 80px;
+      background-color: #FFFFFF;
+      border-bottom: 1px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      width: 100%;
+      max-width: 1280px;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background-color: #0AA878;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .logo-text {
+      font-weight: 800;
+      font-size: 22px;
+      color: #071A3D;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #475569;
+      font-weight: 600;
+      font-size: 15px;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #071A3D;
+    }
+
+    .nav-links a.active {
+      color: #0AA878;
+    }
+
+    .back-to-home {
+      align-self: center;
+      margin-top: 16px;
+      margin-bottom: 28px;
+      color: #0AA878;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 10px 20px;
+      border: 1px solid #0AA878;
+      border-radius: 8px;
+      transition: color 0.2s ease;
+    }
+
+    .back-to-home:hover {
+      color: #08966a;
+      text-decoration: underline;
+      background-color: #E6F7F2;
+    }
+
+    /* ==========================================================================
+       2. PAGE WRAPPER & HEADINGS
+       ========================================================================== */
+    .page-wrapper {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 56px 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title {
+      font-size: 46px;
+      font-weight: 800;
+      color: #071A3D;
+      letter-spacing: -1.2px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      text-align: center;
+      animation: slideInDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .page-subtitle {
+      font-size: 22px;
+      font-weight: 400;
+      color: #64748B;
+      text-align: center;
+      max-width: 800px;
+      margin-bottom: 48px;
+      line-height: 1.4;
+      animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      animation-delay: 0.1s;
+      opacity: 0;
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 4px 16px rgba(10, 168, 120, 0.25);
+      }
+      50% {
+        box-shadow: 0 8px 28px rgba(10, 168, 120, 0.35);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-2px);
+      }
+      75% {
+        transform: translateX(2px);
+      }
+    }
+
+    @keyframes rotate3d {
+      0% {
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+      }
+      100% {
+        transform: perspective(1000px) rotateX(360deg) rotateY(360deg);
+      }
+    }
+
+    /* ==========================================================================
+       STATE 1: PRE-ASSESSMENT
+       ========================================================================== */
+    .landing-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    .status-text {
+      font-size: 20px;
+      font-weight: 500;
+      color: #64748B;
+      margin-bottom: 28px;
+    }
+
+    .btn-start-demo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 36px;
+      height: 60px;
+      background-color: #0AA878;
+      color: #FFFFFF;
+      font-size: 18px;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(10, 168, 120, 0.25);
+      transition: all 0.2s ease;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .btn-start-demo:hover {
+      background-color: #08966a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(10, 168, 120, 0.38);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    /* ==========================================================================
+       STATE 2: RRI RESULT CARD (EXACT MATCH TO REFERENCE SCREENSHOT)
+       ========================================================================== */
+    .result-card-container {
+      display: none; /* Dynamic visibility */
+      width: 100%;
+      max-width: 820px;
+      justify-content: center;
+    }
+
+    .result-card {
+      background: #FFFFFF;
+      width: 100%;
+      border-radius: 20px;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 10px 30px rgba(7, 26, 61, 0.04);
+      padding: 64px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Score Oval Indicator */
+    .score-oval {
+      width: 220px;
+      height: 170px;
+      background: linear-gradient(135deg, #E6F7F2 0%, #D0F0E6 100%);
+      border: 3px solid #0AA878;
+      border-radius: 110px / 85px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      margin-bottom: 32px;
+      animation: rotate3d 8s linear infinite;
+      box-shadow: 0 10px 30px rgba(10, 168, 120, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .score-number {
+      font-size: 72px;
+      font-weight: 900;
+      color: #0AA878;
+      line-height: 1;
+      letter-spacing: -2px;
+      animation: countUp 1.5s ease-out forwards;
+    }
+
+    @keyframes countUp {
+      from {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .score-max {
+      font-size: 24px;
+      font-weight: 700;
+      color: #0AA878;
+      margin-top: 18px;
+      animation: fadeIn 0.8s ease-out 0.3s forwards;
+      opacity: 0;
+    }
+
+    /* Result Content */
+    .result-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #071A3D;
+      margin-bottom: 16px;
+      letter-spacing: -0.4px;
+      animation: fadeIn 0.6s ease-out 0.4s forwards;
+      opacity: 0;
+    }
+
+    .result-description {
+      font-size: 20px;
+      font-weight: 400;
+      color: #64748B;
+      line-height: 1.5;
+      max-width: 680px;
+      margin-bottom: 36px;
+      animation: fadeIn 0.6s ease-out 0.5s forwards;
+      opacity: 0;
+    }
+
+    /* Download PDF Button */
+    .btn-download-pdf {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 255px;
+      height: 52px;
+      background-color: #FFFFFF;
+      color: #071A3D;
+      font-size: 17px;
+      font-weight: 700;
+      border: 1px solid #CBD5E1;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: fadeIn 0.6s ease-out 0.6s forwards;
+      opacity: 0;
+    }
+
+    .btn-download-pdf:hover {
+      background-color: #F8FAFC;
+      border-color: #0AA878;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(10, 168, 120, 0.2);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       STATE 1.5: ASSESSMENT QUESTIONS
+       ========================================================================== */
+    .assessment-container {
+      display: none;
+      width: 100%;
+      max-width: 820px;
+    }
+
+    .question-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      border: 1px solid #E2E8F0;
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(7, 26, 61, 0.04);
+      animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      transition: all 0.3s ease;
+    }
+
+    .question-card:hover {
+      box-shadow: 0 8px 24px rgba(10, 168, 120, 0.12);
+      transform: translateY(-4px);
+      border-color: #0AA878;
+    }
+
+    .question-number {
+      display: inline-block;
+      background-color: #0AA878;
+      color: #FFFFFF;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .question-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: #071A3D;
+      margin-bottom: 20px;
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      padding: 14px 16px;
+      background-color: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-size: 16px;
+      color: #475569;
+    }
+
+    .option-label:hover {
+      background-color: #F0F4F8;
+      border-color: #0AA878;
+      transform: translateX(6px);
+      box-shadow: 0 4px 12px rgba(10, 168, 120, 0.15);
+    }
+
+    .option-label input[type="radio"] {
+      margin-right: 12px;
+      cursor: pointer;
+      accent-color: #0AA878;
+      transition: transform 0.2s ease;
+    }
+
+    .option-label input[type="radio"]:checked {
+      transform: scale(1.2);
+    }
+
+    .option-label input[type="radio"]:checked + span {
+      color: #071A3D;
+      font-weight: 600;
+    }
+
+    .assessment-progress {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background-color: #E2E8F0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0AA878 0%, #08966a 100%);
+      transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 0 10px rgba(10, 168, 120, 0.5);
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(10, 168, 120, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(10, 168, 120, 0.8);
+      }
+    }
+
+    .progress-text {
+      font-size: 14px;
+      color: #64748B;
+      margin-top: 8px;
+    }
+
+    .assessment-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 32px;
+    }
+
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 40px;
+      height: 52px;
+      background-color: #0AA878;
+      color: #FFFFFF;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: slideInUp 0.4s ease-out forwards;
+    }
+
+    .btn-submit:hover {
+      background-color: #08966a;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(10, 168, 120, 0.3);
+    }
+
+    .btn-submit:active {
+      transform: translateY(-1px);
+    }
+
+    .btn-reset {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 40px;
+      height: 52px;
+      background-color: #FFFFFF;
+      color: #071A3D;
+      font-size: 16px;
+      font-weight: 700;
+      border: 1px solid #CBD5E1;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      animation: slideInUp 0.4s ease-out forwards;
+      animation-delay: 0.1s;
+      opacity: 0;
+    }
+
+    .btn-reset:hover {
+      background-color: #F8FAFC;
+      border-color: #0AA878;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(10, 168, 120, 0.15);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE ADAPTATIONS
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .soxit-header { height: 70px; }
+      .nav-links { display: none; }
+      .page-wrapper { padding: 36px 16px 60px; }
+      .page-title { font-size: 34px; }
+      .page-subtitle { font-size: 18px; margin-bottom: 32px; }
+      
+      .result-card { padding: 40px 20px; border-radius: 16px; }
+      .score-oval { width: 180px; height: 140px; }
+      .score-number { font-size: 56px; }
+      .score-max { font-size: 20px; margin-top: 12px; }
+      .result-title { font-size: 24px; }
+      .result-description { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SOXIT HEADER -->
+  <header class="soxit-header">
+    <div class="header-container">
+      <a href="index.html" class="logo-group">
+        <div class="logo-icon">S</div>
+        <span class="logo-text">SOXIT</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Consulting</a></li>
+        <li><a href="index.html" class="active">Academia</a></li>
+        <li><a href="#">OpenMedia</a></li>
+        <li><a href="#">Insights</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- MAIN PAGE WRAPPER -->
+  <main class="page-wrapper">
+    <h1 class="page-title">Role Readiness Index</h1>
+    <p class="page-subtitle">
+      Measure your employability against 6 dimensions and 30 data points.
+    </p>
+
+    <!-- STATE 1: PRE-ASSESSMENT LANDING -->
+    <div id="landing-state" class="landing-box">
+      <p class="status-text">Assessment not started.</p>
+      <button class="btn-start-demo" onclick="startAssessment()">
+        Start Assessment Demo
+      </button>
+    </div>
+
+    <!-- STATE 1.5: ASSESSMENT QUESTIONS -->
+    <div id="assessment-state" class="assessment-container">
+      <div class="assessment-progress">
+        <div class="progress-text"><span id="current-question">1</span> of <span id="total-questions">10</span></div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <div id="questions-wrapper">
+        <!-- Questions will be dynamically generated here -->
+      </div>
+
+      <div class="assessment-actions">
+        <button class="btn-submit" onclick="submitAssessment()">Submit Assessment</button>
+        <button class="btn-reset" onclick="resetAssessment()">Reset</button>
+      </div>
+    </div>
+
+    <!-- STATE 2: RRI RESULT CARD (SCREENSHOT RECREATION) -->
+    <div id="result-state" class="result-card-container">
+      <div class="result-card">
+        
+        <!-- Score Circle -->
+        <div class="score-oval">
+          <span class="score-number" id="user-score">82</span>
+          <span class="score-max">/100</span>
+        </div>
+
+        <!-- Result Title -->
+        <h2 class="result-title" id="user-status-title">You are Job-Ready!</h2>
+
+        <!-- Description -->
+        <p class="result-description" id="user-status-desc">
+          Your profile shows strong competence in execution and tools. Focus on risk awareness to reach "Deployable" status.
+        </p>
+
+        <!-- Download Button -->
+        <button class="btn-download-pdf" onclick="downloadReportPDF()">
+          Download Report PDF
+        </button>
+
+        <a href="index.html" class="back-to-home">&larr; Back to Home</a>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Assessment Questions Data
+    const assessmentQuestions = [
+      {
+        id: 1,
+        dimension: 'Execution & Practical Skills',
+        question: 'How comfortable are you executing tasks with minimal supervision?',
+        options: [
+          { text: 'Very comfortable - I work independently', points: 4 },
+          { text: 'Mostly comfortable - I need occasional guidance', points: 3 },
+          { text: 'Somewhat comfortable - I need regular support', points: 2 },
+          { text: 'Not comfortable - I need close supervision', points: 1 }
+        ]
+      },
+      {
+        id: 2,
+        dimension: 'Tool & Platform Proficiency',
+        question: 'How quickly can you learn and adapt to new tools or platforms?',
+        options: [
+          { text: 'Very quickly - I pick up new tools easily', points: 4 },
+          { text: 'Quickly - Takes me a few days to get proficient', points: 3 },
+          { text: 'Moderately - Takes me a couple of weeks', points: 2 },
+          { text: 'Slowly - I need extensive training and time', points: 1 }
+        ]
+      },
+      {
+        id: 3,
+        dimension: 'Problem Solving & Logic',
+        question: 'When facing a complex problem, how do you typically respond?',
+        options: [
+          { text: 'Break it down systematically and solve it', points: 4 },
+          { text: 'Usually solve it with some trial and error', points: 3 },
+          { text: 'Struggle but eventually find a solution', points: 2 },
+          { text: 'Need help from more experienced colleagues', points: 1 }
+        ]
+      },
+      {
+        id: 4,
+        dimension: 'Communication & Role Clarity',
+        question: 'How do you handle unclear project requirements?',
+        options: [
+          { text: 'Ask clarifying questions and document expectations', points: 4 },
+          { text: 'Usually ask questions when confused', points: 3 },
+          { text: 'Try to figure it out myself first', points: 2 },
+          { text: 'Proceed with my best guess', points: 1 }
+        ]
+      },
+      {
+        id: 5,
+        dimension: 'Domain Knowledge',
+        question: 'How well do you understand industry best practices in your domain?',
+        options: [
+          { text: 'Excellent - I stay updated with latest practices', points: 4 },
+          { text: 'Good - I know the fundamentals well', points: 3 },
+          { text: 'Fair - I have basic knowledge', points: 2 },
+          { text: 'Limited - I\'m still learning the basics', points: 1 }
+        ]
+      },
+      {
+        id: 6,
+        dimension: 'Risk Awareness & Compliance',
+        question: 'How do you approach security and compliance in your work?',
+        options: [
+          { text: 'Always prioritize and follow all guidelines', points: 4 },
+          { text: 'Usually follow guidelines, sometimes overlook minor issues', points: 3 },
+          { text: 'Follow guidelines when reminded', points: 2 },
+          { text: 'Security is not my primary concern', points: 1 }
+        ]
+      },
+      {
+        id: 7,
+        dimension: 'Execution & Practical Skills',
+        question: 'How do you track and manage your work progress?',
+        options: [
+          { text: 'Very organized - I use systems and track everything', points: 4 },
+          { text: 'Organized - I track most important tasks', points: 3 },
+          { text: 'Somewhat organized - I track informally', points: 2 },
+          { text: 'Not organized - I rely on memory', points: 1 }
+        ]
+      },
+      {
+        id: 8,
+        dimension: 'Tool & Platform Proficiency',
+        question: 'How many relevant tools/platforms are you proficient with?',
+        options: [
+          { text: '4+ tools/platforms', points: 4 },
+          { text: '3 tools/platforms', points: 3 },
+          { text: '1-2 tools/platforms', points: 2 },
+          { text: 'Still learning first tool', points: 1 }
+        ]
+      },
+      {
+        id: 9,
+        dimension: 'Problem Solving & Logic',
+        question: 'How do you approach testing your own work?',
+        options: [
+          { text: 'Thorough - I test multiple scenarios', points: 4 },
+          { text: 'Good - I test happy path and common issues', points: 3 },
+          { text: 'Basic - I do minimal testing', points: 2 },
+          { text: 'I don\'t usually test my own work', points: 1 }
+        ]
+      },
+      {
+        id: 10,
+        dimension: 'Communication & Role Clarity',
+        question: 'How comfortable are you presenting your work or ideas?',
+        options: [
+          { text: 'Very comfortable - I present clearly and confidently', points: 4 },
+          { text: 'Comfortable - I can present with minimal preparation', points: 3 },
+          { text: 'Somewhat - I need time to prepare', points: 2 },
+          { text: 'Not comfortable - I prefer written communication', points: 1 }
+        ]
+      }
+    ];
+
+    let currentAnswers = {};
+
+    // Start Assessment
+    function startAssessment() {
+      document.getElementById('landing-state').style.display = 'none';
+      document.getElementById('assessment-state').style.display = 'block';
+      document.getElementById('total-questions').innerText = assessmentQuestions.length;
+      renderQuestions();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Render All Questions
+    function renderQuestions() {
+      const wrapper = document.getElementById('questions-wrapper');
+      wrapper.innerHTML = '';
+
+      assessmentQuestions.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question-card';
+        
+        let optionsHTML = '';
+        q.options.forEach((opt, optIndex) => {
+          optionsHTML += `
+            <label class="option-label">
+              <input type="radio" name="q${q.id}" value="${opt.points}" 
+                onchange="updateProgress()">
+              <span>${opt.text}</span>
+            </label>
+          `;
+        });
+
+        questionDiv.innerHTML = `
+          <div class="question-number">${index + 1}</div>
+          <div class="question-text">${q.question}</div>
+          <div class="options-group">
+            ${optionsHTML}
+          </div>
+        `;
+
+        wrapper.appendChild(questionDiv);
+      });
+    }
+
+    // Update Progress Bar
+    function updateProgress() {
+      let answered = 0;
+      assessmentQuestions.forEach(q => {
+        const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+        if (selected) answered++;
+      });
+
+      const percentage = (answered / assessmentQuestions.length) * 100;
+      document.getElementById('progress-fill').style.width = percentage + '%';
+      document.getElementById('current-question').innerText = answered;
+    }
+
+    // Submit Assessment & Calculate Score
+    function submitAssessment() {
+      let totalPoints = 0;
+      let answered = 0;
+
+      assessmentQuestions.forEach(q => {
+        const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+        if (selected) {
+          totalPoints += parseInt(selected.value);
+          answered++;
+        }
+      });
+
+      if (answered !== assessmentQuestions.length) {
+        alert('Please answer all questions before submitting.');
+        return;
+      }
+
+      // Calculate final score out of 100
+      const maxPoints = assessmentQuestions.length * 4;
+      const finalScore = Math.round((totalPoints / maxPoints) * 100);
+
+      // Determine status
+      let statusTitle, statusDesc;
+      if (finalScore >= 85) {
+        statusTitle = 'You are Deployable!';
+        statusDesc = 'Excellent! Your profile demonstrates strong competence across all dimensions. You are ready to take on challenging roles immediately.';
+      } else if (finalScore >= 70) {
+        statusTitle = 'You are Job-Ready!';
+        statusDesc = 'Good performance! Your profile shows strong competence in most areas. Focus on the areas with lower scores to reach "Deployable" status.';
+      } else if (finalScore >= 50) {
+        statusTitle = 'You are Ready with Support!';
+        statusDesc = 'You have a foundation to build on. With targeted improvement in key areas, you can quickly become job-ready.';
+      } else {
+        statusTitle = 'Keep Learning!';
+        statusDesc = 'Continue developing your skills. Focus on practical experience and targeted learning in all six dimensions.';
+      }
+
+      // Show Result
+      document.getElementById('assessment-state').style.display = 'none';
+      document.getElementById('result-state').style.display = 'flex';
+      document.getElementById('user-score').innerText = finalScore;
+      document.getElementById('user-status-title').innerText = statusTitle;
+      document.getElementById('user-status-desc').innerText = statusDesc;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Reset Assessment
+    function resetAssessment() {
+      currentAnswers = {};
+      assessmentQuestions.forEach(q => {
+        const radios = document.querySelectorAll(`input[name="q${q.id}"]`);
+        radios.forEach(radio => radio.checked = false);
+      });
+      document.getElementById('current-question').innerText = '0';
+      document.getElementById('progress-fill').style.width = '0%';
+    }
+
+    // Download Report PDF
+    function downloadReportPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const score = document.getElementById('user-score').innerText;
+      const statusTitle = document.getElementById('user-status-title').innerText;
+
+      // Header Banner
+      doc.setFillColor(7, 26, 61);
+      doc.rect(0, 0, 210, 28, 'F');
+      
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('Helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.text('SOXIT ACADEMIA', 20, 18);
+
+      // Report Header
+      doc.setTextColor(7, 26, 61);
+      doc.setFontSize(22);
+      doc.text('Role Readiness Index (RRI) Report', 20, 48);
+
+      doc.setDrawColor(226, 232, 240);
+      doc.setLineWidth(0.8);
+      doc.line(20, 54, 190, 54);
+
+      // Score Display
+      doc.setFontSize(13);
+      doc.setTextColor(100, 116, 139);
+      doc.text('Overall RRI Benchmark Score:', 20, 70);
+
+      doc.setFontSize(32);
+      doc.setTextColor(10, 168, 120);
+      doc.text(`${score} / 100`, 20, 85);
+
+      // Status Indicator
+      doc.setFontSize(13);
+      doc.setTextColor(100, 116, 139);
+      doc.text('Current Readiness Status:', 20, 102);
+
+      doc.setFontSize(18);
+      doc.setTextColor(7, 26, 61);
+      doc.text(statusTitle, 20, 114);
+
+      // Detail Summary
+      doc.setFontSize(10);
+      doc.setTextColor(100, 116, 139);
+      doc.setFont('Helvetica', 'normal');
+      
+      const summaryText = "Your profile shows strong competence in execution and tools. Focus on risk awareness to reach 'Deployable' status.";
+      const splitText = doc.splitTextToSize(summaryText, 170);
+      doc.text(splitText, 20, 128);
+
+      // 6 Dimensions Breakdown Table
+      doc.setFont('Helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(7, 26, 61);
+      doc.text('6-Dimension Competency Matrix:', 20, 150);
+
+      const dimensions = [
+        { name: 'Execution & Practical Skills', score: '88%' },
+        { name: 'Tool & Platform Proficiency', score: '85%' },
+        { name: 'Problem Solving & Logic', score: '80%' },
+        { name: 'Communication & Role Clarity', score: '82%' },
+        { name: 'Domain Knowledge', score: '79%' },
+        { name: 'Risk Awareness & Compliance', score: '68%' }
+      ];
+
+      let currentY = 162;
+      dimensions.forEach(dim => {
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(50, 50, 50);
+        doc.text(dim.name, 20, currentY);
+        
+        doc.setFont('Helvetica', 'bold');
+        doc.setTextColor(10, 168, 120);
+        doc.text(dim.score, 170, currentY);
+        
+        doc.setDrawColor(240, 240, 240);
+        doc.line(20, currentY + 3, 190, currentY + 3);
+        currentY += 12;
+      });
+
+      // Footer
+      doc.setFont('Helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(150, 150, 150);
+      doc.text('Generated by SOXIT Academia • cao.soxit.in', 20, 280);
+
+      doc.save(`SOXIT_RRI_Report_${score}.pdf`);
+    }
+  </script>
+
+<script src="../site-shell.js"></script>
+</body>
+</html>

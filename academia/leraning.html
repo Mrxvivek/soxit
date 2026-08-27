@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOXIT Academia — Learning</title>
+    <!-- Fonts & External Libraries -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #030712;
+            --bg-card: rgba(15, 23, 42, 0.65);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --border-glow: rgba(56, 189, 248, 0.25);
+            --border-glow-hover: rgba(168, 85, 247, 0.6);
+            --primary-cyan: #38bdf8;
+            --primary-blue: #3b82f6;
+            --primary-purple: #a855f7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient Glow Backgrounds */
+        .ambient-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #a855f7 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Badges & Buttons */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: var(--primary-cyan);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--primary-cyan);
+            box-shadow: 0 0 8px var(--primary-cyan);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(168, 85, 247, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Layout Structure */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Cards & Glassmorphism */
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            padding: 32px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: var(--border-glow-hover);
+            box-shadow: 0 12px 40px rgba(168, 85, 247, 0.15);
+            background: var(--bg-card-hover);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-cyan);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover .card-icon {
+            transform: rotate(5deg) scale(1.1);
+            background: rgba(168, 85, 247, 0.2);
+            color: #fff;
+            border-color: var(--primary-purple);
+        }
+
+        .card-cta {
+            margin-top: 24px;
+            color: var(--primary-cyan);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: gap 0.3s ease;
+        }
+
+        .glass-card:hover .card-cta {
+            gap: 14px;
+            color: var(--primary-purple);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 60px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .hero-visual {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            border-radius: 24px;
+            overflow: hidden;
+            background: radial-gradient(circle at center, rgba(15, 23, 42, 0.8) 0%, rgba(3, 7, 18, 0.95) 100%);
+        }
+
+        #hero-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* SECTION 1: CHOOSE HOW YOU WANT TO LEARN */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* SECTION 2: LEARNING PATHS */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .full-stack-flip,
+        .ai-flip,
+        .data-analytics-flip,
+        .cloud-devops-flip,
+        .cybersecurity-flip,
+        .uiux-flip {
+            min-height: 410px;
+            perspective: 1200px;
+            cursor: pointer;
+        }
+
+        .full-stack-flip-inner,
+        .ai-flip-inner,
+        .data-analytics-flip-inner,
+        .cloud-devops-flip-inner,
+        .cybersecurity-flip-inner,
+        .uiux-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 410px;
+            transition: transform 0.7s ease;
+            transform-style: preserve-3d;
+        }
+
+        .full-stack-flip.is-flipped .full-stack-flip-inner,
+        .ai-flip.is-flipped .ai-flip-inner,
+        .data-analytics-flip.is-flipped .data-analytics-flip-inner,
+        .cloud-devops-flip.is-flipped .cloud-devops-flip-inner,
+        .cybersecurity-flip.is-flipped .cybersecurity-flip-inner,
+        .uiux-flip.is-flipped .uiux-flip-inner {
+            transform: rotateY(180deg);
+        }
+
+        .full-stack-face,
+        .ai-face,
+        .data-analytics-face,
+        .cloud-devops-face,
+        .cybersecurity-face,
+        .uiux-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .full-stack-flip .glass-card:hover,
+        .ai-flip .glass-card:hover,
+        .data-analytics-flip .glass-card:hover,
+        .cloud-devops-flip .glass-card:hover,
+        .cybersecurity-flip .glass-card:hover,
+        .uiux-flip .glass-card:hover {
+            transform: none;
+            border-color: var(--border-glow);
+            box-shadow: none;
+            background: var(--bg-card);
+        }
+
+        .full-stack-back,
+        .ai-back,
+        .data-analytics-back,
+        .cloud-devops-back,
+        .cybersecurity-back,
+        .uiux-back {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 32px;
+            color: var(--text-main);
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+            border: 1px solid var(--border-glow-hover);
+            border-radius: 20px;
+            transform: rotateY(180deg);
+        }
+
+        .full-stack-back h3,
+        .ai-back h3,
+        .data-analytics-back h3,
+        .cloud-devops-back h3,
+        .cybersecurity-back h3,
+        .uiux-back h3 { margin-bottom: 10px; }
+        .full-stack-back p,
+        .ai-back p,
+        .data-analytics-back p,
+        .cloud-devops-back p,
+        .cybersecurity-back p,
+        .uiux-back p { color: var(--text-muted); }
+
+        .full-stack-back ul,
+        .ai-back ul,
+        .data-analytics-back ul,
+        .cloud-devops-back ul,
+        .cybersecurity-back ul,
+        .uiux-back ul {
+            display: grid;
+            gap: 8px;
+            margin: 20px 0;
+            padding-left: 20px;
+            color: #dbeafe;
+        }
+
+        .flip-hint {
+            margin-top: auto;
+            color: var(--primary-cyan);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .full-stack-flip-inner,
+            .ai-flip-inner,
+            .data-analytics-flip-inner,
+            .cloud-devops-flip-inner,
+            .cybersecurity-flip-inner,
+            .uiux-flip-inner { transition: none; }
+        }
+
+        .path-visual-preview {
+            height: 120px;
+            width: 100%;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .skill-tag {
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.75rem;
+            color: var(--primary-cyan);
+        }
+
+        /* SECTION 3: LEARNING EXPERIENCE */
+        .experience-card {
+            position: relative;
+        }
+
+        .experience-num {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.08);
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .glass-card:hover .experience-num {
+            color: rgba(56, 189, 248, 0.25);
+        }
+
+        /* SECTION 4: HOW LEARNING WORKS (TIMELINE) */
+        .timeline-wrapper {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
+            transform: translateY(-50%);
+            z-index: 0;
+            box-shadow: 0 0 12px var(--primary-cyan);
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-step {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-step:hover {
+            border-color: var(--primary-purple);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+        }
+
+        .step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 12px auto;
+            font-size: 0.9rem;
+        }
+
+        /* SECTION 5: FEATURED LEARNING */
+        .featured-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .course-tag {
+            align-self: flex-start;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: var(--primary-purple);
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        /* SECTION 6: SKILLS GRID */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .skill-pill {
+            padding: 14px 28px;
+            border-radius: 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            color: var(--text-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-pill:hover {
+            transform: scale(1.08) translateY(-3px);
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            background: rgba(30, 41, 59, 0.9);
+            color: #fff;
+        }
+
+        .skill-pill svg {
+            transition: transform 0.3s ease;
+        }
+
+        .skill-pill:hover svg {
+            transform: rotate(15deg);
+            color: var(--primary-cyan);
+        }
+
+        /* SECTION 7: DASHBOARD PROGRESS */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .progress-circle-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .circular-chart {
+            max-width: 180px;
+            max-height: 180px;
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.05);
+            stroke-width: 3.8;
+        }
+
+        .circle {
+            fill: none;
+            stroke-width: 3.8;
+            stroke-linecap: round;
+            stroke: var(--primary-cyan);
+        }
+
+        .percentage {
+            fill: #fff;
+            font-family: var(--font-heading);
+            font-size: 0.5em;
+            text-anchor: middle;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--primary-purple);
+        }
+
+        .progress-bar-bg {
+            height: 6px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-cyan));
+            border-radius: 3px;
+        }
+
+        /* FINAL CTA */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(3, 7, 18, 1) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 32px;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .faq-option {
+            padding: 64px 0;
+            text-align: center;
+            background: #f1f5f9;
+        }
+
+        .faq-option h2 {
+            margin-bottom: 10px;
+            color: var(--text-dark-primary);
+        }
+
+        .faq-option p {
+            margin-bottom: 24px;
+            color: var(--text-dark-secondary);
+        }
+        .cta-content {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        #cta-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* RESPONSIVE STYLES */
+        @media (max-width: 1024px) {
+            .hero-content h1 { font-size: 2.8rem; }
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .timeline-grid { grid-template-columns: 1fr; gap: 20px; }
+            .timeline-line { display: none; }
+            .dashboard-container { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .btn-group { justify-content: center; }
+            .grid-4, .grid-3, .dashboard-stats { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2.2rem; }
+            section { padding: 60px 0; }
+            .cta-section { padding: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow" style="top: -100px; left: -100px; width: 500px; height: 500px; background: rgba(56, 189, 248, 0.15);"></div>
+    <div class="ambient-glow" style="top: 35%; right: -100px; width: 600px; height: 600px; background: rgba(168, 85, 247, 0.12);"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="badge">
+                        <span class="badge-dot"></span>
+                        SOXIT ACADEMIA • LEARNING
+                    </div>
+                    <h1>Learn Today.<br><span class="gradient-text">Build Tomorrow.</span></h1>
+                    <p>Build practical technology skills through structured learning, hands-on practice, projects, and career-focused learning paths.</p>
+                    <div class="btn-group">
+                        <a href="#explore" class="btn btn-primary">Explore Learning →</a>
+                        <a href="#paths" class="btn btn-secondary">Choose Your Path →</a>
+                    </div>
+                </div>
+                <div class="hero-visual glass-card">
+                    <div id="hero-canvas"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: CHOOSE HOW YOU WANT TO LEARN -->
+    <section id="explore">
+        <div class="container">
+            <div class="section-header">
+                <h2>Choose How You <span class="gradient-text">Want to Learn</span></h2>
+                <p>Start with the learning experience that matches your goals.</p>
+            </div>
+            <div class="grid-4">
+                <div class="glass-card">
+                    <div class="card-icon">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+                    </div>
+                    <h3>Learn by Role</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Follow a structured learning path based on the technology role you want to build toward.</p>
+                    <a href="#paths" class="card-cta">Explore Roles →</a>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18h6m-3 3v-3m-4-2.5a6.5 6.5 0 118 0c-.8 0-1.5.5-2 1.2V17h-4v-0.3c-.5-.7-1.2-1.2-2-1.2z"/></svg>
+                    </div>
+                    <h3>Learn by Skill</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Build individual technical and professional skills step by step.</p>
+                    <a href="#skills" class="card-cta">Explore Skills →</a>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <h3>Learn by Project</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Turn your knowledge into practical projects and real-world solutions.</p>
+                    <a href="#featured" class="card-cta">Explore Projects →</a>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon">
+                        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    </div>
+                    <h3>Learn by Practice</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Strengthen your understanding through practical exercises and activities.</p>
+                    <a href="#journey" class="card-cta">Start Practicing →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: LEARNING PATHS -->
+    <section id="paths">
+        <div class="container">
+            <div class="section-header">
+                <h2>Explore <span class="gradient-text">Learning Paths</span></h2>
+                <p>Structured journeys designed to help you move from fundamentals to practical capability.</p>
+            </div>
+            <div class="grid-3">
+                <div class="ai-flip" tabindex="0" role="button" aria-pressed="false" aria-label="AI and Machine Learning card. Click to view related information.">
+                    <div class="ai-flip-inner">
+                        <div class="ai-face glass-card">
+                            <div class="path-visual-preview">
+                                <svg width="48" height="48" fill="none" stroke="var(--primary-cyan)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 6v6l4 2"/></svg>
+                            </div>
+                            <h3>AI &amp; Machine Learning</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;">Learn Python, data, machine learning, AI concepts, and intelligent applications.</p>
+                            <div class="tags-container">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">Machine Learning</span>
+                                <span class="skill-tag">AI</span>
+                                <span class="skill-tag">Data</span>
+                            </div>
+                            <a href="#cta" class="card-cta">Start Learning →</a>
+                        </div>
+                        <div class="ai-face ai-back">
+                            <h3>AI &amp; Machine Learning</h3>
+                            <p>Turn data into intelligent applications through a practical learning path.</p>
+                            <ul>
+                                <li>Use Python for data preparation and analysis</li>
+                                <li>Train and evaluate machine learning models</li>
+                                <li>Explore AI concepts and intelligent applications</li>
+                                <li>Build a data-driven portfolio project</li>
+                            </ul>
+                            <span class="flip-hint">Click the card to return</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="full-stack-flip" tabindex="0" role="button" aria-pressed="false" aria-label="Full Stack Development learning card. Click to view related information.">
+                    <div class="full-stack-flip-inner">
+                        <div class="full-stack-face full-stack-front glass-card">
+                            <div class="path-visual-preview">
+                                <svg width="48" height="48" fill="none" stroke="var(--primary-purple)" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+                            </div>
+                            <h3>Full Stack Development</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;">Learn frontend, backend, databases, APIs, and modern web application development.</p>
+                            <div class="tags-container">
+                                <span class="skill-tag">HTML</span>
+                                <span class="skill-tag">CSS</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Backend</span>
+                            </div>
+                            <a href="#cta" class="card-cta">Start Learning →</a>
+                        </div>
+                        <div class="full-stack-face full-stack-back">
+                            <h3>Full Stack Development</h3>
+                            <p>Build and connect every layer of a modern web application.</p>
+                            <ul>
+                                <li>Create responsive interfaces with HTML, CSS, and JavaScript</li>
+                                <li>Build React components and manage application state</li>
+                                <li>Connect backend services, databases, and APIs</li>
+                                <li>Finish a deployable portfolio web application</li>
+                            </ul>
+                            <span class="flip-hint">Click the card to return</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="data-analytics-flip" tabindex="0" role="button" aria-pressed="false" aria-label="Data Analytics card. Click to view related information.">
+                    <div class="data-analytics-flip-inner">
+                        <div class="data-analytics-face glass-card">
+                            <div class="path-visual-preview">
+                                <svg width="48" height="48" fill="none" stroke="var(--primary-blue)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 20V10m-6 10V4M6 20v-6"/></svg>
+                            </div>
+                            <h3>Data Analytics</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;">Learn how to work with data, analyze information, create visualizations, and generate insights.</p>
+                            <div class="tags-container">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">SQL</span>
+                                <span class="skill-tag">Excel</span>
+                                <span class="skill-tag">Data Visualization</span>
+                            </div>
+                            <a href="#cta" class="card-cta">Start Learning →</a>
+                        </div>
+                        <div class="data-analytics-face data-analytics-back">
+                            <h3>Data Analytics</h3>
+                            <p>Turn business data into clear, useful insights.</p>
+                            <ul>
+                                <li>Collect, clean, and organize structured data</li>
+                                <li>Query datasets with SQL and analyze them with Python</li>
+                                <li>Create dashboards and meaningful visualizations</li>
+                                <li>Present findings through a practical analytics project</li>
+                            </ul>
+                            <span class="flip-hint">Click the card to return</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cloud-devops-flip" tabindex="0" role="button" aria-pressed="false" aria-label="Cloud and DevOps card. Click to view related information.">
+                    <div class="cloud-devops-flip-inner">
+                        <div class="cloud-devops-face glass-card">
+                            <div class="path-visual-preview">
+                                <svg width="48" height="48" fill="none" stroke="var(--primary-cyan)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+                            </div>
+                            <h3>Cloud &amp; DevOps</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;">Understand cloud infrastructure, deployment, automation, containers, and DevOps practices.</p>
+                            <div class="tags-container">
+                                <span class="skill-tag">Cloud</span>
+                                <span class="skill-tag">Linux</span>
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">CI/CD</span>
+                            </div>
+                            <a href="#cta" class="card-cta">Start Learning →</a>
+                        </div>
+                        <div class="cloud-devops-face cloud-devops-back">
+                            <h3>Cloud &amp; DevOps</h3>
+                            <p>Learn how reliable applications are deployed and maintained.</p>
+                            <ul>
+                                <li>Work with cloud infrastructure and Linux environments</li>
+                                <li>Package applications with Docker containers</li>
+                                <li>Automate testing and delivery with CI/CD workflows</li>
+                                <li>Plan a reliable deployment for a web application</li>
+                            </ul>
+                            <span class="flip-hint">Click the card to return</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cybersecurity-flip" tabindex="0" role="button" aria-pressed="false" aria-label="Cybersecurity card. Click to view related information.">
+                    <div class="cybersecurity-flip-inner">
+                        <div class="cybersecurity-face glass-card">
+                            <div class="path-visual-preview">
+                                <svg width="48" height="48" fill="none" stroke="var(--primary-purple)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <h3>Cybersecurity</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;">Build foundational knowledge of secure systems, networks, and cybersecurity practices.</p>
+                            <div class="tags-container">
+                                <span class="skill-tag">Networking</span>
+                                <span class="skill-tag">Linux</span>
+                                <span class="skill-tag">Security</span>
+                                <span class="skill-tag">Web Security</span>
+                            </div>
+                            <a href="#cta" class="card-cta">Start Learning →</a>
+                        </div>
+                        <div class="cybersecurity-face cybersecurity-back">
+                            <h3>Cybersecurity</h3>
+                            <p>Build safer systems by understanding common security risks.</p>
+                            <ul>
+                                <li>Understand networks, systems, and security principles</li>
+                                <li>Use Linux tools to inspect and protect environments</li>
+                                <li>Recognize web vulnerabilities and defensive practices</li>
+                                <li>Create a security review for a practical project</li>
+                            </ul>
+                            <span class="flip-hint">Click the card to return</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="uiux-flip" tabindex="0" role="button" aria-pressed="false" aria-label="UI and UX Design card. Click to view related information.">
+                    <div class="uiux-flip-inner">
+                        <div class="uiux-face glass-card">
+                            <div class="path-visual-preview">
+                                <svg width="48" height="48" fill="none" stroke="var(--primary-blue)" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+                            </div>
+                            <h3>UI/UX Design</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 8px;">Learn user research, wireframes, interface design, prototyping, and digital experiences.</p>
+                            <div class="tags-container">
+                                <span class="skill-tag">UX</span>
+                                <span class="skill-tag">UI</span>
+                                <span class="skill-tag">Wireframes</span>
+                                <span class="skill-tag">Prototyping</span>
+                            </div>
+                            <a href="#cta" class="card-cta">Start Learning →</a>
+                        </div>
+                        <div class="uiux-face uiux-back">
+                            <h3>UI/UX Design</h3>
+                            <p>Design useful, accessible experiences around real user needs.</p>
+                            <ul>
+                                <li>Research users and define clear experience goals</li>
+                                <li>Plan information architecture and wireframes</li>
+                                <li>Design interfaces and interactive prototypes</li>
+                                <li>Present a polished product experience in your portfolio</li>
+                            </ul>
+                            <span class="flip-hint">Click the card to return</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: LEARNING EXPERIENCE -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Learning That Goes <span class="gradient-text">Beyond Courses</span></h2>
+            </div>
+            <div class="grid-4">
+                <div class="glass-card experience-card">
+                    <span class="experience-num">01</span>
+                    <div class="card-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
+                    <h3>Structured Learning</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Follow clear learning paths from fundamentals to advanced concepts.</p>
+                </div>
+                <div class="glass-card experience-card">
+                    <span class="experience-num">02</span>
+                    <div class="card-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+                    <h3>Practical Learning</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Apply concepts through exercises, activities, and practical tasks.</p>
+                </div>
+                <div class="glass-card experience-card">
+                    <span class="experience-num">03</span>
+                    <div class="card-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+                    <h3>Project-Based Learning</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Build meaningful projects that demonstrate what you have learned.</p>
+                </div>
+                <div class="glass-card experience-card">
+                    <span class="experience-num">04</span>
+                    <div class="card-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                    <h3>Career-Focused Learning</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Develop skills that support your long-term professional growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: HOW LEARNING WORKS -->
+    <section id="journey">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your Learning <span class="gradient-text">Journey</span></h2>
+            </div>
+            <div class="timeline-wrapper">
+                <div class="timeline-line"></div>
+                <div class="timeline-grid">
+                    <div class="timeline-step">
+                        <div class="step-num">01</div>
+                        <h4>Discover</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Choose what you want to learn.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="step-num">02</div>
+                        <h4>Learn</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Understand concepts through structured content.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="step-num">03</div>
+                        <h4>Practice</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Apply your knowledge through practical activities.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="step-num">04</div>
+                        <h4>Build</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Create projects using your skills.</p>
+                    </div>
+                    <div class="timeline-step">
+                        <div class="step-num">05</div>
+                        <h4>Grow</h4>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Continue improving and expanding your capabilities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: FEATURED LEARNING -->
+    <section id="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured <span class="gradient-text">Learning</span></h2>
+            </div>
+            <div class="grid-3">
+                <div class="glass-card featured-card">
+                    <div>
+                        <span class="course-tag">AI & ML</span>
+                        <h3>AI Fundamentals</h3>
+                        <p style="color: var(--text-muted); margin-top: 8px;">Build a foundation in artificial intelligence and machine learning.</p>
+                    </div>
+                    <a href="#cta" class="card-cta">Explore Course →</a>
+                </div>
+                <div class="glass-card featured-card">
+                    <div>
+                        <span class="course-tag">Development</span>
+                        <h3>Modern Web Development</h3>
+                        <p style="color: var(--text-muted); margin-top: 8px;">Learn how modern web applications are designed and developed.</p>
+                    </div>
+                    <a href="#cta" class="card-cta">Explore Course →</a>
+                </div>
+                <div class="glass-card featured-card">
+                    <div>
+                        <span class="course-tag">Data</span>
+                        <h3>Data Analytics Essentials</h3>
+                        <p style="color: var(--text-muted); margin-top: 8px;">Understand data, analysis, visualization, and practical insights.</p>
+                    </div>
+                    <a href="#cta" class="card-cta">Explore Course →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: SKILLS GRID -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2>Build Skills <span class="gradient-text">That Matter</span></h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Python</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> JavaScript</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></svg> React</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg> SQL</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> AI</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 20V10m-6 10V4M6 20v-6"/></svg> Machine Learning</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Data Analytics</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg> Cloud</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/></svg> Docker</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 009 9"/></svg> Git</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg> UI/UX</div>
+                <div class="skill-pill"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Cybersecurity</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: LEARNING PROGRESS DASHBOARD -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Track Your <span class="gradient-text">Learning Journey</span></h2>
+            </div>
+            <div class="glass-card">
+                <div class="dashboard-container">
+                    <div class="progress-circle-wrapper">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path class="circle" stroke-dasharray="72, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <text x="18" y="20.35" class="percentage">72%</text>
+                        </svg>
+                        <h4 style="margin-top: 12px;">Overall Progress</h4>
+                    </div>
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div style="color: var(--text-muted); font-size: 0.85rem;">Completed Modules</div>
+                            <div class="stat-value">8</div>
+                            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 80%;"></div></div>
+                        </div>
+                        <div class="stat-card">
+                            <div style="color: var(--text-muted); font-size: 0.85rem;">Projects Built</div>
+                            <div class="stat-value">4</div>
+                            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 60%;"></div></div>
+                        </div>
+                        <div class="stat-card">
+                            <div style="color: var(--text-muted); font-size: 0.85rem;">Skills Developed</div>
+                            <div class="stat-value">12</div>
+                            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="stat-card">
+                            <div style="color: var(--text-muted); font-size: 0.85rem;">Achievements</div>
+                            <div class="stat-value">5</div>
+                            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 50%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: WHAT YOU WILL GAIN -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>What You'll <span class="gradient-text">Gain</span></h2>
+            </div>
+            <div class="grid-3">
+                <div class="glass-card">
+                    <div class="card-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+                    <h3>Technical Skills</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Master modern tools, frameworks, and programming capabilities required in industry.</p>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                    <h3>Practical Experience</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Gain confidence through hands-on practice, labs, and interactive activities.</p>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+                    <h3>Project Experience</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Build portfolio projects that showcase your ability to solve practical challenges.</p>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg></div>
+                    <h3>Problem Solving</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Develop structured thinking to analyze issues and engineer practical technical solutions.</p>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+                    <h3>Professional Skills</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Strengthen teamwork, communication, workflow agility, and professional execution.</p>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+                    <h3>Career Confidence</h3>
+                    <p style="color: var(--text-muted); margin-top: 8px;">Feel prepared for internships, technical discussions, and future career opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section id="cta">
+        <div class="container">
+            <div class="cta-section">
+                <canvas id="cta-canvas"></canvas>
+                <div class="cta-content">
+                    <h2>Start Your <span class="gradient-text">Learning Journey</span></h2>
+                    <p style="color: var(--text-muted); margin: 20px 0 32px 0; font-size: 1.1rem;">Choose a path, build your skills, practice what you learn, and keep growing with SOXIT Academia.</p>
+                    <div class="btn-group">
+                        <a href="#paths" class="btn btn-primary">Explore Learning →</a>
+                        <a href="#explore" class="btn btn-secondary">Choose Your Path →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THREE.JS & ANIMATION SCRIPTS -->
+    <section class="faq-option" aria-labelledby="faq-option-title">
+        <div class="container">
+            <h2 id="faq-option-title">Have questions about learning?</h2>
+            <p>Review enrollment, prerequisites, program structure, and learning outcomes.</p>
+            <a href="questions.html" class="btn btn-primary">View FAQs <i data-lucide="arrow-right"></i></a>
+        </div>
+    </section>
+
+    <script>
+        // Hero Three.js Canvas Animation — Complete 3D Digital Workspace Scene
+        const initHeroScene = () => {
+            const container = document.getElementById('hero-canvas');
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // Lighting Setup
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            const pointLightCyan = new THREE.PointLight(0x38bdf8, 2, 50);
+            pointLightCyan.position.set(5, 5, 5);
+            scene.add(pointLightCyan);
+
+            const pointLightPurple = new THREE.PointLight(0xa855f7, 2, 50);
+            pointLightPurple.position.set(-5, -3, 3);
+            scene.add(pointLightPurple);
+
+            // Master Group for Mouse Parallax Rotation
+            const heroGroup = new THREE.Group();
+            scene.add(heroGroup);
+
+            // 1. LAPTOP 3D MODEL
+            const laptopGroup = new THREE.Group();
+            
+            // Base / Keyboard
+            const baseGeo = new THREE.BoxGeometry(3.6, 0.12, 2.4);
+            const baseMat = new THREE.MeshPhongMaterial({ color: 0x0f172a, specular: 0x38bdf8, shininess: 30 });
+            const laptopBase = new THREE.Mesh(baseGeo, baseMat);
+            laptopGroup.add(laptopBase);
+
+            // Screen Frame
+            const screenFrameGeo = new THREE.BoxGeometry(3.6, 2.2, 0.08);
+            const screenFrameMat = new THREE.MeshPhongMaterial({ color: 0x020617 });
+            const screenFrame = new THREE.Mesh(screenFrameGeo, screenFrameMat);
+            screenFrame.position.set(0, 1.1, -1.2);
+            screenFrame.rotation.x = -0.15;
+            laptopGroup.add(screenFrame);
+
+            // Canvas Dynamic Code Screen Texture
+            const screenCanvas = document.createElement('canvas');
+            screenCanvas.width = 512;
+            screenCanvas.height = 320;
+            const ctx = screenCanvas.getContext('2d');
+
+            const screenTexture = new THREE.CanvasTexture(screenCanvas);
+            const screenGeo = new THREE.PlaneGeometry(3.4, 2.0);
+            const screenMat = new THREE.MeshBasicMaterial({ map: screenTexture });
+            const screenMesh = new THREE.Mesh(screenGeo, screenMat);
+            screenMesh.position.set(0, 1.11, -1.15);
+            screenMesh.rotation.x = -0.15;
+            laptopGroup.add(screenMesh);
+
+            // Render Animated Code on Laptop Screen Canvas
+            let codeOffset = 0;
+            const drawScreenCode = () => {
+                ctx.fillStyle = '#030712';
+                ctx.fillRect(0, 0, screenCanvas.width, screenCanvas.height);
+
+                ctx.fillStyle = '#38bdf8';
+                ctx.font = 'bold 16px monospace';
+                ctx.fillText('> SOXIT Academia // Learning Workspace', 20, 30);
+
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '13px monospace';
+                const codeLines = [
+                    'class SkillPath {',
+                    '  constructor(role) {',
+                    '    this.role = role;',
+                    '    this.status = "Building";',
+                    '  }',
+                    '  async execute() {',
+                    '    await this.learn();',
+                    '    return "Success";',
+                    '  }',
+                    '}'
+                ];
+
+                codeLines.forEach((line, index) => {
+                    ctx.fillStyle = index === (Math.floor(codeOffset) % codeLines.length) ? '#a855f7' : '#94a3b8';
+                    ctx.fillText(line, 20, 65 + index * 22);
+                });
+
+                // Dashboard status box inside screen
+                ctx.strokeStyle = '#38bdf8';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(300, 50, 190, 120);
+                ctx.fillStyle = '#38bdf8';
+                ctx.fillText('MODULE: ACTIVE', 310, 75);
+                ctx.fillStyle = '#22c55e';
+                ctx.fillText('● COMPILING 88%', 310, 105);
+
+                screenTexture.needsUpdate = true;
+            };
+
+            laptopGroup.position.set(0, -0.6, 0);
+            laptopGroup.rotation.y = -0.25;
+            heroGroup.add(laptopGroup);
+
+            // 2. DIGITAL BOOKS STACK
+            const booksGroup = new THREE.Group();
+            const bookColors = [0x3b82f6, 0xa855f7, 0x38bdf8];
+            for (let i = 0; i < 3; i++) {
+                const bookGeo = new THREE.BoxGeometry(1.2, 0.18, 1.6);
+                const bookMat = new THREE.MeshPhongMaterial({ color: bookColors[i] });
+                const book = new THREE.Mesh(bookGeo, bookMat);
+                book.position.set(0, i * 0.2, 0);
+                book.rotation.y = (i * 0.25) - 0.2;
+                booksGroup.add(book);
+            }
+            booksGroup.position.set(-2.5, -0.6, 0.8);
+            heroGroup.add(booksGroup);
+
+            // 3. AI BRAIN / CORE OCTAHEDRON
+            const aiCoreGeo = new THREE.OctahedronGeometry(0.55, 2);
+            const aiCoreMat = new THREE.MeshPhongMaterial({
+                color: 0xa855f7,
+                wireframe: true,
+                emissive: 0x38bdf8,
+                emissiveIntensity: 0.5
+            });
+            const aiCore = new THREE.Mesh(aiCoreGeo, aiCoreMat);
+            aiCore.position.set(2.2, 1.4, -0.5);
+            heroGroup.add(aiCore);
+
+            // 4. FLOATING GRADUATION CAP
+            const capGroup = new THREE.Group();
+            const capTopGeo = new THREE.BoxGeometry(0.9, 0.04, 0.9);
+            const capMat = new THREE.MeshPhongMaterial({ color: 0x020617, specular: 0x38bdf8 });
+            const capTop = new THREE.Mesh(capTopGeo, capMat);
+            capTop.rotation.z = 0.2;
+            
+            const capBaseGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.25, 16);
+            const capBase = new THREE.Mesh(capBaseGeo, capMat);
+            capBase.position.y = -0.12;
+
+            capGroup.add(capTop);
+            capGroup.add(capBase);
+            capGroup.position.set(-2.0, 1.6, -0.8);
+            heroGroup.add(capGroup);
+
+            // 5. DATA CHARTS (BARS)
+            const chartGroup = new THREE.Group();
+            const heights = [0.4, 0.7, 0.5, 1.1, 0.8];
+            heights.forEach((h, idx) => {
+                const barGeo = new THREE.BoxGeometry(0.12, h, 0.12);
+                const barMat = new THREE.MeshPhongMaterial({ color: idx % 2 === 0 ? 0x38bdf8 : 0xa855f7 });
+                const bar = new THREE.Mesh(barGeo, barMat);
+                bar.position.set(idx * 0.22, h / 2, 0);
+                chartGroup.add(bar);
+            });
+            chartGroup.position.set(1.8, -0.6, 1.2);
+            heroGroup.add(chartGroup);
+
+            // 6. CONNECTED NODES & FLOATING PARTICLES
+            const particlesGeo = new THREE.BufferGeometry();
+            const count = 180;
+            const positions = new Float32Array(count * 3);
+
+            for (let i = 0; i < count * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 10;
+                positions[i + 1] = (Math.random() - 0.5) * 8;
+                positions[i + 2] = (Math.random() - 0.5) * 8;
+            }
+
+            particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const particlesMat = new THREE.PointsMaterial({
+                size: 0.04,
+                color: 0x38bdf8,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const particleSystem = new THREE.Points(particlesGeo, particlesMat);
+            scene.add(particleSystem);
+
+            camera.position.set(0, 0.8, 6.2);
+
+            // Parallax mouse movements
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
+            });
+
+            // Animation Loop
+            let clock = new THREE.Clock();
+            const animate = () => {
+                requestAnimationFrame(animate);
+                const elapsedTime = clock.getElapsedTime();
+
+                // Screen code update
+                codeOffset += 0.02;
+                drawScreenCode();
+
+                // Gentle floating floating animations
+                laptopGroup.position.y = -0.6 + Math.sin(elapsedTime * 1.5) * 0.08;
+                aiCore.rotation.x = elapsedTime * 0.5;
+                aiCore.rotation.y = elapsedTime * 0.8;
+                aiCore.position.y = 1.4 + Math.cos(elapsedTime * 2) * 0.12;
+
+                capGroup.rotation.y = elapsedTime * 0.4;
+                capGroup.position.y = 1.6 + Math.sin(elapsedTime * 1.8) * 0.1;
+
+                booksGroup.position.y = -0.6 + Math.sin(elapsedTime * 1.2 + 1) * 0.06;
+                chartGroup.position.y = -0.6 + Math.cos(elapsedTime * 1.6) * 0.05;
+
+                particleSystem.rotation.y = elapsedTime * 0.03;
+
+                // Mouse Parallax movement
+                heroGroup.rotation.y += (mouseX - heroGroup.rotation.y) * 0.05;
+                heroGroup.rotation.x += (-mouseY - heroGroup.rotation.x) * 0.05;
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        };
+
+        // Final CTA Background Canvas Particle Effect
+        const initCtaCanvas = () => {
+            const canvas = document.getElementById('cta-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const resize = () => {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            };
+            resize();
+
+            const particles = [];
+            for (let i = 0; i < 40; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 3 + 1,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    alpha: Math.random() * 0.5 + 0.2
+                });
+            }
+
+            const draw = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(56, 189, 248, ${p.alpha})`;
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(draw);
+            };
+
+            draw();
+            window.addEventListener('resize', resize);
+        };
+
+        const fullStackCard = document.querySelector('.full-stack-flip');
+        if (fullStackCard) {
+            const toggleFullStackCard = () => {
+                const isFlipped = fullStackCard.classList.toggle('is-flipped');
+                fullStackCard.setAttribute('aria-pressed', String(isFlipped));
+            };
+
+            fullStackCard.addEventListener('click', (event) => {
+                if (!event.target.closest('a')) toggleFullStackCard();
+            });
+            fullStackCard.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleFullStackCard();
+                }
+            });
+        }
+
+        const aiCard = document.querySelector('.ai-flip');
+        if (aiCard) {
+            const toggleAiCard = () => {
+                const isFlipped = aiCard.classList.toggle('is-flipped');
+                aiCard.setAttribute('aria-pressed', String(isFlipped));
+            };
+
+            aiCard.addEventListener('click', (event) => {
+                if (!event.target.closest('a')) toggleAiCard();
+            });
+            aiCard.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleAiCard();
+                }
+            });
+        }
+
+        document.querySelectorAll('.data-analytics-flip, .cloud-devops-flip, .cybersecurity-flip, .uiux-flip').forEach((card) => {
+            const toggleCard = () => {
+                const isFlipped = card.classList.toggle('is-flipped');
+                card.setAttribute('aria-pressed', String(isFlipped));
+            };
+
+            card.addEventListener('click', (event) => {
+                if (!event.target.closest('a')) toggleCard();
+            });
+            card.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggleCard();
+                }
+            });
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initHeroScene();
+            initCtaCanvas();
+        });
+    </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

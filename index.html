@@ -1,0 +1,1692 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SOXIT — Innovate. Learn. Transform.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Animated Background Video and Highlights */
+      .hero {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-bg-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        opacity: 0.35;
+        filter: brightness(0.8) contrast(1.1);
+      }
+
+      .hero-bg-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 50% 40%,
+            rgba(0, 150, 255, 0.25),
+            transparent 60%
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(10, 15, 25, 0.4),
+            rgba(10, 15, 25, 0.85)
+          );
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 0 35px rgba(0, 180, 255, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      /* About & Mission / Vision Styles */
+      .about-section,
+      .mission-section {
+        padding: 3.5rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .about-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 1.5rem;
+        backdrop-filter: blur(10px);
+      }
+
+      .mv-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .mv-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 1rem;
+        backdrop-filter: blur(10px);
+        transition:
+          transform 0.3s ease,
+          border-color 0.3s ease;
+      }
+
+      .mv-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255, 255, 255, 0.25);
+      }
+
+      .mv-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.2rem;
+      }
+      .mv-card[data-tone="mission"] .mv-icon {
+        background: var(--orange-light);
+        color: var(--orange-primary);
+      }
+      .mv-card[data-tone="vision"] .mv-icon {
+        background: var(--green-light);
+        color: var(--green-primary);
+      }
+
+      /* Hero headline word-in animation */
+      .hero-heading .word {
+        display: inline-block;
+        opacity: 0;
+        filter: blur(6px);
+        transform: translateY(14px);
+        animation: word-in 0.7s var(--ease-out) forwards;
+      }
+      @keyframes word-in {
+        to {
+          opacity: 1;
+          filter: blur(0);
+          transform: translateY(0);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .hero-heading .word {
+          animation: none;
+          opacity: 1;
+          filter: none;
+          transform: none;
+        }
+      }
+
+      /* Nav CTA */
+      .nav-cta {
+        white-space: nowrap;
+      }
+      @media (max-width: 980px) {
+        .nav-cta {
+          display: none;
+        }
+      }
+
+      /* Stats */
+      .stats-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2.5rem 2rem 0.75rem;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+      }
+      .stat-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 2rem 1.5rem;
+        text-align: center;
+      }
+      .stat-number {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+      .stat-card:nth-child(3n + 1) .stat-number {
+        color: var(--orange-primary);
+      }
+      .stat-card:nth-child(3n + 2) .stat-number {
+        color: var(--green-primary);
+      }
+      .stat-card:nth-child(3n + 3) .stat-number {
+        color: var(--yellow-primary);
+      }    .stat-label {
+        margin-top: 0.6rem;
+        font-size: 0.92rem;
+        color: var(--text-muted);
+      }
+
+      /* Interactive Technology Network */
+      .tech-network-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3.5rem 2rem;
+        display: grid;
+        grid-template-columns: minmax(280px, 460px) 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+      .tech-network-diagram {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        max-width: 460px;
+        margin: 0 auto;
+        perspective: 900px;
+      }
+      .tech-network-lines {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .tech-network-lines line {
+        stroke: rgba(255, 255, 255, 0.12);
+        stroke-width: 0.8;
+        stroke-dasharray: 2 3;
+        vector-effect: non-scaling-stroke;
+        transition:
+          stroke 0.3s ease,
+          stroke-width 0.3s ease;
+        animation: network-flow 5s linear infinite;
+      }
+      .tech-network-lines line.is-active {
+        stroke: rgba(15, 23, 42, 0.35);
+        stroke-width: 1;
+      }
+      .tech-hub {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 132px;
+        height: 132px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        z-index: 2;
+        box-shadow: 0 18px 35px rgba(15, 23, 42, 0.14), inset 0 0 22px rgba(255, 255, 255, 0.55);
+        transform-style: preserve-3d;
+        animation: hub-float 5s ease-in-out infinite;
+      }
+      .tech-hub strong {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 1.35rem;
+        letter-spacing: 0.04em;
+      }
+      .tech-hub span {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 0.2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .tech-node {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.4rem;
+        font-family: inherit;
+        z-index: 3;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s var(--ease-spring);
+      }
+      .tech-node-dot {
+        width: 76px;
+        height: 76px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        border: 1.5px solid var(--glass-border);
+        box-shadow: 0 16px 28px -12px rgba(15, 23, 42, 0.45), inset 0 0 14px rgba(255, 255, 255, 0.8);
+        transform-style: preserve-3d;
+        transition:
+          transform 0.3s var(--ease-spring),
+          box-shadow 0.3s ease,
+          border-color 0.3s ease;
+      }
+      .tech-node-dot svg {
+        width: 34px;
+        height: 34px;
+        filter: drop-shadow(0 3px 3px rgba(15, 23, 42, 0.15));
+      }
+      .tech-node-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        white-space: nowrap;
+      }
+      .tech-node:focus-visible .tech-node-dot,
+      .tech-node.is-active .tech-node-dot {
+        transform: scale(1.16);
+      }
+      .tech-node.is-active .tech-node-label {
+        color: var(--text-main);
+      }
+      .tech-node.is-dimmed {
+        opacity: 0.35;
+      }
+      .tech-node:hover .tech-node-dot,
+      .tech-node:focus-visible .tech-node-dot {
+        transform: translateY(-6px) rotateX(10deg) rotateY(-8deg) scale(1.08);
+        box-shadow: 0 22px 34px -12px rgba(15, 23, 42, 0.5), 0 0 0 5px rgba(249, 115, 22, 0.12);
+      }
+      .tech-node[data-tone="orange"] .tech-node-dot {
+        color: var(--orange-primary);
+      }
+      .tech-node[data-tone="green"] .tech-node-dot {
+        color: var(--green-primary);
+      }
+      .tech-node[data-tone="yellow"] .tech-node-dot {
+        color: var(--yellow-primary);
+      }
+      .tech-node.is-active[data-tone="orange"] .tech-node-dot {
+        border-color: var(--orange-primary);
+        box-shadow: 0 0 0 4px var(--orange-light);
+      }
+      .tech-node.is-active[data-tone="green"] .tech-node-dot {
+        border-color: var(--green-primary);
+        box-shadow: 0 0 0 4px var(--green-light);
+      }
+      .tech-node.is-active[data-tone="yellow"] .tech-node-dot {
+        border-color: var(--yellow-primary);
+        box-shadow: 0 0 0 4px var(--yellow-light);
+      }
+      @keyframes network-flow {
+        to {
+          stroke-dashoffset: -20;
+        }
+      }
+      @keyframes hub-float {
+        0%, 100% {
+          margin-top: 0;
+        }
+        50% {
+          margin-top: -5px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .tech-network-lines,
+        .tech-hub {
+          animation: none;
+        }
+      }
+
+      .tech-network-info {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 2.5rem;
+        min-height: 220px;
+      }
+      .tech-network-info .eyebrow {
+        margin-bottom: 0.6rem;
+      }
+      .tech-network-info h3 {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        margin-bottom: 0.8rem;
+        transition: opacity 0.25s ease;
+      }
+      .tech-network-info p {
+        color: var(--text-muted);
+        line-height: 1.7;
+        transition: opacity 0.25s ease;
+      }
+      @media (max-width: 860px) {
+        .tech-network-section {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Testimonials */
+      .testimonials-section {
+        background: rgba(255, 255, 255, 0.02);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 3.5rem 0;
+        overflow: hidden;
+      }
+      .testimonials-viewport {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        overflow: hidden;
+      }
+      .testimonials-track {
+        display: flex;
+        gap: 1.5rem;
+        transition: transform 0.6s var(--ease-out);
+      }
+      .testimonial-card {
+        flex: 0 0 calc(33.333% - 1rem);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 1.8rem;
+        display: flex;
+        flex-direction: column;
+      }
+      @media (max-width: 980px) {
+        .testimonial-card {
+          flex: 0 0 calc(50% - 0.75rem);
+        }
+      }
+      @media (max-width: 640px) {
+        .testimonial-card {
+          flex: 0 0 100%;
+        }
+      }
+      .testimonial-stars {
+        color: var(--yellow-primary);
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+      }
+      .testimonial-quote {
+        margin-top: 0.8rem;
+        color: var(--text-main);
+        line-height: 1.65;
+        font-size: 0.98rem;
+        flex-grow: 1;
+      }
+      .testimonial-person {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-top: 1.5rem;
+      }
+      .testimonial-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .testimonial-person strong {
+        display: block;
+        font-size: 0.9rem;
+      }
+      .testimonial-person span {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+      .testimonials-controls {
+        max-width: 1200px;
+        margin: 1.8rem auto 0;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.2rem;
+      }
+      .testimonials-dots {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .testimonials-dots button {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255, 255, 255, 0.15);
+        cursor: pointer;
+        padding: 0;
+        transition:
+          background 0.25s ease,
+          transform 0.25s ease;
+      }
+      .testimonials-dots button.is-active {
+        background: var(--orange-primary);
+        transform: scale(1.3);
+      }
+      .testimonials-arrow {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid var(--glass-border);
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition:
+          border-color 0.25s ease,
+          transform 0.2s ease;
+      }
+      .testimonials-arrow:hover {
+        border-color: var(--orange-primary);
+        transform: translateY(-2px);
+      }
+
+      /* Final CTA */
+      .final-cta-section {
+        position: relative;
+        overflow: hidden;
+        padding: 4.5rem 2rem;
+        text-align: center;
+      }
+      .final-cta-glow {
+        position: absolute;
+        inset: -20% -10%;
+        background:
+          radial-gradient(
+            circle at 15% 30%,
+            rgba(249, 115, 22, 0.14),
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 85% 25%,
+            rgba(34, 197, 94, 0.14),
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 50% 90%,
+            rgba(234, 179, 8, 0.14),
+            transparent 45%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .final-cta-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+      .final-cta-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+      }
+      .build-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin: 2.5rem auto 0;
+        max-width: 780px;
+        perspective: 900px;
+      }
+      .build-option {
+        padding: 1.2rem;
+        text-align: left;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.06);
+        transition:
+          transform 0.35s var(--ease-spring),
+          border-color 0.35s ease,
+          background 0.35s ease;
+      }
+      .build-option:hover {
+        transform: translateY(-8px) rotateX(4deg) rotateY(-4deg);
+        border-color: var(--orange-primary);
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .build-option-icon {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        margin-bottom: 0.8rem;
+        background: var(--orange-light);
+        color: var(--orange-primary);
+      }
+      .build-option:nth-child(2) .build-option-icon {
+        background: var(--green-light);
+        color: var(--green-primary);
+      }
+      .build-option:nth-child(3) .build-option-icon {
+        background: var(--yellow-light);
+        color: var(--yellow-dark);
+      }
+      .build-option strong {
+        display: block;
+        font-size: 0.92rem;
+      }
+      .build-option span {
+        display: block;
+        margin-top: 0.25rem;
+        color: var(--text-muted);
+        font-size: 0.78rem;
+        line-height: 1.4;
+      }
+      .contact-layout {
+        display: grid;
+        grid-template-columns: minmax(220px, 0.8fr) minmax(300px, 1.2fr);
+        gap: 2.5rem;
+        align-items: start;
+        max-width: 980px;
+        margin: 0 auto;
+        text-align: left;
+      }
+      .contact-copy {
+        padding-top: 0.5rem;
+      }
+      .contact-form {
+        display: grid;
+        gap: 1rem;
+        padding: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        text-align: left;
+      }
+      .contact-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .contact-field {
+        display: grid;
+        gap: 0.4rem;
+      }
+      .contact-field span {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--text-muted);
+      }
+      .contact-field input,
+      .contact-field select,
+      .contact-field textarea {
+        width: 100%;
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        padding: 0.75rem 0.85rem;
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.9);
+        font: inherit;
+      }
+      .contact-field textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+      .contact-field small {
+        color: var(--text-muted);
+        font-size: 0.72rem;
+      }
+      .contact-status {
+        min-height: 1.2rem;
+        color: var(--green-primary);
+        font-size: 0.85rem;
+      }
+      @media (max-width: 700px) {
+        .build-options,
+        .contact-layout,
+        .contact-form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader" id="loader" aria-hidden="true">
+      <div class="loader-inner">
+        <svg viewBox="0 0 80 80" width="64" height="64">
+          <circle class="loader-ring" cx="40" cy="40" r="34" />
+          <circle class="loader-node" cx="40" cy="8" r="5" />
+        </svg>
+        <p class="loader-word">SOXIT</p>
+      </div>
+    </div>
+
+    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+    <header class="navbar" id="navbar">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <!-- UPDATED LOGO IMAGE -->
+          <img
+            src="soxit.webp"
+            alt="error"
+            width="132"
+            height="132"
+            style="object-fit: contain"
+            onerror="
+              this.onerror = null;
+              this.src = 'logo.png';
+            "
+          />
+          <span></span>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="consulting/index.html" class="nav-link">Consulting</a>
+          <a href="academia/index.html" class="nav-link">Academia</a>
+          <a href="open-media/index.html" class="nav-link">Open Media</a>
+          <div class="nav-dropdown">
+            <button
+              class="nav-link nav-dropdown-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="aboutMenu"
+            >
+              About Us
+            </button>
+            <div class="nav-dropdown-menu" id="aboutMenu">
+              <a href="#about" class="nav-dropdown-link">Get to Know Us</a>
+              <a href="#careers" class="nav-dropdown-link">Careers</a>
+              <a href="#mission" class="nav-dropdown-link">Mission & Vision</a>
+            </div>
+          </div>
+          <a href="#about" class="nav-link nav-mobile-about">About Us</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a
+            href="#final-cta"
+            class="btn btn-secondary btn-ripple magnetic-button nav-cta"
+          >
+            Let's Build Together
+          </a>
+          <button class="btn btn-login js-open-login" id="openLogin">
+            Login
+          </button>
+          <button class="nav-burger" id="navBurger" aria-label="Toggle Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <!-- ANIMATED VIDEO BACKGROUND -->
+      <video class="hero-bg-video" autoplay loop muted playsinline>
+        <source
+          src="https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-41551-large.mp4"
+          type="video/mp4"
+        />
+      </video>
+
+      <!-- HIGHLIGHT OVERLAY -->
+      <div class="hero-bg-overlay"></div>
+
+      <canvas
+        id="particleCanvas"
+        class="hero-canvas"
+        style="position: absolute; inset: 0; pointer-events: none; z-index: 1"
+      ></canvas>
+
+      <div
+        class="hero-content glass-panel reveal"
+        style="
+          max-width: 800px;
+          margin: 4rem auto 0;
+          text-align: center;
+          padding: 2.5rem 2rem;
+        "
+      >
+        <p class="eyebrow">Consulting · Academia · Open Media</p>
+        <h1
+          class="hero-heading"
+          style="font-size: clamp(2.2rem, 4.5vw, 3.6rem)"
+        >
+          <span class="word" style="animation-delay: 0.05s">Empowering</span>
+          <span class="word" style="animation-delay: 0.13s">Innovation</span>
+          <span class="word" style="animation-delay: 0.21s">Through</span>
+          <span class="word" style="animation-delay: 0.29s">Industry,</span>
+          <span class="word" style="animation-delay: 0.37s">Academia</span>
+          <span class="word" style="animation-delay: 0.45s">&amp;</span>
+          <span class="word" style="animation-delay: 0.53s">Media</span>
+        </h1>
+        <p
+          style="
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 1rem auto 2rem;
+            opacity: 0;
+            animation: word-in 0.7s var(--ease-out) 0.75s forwards;
+          "
+        >
+          SOXIT bridges high-impact consulting, modern university education, and
+          open digital media.
+        </p>
+        <div
+          style="
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: word-in 0.7s var(--ease-out) 0.95s forwards;
+          "
+        >
+          <a href="#about" class="btn btn-primary btn-ripple">Get to Know Us</a>
+          <a href="#pillars" class="btn btn-ghost btn-ripple magnetic-button"
+            >Explore Pillars</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- PROOF IN NUMBERS -->
+    <section class="stats-section" id="stats">
+      <div class="stats-grid">
+        <div class="stat-card reveal reveal-up">
+          <div
+            class="stat-number"
+            data-count
+            data-target="99.9"
+            data-decimals="1"
+            data-suffix="%"
+          >
+            0%
+          </div>
+          <p class="stat-label">System Reliability</p>
+        </div>
+        <div class="stat-card reveal reveal-up">
+          <div class="stat-number" data-count data-target="150" data-suffix="+">
+            0+
+          </div>
+          <p class="stat-label">Projects Delivered</p>
+        </div>
+        <div class="stat-card reveal reveal-up">
+          <div class="stat-number" data-count data-target="12" data-suffix="+">
+            0+
+          </div>
+          <p class="stat-label">Years Combined Experience</p>
+        </div>
+        <div class="stat-card reveal reveal-up">
+          <div class="stat-number" data-count data-target="35" data-suffix="+">
+            0+
+          </div>
+          <p class="stat-label">Technology Specialists</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GET TO KNOW US SECTION -->
+    <section class="about-section" id="about">
+      <div class="about-card reveal">
+        <p class="eyebrow">About SOXIT</p>
+        <h2>Get to Know Us</h2>
+        <p
+          style="
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            margin-top: 1rem;
+          "
+        >
+          At SOXIT, we operate at the intersection of technology, education, and
+          digital storytelling. We serve as a comprehensive growth engine for
+          enterprises looking to digitally transform, educational institutions
+          building modern learning ecosystems, and individuals seeking
+          open-access industry insights.
+        </p>
+      </div>
+    </section>
+
+    <!-- MISSION & VISION SECTION -->
+    <section class="mission-section" id="mission">
+      <div class="section-head reveal" style="text-align: center">
+        <p class="eyebrow">Our Core Purpose</p>
+        <h2>Mission & Vision</h2>
+      </div>
+
+      <div class="mv-grid">
+        <div class="mv-card reveal" data-tone="mission">
+          <div class="mv-icon">
+            <svg
+              viewBox="0 0 24 24"
+              width="28"
+              height="28"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v8M8 12h8" />
+            </svg>
+          </div>
+          <h3>Our Mission</h3>
+          <p
+            style="
+              color: var(--text-muted);
+              margin-top: 0.8rem;
+              line-height: 1.6;
+            "
+          >
+            To empower organizations and learners by delivering cutting-edge AI
+            and software consulting, accessible high-quality university academic
+            frameworks, and open digital media to bridge knowledge gaps
+            worldwide.
+          </p>
+        </div>
+
+        <div class="mv-card reveal" data-tone="vision">
+          <div class="mv-icon">
+            <svg
+              viewBox="0 0 24 24"
+              width="28"
+              height="28"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </div>
+          <h3>Our Vision</h3>
+          <p
+            style="
+              color: var(--text-muted);
+              margin-top: 0.8rem;
+              line-height: 1.6;
+            "
+          >
+            To establish a globally recognized ecosystem where enterprise tech
+            solutions, academic learning, and transparent digital publications
+            seamlessly interface to drive continuous innovation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- THREE CLICKABLE PILLARS -->
+    <section class="pillars" id="pillars">
+      <div class="section-head reveal">
+        <p class="eyebrow">Three Disciplines. One Vision.</p>
+        <h2>Choose Your Domain</h2>
+      </div>
+
+      <div class="triad">
+        <!-- CONSULTING LINK -->
+        <a href="consulting/index.html" class="pillar-card-link reveal">
+          <article class="pillar-card pillar-orange" id="consulting">
+            <div class="pillar-icon">
+              <svg
+                viewBox="0 0 24 24"
+                width="28"
+                height="28"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+              </svg>
+            </div>
+            <span class="pillar-index">01 / Industry</span>
+            <h3>Consulting</h3>
+            <p>
+              Enterprise digital transformation, AI deployment, strategy, and IT
+              software architecture.
+            </p>
+            <span
+              style="
+                color: var(--orange-primary);
+                font-weight: 700;
+                font-size: 0.9rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                margin-top: 1rem;
+              "
+            >
+              Explore Consulting &rarr;
+            </span>
+          </article>
+        </a>
+
+        <!-- ACADEMIA LINK -->
+        <a href="academia/index.html" class="pillar-card-link reveal">
+          <article class="pillar-card pillar-green" id="academia">
+            <div class="pillar-icon">
+              <svg
+                viewBox="0 0 24 24"
+                width="28"
+                height="28"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                <path d="M6 12v5c3 3 9 3 12 0v-5" />
+              </svg>
+            </div>
+            <span class="pillar-index">02 / Education</span>
+            <h3>Academia</h3>
+            <p>
+              Certifications, university learning paths, research labs, student
+              projects, and Academic Index Score.
+            </p>
+            <span
+              style="
+                color: var(--green-primary);
+                font-weight: 700;
+                font-size: 0.9rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                margin-top: 1rem;
+              "
+            >
+              Explore Academia &rarr;
+            </span>
+          </article>
+        </a>
+
+        <!-- OPEN MEDIA LINK -->
+        <a href="open-media/index.html" class="pillar-card-link reveal">
+          <article class="pillar-card pillar-gold" id="openmedia">
+            <div class="pillar-icon">
+              <svg
+                viewBox="0 0 24 24"
+                width="28"
+                height="28"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"
+                />
+                <path d="M18 14h-8" />
+                <path d="M15 18h-5" />
+                <path d="M10 6h8v4h-8z" />
+              </svg>
+            </div>
+            <span class="pillar-index">03 / Community</span>
+            <h3>Open Media</h3>
+            <p>
+              Tech news, blogs, podcasts, video courses, open-access research,
+              and global publications.
+            </p>
+            <span
+              style="
+                color: var(--yellow-primary);
+                font-weight: 700;
+                font-size: 0.9rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                margin-top: 1rem;
+              "
+            >
+              Explore Open Media &rarr;
+            </span>
+          </article>
+        </a>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE TECHNOLOGY NETWORK -->
+    <section class="tech-network-section" id="tech-network">
+      <div class="tech-network-diagram reveal reveal-scale">
+        <svg
+          class="tech-network-lines"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <line x1="50" y1="50" x2="50" y2="8" data-line="ai" />
+          <line x1="50" y1="50" x2="86" y2="29" data-line="cloud" />
+          <line x1="50" y1="50" x2="86" y2="71" data-line="security" />
+          <line x1="50" y1="50" x2="50" y2="92" data-line="data" />
+          <line x1="50" y1="50" x2="14" y2="71" data-line="engineering" />
+          <line x1="50" y1="50" x2="14" y2="29" data-line="automation" />
+        </svg>
+
+        <div class="tech-hub">
+          <strong>SOXIT</strong>
+          <span>Core</span>
+        </div>
+
+        <button
+          class="tech-node"
+          data-tone="orange"
+          data-key="ai"
+          style="top: 8%; left: 50%"
+          data-title="AI &amp; Machine Learning"
+          data-desc="Predictive models and intelligent automation embedded into real production workflows, not proof-of-concept demos."
+        >
+          <span class="tech-node-dot">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"
+              />
+              <path d="M12 6v6l4 2" />
+            </svg>
+          </span>
+          <span class="tech-node-label">AI &amp; ML</span>
+        </button>
+
+        <button
+          class="tech-node"
+          data-tone="green"
+          data-key="cloud"
+          style="top: 29%; left: 86%"
+          data-title="Cloud Infrastructure"
+          data-desc="Multi-cloud architecture on AWS and Azure, built for elastic scale, resilience, and predictable cost."
+        >
+          <span class="tech-node-dot">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+            </svg>
+          </span>
+          <span class="tech-node-label">Cloud</span>
+        </button>
+
+        <button
+          class="tech-node"
+          data-tone="yellow"
+          data-key="security"
+          style="top: 71%; left: 86%"
+          data-title="Cybersecurity"
+          data-desc="Zero-trust frameworks and continuous threat monitoring that protect data, systems, and the people who rely on them."
+        >
+          <span class="tech-node-dot">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </span>
+          <span class="tech-node-label">Security</span>
+        </button>
+
+        <button
+          class="tech-node"
+          data-tone="orange"
+          data-key="data"
+          style="top: 92%; left: 50%"
+          data-title="Data &amp; Analytics"
+          data-desc="Turning raw operational data into dashboards and decisions that leadership can actually act on."
+        >
+          <span class="tech-node-dot">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M3 3v18h18" />
+              <path d="M18.5 8.5 13 14l-3-3-4.5 4.5" />
+            </svg>
+          </span>
+          <span class="tech-node-label">Data</span>
+        </button>
+
+        <button
+          class="tech-node"
+          data-tone="green"
+          data-key="engineering"
+          style="top: 71%; left: 14%"
+          data-title="Software Engineering"
+          data-desc="Production-grade applications built with senior engineering discipline, from architecture through deployment."
+        >
+          <span class="tech-node-dot">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg>
+          </span>
+          <span class="tech-node-label">Engineering</span>
+        </button>
+
+        <button
+          class="tech-node"
+          data-tone="yellow"
+          data-key="automation"
+          style="top: 29%; left: 14%"
+          data-title="Automation"
+          data-desc="Removing manual friction from operations end to end, so teams spend time on judgment calls, not busywork."
+        >
+          <span class="tech-node-dot">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </span>
+          <span class="tech-node-label">Automation</span>
+        </button>
+      </div>
+
+      <div class="reveal reveal-right">
+        <p class="eyebrow">One Vision, Six Capabilities</p>
+        <h2 style="margin-bottom: 1rem">The SOXIT Technology Network</h2>
+        <div class="tech-network-info" id="techNetworkInfo">
+          <h3 id="techNetworkTitle">AI &amp; Machine Learning</h3>
+          <p id="techNetworkDesc">
+            Predictive models and intelligent automation embedded into real
+            production workflows, not proof-of-concept demos.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials-section" id="testimonials">
+      <div class="section-head reveal reveal-up" style="text-align: center">
+        <p class="eyebrow">Trusted Across All Three Domains</p>
+        <h2>What Partners &amp; Learners Say</h2>
+      </div>
+
+      <div class="testimonials-viewport">
+        <div class="testimonials-track" id="testimonialsTrack">
+          <article
+            class="testimonial-card tilt-card glow-follow interactive-card"
+          >
+            <div class="testimonial-stars" aria-label="5 out of 5 stars">
+              ★★★★★
+            </div>
+            <p class="testimonial-quote">
+              "SOXIT rebuilt our cloud governance from the ground up. What used
+              to take our team weeks now runs in days, and the audit trail
+              finally holds up."
+            </p>
+            <div class="testimonial-person">
+              <div
+                class="testimonial-avatar"
+                style="background: var(--orange-primary)"
+              >
+                PN
+              </div>
+              <div>
+                <strong>Priya Nandakumar</strong>
+                <span>VP of Engineering, Meridian Fintech</span>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="testimonial-card tilt-card glow-follow interactive-card"
+          >
+            <div class="testimonial-stars" aria-label="5 out of 5 stars">
+              ★★★★★
+            </div>
+            <p class="testimonial-quote">
+              "The Academic Index Score gave our faculty a real benchmark
+              instead of guesswork. Curriculum planning meetings are shorter and
+              far more useful now."
+            </p>
+            <div class="testimonial-person">
+              <div
+                class="testimonial-avatar"
+                style="background: var(--green-primary)"
+              >
+                AW
+              </div>
+              <div>
+                <strong>Dr. Alan Whitfield</strong>
+                <span
+                  >Program Director, Northbridge Institute of Technology</span
+                >
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="testimonial-card tilt-card glow-follow interactive-card"
+          >
+            <div class="testimonial-stars" aria-label="4 out of 5 stars">
+              ★★★★☆
+            </div>
+            <p class="testimonial-quote">
+              "SOXIT Signal is the one tech podcast on my commute I actually
+              take notes on. The Quantum AI episode alone reshaped a roadmap
+              discussion."
+            </p>
+            <div class="testimonial-person">
+              <div
+                class="testimonial-avatar"
+                style="background: var(--yellow-dark)"
+              >
+                MI
+              </div>
+              <div>
+                <strong>Marcus Ilori</strong>
+                <span>Staff Engineer, listener</span>
+              </div>
+            </div>
+          </article>
+
+          <article
+            class="testimonial-card tilt-card glow-follow interactive-card"
+          >
+            <div class="testimonial-stars" aria-label="5 out of 5 stars">
+              ★★★★★
+            </div>
+            <p class="testimonial-quote">
+              "We came in through consulting and ended up sending half our team
+              through the academia certification tracks. It's rare to find a
+              partner that connects both."
+            </p>
+            <div class="testimonial-person">
+              <div
+                class="testimonial-avatar"
+                style="background: var(--orange-primary)"
+              >
+                SR
+              </div>
+              <div>
+                <strong>Sofia Reyes</strong>
+                <span>Head of Operations, Larkspur Logistics</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="testimonials-controls">
+        <button
+          class="testimonials-arrow"
+          id="testimonialsPrev"
+          aria-label="Previous testimonial"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <div class="testimonials-dots" id="testimonialsDots"></div>
+        <button
+          class="testimonials-arrow"
+          id="testimonialsNext"
+          aria-label="Next testimonial"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta-section" id="final-cta">
+      <div class="final-cta-glow" aria-hidden="true"></div>
+      <div class="final-cta-inner reveal reveal-scale">
+        <p class="eyebrow">Let's Build Together</p>
+        <h2 style="font-size: clamp(1.9rem, 3.8vw, 2.8rem)">
+          Ready to Build What Comes Next?
+        </h2>
+        <p
+          style="color: var(--text-muted); margin-top: 1rem; font-size: 1.05rem"
+        >
+          Whether it's modernizing your stack, training your next generation of
+          talent, or telling your story to the world — SOXIT is built for the
+          build.
+        </p>
+        <div class="build-options" aria-label="Ways to work with SOXIT">
+          <div class="build-option">
+            <div class="build-option-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path
+                  d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"
+                />
+              </svg>
+            </div>
+            <strong>Transform systems</strong>
+            <span>Strategy, AI, and engineering for ambitious teams.</span>
+          </div>
+          <div class="build-option">
+            <div class="build-option-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="m12 3 9 4.5-9 4.5-9-4.5L12 3Z" />
+                <path d="m3 12 9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" />
+              </svg>
+            </div>
+            <strong>Grow capability</strong>
+            <span>Learning paths that turn knowledge into momentum.</span>
+          </div>
+          <div class="build-option">
+            <div class="build-option-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M3 11 21 3l-8 18-3-7-7-3Z" />
+                <path d="m10 14 4-4" />
+              </svg>
+            </div>
+            <strong>Share the signal</strong>
+            <span>Open media that makes complex ideas easier to use.</span>
+          </div>
+        </div>
+        <div class="final-cta-actions">
+          <a
+            href="#contact"
+            class="btn btn-secondary btn-ripple magnetic-button"
+            >Start a Conversation &rarr;</a
+          >
+          <a href="#pillars" class="btn btn-ghost btn-ripple magnetic-button"
+            >Explore Our Domains</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="careers-section" id="careers">
+      <div class="careers-inner">
+        <p class="eyebrow">Careers at SOXIT</p>
+        <h2>Build what comes next with us.</h2>
+        <p>
+          We are looking for curious consultants, educators, engineers, and
+          storytellers who want their work to matter.
+        </p>
+        <div class="careers-highlights">
+          <div>
+            <strong>Consulting and engineering</strong>
+            <span>Help teams turn ambitious technology plans into dependable systems.</span>
+          </div>
+          <div>
+            <strong>Education and media</strong>
+            <span>Make complex ideas useful through teaching, research, and storytelling.</span>
+          </div>
+          <div>
+            <strong>How to apply</strong>
+            <span>Send your profile and a short note about the work you want to do.</span>
+          </div>
+        </div>
+        <form class="careers-form" id="careersForm">
+          <div class="careers-form-grid">
+            <label class="careers-field">
+              <span>Your name</span>
+              <input name="name" type="text" autocomplete="name" required pattern="[A-Za-z]+(?:[ ][A-Za-z]+)*" minlength="2" maxlength="80" />
+            </label>
+            <label class="careers-field">
+              <span>Email address</span>
+              <input name="email" type="email" autocomplete="email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" />
+            </label>
+          </div>
+          <div class="careers-form-grid">
+            <label class="careers-field">
+              <span>Role of interest</span>
+              <select name="role" required>
+                <option value="" selected disabled>Select a role</option>
+                <option>Consulting</option>
+                <option>Engineering</option>
+                <option>Education</option>
+                <option>Media and storytelling</option>
+              </select>
+            </label>
+            <label class="careers-field">
+              <span>Profile or portfolio link</span>
+              <input name="profile" type="url" placeholder="https://" />
+            </label>
+          </div>
+          <label class="careers-field">
+            <span>Tell us about yourself</span>
+            <textarea name="introduction" required minlength="10" maxlength="2000" placeholder="Share your experience and the work you want to do."></textarea>
+          </label>
+          <button class="btn btn-primary btn-ripple" type="submit">Send your profile &rarr;</button>
+          <p class="careers-status" id="careersStatus" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="contact-layout">
+        <div class="contact-copy">
+          <p class="eyebrow">Start a Conversation</p>
+          <h2>Let’s make the next move useful.</h2>
+          <p>
+            Tell us what you are building, where the friction is, and which
+            SOXIT domain can help. We will turn your note into a practical next
+            step.
+          </p>
+          <div class="contact-points">
+            <div>
+              <strong>Tell us what matters</strong>
+              <span>Share your goal, timeline, and the biggest constraint facing your team.</span>
+            </div>
+            <div>
+              <strong>Choose a starting point</strong>
+              <span>We can begin with consulting, academia, open media, or a combined path.</span>
+            </div>
+            <div>
+              <strong>Expect a practical reply</strong>
+              <span>We will review your note and respond with a useful next step.</span>
+            </div>
+          </div>
+          <a class="btn btn-ghost btn-ripple" href="mailto:hello@soxit.example"
+            >Email SOXIT &rarr;</a
+          >
+        </div>
+        <form class="contact-form" id="contactForm">
+          <div class="contact-form-grid">
+            <label class="contact-field"
+              ><span>Your name</span
+              ><input name="name" type="text" autocomplete="name" required
+              pattern="[A-Za-z]+(?:[ ][A-Za-z]+)*" minlength="2" maxlength="80"
+            /></label>
+            <label class="contact-field"
+              ><span>Email address</span
+              ><input name="email" type="email" autocomplete="email" required
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+            /></label>
+            <label class="contact-field"
+              ><span>Contact number</span
+              ><input name="phone" type="tel" inputmode="numeric" autocomplete="tel" required
+              pattern="[0-9]{10}" maxlength="10" minlength="10"
+              placeholder="10-digit number" aria-describedby="phoneHint"
+            /><small id="phoneHint">Enter 10 digits only.</small></label>
+          </div>
+          <label class="contact-field"
+            ><span>How can we help?</span
+            ><select name="interest" required>
+              <option value="" selected disabled>Select a path</option>
+              <option>Consulting</option>
+              <option>Academia</option>
+              <option>Open Media</option>
+              <option>Careers</option>
+            </select></label
+          >
+          <label class="contact-field"
+            ><span>Your project or question</span
+            ><textarea name="message" required minlength="10" maxlength="2000"></textarea>
+          </label>
+          <button class="btn btn-primary btn-ripple" type="submit">
+            Send enquiry &rarr;
+          </button>
+          <p class="contact-status" id="contactStatus" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- UNIVERSAL REUSABLE LOGIN MODAL -->
+    <div class="login-overlay" id="loginOverlay" aria-hidden="true">
+      <div class="login-panel" role="dialog" aria-modal="true">
+        <button class="login-close" id="loginClose">&times;</button>
+        <h3>Welcome to SOXIT</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted)">
+          Sign in to access your dashboard
+        </p>
+        <form class="login-form">
+          <label class="field">
+            <span>Email Address</span>
+            <input type="email" placeholder="you@company.com" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" />
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input type="password" placeholder="••••••••" required minlength="8" />
+          </label>
+          <button
+            type="submit"
+            class="btn btn-primary full btn-ripple"
+            style="margin-top: 0.5rem"
+          >
+            Sign In
+          </button>
+        </form>
+        <p class="login-status" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div class="site-footer-grid">
+          <div class="site-footer-brand">
+            <img src="soxit.webp" alt="SOXIT Logo" />
+            <p>Unified enterprise platform delivering consulting solutions across industries.</p>
+            <div class="site-footer-socials">
+              <a href="#" aria-label="Website"><span aria-hidden="true">◎</span></a>
+              <a href="#" aria-label="LinkedIn"><span aria-hidden="true">in</span></a>
+              <a href="mailto:hello@soxit.example" aria-label="Email"><span aria-hidden="true">✉</span></a>
+            </div>
+          </div>
+          <div class="site-footer-column">
+            <h4>Solutions</h4>
+            <a href="consulting/index.html">Strategy &amp; Transformation</a>
+            <a href="consulting/technology.html">Technology &amp; Digital</a>
+            <a href="consulting/methodology.html">Operations &amp; Excellence</a>
+          </div>
+          <div class="site-footer-column">
+            <h4>Industries</h4>
+            <a href="consulting/industries.html">BFSI</a>
+            <a href="consulting/industries.html">Technology &amp; Digital</a>
+            <a href="consulting/industries.html">Industrial &amp; Manufacturing</a>
+            <a href="consulting/industries.html">Pharma &amp; Healthcare</a>
+            <a href="open-media/index.html">Creative &amp; Media</a>
+          </div>
+          <div class="site-footer-column">
+            <h4>Company</h4>
+            <a href="#pillars">Our Work</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+        <div class="site-footer-bottom">
+          <p>&copy; <span id="year"></span> SOXIT. All rights reserved.</p>
+          <p><a href="#">Privacy Policy</a> &nbsp; <a href="#">Terms of Service</a></p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="home.js"></script>
+  </body>
+</html>

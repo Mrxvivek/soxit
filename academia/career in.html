@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOXIT Academia • Career Insights</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ==========================================================================
+       VARIABLES & BASE STYLES
+       ========================================================================== */
+    :root {
+      --bg-dark: #080b14;
+      --bg-dark-card: #0f172a;
+      --bg-light: #f8fafc;
+      --bg-light-card: #ffffff;
+      
+      --primary-cyan: #06b6d4;
+      --primary-blue: #3b82f6;
+      --primary-purple: #8b5cf6;
+      
+      --text-dark-primary: #0f172a;
+      --text-dark-secondary: #475569;
+      --text-light-primary: #f8fafc;
+      --text-light-secondary: #94a3b8;
+      
+      --gradient-main: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+      --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      --gradient-dark: linear-gradient(180deg, #080b14 0%, #0f172a 100%);
+      
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-glow: rgba(59, 130, 246, 0.15);
+      
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      --shadow-glow: 0 0 25px rgba(59, 130, 246, 0.25);
+      
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      
+      --font-main: 'Plus Jakarta Sans', sans-serif;
+      --font-heading: 'Space Grotesk', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-light);
+      color: var(--text-dark-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-heading);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient-main);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(6, 182, 212, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary-blue);
+      border: 2px solid var(--primary-blue);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-blue);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--primary-cyan);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      margin-bottom: 20px;
+    }
+
+    /* Scroll Reveal Animation Classes */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero {
+      position: relative;
+      background: var(--bg-dark);
+      color: var(--text-light-primary);
+      padding: 100px 0 120px;
+      overflow: hidden;
+    }
+
+    .hero-bg-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 50%, rgba(0,0,0,0) 70%);
+      top: -100px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: 3.8rem;
+      line-height: 1.15;
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: var(--text-light-secondary);
+      margin-bottom: 36px;
+      max-width: 540px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* CSS Tech Visual Illustration */
+    .tech-visual-container {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-glow);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .visual-grid {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+      transform: perspective(500px) rotateX(60deg) translateY(-100px);
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+      100% { transform: perspective(500px) rotateX(60deg) translateY(60px); }
+    }
+
+    .dashboard-card {
+      position: relative;
+      z-index: 2;
+      width: 80%;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--glass-border);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .dashboard-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .chart-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      height: 120px;
+      padding-top: 20px;
+    }
+
+    .chart-bar {
+      flex: 1;
+      background: var(--gradient-main);
+      border-radius: 4px;
+      transition: height 1s ease;
+      position: relative;
+    }
+
+    .floating-node {
+      position: absolute;
+      padding: 10px 16px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--primary-cyan);
+      border-radius: 30px;
+      color: #fff;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .node-1 { top: 40px; right: 30px; animation-delay: 0s; }
+    .node-2 { bottom: 40px; left: 30px; animation-delay: 2s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ==========================================================================
+       PERSONAL CAREER SECTION
+       ========================================================================== */
+    .personal-section {
+      padding: 100px 0;
+      background: #ffffff;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 60px;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-dark-primary);
+    }
+
+    .section-header p {
+      color: var(--text-dark-secondary);
+      font-size: 1.1rem;
+    }
+
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .journey-card {
+      background: var(--bg-light);
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 32px 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .journey-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-blue);
+    }
+
+    .journey-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--primary-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .journey-card:hover .journey-icon {
+      background: var(--primary-blue);
+      color: #ffffff;
+    }
+
+    .journey-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .journey-card p {
+      color: var(--text-dark-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       CAREER PATHS
+       ========================================================================== */
+    .paths-section {
+      padding: 100px 0;
+      background: var(--bg-light);
+    }
+
+    .paths-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .path-card {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .path-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .path-image {
+      height: 160px;
+      background: var(--bg-dark);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .path-image-graphic {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.5s ease;
+    }
+
+    .path-card:hover .path-image-graphic {
+      transform: scale(1.05);
+    }
+
+    /* Procedural Tech Headers for Path Cards */
+    .path-ai { background: linear-gradient(135deg, #06b6d4, #3b82f6); }
+    .path-dev { background: linear-gradient(135deg, #3b82f6, #8b5cf6); }
+    .path-data { background: linear-gradient(135deg, #10b981, #06b6d4); }
+    .path-cloud { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+    .path-sec { background: linear-gradient(135deg, #6366f1, #a855f7); }
+    .path-ux { background: linear-gradient(135deg, #ec4899, #8b5cf6); }
+
+    .path-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .path-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .path-content p {
+      color: var(--text-dark-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .path-link {
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s ease;
+    }
+
+    .path-link:hover {
+      gap: 10px;
+    }
+
+    /* ==========================================================================
+       SKILLS INSIGHTS
+       ========================================================================== */
+    .skills-section {
+      padding: 100px 0;
+      background: var(--bg-dark);
+      color: var(--text-light-primary);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .skill-category {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      backdrop-filter: blur(10px);
+    }
+
+    .skill-category h3 {
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #ffffff;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .skill-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .skill-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: var(--gradient-main);
+      width: 0%;
+      transition: width 1.5s cubic-bezier(0.1, 0.5, 0.5, 1);
+    }
+
+    /* ==========================================================================
+       PROJECT INSIGHTS
+       ========================================================================== */
+    .projects-section {
+      padding: 100px 0;
+      background: #ffffff;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .project-card {
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .project-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-6px);
+    }
+
+    .project-visual {
+      height: 180px;
+      background: var(--bg-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      position: relative;
+    }
+
+    .project-body {
+      padding: 24px;
+    }
+
+    .project-body h3 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+
+    /* ==========================================================================
+       INTERNSHIP INSIGHTS
+       ========================================================================== */
+    .internship-section {
+      padding: 100px 0;
+      background: var(--bg-light);
+    }
+
+    .internship-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .internship-card {
+      background: #ffffff;
+      padding: 32px;
+      border-radius: var(--radius-md);
+      border: 1px solid #e2e8f0;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .internship-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-cyan);
+    }
+
+    .internship-card-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      background: rgba(6, 182, 212, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-cyan);
+    }
+
+    .internship-cta-container {
+      text-align: center;
+    }
+
+    /* ==========================================================================
+       CAREER PREPARATION TIMELINE
+       ========================================================================== */
+    .prep-section {
+      padding: 100px 0;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .timeline-container {
+      position: relative;
+      margin-top: 60px;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 36px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+
+    .timeline-line-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--gradient-main);
+      transition: width 1.5s ease;
+    }
+
+    .timeline-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+    }
+
+    .timeline-step {
+      text-align: center;
+    }
+
+    .timeline-node {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 4px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-dark-secondary);
+      transition: all 0.4s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timeline-step.active .timeline-node {
+      border-color: var(--primary-blue);
+      background: var(--primary-blue);
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .timeline-step h4 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+
+    /* ==========================================================================
+       PERSONALIZED CTA
+       ========================================================================== */
+    .cta-section {
+      padding: 100px 0;
+      background: var(--bg-dark);
+      position: relative;
+      overflow: hidden;
+      color: var(--text-light-primary);
+    }
+
+    .cta-bg-roadmap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.1;
+      background-image: radial-gradient(#3b82f6 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .cta-content p {
+      font-size: 1.2rem;
+      color: var(--text-light-secondary);
+      margin-bottom: 36px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN (MEDIA QUERIES)
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .journey-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .paths-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .timeline-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+      .timeline-line {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .journey-grid,
+      .paths-grid,
+      .projects-grid,
+      .internship-grid,
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+      .timeline-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .cta-content h2 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       MAIN HERO SECTION
+       ========================================================================== -->
+  <section class="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="container hero-grid">
+      <div class="hero-content reveal">
+        <span class="badge">SOXIT ACADEMIA • CAREER INSIGHTS</span>
+        <h1>Build the Career You Want.</h1>
+        <p>Discover the right skills, career paths, projects, and opportunities to move confidently from learning to industry.</p>
+        <div class="hero-buttons">
+          <a href="#paths" class="btn btn-primary">Explore Career Paths <i data-lucide="arrow-right"></i></a>
+          <a href="#journey" class="btn btn-secondary">Start Your Journey <i data-lucide="arrow-right"></i></a>
+        </div>
+      </div>
+      
+      <!-- Futuristic Visual Illustration -->
+      <div class="tech-visual-container reveal">
+        <div class="visual-grid"></div>
+        <div class="dashboard-card">
+          <div class="dashboard-header">
+            <div class="dashboard-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span style="font-size: 0.8rem; color: #94a3b8;">Career Analytics v2.6</span>
+          </div>
+          <div style="color: #fff; font-size: 0.9rem; margin-bottom: 10px;">Market Readiness Index</div>
+          <div class="chart-container">
+            <div class="chart-bar" style="height: 40%;"></div>
+            <div class="chart-bar" style="height: 65%;"></div>
+            <div class="chart-bar" style="height: 50%;"></div>
+            <div class="chart-bar" style="height: 85%;"></div>
+            <div class="chart-bar" style="height: 95%;"></div>
+          </div>
+        </div>
+        
+        <div class="floating-node node-1">
+          <i data-lucide="sparkles" style="width: 16px; color: var(--primary-cyan);"></i>
+          <span>AI Path Matched (98%)</span>
+        </div>
+        <div class="floating-node node-2">
+          <i data-lucide="check-circle" style="width: 16px; color: #10b981;"></i>
+          <span>Portfolio Ready</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       PERSONAL CAREER SECTION
+       ========================================================================== -->
+  <section class="personal-section" id="journey">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Your Career Journey Starts With You</h2>
+        <p>Every career journey is different. Discover what interests you, understand the skills you need, and choose a path that matches your goals.</p>
+      </div>
+
+      <div class="journey-grid">
+        <!-- Card 1 -->
+        <div class="journey-card reveal">
+          <div class="journey-icon">
+            <i data-lucide="compass"></i>
+          </div>
+          <h3>1. Discover Your Interests</h3>
+          <p>Identify the technology areas and career directions that match your interests.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="journey-card reveal">
+          <div class="journey-icon">
+            <i data-lucide="lightbulb"></i>
+          </div>
+          <h3>2. Build Your Skills</h3>
+          <p>Develop practical technical and professional skills for your chosen path.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="journey-card reveal">
+          <div class="journey-icon">
+            <i data-lucide="code-2"></i>
+          </div>
+          <h3>3. Create Your Portfolio</h3>
+          <p>Turn your learning into real projects that demonstrate your capabilities.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="journey-card reveal">
+          <div class="journey-icon">
+            <i data-lucide="rocket"></i>
+          </div>
+          <h3>4. Prepare for Industry</h3>
+          <p>Build confidence through internships, mentorship, interview preparation, and practical experience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       CAREER PATHS SECTION
+       ========================================================================== -->
+  <section class="paths-section" id="paths">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Explore Career Paths</h2>
+        <p>Find a direction that matches your interests and future goals.</p>
+      </div>
+
+      <div class="paths-grid">
+        <!-- Path 1 -->
+        <div class="path-card reveal">
+          <div class="path-image path-ai">
+            <i data-lucide="cpu" style="width: 48px; height: 48px; color: #fff;"></i>
+          </div>
+          <div class="path-content">
+            <h3>AI & Machine Learning</h3>
+            <p>Build intelligent systems and work with machine learning, AI models, and data.</p>
+            <a href="#" class="path-link">Explore Path <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Path 2 -->
+        <div class="path-card reveal">
+          <div class="path-image path-dev">
+            <i data-lucide="code" style="width: 48px; height: 48px; color: #fff;"></i>
+          </div>
+          <div class="path-content">
+            <h3>Full Stack Development</h3>
+            <p>Design and develop complete web applications using modern technologies.</p>
+            <a href="#" class="path-link">Explore Path <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Path 3 -->
+        <div class="path-card reveal">
+          <div class="path-image path-data">
+            <i data-lucide="bar-chart-3" style="width: 48px; height: 48px; color: #fff;"></i>
+          </div>
+          <div class="path-content">
+            <h3>Data Analytics</h3>
+            <p>Turn data into useful insights and support better business decisions.</p>
+            <a href="#" class="path-link">Explore Path <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Path 4 -->
+        <div class="path-card reveal">
+          <div class="path-image path-cloud">
+            <i data-lucide="cloud" style="width: 48px; height: 48px; color: #fff;"></i>
+          </div>
+          <div class="path-content">
+            <h3>Cloud & DevOps</h3>
+            <p>Build, deploy, automate, and manage modern cloud-based applications.</p>
+            <a href="#" class="path-link">Explore Path <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Path 5 -->
+        <div class="path-card reveal">
+          <div class="path-image path-sec">
+            <i data-lucide="shield-check" style="width: 48px; height: 48px; color: #fff;"></i>
+          </div>
+          <div class="path-content">
+            <h3>Cybersecurity</h3>
+            <p>Learn how to protect applications, systems, networks, and digital information.</p>
+            <a href="#" class="path-link">Explore Path <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Path 6 -->
+        <div class="path-card reveal">
+          <div class="path-image path-ux">
+            <i data-lucide="layout" style="width: 48px; height: 48px; color: #fff;"></i>
+          </div>
+          <div class="path-content">
+            <h3>UI/UX & Product Design</h3>
+            <p>Create useful, accessible, and engaging digital experiences.</p>
+            <a href="#" class="path-link">Explore Path <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       SKILLS INSIGHTS
+       ========================================================================== -->
+  <section class="skills-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 style="color: #fff;">Skills That Move Your Career Forward</h2>
+      </div>
+
+      <div class="skills-grid">
+        <!-- Technical Skills -->
+        <div class="skill-category reveal">
+          <h3><i data-lucide="terminal" style="color: var(--primary-cyan);"></i> Technical Skills</h3>
+          <div class="skills-list">
+            <div class="skill-item" data-progress="90">
+              <div class="skill-info"><span>Programming</span><span>90%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+            <div class="skill-item" data-progress="85">
+              <div class="skill-info"><span>Web Development</span><span>85%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+            <div class="skill-item" data-progress="80">
+              <div class="skill-info"><span>AI & ML</span><span>80%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+            <div class="skill-item" data-progress="75">
+              <div class="skill-info"><span>Data Analysis</span><span>75%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+            <div class="skill-item" data-progress="70">
+              <div class="skill-info"><span>Cloud Architecture</span><span>70%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+            <div class="skill-item" data-progress="65">
+              <div class="skill-info"><span>Cybersecurity</span><span>65%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Skills -->
+        <div class="skill-category reveal">
+          <h3><i data-lucide="briefcase" style="color: var(--primary-purple);"></i> Professional Skills</h3>
+          <div class="skills-list">
+            <div class="skill-item" data-progress="95">
+              <div class="skill-info"><span>Communication</span><span>95%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+            <div class="skill-item" data-progress="90">
+              <div class="skill-info"><span>Problem Solving</span><span>90%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+            <div class="skill-item" data-progress="85">
+              <div class="skill-info"><span>Teamwork</span><span>85%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+            <div class="skill-item" data-progress="80">
+              <div class="skill-info"><span>Leadership</span><span>80%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+            <div class="skill-item" data-progress="85">
+              <div class="skill-info"><span>Presentation</span><span>85%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+            <div class="skill-item" data-progress="88">
+              <div class="skill-info"><span>Time Management</span><span>88%</span></div>
+              <div class="skill-bar-bg"><div class="skill-bar-fill"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       PROJECT INSIGHTS
+       ========================================================================== -->
+  <section class="projects-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Build Projects. Show What You Can Do.</h2>
+        <p>Projects transform knowledge into evidence of your skills.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <div class="project-card reveal">
+          <div class="project-visual path-ai">
+            <i data-lucide="layers" style="width: 48px; height: 48px;"></i>
+          </div>
+          <div class="project-body">
+            <h3>Beginner Projects</h3>
+            <p style="color: var(--text-dark-secondary); margin-bottom: 20px;">Start with guided hands-on exercises to build foundational knowledge.</p>
+            <a href="#" class="path-link">Explore Projects <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card reveal">
+          <div class="project-visual path-dev">
+            <i data-lucide="folder-git-2" style="width: 48px; height: 48px;"></i>
+          </div>
+          <div class="project-body">
+            <h3>Industry Projects</h3>
+            <p style="color: var(--text-dark-secondary); margin-bottom: 20px;">Tackle real-world problems patterned after live enterprise environments.</p>
+            <a href="#" class="path-link">Explore Projects <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card reveal">
+          <div class="project-visual path-sec">
+            <i data-lucide="award" style="width: 48px; height: 48px;"></i>
+          </div>
+          <div class="project-body">
+            <h3>Portfolio Projects</h3>
+            <p style="color: var(--text-dark-secondary); margin-bottom: 20px;">Develop capstone applications ready to highlight on your resume.</p>
+            <a href="#" class="path-link">Explore Projects <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       INTERNSHIP INSIGHTS
+       ========================================================================== -->
+  <section class="internship-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Experience Matters</h2>
+        <p>Internships help you understand how technology is applied in real-world environments.</p>
+      </div>
+
+      <div class="internship-grid">
+        <div class="internship-card reveal">
+          <div class="internship-card-icon">
+            <i data-lucide="search"></i>
+          </div>
+          <h3>Find Opportunities</h3>
+          <p style="color: var(--text-dark-secondary); margin-top: 10px;">Connect with active technology internship roles built for students.</p>
+        </div>
+
+        <div class="internship-card reveal">
+          <div class="internship-card-icon">
+            <i data-lucide="cpu"></i>
+          </div>
+          <h3>Work With Real Projects</h3>
+          <p style="color: var(--text-dark-secondary); margin-top: 10px;">Gain hands-on exposure to production software and deployment workflows.</p>
+        </div>
+
+        <div class="internship-card reveal">
+          <div class="internship-card-icon">
+            <i data-lucide="users"></i>
+          </div>
+          <h3>Learn From Mentors</h3>
+          <p style="color: var(--text-dark-secondary); margin-top: 10px;">Receive direct feedback and career advice from experienced industry leaders.</p>
+        </div>
+      </div>
+
+      <div class="internship-cta-container reveal">
+        <a href="#" class="btn btn-primary">Explore Internships <i data-lucide="arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       CAREER PREPARATION
+       ========================================================================== -->
+  <section class="prep-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Prepare for Your Next Opportunity</h2>
+        <p>A structured step-by-step pathway from learning fundamentals to industry success.</p>
+      </div>
+
+      <div class="timeline-container">
+        <div class="timeline-line">
+          <div class="timeline-line-progress" id="timelineProgress"></div>
+        </div>
+        
+        <div class="timeline-grid">
+          <!-- Step 1 -->
+          <div class="timeline-step reveal">
+            <div class="timeline-node">01</div>
+            <h4>Learn</h4>
+            <p style="font-size: 0.85rem; color: var(--text-dark-secondary);">Master core concepts</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="timeline-step reveal">
+            <div class="timeline-node">02</div>
+            <h4>Practice</h4>
+            <p style="font-size: 0.85rem; color: var(--text-dark-secondary);">Solve practical tasks</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="timeline-step reveal">
+            <div class="timeline-node">03</div>
+            <h4>Build</h4>
+            <p style="font-size: 0.85rem; color: var(--text-dark-secondary);">Create real projects</p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="timeline-step reveal">
+            <div class="timeline-node">04</div>
+            <h4>Experience</h4>
+            <p style="font-size: 0.85rem; color: var(--text-dark-secondary);">Complete internships</p>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="timeline-step reveal">
+            <div class="timeline-node">05</div>
+            <h4>Prepare</h4>
+            <p style="font-size: 0.85rem; color: var(--text-dark-secondary);">Mock interviews</p>
+          </div>
+
+          <!-- Step 6 -->
+          <div class="timeline-step reveal">
+            <div class="timeline-node">06</div>
+            <h4>Grow</h4>
+            <p style="font-size: 0.85rem; color: var(--text-dark-secondary);">Launch your career</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       PERSONALIZED CTA
+       ========================================================================== -->
+  <section class="cta-section">
+    <div class="cta-bg-roadmap"></div>
+    <div class="container">
+      <div class="cta-content reveal">
+        <h2>Not Sure Where to Start?</h2>
+        <p>Explore your interests, discover suitable career paths, and take your next step with confidence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       JAVASCRIPT
+       ========================================================================== -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Scroll Reveal Animation Logic
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      const windowHeight = window.innerHeight;
+
+      reveals.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+
+        if (elementTop < windowHeight - elementVisible) {
+          element.classList.add('active');
+
+          // Trigger skill progress bars when section is visible
+          if (element.classList.contains('skill-category')) {
+            const skillItems = element.querySelectorAll('.skill-item');
+            skillItems.forEach(item => {
+              const targetWidth = item.getAttribute('data-progress');
+              const bar = item.querySelector('.skill-bar-fill');
+              if (bar) bar.style.width = targetWidth + '%';
+            });
+          }
+
+          // Trigger timeline progress line when timeline section is visible
+          if (element.classList.contains('timeline-step')) {
+            const steps = document.querySelectorAll('.timeline-step');
+            steps.forEach((step, idx) => {
+              setTimeout(() => {
+                step.classList.add('active');
+              }, idx * 200);
+            });
+            const progressLine = document.getElementById('timelineProgress');
+            if(progressLine) progressLine.style.width = '100%';
+          }
+        }
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    // Initial trigger for elements visible on initial page load
+    revealOnScroll();
+  </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

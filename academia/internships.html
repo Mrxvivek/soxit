@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOXIT Academia — Internship & Training </title>
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ==========================================================================
+       VARIABLES & CORE STYLES
+       ========================================================================== */
+    :root {
+      --bg-dark: #070a12;
+      --bg-dark-card: #0f172a;
+      --bg-light: #f8fafc;
+      
+      --primary-cyan: #06b6d4;
+      --primary-blue: #3b82f6;
+      --primary-purple: #8b5cf6;
+      
+      --text-dark-primary: #0f172a;
+      --text-dark-secondary: #475569;
+      --text-light-primary: #f8fafc;
+      --text-light-secondary: #94a3b8;
+      
+      --gradient-main: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+      
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-glow: rgba(59, 130, 246, 0.15);
+      
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      --shadow-glow: 0 0 35px rgba(6, 182, 212, 0.25);
+      
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      
+      --font-main: 'Plus Jakarta Sans', sans-serif;
+      --font-heading: 'Space Grotesk', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-light);
+      color: var(--text-dark-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: var(--font-heading);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient-main);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(6, 182, 212, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--primary-cyan);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(6, 182, 212, 0.08);
+      color: #0284c7;
+      border: 1px solid rgba(6, 182, 212, 0.2);
+    }
+
+    /* ==========================================================================
+       TOP → DOWN ENTRANCE & SCROLL REVEAL ANIMATIONS
+       ========================================================================== */
+
+    /* Entrance Animation Keyframe */
+    @keyframes pageDrop {
+      from {
+        opacity: 0;
+        transform: translateY(-80px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-top-down {
+      opacity: 0;
+      animation: pageDrop 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Staggered Delays (0.1s to 0.7s) */
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    .delay-6 { animation-delay: 0.6s; }
+    .delay-7 { animation-delay: 0.7s; }
+
+    /* Scroll Reveal (TOP → DOWN: Starts at translateY(-60px)) */
+    .reveal {
+      opacity: 0;
+      transform: translateY(-60px);
+      transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Section Header */
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 60px;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-dark-primary);
+    }
+
+    .section-header p {
+      color: var(--text-dark-secondary);
+      font-size: 1.1rem;
+    }
+
+    /* ==========================================================================
+       HERO SECTION WITH 3D VISUAL
+       ========================================================================== */
+    .hero {
+      position: relative;
+      background: var(--bg-dark);
+      color: var(--text-light-primary);
+      padding: 110px 0 130px;
+      overflow: hidden;
+    }
+
+    .hero-glow-bg {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 70%);
+      top: -150px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: 3.8rem;
+      line-height: 1.15;
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: var(--text-light-secondary);
+      margin-bottom: 36px;
+      max-width: 540px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* 3D Visual Stage */
+    .hero-3d-stage {
+      position: relative;
+      width: 100%;
+      height: 480px;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .stage-card {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      transform-style: preserve-3d;
+      animation: rotateStage 18s linear infinite;
+    }
+
+    @keyframes rotateStage {
+      0% { transform: rotateY(0deg) rotateX(10deg); }
+      100% { transform: rotateY(360deg) rotateX(10deg); }
+    }
+
+    .floating-element {
+      position: absolute;
+      padding: 16px 22px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-glow);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .fe-1 { transform: translateZ(140px) translateY(-80px); border-color: var(--primary-cyan); }
+    .fe-2 { transform: rotateY(90deg) translateZ(140px) translateY(40px); border-color: var(--primary-purple); }
+    .fe-3 { transform: rotateY(180deg) translateZ(140px) translateY(-50px); border-color: var(--primary-blue); }
+    .fe-4 { transform: rotateY(270deg) translateZ(140px) translateY(60px); border-color: #10b981; }
+
+    .cube-core {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      top: 110px;
+      left: 110px;
+      transform-style: preserve-3d;
+      animation: floatCube 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatCube {
+      0% { transform: translateY(-10px) rotateX(0deg); }
+      100% { transform: translateY(10px) rotateX(360deg); }
+    }
+
+    .cube-face {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: rgba(6, 182, 212, 0.25);
+      border: 2px solid var(--primary-cyan);
+      box-shadow: inset 0 0 15px rgba(6, 182, 212, 0.5);
+    }
+
+    .cf-front  { transform: rotateY(0deg) translateZ(50px); }
+    .cf-back   { transform: rotateY(180deg) translateZ(50px); }
+    .cf-right  { transform: rotateY(90deg) translateZ(50px); }
+    .cf-left   { transform: rotateY(-90deg) translateZ(50px); }
+    .cf-top    { transform: rotateX(90deg) translateZ(50px); }
+    .cf-bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+    /* ==========================================================================
+       SECTION 1: INTERNSHIP BENEFITS
+       ========================================================================== */
+    .benefits-section {
+      padding: 100px 0;
+      background: #ffffff;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .benefit-card-wrapper {
+      perspective: 1000px;
+    }
+
+    .benefit-card {
+      background: var(--bg-light);
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform-style: preserve-3d;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .benefit-card-wrapper:hover .benefit-card {
+      transform: translateY(-10px) rotateX(4deg) rotateY(-4deg);
+      box-shadow: 0 20px 35px -10px rgba(6, 182, 212, 0.15);
+      border-color: var(--primary-cyan);
+    }
+
+    .benefit-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--primary-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      transition: transform 0.4s ease;
+    }
+
+    .benefit-card-wrapper:hover .benefit-icon {
+      transform: scale(1.1) rotate(6deg);
+      background: var(--primary-cyan);
+      color: #ffffff;
+    }
+
+    .benefit-card h3 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .benefit-card p {
+      color: var(--text-dark-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+
+    .benefit-link {
+      color: var(--primary-cyan);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.3s ease;
+    }
+
+    .benefit-card-wrapper:hover .benefit-link {
+      gap: 14px;
+      color: var(--primary-blue);
+    }
+
+    /* ==========================================================================
+       SECTION 2: INTERNSHIP TRACKS
+       ========================================================================== */
+    .tracks-section {
+      padding: 100px 0;
+      background: var(--bg-light);
+    }
+
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .track-card-wrapper {
+      perspective: 1000px;
+    }
+
+    .track-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform-style: preserve-3d;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .track-card-wrapper:hover .track-card {
+      transform: translateY(-12px) rotateX(4deg) rotateY(-4deg);
+      box-shadow: 0 20px 35px -10px rgba(6, 182, 212, 0.15);
+      border-color: var(--primary-cyan);
+    }
+
+    .track-visual {
+      height: 180px;
+      background: var(--bg-dark);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .track-visual-bg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.2;
+      background-image: radial-gradient(var(--primary-cyan) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+
+    .track-3d-graphic {
+      position: relative;
+      z-index: 2;
+      transition: transform 0.5s ease;
+    }
+
+    .track-card-wrapper:hover .track-3d-graphic {
+      transform: translateZ(30px) scale(1.1);
+    }
+
+    .track-body {
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .track-header-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .track-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--primary-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s ease;
+    }
+
+    .track-card-wrapper:hover .track-icon {
+      transform: rotate(8deg);
+      background: var(--primary-cyan);
+      color: #ffffff;
+    }
+
+    .track-body h3 {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .track-body p {
+      color: var(--text-dark-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .track-meta {
+      display: flex;
+      gap: 48px;
+      margin-bottom: 22px;
+      padding-top: 16px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .track-meta span {
+      display: block;
+      color: #64748b;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .track-meta strong {
+      display: block;
+      margin-top: 3px;
+      color: var(--text-dark-primary);
+      font-size: 0.95rem;
+    }
+
+    .track-link {
+      color: var(--primary-cyan);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.3s ease;
+    }
+
+    .track-card-wrapper:hover .track-link {
+      gap: 14px;
+      color: var(--primary-blue);
+    }
+
+    /* ==========================================================================
+       SECTION 3: PROJECTS
+       ========================================================================== */
+    .projects-section {
+      padding: 100px 0;
+      background: #ffffff;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .project-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-purple);
+    }
+
+    .project-visual {
+      height: 160px;
+      background: var(--bg-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-cyan);
+    }
+
+    .project-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .project-body h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .project-body p {
+      color: var(--text-dark-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    /* ==========================================================================
+       SECTION 4: PROJECT JOURNEY (TIMELINE)
+       ========================================================================== */
+    .journey-section {
+      padding: 100px 0;
+      background: var(--bg-light);
+    }
+
+    .timeline-container {
+      position: relative;
+      margin-top: 60px;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 36px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+
+    .timeline-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--gradient-main);
+      transition: width 1.5s ease;
+    }
+
+    .timeline-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .timeline-step {
+      text-align: center;
+    }
+
+    .step-node {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 4px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text-dark-secondary);
+      transition: all 0.4s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timeline-step.active .step-node {
+      border-color: var(--primary-cyan);
+      background: var(--primary-cyan);
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+    }
+
+    .timeline-step h4 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .timeline-step p {
+      font-size: 0.9rem;
+      color: var(--text-dark-secondary);
+    }
+
+    /* ==========================================================================
+       SECTION 5: WHAT YOU GAIN
+       ========================================================================== */
+    .gains-section {
+      padding: 100px 0;
+      background: #ffffff;
+    }
+
+    .gains-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .gain-card {
+      background: var(--bg-light);
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      padding: 32px 24px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: all 0.3s ease;
+    }
+
+    .gain-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-cyan);
+    }
+
+    .gain-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--primary-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .gain-body h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .gain-body p {
+      font-size: 0.9rem;
+      color: var(--text-dark-secondary);
+    }
+
+    /* ==========================================================================
+       SECTION 6: INTERNSHIP PROCESS
+       ========================================================================== */
+    .process-section {
+      padding: 100px 0;
+      background: var(--bg-light);
+    }
+
+    .process-container {
+      position: relative;
+      margin-top: 60px;
+    }
+
+    .process-line {
+      position: absolute;
+      top: 36px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+
+    .process-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--gradient-main);
+      transition: width 1.5s ease;
+    }
+
+    .process-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+    }
+
+    .process-step {
+      text-align: center;
+    }
+
+    .process-node {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 4px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--primary-blue);
+      transition: all 0.4s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .process-step.active .process-node {
+      border-color: var(--primary-purple);
+      background: var(--primary-purple);
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    }
+
+    .process-step h4 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .process-step p {
+      font-size: 0.85rem;
+      color: var(--text-dark-secondary);
+    }
+
+    /* ==========================================================================
+       SECTION 7: FINAL CTA
+       ========================================================================== */
+    .cta-section {
+      padding: 120px 0;
+      background: var(--bg-dark);
+      position: relative;
+      overflow: hidden;
+      color: var(--text-light-primary);
+    }
+    .faq-option {
+      padding: 64px 0;
+      text-align: center;
+      background: #f1f5f9;
+    }
+
+    .faq-option h2 {
+      margin-bottom: 10px;
+      color: var(--text-dark-primary);
+    }
+
+    .faq-option p {
+      margin-bottom: 24px;
+      color: var(--text-dark-secondary);
+    }
+
+    .cta-3d-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.05) 40%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    .cta-content p {
+      font-size: 1.2rem;
+      color: var(--text-light-secondary);
+      margin-bottom: 40px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE DESIGN
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-content p {
+        margin: 0 auto 36px;
+      }
+      .hero-buttons {
+        justify-content: center;
+      }
+      .benefits-grid,
+      .tracks-grid,
+      .gains-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .timeline-line,
+      .process-line {
+        display: none;
+      }
+      .timeline-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+      }
+      .process-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.6rem;
+      }
+      .benefits-grid,
+      .tracks-grid,
+      .projects-grid,
+      .gains-grid,
+      .timeline-grid,
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+      .cta-content h2 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HERO SECTION (STAGGERED TOP → DOWN ENTRANCE)
+       ========================================================================== -->
+  <section class="hero animate-top-down delay-1">
+    <div class="hero-glow-bg"></div>
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="badge animate-top-down delay-2">SOXIT ACADEMIA • INTERNSHIP & TRAINING</span>
+        <h1 class="animate-top-down delay-2">Learn. Build. Experience.</h1>
+        <p class="animate-top-down delay-3">Gain practical experience through industry-focused internships and real-world projects designed to turn your learning into valuable skills.</p>
+        <div class="hero-buttons animate-top-down delay-4">
+          <a href="#tracks" class="btn btn-primary">Explore Internships <i data-lucide="arrow-right"></i></a>
+          <a href="#projects" class="btn btn-secondary">View Projects <i data-lucide="folder"></i></a>
+        </div>
+      </div>
+
+      <!-- 3D Career Visual Stage -->
+      <div class="hero-3d-stage animate-top-down delay-5">
+        <div class="stage-card">
+          <div class="cube-core">
+            <div class="cube-face cf-front"></div>
+            <div class="cube-face cf-back"></div>
+            <div class="cube-face cf-right"></div>
+            <div class="cube-face cf-left"></div>
+            <div class="cube-face cf-top"></div>
+            <div class="cube-face cf-bottom"></div>
+          </div>
+
+          <div class="floating-element fe-1">
+            <i data-lucide="rocket" style="color: var(--primary-cyan);"></i>
+            <span>Real Projects</span>
+          </div>
+
+          <div class="floating-element fe-2">
+            <i data-lucide="briefcase" style="color: var(--primary-purple);"></i>
+            <span>Industry Workflow</span>
+          </div>
+
+          <div class="floating-element fe-3">
+            <i data-lucide="users" style="color: var(--primary-blue);"></i>
+            <span>Mentorship</span>
+          </div>
+
+          <div class="floating-element fe-4">
+            <i data-lucide="folder-git-2" style="color: #10b981;"></i>
+            <span>Portfolio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 1: INTERNSHIP BENEFITS
+       ========================================================================== -->
+  <section class="benefits-section">
+    <div class="container">
+      <div class="section-header reveal animate-top-down delay-6">
+        <h2>Build Experience That Matters</h2>
+        <p>Go beyond classroom learning with practical experience, guided projects, and industry-focused learning.</p>
+      </div>
+
+      <div class="benefits-grid">
+        <!-- 1 -->
+        <div class="benefit-card-wrapper reveal">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i data-lucide="briefcase"></i>
+            </div>
+            <h3>Industry-Focused Learning</h3>
+            <p>Learn through practical tasks and workflows that reflect real technology environments.</p>
+            <a href="#tracks" class="benefit-link">Learn More <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="benefit-card-wrapper reveal">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i data-lucide="users"></i>
+            </div>
+            <h3>Guided Mentorship</h3>
+            <p>Learn with structured guidance, feedback, and support throughout your internship journey.</p>
+            <a href="#process" class="benefit-link">Learn More <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="benefit-card-wrapper reveal">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i data-lucide="rocket"></i>
+            </div>
+            <h3>Real-World Experience</h3>
+            <p>Apply your knowledge by working on meaningful projects and solving practical problems.</p>
+            <a href="#projects" class="benefit-link">Learn More <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 2: INTERNSHIP TRACKS
+       ========================================================================== -->
+  <section class="tracks-section" id="tracks">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Choose Your Internship Track</h2>
+      </div>
+
+      <div class="tracks-grid">
+        <!-- TRACK 1: AI & Machine Learning -->
+        <div class="track-card-wrapper reveal">
+          <div class="track-card">
+            <div class="track-visual">
+              <div class="track-visual-bg"></div>
+              <div class="track-3d-graphic">
+                <i data-lucide="brain-circuit" style="width: 72px; height: 72px; color: var(--primary-cyan);"></i>
+              </div>
+            </div>
+            <div class="track-body">
+              <div class="track-header-line">
+                <div class="track-icon"><i data-lucide="cpu"></i></div>
+                <h3>AI & Machine Learning</h3>
+              </div>
+              <p>Work with data, machine learning concepts, AI applications, and intelligent systems.</p>
+              <div class="skills-container">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Machine Learning</span>
+                <span class="skill-tag">AI</span>
+                <span class="skill-tag">Data</span>
+              </div>
+              <div class="track-meta"><div><span>Level</span><strong>Intermediate</strong></div><div><span>Duration</span><strong>40+ Hours</strong></div></div>
+              <a href="#" class="track-link">Explore Track <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRACK 2: Full Stack Development -->
+        <div class="track-card-wrapper reveal">
+          <div class="track-card">
+            <div class="track-visual">
+              <div class="track-visual-bg"></div>
+              <div class="track-3d-graphic">
+                <i data-lucide="laptop" style="width: 72px; height: 72px; color: var(--primary-blue);"></i>
+              </div>
+            </div>
+            <div class="track-body">
+              <div class="track-header-line">
+                <div class="track-icon"><i data-lucide="code"></i></div>
+                <h3>Full Stack Development</h3>
+              </div>
+              <p>Build modern web applications and understand frontend, backend, databases, and APIs.</p>
+              <div class="skills-container">
+                <span class="skill-tag">HTML</span>
+                <span class="skill-tag">CSS</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">React</span>
+                <span class="skill-tag">Backend</span>
+              </div>
+              <div class="track-meta"><div><span>Level</span><strong>Intermediate</strong></div><div><span>Duration</span><strong>40+ Hours</strong></div></div>
+              <a href="#" class="track-link">Explore Track <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRACK 3: Data Analytics -->
+        <div class="track-card-wrapper reveal">
+          <div class="track-card">
+            <div class="track-visual">
+              <div class="track-visual-bg"></div>
+              <div class="track-3d-graphic">
+                <i data-lucide="line-chart" style="width: 72px; height: 72px; color: var(--primary-purple);"></i>
+              </div>
+            </div>
+            <div class="track-body">
+              <div class="track-header-line">
+                <div class="track-icon"><i data-lucide="bar-chart-2"></i></div>
+                <h3>Data Analytics</h3>
+              </div>
+              <p>Work with data analysis, visualization, reporting, and practical business insights.</p>
+              <div class="skills-container">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">Excel</span>
+                <span class="skill-tag">Visualization</span>
+              </div>
+              <div class="track-meta"><div><span>Level</span><strong>Intermediate</strong></div><div><span>Duration</span><strong>40+ Hours</strong></div></div>
+              <a href="#" class="track-link">Explore Track <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRACK 4: Cloud & DevOps -->
+        <div class="track-card-wrapper reveal">
+          <div class="track-card">
+            <div class="track-visual">
+              <div class="track-visual-bg"></div>
+              <div class="track-3d-graphic">
+                <i data-lucide="server" style="width: 72px; height: 72px; color: #10b981;"></i>
+              </div>
+            </div>
+            <div class="track-body">
+              <div class="track-header-line">
+                <div class="track-icon"><i data-lucide="cloud"></i></div>
+                <h3>Cloud & DevOps</h3>
+              </div>
+              <p>Explore cloud platforms, deployment, automation, containers, and DevOps workflows.</p>
+              <div class="skills-container">
+                <span class="skill-tag">Cloud</span>
+                <span class="skill-tag">Linux</span>
+                <span class="skill-tag">Docker</span>
+                <span class="skill-tag">CI/CD</span>
+              </div>
+              <div class="track-meta"><div><span>Level</span><strong>Intermediate</strong></div><div><span>Duration</span><strong>40+ Hours</strong></div></div>
+              <a href="#" class="track-link">Explore Track <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRACK 5: Cybersecurity -->
+        <div class="track-card-wrapper reveal">
+          <div class="track-card">
+            <div class="track-visual">
+              <div class="track-visual-bg"></div>
+              <div class="track-3d-graphic">
+                <i data-lucide="shield-check" style="width: 72px; height: 72px; color: #f59e0b;"></i>
+              </div>
+            </div>
+            <div class="track-body">
+              <div class="track-header-line">
+                <div class="track-icon"><i data-lucide="shield"></i></div>
+                <h3>Cybersecurity</h3>
+              </div>
+              <p>Develop foundational knowledge of secure systems, networks, and cybersecurity practices.</p>
+              <div class="skills-container">
+                <span class="skill-tag">Networking</span>
+                <span class="skill-tag">Linux</span>
+                <span class="skill-tag">Security</span>
+                <span class="skill-tag">Web Security</span>
+              </div>
+              <div class="track-meta"><div><span>Level</span><strong>Intermediate</strong></div><div><span>Duration</span><strong>40+ Hours</strong></div></div>
+              <a href="#" class="track-link">Explore Track <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRACK 6: UI/UX Design -->
+        <div class="track-card-wrapper reveal">
+          <div class="track-card">
+            <div class="track-visual">
+              <div class="track-visual-bg"></div>
+              <div class="track-3d-graphic">
+                <i data-lucide="layout" style="width: 72px; height: 72px; color: #ec4899;"></i>
+              </div>
+            </div>
+            <div class="track-body">
+              <div class="track-header-line">
+                <div class="track-icon"><i data-lucide="palette"></i></div>
+                <h3>UI/UX Design</h3>
+              </div>
+              <p>Design useful and engaging digital experiences through research, wireframes, interfaces, and prototypes.</p>
+              <div class="skills-container">
+                <span class="skill-tag">UX</span>
+                <span class="skill-tag">UI</span>
+                <span class="skill-tag">Wireframes</span>
+                <span class="skill-tag">Prototyping</span>
+              </div>
+              <div class="track-meta"><div><span>Level</span><strong>Intermediate</strong></div><div><span>Duration</span><strong>40+ Hours</strong></div></div>
+              <a href="#" class="track-link">Explore Track <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 3: PROJECTS
+       ========================================================================== -->
+  <section class="projects-section" id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Turn Your Skills Into Projects</h2>
+        <p>Build practical projects that demonstrate what you have learned.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <div class="project-card reveal">
+          <div class="project-visual">
+            <i data-lucide="code-2" style="width: 54px; height: 54px;"></i>
+          </div>
+          <div class="project-body">
+            <h3>Beginner Projects</h3>
+            <p>Start with guided projects that help you understand fundamentals.</p>
+            <a href="#" class="track-link">Explore Projects <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card reveal">
+          <div class="project-visual">
+            <i data-lucide="layers" style="width: 54px; height: 54px;"></i>
+          </div>
+          <div class="project-body">
+            <h3>Intermediate Projects</h3>
+            <p>Work on more practical applications and strengthen your technical skills.</p>
+            <a href="#" class="track-link">Explore Projects <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card reveal">
+          <div class="project-visual">
+            <i data-lucide="building-2" style="width: 54px; height: 54px;"></i>
+          </div>
+          <div class="project-body">
+            <h3>Industry Projects</h3>
+            <p>Work on realistic problem statements and industry-style project workflows.</p>
+            <a href="#" class="track-link">Explore Projects <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card reveal">
+          <div class="project-visual">
+            <i data-lucide="briefcase" style="width: 54px; height: 54px;"></i>
+          </div>
+          <div class="project-body">
+            <h3>Portfolio Projects</h3>
+            <p>Build polished projects that demonstrate your skills and capabilities.</p>
+            <a href="#" class="track-link">Build Portfolio <i data-lucide="arrow-right" style="width: 16px;"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 4: PROJECT JOURNEY (TIMELINE)
+       ========================================================================== -->
+  <section class="journey-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>From Idea to Real Project</h2>
+      </div>
+
+      <div class="timeline-container">
+        <div class="timeline-line">
+          <div class="timeline-progress" id="projectJourneyTrack"></div>
+        </div>
+
+        <div class="timeline-grid">
+          <div class="timeline-step reveal">
+            <div class="step-node">01</div>
+            <h4>Choose</h4>
+            <p>Choose a project based on your role and interests.</p>
+          </div>
+
+          <div class="timeline-step reveal">
+            <div class="step-node">02</div>
+            <h4>Plan</h4>
+            <p>Understand the problem, requirements, and technology.</p>
+          </div>
+
+          <div class="timeline-step reveal">
+            <div class="step-node">03</div>
+            <h4>Build</h4>
+            <p>Develop the project step by step.</p>
+          </div>
+
+          <div class="timeline-step reveal">
+            <div class="step-node">04</div>
+            <h4>Review</h4>
+            <p>Test, improve, document, and present your work.</p>
+          </div>
+
+          <div class="timeline-step reveal">
+            <div class="step-node">05</div>
+            <h4>Showcase</h4>
+            <p>Add the project to your portfolio and demonstrate your skills.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 5: WHAT YOU GAIN
+       ========================================================================== -->
+  <section class="gains-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>What You Gain</h2>
+      </div>
+
+      <div class="gains-grid">
+        <div class="gain-card reveal">
+          <div class="gain-icon"><i data-lucide="laptop"></i></div>
+          <div class="gain-body">
+            <h3>Practical Skills</h3>
+            <p>Apply concepts through hands-on work.</p>
+          </div>
+        </div>
+
+        <div class="gain-card reveal">
+          <div class="gain-icon"><i data-lucide="brain"></i></div>
+          <div class="gain-body">
+            <h3>Problem Solving</h3>
+            <p>Learn to approach real-world problems.</p>
+          </div>
+        </div>
+
+        <div class="gain-card reveal">
+          <div class="gain-icon"><i data-lucide="users-2"></i></div>
+          <div class="gain-body">
+            <h3>Team Collaboration</h3>
+            <p>Understand how teams work together.</p>
+          </div>
+        </div>
+
+        <div class="gain-card reveal">
+          <div class="gain-icon"><i data-lucide="rocket"></i></div>
+          <div class="gain-body">
+            <h3>Project Experience</h3>
+            <p>Build meaningful technology projects.</p>
+          </div>
+        </div>
+
+        <div class="gain-card reveal">
+          <div class="gain-icon"><i data-lucide="folder-check"></i></div>
+          <div class="gain-body">
+            <h3>Portfolio</h3>
+            <p>Create work you can showcase.</p>
+          </div>
+        </div>
+
+        <div class="gain-card reveal">
+          <div class="gain-icon"><i data-lucide="target"></i></div>
+          <div class="gain-body">
+            <h3>Career Readiness</h3>
+            <p>Develop confidence for future opportunities.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 6: INTERNSHIP PROCESS
+       ========================================================================== -->
+  <section class="process-section" id="process">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Your Internship Journey</h2>
+      </div>
+
+      <div class="process-container">
+        <div class="process-line">
+          <div class="process-progress" id="processJourneyTrack"></div>
+        </div>
+
+        <div class="process-grid">
+          <div class="process-step reveal">
+            <div class="process-node"><i data-lucide="file-text"></i></div>
+            <h4>01 — Apply</h4>
+            <p>Submit your interest</p>
+          </div>
+
+          <div class="process-step reveal">
+            <div class="process-node"><i data-lucide="play-circle"></i></div>
+            <h4>02 — Get Started</h4>
+            <p>Onboard & setup</p>
+          </div>
+
+          <div class="process-step reveal">
+            <div class="process-node"><i data-lucide="book-open"></i></div>
+            <h4>03 — Learn</h4>
+            <p>Guided learning</p>
+          </div>
+
+          <div class="process-step reveal">
+            <div class="process-node"><i data-lucide="hammer"></i></div>
+            <h4>04 — Build</h4>
+            <p>Develop real projects</p>
+          </div>
+
+          <div class="process-step reveal">
+            <div class="process-node"><i data-lucide="message-square"></i></div>
+            <h4>05 — Get Feedback</h4>
+            <p>Mentors review work</p>
+          </div>
+
+          <div class="process-step reveal">
+            <div class="process-node"><i data-lucide="award"></i></div>
+            <h4>06 — Complete</h4>
+            <p>Certify & showcase</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 7: FINAL CTA
+       ========================================================================== -->
+  <section class="cta-section reveal">
+    <div class="cta-3d-bg"></div>
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Build Real Experience?</h2>
+        <p>Start learning, build meaningful projects, gain practical experience, and take the next step toward your career.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-option reveal" aria-labelledby="faq-option-title">
+    <div class="container">
+      <h2 id="faq-option-title">Have questions about internships?</h2>
+      <p>Review enrollment, prerequisites, program structure, and learning outcomes.</p>
+      <a href="questions.html" class="btn btn-primary">View FAQs <i data-lucide="arrow-right"></i></a>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       JAVASCRIPT (INTERSECTION OBSERVER FOR TOP → DOWN SCROLL REVEAL)
+       ========================================================================== -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // IntersectionObserver for TOP → DOWN Scroll Reveal
+    document.addEventListener("DOMContentLoaded", () => {
+      const observerOptions = {
+        root: null,
+        threshold: 0.15,
+        rootMargin: "0px"
+      };
+
+      const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+
+            // Stagger cards dynamically in grid containers
+            const parent = el.parentElement;
+            if (parent && (parent.classList.contains("benefits-grid") || 
+                           parent.classList.contains("tracks-grid") || 
+                           parent.classList.contains("projects-grid") || 
+                           parent.classList.contains("gains-grid"))) {
+              const siblings = Array.from(parent.children);
+              const index = siblings.indexOf(el);
+              el.style.transitionDelay = `${index * 0.1}s`;
+            }
+
+            el.classList.add("active");
+
+            // Trigger timeline progress animation
+            if (el.classList.contains('timeline-step')) {
+              const steps = document.querySelectorAll('.timeline-step');
+              steps.forEach((step, index) => {
+                setTimeout(() => {
+                  step.classList.add('active');
+                }, index * 200);
+              });
+              const track = document.getElementById('projectJourneyTrack');
+              if (track) track.style.width = '100%';
+            }
+
+            // Trigger process progress animation
+            if (el.classList.contains('process-step')) {
+              const steps = document.querySelectorAll('.process-step');
+              steps.forEach((step, index) => {
+                setTimeout(() => {
+                  step.classList.add('active');
+                }, index * 150);
+              });
+              const track = document.getElementById('processJourneyTrack');
+              if (track) track.style.width = '100%';
+            }
+
+            observer.unobserve(el);
+          }
+        });
+      }, observerOptions);
+
+      const revealElements = document.querySelectorAll(".reveal");
+      revealElements.forEach((el) => scrollObserver.observe(el));
+    });
+  </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOXIT Academia — LMS</title>
+    <!-- Fonts & Three.js -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #030712;
+            --bg-card: rgba(15, 23, 42, 0.65);
+            --bg-card-hover: rgba(30, 41, 59, 0.85);
+            --border-glow: rgba(56, 189, 248, 0.2);
+            --border-glow-hover: rgba(168, 85, 247, 0.5);
+            --primary-cyan: #38bdf8;
+            --primary-blue: #3b82f6;
+            --primary-purple: #a855f7;
+            --primary-green: #22c55e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient Glow Backgrounds */
+        .ambient-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Typography & Utility */
+        h1, h2, h3, h4, h5 {
+            font-family: var(--font-heading);
+            color: #ffffff;
+            line-height: 1.25;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #a855f7 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: var(--primary-cyan);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--primary-cyan);
+            box-shadow: 0 0 8px var(--primary-cyan);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(168, 85, 247, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 90px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 60px auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Glassmorphic Cards */
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            padding: 32px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-glow-hover);
+            box-shadow: 0 12px 40px rgba(168, 85, 247, 0.15);
+            background: var(--bg-card-hover);
+        }
+
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-cyan);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(168, 85, 247, 0.2);
+            color: #fff;
+            border-color: var(--primary-purple);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 40px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.6rem;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+        }
+
+        .hero-visual {
+            position: relative;
+            width: 100%;
+            height: 580px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-glow);
+            background: radial-gradient(circle at center, rgba(15, 23, 42, 0.8) 0%, rgba(3, 7, 18, 0.95) 100%);
+        }
+
+        #hero-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* SECTION 1: LMS FEATURES */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        /* SECTION 2 & 6: DASHBOARDS & TASKS */
+        .lms-dashboard-ui {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 560px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+        }
+
+        .lms-sidebar {
+            background: rgba(3, 7, 18, 0.6);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-brand {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding: 0 8px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.92rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+        }
+
+        .sidebar-item:hover, .sidebar-item.active {
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--primary-cyan);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .lms-main-content {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            overflow-y: auto;
+        }
+
+        /* SEARCH BAR */
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* DASHBOARD GRID INTERNAL */
+        .dash-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .dash-stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .dash-stat-val {
+            font-size: 1.8rem;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: #fff;
+            margin-top: 4px;
+        }
+
+        .dash-section-title {
+            font-size: 1.2rem;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-bar-wrap {
+            height: 8px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-cyan));
+            border-radius: 10px;
+        }
+
+        /* SECTION 3: MY LEARNING COURSES */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .course-card-v2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 380px;
+        }
+
+        .course-preview-box {
+            height: 140px;
+            width: 100%;
+            border-radius: 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-badge-level {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 0.72rem;
+            color: var(--primary-cyan);
+            font-weight: 600;
+        }
+
+        /* SECTION 4: COURSE CONTENT FORMATS */
+        .format-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+        }
+
+        /* SECTION 5: CONTINUE LEARNING HORIZONTAL */
+        .continue-banner {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 32px;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.7) 100%);
+            border: 1px solid var(--border-glow);
+            border-radius: 28px;
+            padding: 48px;
+        }
+
+        .continue-visual {
+            height: 240px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* SECTION 6: TASK DASHBOARD ITEMS */
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .task-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .status-in-progress { background: rgba(56, 189, 248, 0.15); color: var(--primary-cyan); border: 1px solid rgba(56, 189, 248, 0.3); }
+        .status-upcoming { background: rgba(168, 85, 247, 0.15); color: var(--primary-purple); border: 1px solid rgba(168, 85, 247, 0.3); }
+        .status-available { background: rgba(34, 197, 94, 0.15); color: var(--primary-green); border: 1px solid rgba(34, 197, 94, 0.3); }
+
+        /* SECTION 7: LEARNING PROGRESS ANALYTICS */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .circle-chart-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* SECTION 8: SKILLS GRID */
+        .skills-container-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .skill-item-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item-card:hover {
+            border-color: var(--primary-cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.15);
+        }
+
+        /* SECTION 9 & 10: ACHIEVEMENTS & CERTIFICATES */
+        .cert-card-preview {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+            border: 2px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .cert-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.04;
+            pointer-events: none;
+        }
+
+        /* SECTION 11: LEARNING JOURNEY TIMELINE */
+        .journey-timeline-wrapper {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 40px;
+        }
+
+        .journey-line {
+            position: absolute;
+            top: 24px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
+            z-index: 0;
+            box-shadow: 0 0 10px var(--primary-cyan);
+        }
+
+        .journey-node {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            flex: 1;
+        }
+
+        .journey-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 2px solid var(--primary-cyan);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 16px auto;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .journey-node:hover .journey-circle {
+            transform: scale(1.15);
+            background: var(--primary-cyan);
+            color: #000;
+            box-shadow: 0 0 25px var(--primary-cyan);
+        }
+
+        /* FINAL CTA */
+        .cta-section-lms {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(3, 7, 18, 1) 100%);
+            border: 1px solid var(--border-glow-hover);
+            border-radius: 32px;
+            padding: 80px 40px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #cta-bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        /* ANIMATION UTILITIES */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .hero-visual { height: 420px; }
+            .lms-dashboard-ui { grid-template-columns: 1fr; }
+            .lms-sidebar { flex-direction: row; overflow-x: auto; padding: 16px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+            .grid-3, .grid-4, .analytics-grid, .skills-container-grid { grid-template-columns: repeat(2, 1fr); }
+            .continue-banner { grid-template-columns: 1fr; text-align: center; }
+            .dash-stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .grid-3, .grid-4, .analytics-grid, .skills-container-grid, .task-grid, .dash-stats-grid { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .journey-timeline-wrapper { flex-direction: column; gap: 30px; align-items: flex-start; }
+            .journey-line { width: 3px; height: 100%; top: 0; left: 24px; }
+            .journey-node { display: flex; align-items: center; gap: 20px; text-align: left; }
+            .journey-circle { margin: 0; }
+            section { padding: 60px 0; }
+            .btn-group { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AMBIENT GLOW LIGHTS -->
+    <div class="ambient-glow" style="top: -100px; left: -100px; width: 500px; height: 500px; background: rgba(56, 189, 248, 0.15);"></div>
+    <div class="ambient-glow" style="top: 40%; right: -150px; width: 600px; height: 600px; background: rgba(168, 85, 247, 0.12);"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="badge">
+                        <span class="badge-dot"></span>
+                        SOXIT ACADEMIA • LEARNING MANAGEMENT SYSTEM
+                    </div>
+                    <h1>Everything You Need to Learn, <span class="gradient-text">In One Place.</span></h1>
+                    <p>Access courses, learning materials, assignments, projects, assessments, and track your learning progress through one personalized learning platform.</p>
+                    <div class="btn-group">
+                        <a href="#my-learning" class="btn btn-primary">Explore Courses →</a>
+                        <a href="#lms-dashboard" class="btn btn-secondary">View Learning Dashboard →</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div id="hero-canvas"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: LMS FEATURES -->
+    <section id="features">
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <h2>Everything Your <span class="gradient-text">Learning Journey Needs</span></h2>
+                <p>Learn, practice, track, and grow from one connected learning environment.</p>
+            </div>
+            <div class="grid-3">
+                <div class="glass-card reveal-on-scroll">
+                    <div class="card-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                    </div>
+                    <h3>Courses</h3>
+                    <p style="color: var(--text-muted); margin-top: 10px;">Access structured courses and learning content organized around your learning goals.</p>
+                </div>
+                <div class="glass-card reveal-on-scroll">
+                    <div class="card-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                    </div>
+                    <h3>Video Learning</h3>
+                    <p style="color: var(--text-muted); margin-top: 10px;">Learn through engaging video lessons and visual explanations.</p>
+                </div>
+                <div class="glass-card reveal-on-scroll">
+                    <div class="card-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                    </div>
+                    <h3>Assignments</h3>
+                    <p style="color: var(--text-muted); margin-top: 10px;">Complete practical assignments and activities to strengthen your understanding.</p>
+                </div>
+                <div class="glass-card reveal-on-scroll">
+                    <div class="card-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <h3>Assessments</h3>
+                    <p style="color: var(--text-muted); margin-top: 10px;">Test your knowledge through quizzes, assessments, and learning activities.</p>
+                </div>
+                <div class="glass-card reveal-on-scroll">
+                    <div class="card-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <h3>Progress Tracking</h3>
+                    <p style="color: var(--text-muted); margin-top: 10px;">Track completed lessons, course progress, skills, and learning milestones.</p>
+                </div>
+                <div class="glass-card reveal-on-scroll">
+                    <div class="card-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                    </div>
+                    <h3>Certificates</h3>
+                    <p style="color: var(--text-muted); margin-top: 10px;">Complete eligible learning programs and showcase your achievements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: LMS DASHBOARD INTERFACE -->
+    <section id="lms-dashboard">
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <h2>Your Learning <span class="gradient-text">Dashboard</span></h2>
+            </div>
+            <div class="lms-dashboard-ui reveal-on-scroll">
+                <!-- Sidebar Nav -->
+                <div class="lms-sidebar">
+                    <div class="sidebar-brand">
+                        <svg width="24" height="24" fill="none" stroke="var(--primary-cyan)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        SOXIT LMS
+                    </div>
+                    <a href="#lms-dashboard" class="sidebar-item active">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        Dashboard
+                    </a>
+                    <a href="#my-learning" class="sidebar-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                        My Learning
+                    </a>
+                    <a href="#my-learning" class="sidebar-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        Courses
+                    </a>
+                    <a href="#assignments" class="sidebar-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                        Assignments
+                    </a>
+                    <a href="#assignments" class="sidebar-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+                        Projects
+                    </a>
+                    <a href="#assignments" class="sidebar-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        Assessments
+                    </a>
+                    <a href="#certificates" class="sidebar-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                        Certificates
+                    </a>
+                    <a href="#achievements" class="sidebar-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+                        Achievements
+                    </a>
+                    <a href="#profile" class="sidebar-item">
+                        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        Profile
+                    </a>
+                </div>
+
+                <!-- Main Dashboard Panel -->
+                <div class="lms-main-content">
+                    <div class="search-box">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" placeholder="Search courses, lessons, resources...">
+                    </div>
+
+                    <div>
+                        <h3 style="font-size: 1.6rem; margin-bottom: 4px;">Welcome Back, Learner</h3>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Track your progress and continue where you left off.</p>
+                    </div>
+
+                    <!-- Statistics Cards -->
+                    <div>
+                        <div class="dash-section-title">
+                            <span>Your Learning Progress</span>
+                            <span style="font-size:0.85rem; color:var(--primary-cyan); font-weight:600;">Overall Progress 72%</span>
+                        </div>
+                        <div class="dash-stats-grid">
+                            <div class="dash-stat-card">
+                                <div style="color: var(--text-muted); font-size: 0.8rem;">Course Progress</div>
+                                <div class="dash-stat-val">68%</div>
+                                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 68%;"></div></div>
+                            </div>
+                            <div class="dash-stat-card">
+                                <div style="color: var(--text-muted); font-size: 0.8rem;">Modules Completed</div>
+                                <div class="dash-stat-val">8</div>
+                                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 80%;"></div></div>
+                            </div>
+                            <div class="dash-stat-card">
+                                <div style="color: var(--text-muted); font-size: 0.8rem;">Projects Completed</div>
+                                <div class="dash-stat-val">4</div>
+                                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 50%;"></div></div>
+                            </div>
+                            <div class="dash-stat-card">
+                                <div style="color: var(--text-muted); font-size: 0.8rem;">Skills Developed</div>
+                                <div class="dash-stat-val">12</div>
+                                <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 90%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Continue Learning & Upcoming -->
+                    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px;">
+                        <div class="dash-stat-card">
+                            <h4 style="margin-bottom: 12px; font-size: 1.05rem;">Continue Learning</h4>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <strong style="font-size: 0.95rem;">AI & Machine Learning Fundamentals</strong>
+                                <span style="font-size: 0.85rem; color: var(--primary-cyan);">68%</span>
+                            </div>
+                            <div class="progress-bar-wrap" style="margin-bottom: 16px;"><div class="progress-bar-fill" style="width: 68%;"></div></div>
+                            <a href="#continue" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">Continue →</a>
+                        </div>
+                        <div class="dash-stat-card">
+                            <h4 style="margin-bottom: 12px; font-size: 1.05rem;">Upcoming</h4>
+                            <ul style="list-style: none; font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px;">
+                                <li style="display:flex; justify-content:space-between;"><span>• Assignment: Neural Net Lab</span> <span style="color:#fff;">In Progress</span></li>
+                                <li style="display:flex; justify-content:space-between;"><span>• Quiz: Model Optimization</span> <span style="color:#fff;">Available</span></li>
+                                <li style="display:flex; justify-content:space-between;"><span>• Milestone: Capstone Draft</span> <span style="color:#fff;">Upcoming</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: MY LEARNING -->
+    <section id="my-learning">
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <h2>My <span class="gradient-text">Learning</span></h2>
+            </div>
+            <div class="grid-4">
+                <!-- Course 1 -->
+                <div class="glass-card course-card-v2 reveal-on-scroll">
+                    <div>
+                        <div class="course-preview-box">
+                            <span class="course-badge-level">Intermediate</span>
+                            <svg width="48" height="48" fill="none" stroke="var(--primary-cyan)" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
+                        </div>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 6px;">AI & Machine Learning</h3>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Progress: 68%</div>
+                        <div class="progress-bar-wrap" style="margin-bottom: 20px;"><div class="progress-bar-fill" style="width: 68%;"></div></div>
+                    </div>
+                    <a href="#continue" class="btn btn-secondary" style="width: 100%; text-align: center; font-size: 0.9rem; padding: 10px;">Continue Learning →</a>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="glass-card course-card-v2 reveal-on-scroll">
+                    <div>
+                        <div class="course-preview-box">
+                            <span class="course-badge-level">Intermediate</span>
+                            <svg width="48" height="48" fill="none" stroke="var(--primary-purple)" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+                        </div>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 6px;">Full Stack Development</h3>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Progress: 52%</div>
+                        <div class="progress-bar-wrap" style="margin-bottom: 20px;"><div class="progress-bar-fill" style="width: 52%;"></div></div>
+                    </div>
+                    <a href="#continue" class="btn btn-secondary" style="width: 100%; text-align: center; font-size: 0.9rem; padding: 10px;">Continue Learning →</a>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="glass-card course-card-v2 reveal-on-scroll">
+                    <div>
+                        <div class="course-preview-box">
+                            <span class="course-badge-level">Beginner</span>
+                            <svg width="48" height="48" fill="none" stroke="var(--primary-blue)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 20V10m-6 10V4M6 20v-6"/></svg>
+                        </div>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 6px;">Data Analytics</h3>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Progress: 42%</div>
+                        <div class="progress-bar-wrap" style="margin-bottom: 20px;"><div class="progress-bar-fill" style="width: 42%;"></div></div>
+                    </div>
+                    <a href="#continue" class="btn btn-secondary" style="width: 100%; text-align: center; font-size: 0.9rem; padding: 10px;">Continue Learning →</a>
+                </div>
+
+                <!-- Course 4 -->
+                <div class="glass-card course-card-v2 reveal-on-scroll">
+                    <div>
+                        <div class="course-preview-box">
+                            <span class="course-badge-level">Intermediate</span>
+                            <svg width="48" height="48" fill="none" stroke="var(--primary-cyan)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+                        </div>
+                        <h3 style="font-size: 1.15rem; margin-bottom: 6px;">Cloud & DevOps</h3>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Progress: 35%</div>
+                        <div class="progress-bar-wrap" style="margin-bottom: 20px;"><div class="progress-bar-fill" style="width: 35%;"></div></div>
+                    </div>
+                    <a href="#continue" class="btn btn-secondary" style="width: 100%; text-align: center; font-size: 0.9rem; padding: 10px;">Continue Learning →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: COURSE CONTENT FORMATS -->
+    <section>
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <h2>Learn Through <span class="gradient-text">Multiple Formats</span></h2>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 16px; max-width: 900px; margin: 0 auto;">
+                <div class="glass-card format-card reveal-on-scroll">
+                    <div class="card-icon" style="margin-bottom:0;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+                    <div>
+                        <h4>Video Lessons</h4>
+                        <p style="color: var(--text-muted); font-size: 0.92rem;">Learn through structured video lessons.</p>
+                    </div>
+                </div>
+                <div class="glass-card format-card reveal-on-scroll">
+                    <div class="card-icon" style="margin-bottom:0;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div>
+                    <div>
+                        <h4>Reading Materials</h4>
+                        <p style="color: var(--text-muted); font-size: 0.92rem;">Access useful learning resources and reference materials.</p>
+                    </div>
+                </div>
+                <div class="glass-card format-card reveal-on-scroll">
+                    <div class="card-icon" style="margin-bottom:0;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+                    <div>
+                        <h4>Practical Exercises</h4>
+                        <p style="color: var(--text-muted); font-size: 0.92rem;">Practice concepts through hands-on activities.</p>
+                    </div>
+                </div>
+                <div class="glass-card format-card reveal-on-scroll">
+                    <div class="card-icon" style="margin-bottom:0;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+                    <div>
+                        <h4>Quizzes</h4>
+                        <p style="color: var(--text-muted); font-size: 0.92rem;">Check your understanding through interactive assessments.</p>
+                    </div>
+                </div>
+                <div class="glass-card format-card reveal-on-scroll">
+                    <div class="card-icon" style="margin-bottom:0;"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.71 1.26-2 1.26-2l-4.26-4.26s-1.29.55-2 1.26z"/><path d="M12 15l-3-3 7.35-7.35c.78-.78 2.05-.78 2.83 0l.17.17c.78.78.78 2.05 0 2.83L12 15z"/></svg></div>
+                    <div>
+                        <h4>Projects</h4>
+                        <p style="color: var(--text-muted); font-size: 0.92rem;">Apply your knowledge by building practical projects.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: CONTINUE LEARNING -->
+    <section id="continue">
+        <div class="container">
+            <div class="continue-banner reveal-on-scroll">
+                <div>
+                    <span style="color: var(--primary-cyan); font-weight: 700; font-size: 0.85rem; letter-spacing: 1px;">CONTINUE WHERE YOU LEFT OFF</span>
+                    <h2 style="font-size: 2.2rem; margin: 12px 0;">Full Stack Development</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 16px;">Current Module: <strong style="color: #fff;">Building Responsive Web Interfaces</strong></p>
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 28px;">
+                        <div class="progress-bar-wrap" style="flex: 1;"><div class="progress-bar-fill" style="width: 72%;"></div></div>
+                        <span style="font-weight: 700; color: var(--primary-cyan);">72%</span>
+                    </div>
+                    <div class="btn-group">
+                        <a href="#continue" class="btn btn-primary">Continue Learning →</a>
+                        <a href="#my-learning" class="btn btn-secondary">View Course</a>
+                    </div>
+                </div>
+                <div class="continue-visual">
+                    <svg width="90" height="90" fill="none" stroke="var(--primary-cyan)" stroke-width="1.2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/><polygon points="10 8 16 11 10 14 10 8" fill="var(--primary-cyan)"/></svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: ASSIGNMENTS & ACTIVITIES -->
+    <section id="assignments">
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <h2>Assignments & <span class="gradient-text">Activities</span></h2>
+            </div>
+            <div class="task-grid">
+                <div class="glass-card task-card reveal-on-scroll">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div class="card-icon" style="margin-bottom:0;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
+                        <div>
+                            <h4>Assignment 01</h4>
+                            <p style="font-size: 0.88rem; color: var(--text-muted);">Build a Responsive Landing Page</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="status-badge status-in-progress">In Progress</span>
+                        <div style="margin-top: 8px;"><a href="#assignments" style="color: var(--primary-cyan); font-size: 0.85rem; text-decoration: none;">View Task →</a></div>
+                    </div>
+                </div>
+
+                <div class="glass-card task-card reveal-on-scroll">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div class="card-icon" style="margin-bottom:0;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></div>
+                        <div>
+                            <h4>Assignment 02</h4>
+                            <p style="font-size: 0.88rem; color: var(--text-muted);">Create a Data Visualization</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="status-badge status-upcoming">Upcoming</span>
+                        <div style="margin-top: 8px;"><a href="#assignments" style="color: var(--primary-purple); font-size: 0.85rem; text-decoration: none;">Details →</a></div>
+                    </div>
+                </div>
+
+                <div class="glass-card task-card reveal-on-scroll">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div class="card-icon" style="margin-bottom:0;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                        <div>
+                            <h4>Quiz</h4>
+                            <p style="font-size: 0.88rem; color: var(--text-muted);">JavaScript Fundamentals</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="status-badge status-available">Available</span>
+                        <div style="margin-top: 8px;"><a href="#assignments" style="color: var(--primary-green); font-size: 0.85rem; text-decoration: none;">Start Quiz →</a></div>
+                    </div>
+                </div>
+
+                <div class="glass-card task-card reveal-on-scroll">
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <div class="card-icon" style="margin-bottom:0;"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+                        <div>
+                            <h4>Project</h4>
+                            <p style="font-size: 0.88rem; color: var(--text-muted);">Build Your Portfolio Website</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="status-badge status-in-progress">In Progress</span>
+                        <div style="margin-top: 8px;"><a href="#assignments" style="color: var(--primary-cyan); font-size: 0.85rem; text-decoration: none;">Submit Draft →</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: LEARNING PROGRESS ANALYTICS -->
+    <section>
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <h2>Track Your <span class="gradient-text">Progress</span></h2>
+            </div>
+            <div class="glass-card reveal-on-scroll" style="padding: 40px;">
+                <div class="analytics-grid">
+                    <div class="circle-chart-box">
+                        <svg viewBox="0 0 36 36" style="width: 130px; height: 130px;">
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3" />
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--primary-cyan)" stroke-width="3" stroke-dasharray="68, 100" stroke-linecap="round" />
+                            <text x="18" y="20.5" fill="#fff" font-family="var(--font-heading)" font-size="0.5em" text-anchor="middle">68%</text>
+                        </svg>
+                        <h4 style="margin-top: 12px;">Course Progress</h4>
+                    </div>
+                    <div class="circle-chart-box">
+                        <svg viewBox="0 0 36 36" style="width: 130px; height: 130px;">
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3" />
+                            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--primary-purple)" stroke-width="3" stroke-dasharray="82, 100" stroke-linecap="round" />
+                            <text x="18" y="20.5" fill="#fff" font-family="var(--font-heading)" font-size="0.5em" text-anchor="middle">82%</text>
+                        </svg>
+                        <h4 style="margin-top: 12px;">Skill Progress</h4>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center; gap: 16px;">
+                        <div>
+                            <div style="display:flex; justify-content:space-between; font-size: 0.88rem; color:var(--text-muted);"><span>Learning Hours</span> <strong style="color:#fff;">48 hrs</strong></div>
+                            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 75%;"></div></div>
+                        </div>
+                        <div>
+                            <div style="display:flex; justify-content:space-between; font-size: 0.88rem; color:var(--text-muted);"><span>Projects</span> <strong style="color:#fff;">4 Built</strong></div>
+                            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 60%;"></div></div>
+                        </div>
+                        <div>
+                            <div style="display:flex; justify-content:space-between; font-size: 0.88rem; color:var(--text-muted);"><span>Assessments</span> <strong style="color:#fff;">12 Passed</strong></div>
+                            <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 90%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: SKILLS YOU'RE BUILDING -->
+    <section>
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <h2>Skills You're <span class="gradient-text">Building</span></h2>
+            </div>
+            <div class="skills-container-grid">
+                <div class="skill-item-card reveal-on-scroll">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <h4>Python</h4>
+                        <span style="font-size:0.75rem; color:var(--primary-cyan); font-weight:700;">Intermediate</span>
+                    </div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 72%;"></div></div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; text-align:right;">72%</div>
+                </div>
+                <div class="skill-item-card reveal-on-scroll">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <h4>JavaScript</h4>
+                        <span style="font-size:0.75rem; color:var(--primary-cyan); font-weight:700;">Advanced</span>
+                    </div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 85%;"></div></div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; text-align:right;">85%</div>
+                </div>
+                <div class="skill-item-card reveal-on-scroll">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <h4>React</h4>
+                        <span style="font-size:0.75rem; color:var(--primary-cyan); font-weight:700;">Intermediate</span>
+                    </div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 64%;"></div></div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; text-align:right;">64%</div>
+                </div>
+                <div class="skill-item-card reveal-on-scroll">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <h4>SQL</h4>
+                        <span style="font-size:0.75rem; color:var(--primary-cyan); font-weight:700;">Intermediate</span>
+                    </div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 58%;"></div></div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; text-align:right;">58%</div>
+                </div>
+                <div class="skill-item-card reveal-on-scroll">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <h4>AI</h4>
+                        <span style="font-size:0.75rem; color:var(--primary-cyan); font-weight:700;">Beginner</span>
+                    </div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 45%;"></div></div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; text-align:right;">45%</div>
+                </div>
+                <div class="skill-item-card reveal-on-scroll">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <h4>Machine Learning</h4>
+                        <span style="font-size:0.75rem; color:var(--primary-cyan); font-weight:700;">Beginner</span>
+                    </div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 40%;"></div></div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; text-align:right;">40%</div>
+                </div>
+                <div class="skill-item-card reveal-on-scroll">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <h4>Data Analytics</h4>
+                        <span style="font-size:0.75rem; color:var(--primary-cyan); font-weight:700;">Intermediate</span>
+                    </div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 60%;"></div></div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; text-align:right;">60%</div>
+                </div>
+                <div class="skill-item-card reveal-on-scroll">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <h4>Cloud</h4>
+                        <span style="font-size:0.75rem; color:var(--primary-cyan); font-weight:700;">Beginner</span>
+                    </div>
+                    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width: 35%;"></div></div>
+                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:6px; text-align:right;">35%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: YOUR ACHIEVEMENTS -->
+    <section id="achievements">
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <h2>Your <span class="gradient-text">Achievements</span></h2>
+            </div>
+            <div class="grid-4">
+                <div class="glass-card reveal-on-scroll" style="text-align: center;">
+                    <div class="card-icon" style="margin: 0 auto 16px auto;"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg></div>
+                    <h4>Course Completed</h4>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Foundation Web Program</p>
+                </div>
+                <div class="glass-card reveal-on-scroll" style="text-align: center;">
+                    <div class="card-icon" style="margin: 0 auto 16px auto;"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div>
+                    <h4>Project Completed</h4>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Portfolio Showcase</p>
+                </div>
+                <div class="glass-card reveal-on-scroll" style="text-align: center;">
+                    <div class="card-icon" style="margin: 0 auto 16px auto;"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></div>
+                    <h4>Assessment Passed</h4>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">JavaScript Mastery</p>
+                </div>
+                <div class="glass-card reveal-on-scroll" style="text-align: center;">
+                    <div class="card-icon" style="margin: 0 auto 16px auto;"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 15l-3-3 7.35-7.35c.78-.78 2.05-.78 2.83 0l.17.17c.78.78.78 2.05 0 2.83L12 15z"/></svg></div>
+                    <h4>Certificate Earned</h4>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px;">Web Foundations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: CERTIFICATES -->
+    <section id="certificates">
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <h2>Your <span class="gradient-text">Certificates</span></h2>
+            </div>
+            <div class="cert-card-preview reveal-on-scroll">
+                <svg class="cert-watermark" width="300" height="300" fill="none" stroke="#fff" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <div style="font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: 2px; color: var(--primary-cyan); text-transform: uppercase;">SOXIT ACADEMIA</div>
+                <h3 style="font-size: 2rem; margin: 16px 0;">Certificate of Completion</h3>
+                <p style="color: var(--text-muted);">This is to certify that</p>
+                <h4 style="font-size: 1.8rem; color: #fff; margin: 12px 0;">Learner Name</h4>
+                <p style="color: var(--text-muted);">has successfully completed the program</p>
+                <h5 style="font-size: 1.2rem; color: var(--primary-purple); margin-top: 8px;">Web Development Foundations</h5>
+                <div style="margin-top: 32px; font-size: 0.85rem; color: var(--text-muted);">Completion Date: Placeholder Date</div>
+                <a href="#certificates" class="btn btn-primary" style="margin-top: 28px;">View Certificate →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 11: LEARNING JOURNEY TIMELINE -->
+    <section>
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <h2>Your Learning <span class="gradient-text">Journey</span></h2>
+            </div>
+            <div class="journey-timeline-wrapper reveal-on-scroll">
+                <div class="journey-line"></div>
+                <div class="journey-node">
+                    <div class="journey-circle">01</div>
+                    <h4>Enroll</h4>
+                </div>
+                <div class="journey-node">
+                    <div class="journey-circle">02</div>
+                    <h4>Learn</h4>
+                </div>
+                <div class="journey-node">
+                    <div class="journey-circle">03</div>
+                    <h4>Practice</h4>
+                </div>
+                <div class="journey-node">
+                    <div class="journey-circle">04</div>
+                    <h4>Assess</h4>
+                </div>
+                <div class="journey-node">
+                    <div class="journey-circle">05</div>
+                    <h4>Build</h4>
+                </div>
+                <div class="journey-node">
+                    <div class="journey-circle">06</div>
+                    <h4>Complete</h4>
+                </div>
+                <div class="journey-node">
+                    <div class="journey-circle">07</div>
+                    <h4>Achieve</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section>
+        <div class="container">
+            <div class="cta-section-lms reveal-on-scroll">
+                <canvas id="cta-bg-canvas"></canvas>
+                <div style="position: relative; z-index: 2; max-width: 650px; margin: 0 auto;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 16px;">Your Learning Journey <span class="gradient-text">Starts Here.</span></h2>
+                    <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 32px;">Learn at your pace, track your progress, build practical skills, and keep moving toward your goals.</p>
+                    <div class="btn-group">
+                        <a href="#my-learning" class="btn btn-primary">Explore Courses →</a>
+                        <a href="#lms-dashboard" class="btn btn-secondary">Open LMS →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THREE.JS HERO CANVAS & INTERACTION SCRIPTS -->
+    <script>
+        // Hero 3D LMS Dashboard Visualization using Three.js
+        const initLmsHero3D = () => {
+            const container = document.getElementById('hero-canvas');
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // Ambient & Directional Lights
+            const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambient);
+
+            const lightCyan = new THREE.PointLight(0x38bdf8, 2, 40);
+            lightCyan.position.set(6, 6, 6);
+            scene.add(lightCyan);
+
+            const lightPurple = new THREE.PointLight(0xa855f7, 2, 40);
+            lightPurple.position.set(-6, -4, 4);
+            scene.add(lightPurple);
+
+            // Master Group
+            const mainGroup = new THREE.Group();
+            scene.add(mainGroup);
+
+            // 1. Dashboard Main Frame Object
+            const dashGeo = new THREE.BoxGeometry(4.2, 2.6, 0.1);
+            const dashMat = new THREE.MeshPhongMaterial({ color: 0x0f172a, specular: 0x38bdf8, shininess: 40 });
+            const dashBoard = new THREE.Mesh(dashGeo, dashMat);
+            mainGroup.add(dashBoard);
+
+            // Screen Canvas Texture for Animated Elements
+            const dashCanvas = document.createElement('canvas');
+            dashCanvas.width = 512;
+            dashCanvas.height = 320;
+            const ctx = dashCanvas.getContext('2d');
+            const dashTexture = new THREE.CanvasTexture(dashCanvas);
+
+            const screenGeo = new THREE.PlaneGeometry(4.0, 2.4);
+            const screenMat = new THREE.MeshBasicMaterial({ map: dashTexture });
+            const screenMesh = new THREE.Mesh(screenGeo, screenMat);
+            screenMesh.position.z = 0.06;
+            mainGroup.add(screenMesh);
+
+            let pulseVal = 0;
+            const drawDashScreen = () => {
+                ctx.fillStyle = '#030712';
+                ctx.fillRect(0, 0, dashCanvas.width, dashCanvas.height);
+
+                // UI Top Bar
+                ctx.fillStyle = '#1e293b';
+                ctx.fillRect(0, 0, dashCanvas.width, 40);
+                ctx.fillStyle = '#38bdf8';
+                ctx.font = 'bold 14px sans-serif';
+                ctx.fillText('SOXIT LMS Dashboard', 20, 25);
+
+                // Course Card Mock
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.1)';
+                ctx.fillRect(20, 60, 220, 110);
+                ctx.strokeStyle = '#38bdf8';
+                ctx.strokeRect(20, 60, 220, 110);
+                ctx.fillStyle = '#fff';
+                ctx.font = '12px sans-serif';
+                ctx.fillText('AI & ML Fundamentals', 30, 85);
+
+                // Progress Bar Animated
+                ctx.fillStyle = '#1e293b';
+                ctx.fillRect(30, 120, 180, 8);
+                const fillWidth = 120 + Math.sin(pulseVal) * 20;
+                ctx.fillStyle = '#a855f7';
+                ctx.fillRect(30, 120, fillWidth, 8);
+
+                // Video Lesson Mock Box
+                ctx.fillStyle = 'rgba(168, 85, 247, 0.1)';
+                ctx.fillRect(260, 60, 230, 110);
+                ctx.strokeStyle = '#a855f7';
+                ctx.strokeRect(260, 60, 230, 110);
+                ctx.fillStyle = '#38bdf8';
+                ctx.fillText('● Video Lesson Active', 275, 85);
+
+                // Quiz / Stats Box
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.fillRect(20, 190, 470, 100);
+                ctx.fillStyle = '#94a3b8';
+                ctx.fillText('Overall Mastery: 72%', 40, 220);
+
+                dashTexture.needsUpdate = true;
+            };
+
+            // 2. Floating 3D Elements
+            // Graduation Cap
+            const capGroup = new THREE.Group();
+            const capTop = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.04, 0.8), new THREE.MeshPhongMaterial({ color: 0x0f172a }));
+            const capBase = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 0.2), new THREE.MeshPhongMaterial({ color: 0x38bdf8 }));
+            capBase.position.y = -0.1;
+            capGroup.add(capTop, capBase);
+            capGroup.position.set(-2.4, 1.6, 0.8);
+            mainGroup.add(capGroup);
+
+            // Trophy
+            const trophyGeo = new THREE.CylinderGeometry(0.3, 0.1, 0.6, 8);
+            const trophyMat = new THREE.MeshPhongMaterial({ color: 0xa855f7, specular: 0xffffff });
+            const trophy = new THREE.Mesh(trophyGeo, trophyMat);
+            trophy.position.set(2.4, 1.5, 0.5);
+            mainGroup.add(trophy);
+
+            // Cloud Symbol
+            const cloudGeo = new THREE.SphereGeometry(0.35, 16, 16);
+            const cloudMat = new THREE.MeshPhongMaterial({ color: 0x38bdf8, wireframe: true });
+            const cloud = new THREE.Mesh(cloudGeo, cloudMat);
+            cloud.position.set(2.6, -1.2, 0.6);
+            mainGroup.add(cloud);
+
+            // Particles around dashboard
+            const particleCount = 100;
+            const pGeo = new THREE.BufferGeometry();
+            const pPos = new Float32Array(particleCount * 3);
+            for(let i = 0; i < particleCount * 3; i++) {
+                pPos[i] = (Math.random() - 0.5) * 8;
+            }
+            pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+            const pMat = new THREE.PointsMaterial({ size: 0.03, color: 0x38bdf8 });
+            const particleSystem = new THREE.Points(pGeo, pMat);
+            scene.add(particleSystem);
+
+            camera.position.z = 5.5;
+
+            // Parallax Interaction
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 0.4;
+                mouseY = (e.clientY / window.innerHeight - 0.5) * 0.4;
+            });
+
+            // Animation Loop
+            let clock = new THREE.Clock();
+            const animate = () => {
+                requestAnimationFrame(animate);
+                const t = clock.getElapsedTime();
+
+                pulseVal += 0.03;
+                drawDashScreen();
+
+                // Gentle Rotation & Floating
+                mainGroup.rotation.y += (mouseX - mainGroup.rotation.y) * 0.05;
+                mainGroup.rotation.x += (-mouseY - mainGroup.rotation.x) * 0.05;
+
+                dashBoard.position.y = Math.sin(t * 1.5) * 0.05;
+                capGroup.position.y = 1.6 + Math.sin(t * 2) * 0.08;
+                capGroup.rotation.y = t * 0.5;
+                trophy.rotation.y = t * 0.8;
+                cloud.rotation.x = t * 0.4;
+
+                particleSystem.rotation.y = t * 0.05;
+
+                renderer.render(scene, camera);
+            };
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        };
+
+        // Final CTA Particle Effect
+        const initCtaCanvas = () => {
+            const canvas = document.getElementById('cta-bg-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const resize = () => {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            };
+            resize();
+
+            const particles = [];
+            for (let i = 0; i < 35; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 2 + 1,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4
+                });
+            }
+
+            const draw = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#38bdf8';
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                requestAnimationFrame(draw);
+            };
+            draw();
+            window.addEventListener('resize', resize);
+        };
+
+        // Scroll Reveal Animation Observer
+        const initScrollReveal = () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initLmsHero3D();
+            initCtaCanvas();
+            initScrollReveal();
+        });
+    </script>
+<script src="../site-shell.js"></script>
+</body>
+</html>

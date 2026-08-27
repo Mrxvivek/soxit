@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - SOXIT Ecosystem</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50: '#eef2ff', 100: '#d6e0ff', 500: '#1e5eff', 700: '#112e5c', 800: '#0d2449', 900: '#0b1f3a' },
+            accent: { 400: '#00c2ff' },
+            neutral: { 50: '#f9fafb', 200: '#e5e7eb', 400: '#9ca3af', 600: '#4b5563', 900: '#111827' }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="inner-page bg-primary-900 text-gray-800 font-sans antialiased">
+  
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-primary-900/95 backdrop-blur-md shadow-lg border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
+      <a href="index.html" class="flex items-center gap-2 text-white">
+        <!-- Kept your local path format -->
+        <img src="resources/soxit.webp" alt="SOXIT Logo" class="h-8 w-auto object-contain">
+      </a>
+      <ul class="hidden md:flex items-center gap-8">
+        <li><a href="index.html#domains" class="text-gray-200 hover:text-accent-400 text-sm font-medium transition-colors">Consulting</a></li>
+      </ul>
+      <a href="index.html#booking-form" class="hidden md:inline-flex items-center px-6 py-2.5 rounded-full bg-primary-500 text-white text-sm font-semibold hover:bg-primary-400 transition-colors">
+        Contact Us
+      </a>
+    </div>
+  </nav>
+
+  <div class="pt-32 pb-12 px-6 lg:px-8 bg-primary-900 text-white">
+    <div class="max-w-7xl mx-auto">
+      <a href="index.html" class="inline-flex items-center gap-2 text-gray-400 hover:text-accent-400 text-sm font-medium transition-colors mb-8">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home
+      </a>
+      <br>
+      <div class="inline-flex items-center gap-3 mb-3">
+        <div class="w-6 h-px bg-accent-400"></div>
+        <span class="text-gray-400 font-semibold text-xs uppercase tracking-widest">Company</span>
+      </div>
+      <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-[1.1]">About SOXIT</h1>
+      <p class="mt-6 text-gray-400 text-lg max-w-3xl leading-relaxed">Unified enterprise platform delivering consulting solutions.</p>
+    </div>
+  </div>
+  
+  <div class="py-16 px-6 lg:px-8 min-h-screen text-white">
+    <div class="max-w-5xl mx-auto">
+      
+      <!-- CHANGED: Replaced the border grid with separated distinct cards (gap-6) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <div class="relative p-10 rounded-3xl bg-[#0a1628] border border-white/10 hover:border-accent-400/50 shadow-xl group overflow-hidden transition-all duration-300">
+          <div class="absolute top-0 left-0 w-full h-1 bg-accent-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <span class="absolute top-6 right-8 text-6xl font-black text-white/[0.03] group-hover:text-accent-400/10 transition-colors">01</span>
+          <h3 class="relative text-2xl font-bold text-white mb-3">Integrity</h3>
+          <p class="relative text-gray-400 leading-relaxed max-w-sm">We do what is right — always. Honest counsel, even when it is hard to hear.</p>
+        </div>
+        
+        <div class="relative p-10 rounded-3xl bg-[#0a1628] border border-white/10 hover:border-accent-400/50 shadow-xl group overflow-hidden transition-all duration-300">
+          <div class="absolute top-0 left-0 w-full h-1 bg-accent-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <span class="absolute top-6 right-8 text-6xl font-black text-white/[0.03] group-hover:text-accent-400/10 transition-colors">02</span>
+          <h3 class="relative text-2xl font-bold text-white mb-3">Excellence</h3>
+          <p class="relative text-gray-400 leading-relaxed max-w-sm">We hold ourselves to the highest standard in every deliverable.</p>
+        </div>
+        
+        <div class="relative p-10 rounded-3xl bg-[#0a1628] border border-white/10 hover:border-accent-400/50 shadow-xl group overflow-hidden transition-all duration-300">
+          <div class="absolute top-0 left-0 w-full h-1 bg-accent-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <span class="absolute top-6 right-8 text-6xl font-black text-white/[0.03] group-hover:text-accent-400/10 transition-colors">03</span>
+          <h3 class="relative text-2xl font-bold text-white mb-3">Partnership</h3>
+          <p class="relative text-gray-400 leading-relaxed max-w-sm">We work alongside your team, not above it. Shared ownership of outcomes.</p>
+        </div>
+        
+        <div class="relative p-10 rounded-3xl bg-[#0a1628] border border-white/10 hover:border-accent-400/50 shadow-xl group overflow-hidden transition-all duration-300">
+          <div class="absolute top-0 left-0 w-full h-1 bg-accent-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <span class="absolute top-6 right-8 text-6xl font-black text-white/[0.03] group-hover:text-accent-400/10 transition-colors">04</span>
+          <h3 class="relative text-2xl font-bold text-white mb-3">Impact</h3>
+          <p class="relative text-gray-400 leading-relaxed max-w-sm">We measure success by the lasting value we create, not the hours we bill.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-[#061224] text-gray-400 pt-20 pb-8 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-16">
+        <div class="md:col-span-4">
+          <div class="flex items-center gap-3 text-white mb-6">
+            <img src="resources/soxit.webp" alt="SOXIT Logo" class="h-8 w-auto grayscale brightness-200 object-contain">
+          </div>
+          <p class="text-sm leading-relaxed max-w-xs mb-8">
+            Unified enterprise platform delivering consulting solutions across industries.
+          </p>
+          <div class="flex gap-4">
+            <a href="#" class="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent-400 hover:text-primary-900 transition-colors"><i data-lucide="globe" class="w-4 h-4"></i></a>
+            <a href="#" class="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent-400 hover:text-primary-900 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+            <a href="#" class="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-accent-400 hover:text-primary-900 transition-colors"><i data-lucide="mail" class="w-4 h-4"></i></a>
+          </div>
+        </div>
+        <div class="md:col-span-3">
+          <h4 class="text-white font-bold mb-6 text-xs uppercase tracking-widest">Solutions</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="hover:text-accent-400 transition-colors">Strategy & Transformation</a></li>
+            <li><a href="#" class="hover:text-accent-400 transition-colors">Technology & Digital</a></li>
+            <li><a href="#" class="hover:text-accent-400 transition-colors">Operations & Excellence</a></li>
+          </ul>
+        </div>
+        <div class="md:col-span-3">
+          <h4 class="text-white font-bold mb-6 text-xs uppercase tracking-widest">Industries</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="industries.html" class="hover:text-accent-400 transition-colors">BFSI</a></li>
+            <li><a href="industries.html" class="hover:text-accent-400 transition-colors">Technology & Digital</a></li>
+            <li><a href="industries.html" class="hover:text-accent-400 transition-colors">Industrial & Manufacturing</a></li>
+            <li><a href="industries.html" class="hover:text-accent-400 transition-colors">Pharma & Healthcare</a></li>
+            <li><a href="industries.html" class="hover:text-accent-400 transition-colors">Creative & Media</a></li>
+          </ul>
+        </div>
+        <div class="md:col-span-2">
+          <h4 class="text-white font-bold mb-6 text-xs uppercase tracking-widest">Company</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#" class="hover:text-accent-400 transition-colors">Our Work</a></li>
+            <li><a href="index.html#booking-form" class="hover:text-accent-400 transition-colors">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-xs">&copy; 2026 SOXIT. All rights reserved.</p>
+        <div class="flex gap-6 text-xs">
+          <a href="#" class="hover:text-accent-400 transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-accent-400 transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+  <script src="../site-shell.js"></script>
+</body>
+</html>
