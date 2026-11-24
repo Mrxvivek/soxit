@@ -575,8 +575,11 @@ body.sx-menu-open {
   .stat-grid, [class*="stats-grid"], .stats-row { grid-template-columns: 1fr !important; }
 }
 
-/* Prevent horizontal scroll jitter */
-html, body {
-  overflow-x: clip;
+/* Prevent horizontal scroll jitter without breaking sticky navigation */
+html,
+body,
+body[class],
+body.consulting-page {
+  overflow-x: clip !important;
   max-width: 100vw;
 }

@@ -89,6 +89,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-height) + 16px);
+  overflow-x: clip;
 }
 
 body.consulting-page {
@@ -96,7 +97,7 @@ body.consulting-page {
   color: var(--soxit-text-primary);
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   font-family: var(--font-sans);
 }
 
