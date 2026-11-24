@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerPath 2026 • Quantum Computing Engineer Interactive Roadmap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* ==========================================================================
+       LIGHT & PASTEL DESIGN TOKENS
+       ========================================================================== */
+    :root {
+      --bg-page: #f4f7fb;
+      --bg-surface: #ffffff;
+      --bg-tinted: #f8faff;
+      --border-soft: #e2e8f0;
+      --border-accent: #c7d2fe;
+      --text-main: #0f172a;
+      --text-body: #475569;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ==========================================================================
+       GLASS NAVBAR & PASTEL HERO MESH
+       ========================================================================== */
+    .glass-navbar {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .pastel-hero {
+      background:
+        radial-gradient(circle at 8% 18%, rgba(224, 231, 255, 0.88) 0%, transparent 44%),
+        radial-gradient(circle at 88% 16%, rgba(220, 252, 231, 0.78) 0%, transparent 42%),
+        radial-gradient(circle at 60% 92%, rgba(255, 237, 213, 0.78) 0%, transparent 46%),
+        linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .hero-grid-pattern {
+      background-image:
+        linear-gradient(to right, rgba(99, 102, 241, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.045) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* ==========================================================================
+       BENTO CARDS, PILLS & MICRO-INTERACTIONS
+       ========================================================================== */
+    .bento-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.03);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .bento-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 28px -6px rgba(79, 70, 229, 0.07);
+    }
+
+    .skill-pill {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      color: #334155;
+      transition: all 0.18s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .skill-pill:hover {
+      background: #eef2ff;
+      border-color: #818cf8;
+      color: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .skill-pill.active {
+      background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+      border-color: transparent;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+
+    .workflow-tile {
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .workflow-tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px -4px rgba(15, 23, 42, 0.08);
+    }
+
+    .domain-tile {
+      background: var(--bg-tinted);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      transition: all 0.22s ease;
+    }
+
+    .domain-tile:hover {
+      background: #ffffff;
+      border-color: #a5b4fc;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.12);
+    }
+
+    /* ==========================================================================
+       INTERACTIVE ROADMAP TIMELINE
+       ========================================================================== */
+    .timeline-container {
+      position: relative;
+    }
+
+    .timeline-rail {
+      position: absolute;
+      left: 17px;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+
+    .timeline-rail-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(180deg, #6366f1, #0ea5e9, #10b981);
+      transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-row {
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-check-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: #ffffff;
+      border: 2px solid #c7d2fe;
+      color: #4338ca;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.08);
+    }
+
+    .step-check-btn:hover {
+      border-color: #6366f1;
+      background: #eef2ff;
+      transform: scale(1.06);
+    }
+
+    .step-row.completed .step-check-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-color: #10b981;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
+    }
+
+    .step-card {
+      background: #fafcff;
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .step-row:hover .step-card {
+      background: #ffffff;
+      border-color: #c7d2fe;
+    }
+
+    .step-row.completed .step-card {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .step-row.highlighted .step-card {
+      background: #eff6ff;
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+    }
+
+    .step-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-row.expanded .step-drawer {
+      grid-template-rows: 1fr;
+    }
+
+    .step-drawer-inner {
+      overflow: hidden;
+    }
+
+    .step-chevron {
+      transition: transform 0.25s ease;
+    }
+
+    .step-row.expanded .step-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* ==========================================================================
+       SIDEBAR CARDS
+       ========================================================================== */
+    .level-pill-tab {
+      border: 1px solid var(--border-soft);
+      background: #f8fafc;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .level-pill-tab.active[data-lvl="l1"] {
+      background: #e0f2fe;
+      border-color: #7dd3fc;
+      color: #0369a1;
+    }
+
+    .level-pill-tab.active[data-lvl="l2"] {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #15803d;
+    }
+
+    .level-pill-tab.active[data-lvl="l3"] {
+      background: #ffedd5;
+      border-color: #fdba74;
+      color: #c2410c;
+    }
+
+    .tool-badge-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      transition: all 0.18s ease;
+    }
+
+    .tool-badge-card:hover {
+      background: #ffffff;
+      border-color: #a5b4fc;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+    }
+
+    .tool-badge-card.highlighted {
+      background: #eef2ff;
+      border-color: #818cf8;
+      box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.22);
+    }
+
+    .project-mini-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-soft);
+      border-radius: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .project-mini-card:hover {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      transform: translateX(3px);
+    }
+
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    #toast-banner {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+    }
+  </style>
+<!-- sx:begin --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../css/soxit-theme.css?v=20261120_direct_v5"><script src="../../js/site-shell.js?v=20261120_direct_v5" defer></script><!-- sx:end -->
+</head>
+<body class="antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- ========================================================================
+       STICKY TOP NAVBAR WITH PROGRESS TRACKER
+       ======================================================================== -->
+  <nav class="glass-navbar sticky top-0 z-40">
+    <div class="max-w-[1320px] mx-auto px-4 sm:px-6 h-15 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      <!-- Left: Brand -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-600 to-sky-500 text-white flex items-center justify-center font-extrabold text-sm shadow-sm">
+          12
+        </div>
+        <div>
+          <span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900">CareerPath <span class="text-indigo-600">2026</span></span>
+          <span class="hidden md:inline-block ml-2 text-xs font-mono-code font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200/70">Quantum Computing Track</span>
+        </div>
+      </div>
+
+      <!-- Center: Active Progress Bar -->
+      <div class="flex-1 max-w-md">
+        <div class="flex items-center justify-between text-[11px] font-semibold mb-0.5">
+          <span class="text-slate-500 uppercase tracking-wider">Quantum Mastery Progress</span>
+          <span id="nav-progress-text" class="font-mono-code text-indigo-600 font-bold">0% (0/9)</span>
+        </div>
+        <div class="w-full h-2 rounded-full bg-slate-200/80 overflow-hidden">
+          <div id="nav-progress-fill" class="h-full rounded-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 transition-all duration-500" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Right: Quick Actions -->
+      <div class="flex items-center gap-2">
+        <button id="reset-nav-btn" title="Reset Progress" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 hover:bg-rose-50 transition-colors">
+          Reset Progress
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       BRIGHT PASTEL MESH HERO SECTION
+       ======================================================================== -->
+  <header class="pastel-hero hero-grid-pattern py-8 sm:py-11">
+    <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+
+        <!-- Left 8 Cols: Category Tag, Role Title, Subtitle, Skill Filter Pills -->
+        <div class="lg:col-span-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono-code font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/80 mb-3">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>#12 • QUANTUM COMPUTING & ALGORITHMS • ADVANCED RESEARCH</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 mb-3">
+            <span class="bg-gradient-to-r from-indigo-600 via-sky-600 to-emerald-600 bg-clip-text text-transparent">Quantum Computing Engineer</span> Roadmap
+          </h1>
+
+          <p class="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed mb-5">
+            Designs quantum algorithms, programs qubits using Qiskit and Pennylane, develops error-correction codes, and executes hybrid quantum-classical workflows on NISQ and fault-tolerant hardware.
+          </p>
+
+          <!-- Interactive Skill Filter Pills -->
+          <div>
+            <div class="flex items-center gap-2 text-[11px] font-mono-code font-semibold uppercase tracking-wider text-slate-500 mb-2">
+              <span>Click a skill tag to highlight matching modules & tools:</span>
+              <button id="clear-skill-btn" class="hidden text-indigo-600 hover:underline font-bold">Clear filter ×</button>
+            </div>
+            <div id="hero-skill-pills" class="flex flex-wrap gap-2">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 4 Cols: 2x2 Quick-Stat Pastel Chips -->
+        <div class="lg:col-span-4 grid grid-cols-2 gap-3">
+          <div class="p-4 rounded-2xl bg-indigo-50/90 border border-indigo-200/70">
+            <div class="text-xs font-mono-code font-semibold text-indigo-600 mb-1">CURRICULUM</div>
+            <div class="text-2xl font-extrabold text-slate-900">9 Core</div>
+            <div class="text-xs text-slate-600">Structured Modules</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-sky-50/90 border border-sky-200/70">
+            <div class="text-xs font-mono-code font-semibold text-sky-700 mb-1">SPECIALTIES</div>
+            <div class="text-2xl font-extrabold text-slate-900">6 Focus</div>
+            <div class="text-xs text-slate-600">Quantum Engineering Domains</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200/70">
+            <div class="text-xs font-mono-code font-semibold text-emerald-700 mb-1">TECH STACK</div>
+            <div class="text-2xl font-extrabold text-slate-900">12 Tools</div>
+            <div class="text-xs text-slate-600">Industry Standard</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-amber-50/90 border border-amber-200/70">
+            <div class="text-xs font-mono-code font-semibold text-amber-700 mb-1">EST. TIMELINE</div>
+            <div class="text-2xl font-extrabold text-slate-900">26–32 Wks</div>
+            <div class="text-xs text-slate-600">Expert-Ready Pace</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       BALANCED 2-COLUMN BENTO GRID
+       ======================================================================== -->
+  <main class="max-w-[1320px] mx-auto px-4 sm:px-6 py-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+      <!-- ====================================================================
+           LEFT COLUMN (8 COLS): OVERVIEW + 6-STEP WORKFLOW + 6 DOMAINS + 9 STEPS
+           ==================================================================== -->
+      <div class="lg:col-span-8 space-y-5">
+
+        <!-- CARD 1: ROLE OVERVIEW & 6-STEP WORKFLOW -->
+        <section class="bento-card p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">What does a Quantum Computing Engineer do?</h2>
+                <p class="text-[11px] font-mono-code uppercase tracking-wider text-slate-500">Role Scope & End-to-End Quantum Software Lifecycle</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border bg-sky-50 text-sky-700 border-sky-200/70">Qubits & Gates</span>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border bg-emerald-50 text-emerald-700 border-emerald-200/70">Qiskit & Pennylane</span>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border bg-purple-50 text-purple-700 border-purple-200/70">Error Correction</span>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 leading-relaxed mb-5">
+            Quantum Computing Engineers bridge quantum physics and software engineering, formulating quantum circuits, implementing variational algorithms, mitigating noise, and orchestrating hybrid supercomputing workloads.
+          </p>
+
+          <!-- 6-Step Horizontal Pipeline -->
+          <div>
+            <div class="text-xs font-mono-code font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              <span>Quantum Algorithm Workflow & Execution Lifecycle</span>
+            </div>
+
+            <div id="workflow-grid" class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2.5">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </section>
+
+        <!-- CARD 2: 6 FOCUS DOMAINS (DENSE 3x2 GRID) -->
+        <section class="bento-card p-5 sm:p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 border border-sky-200 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">Quantum Focus Domains</h2>
+                <p class="text-[11px] font-mono-code uppercase tracking-wider text-slate-500">6 Core Pillars of Specialization</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="domains-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <!-- CARD 3: INTERACTIVE 9-STEP LEARNING ROADMAP -->
+        <section class="bento-card p-5 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">Interactive Learning Roadmap</h2>
+                <p class="text-xs text-slate-500">Click the numbered badge to mark complete • Click any card for checklist & mini-project</p>
+              </div>
+            </div>
+
+            <button id="toggle-expand-all" class="self-start sm:self-auto px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 transition-colors">
+              Expand All
+            </button>
+          </div>
+
+          <!-- Search / Topic Filter Bar -->
+          <div class="relative mb-5">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input
+              id="topic-search-input"
+              type="text"
+              placeholder="Search modules, subtopics, or tools (e.g., Qiskit, Qubits, Linear Algebra, VQE, Error Correction, Grover, Shor)..."
+              class="w-full pl-10 pr-20 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
+            />
+            <button id="clear-search-btn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 hover:text-indigo-600">
+              Clear
+            </button>
+          </div>
+
+          <div id="empty-search-msg" class="hidden text-center py-8 px-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300">
+            <p class="text-sm font-semibold text-slate-700 mb-1">No matching modules found</p>
+            <p class="text-xs text-slate-500">Try clearing your search filter to view all 9 Quantum steps.</p>
+          </div>
+
+          <!-- 9-Step Timeline List -->
+          <div id="roadmap-list" class="timeline-container space-y-3">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ====================================================================
+           RIGHT SIDEBAR (4 COLS): 5 DENSE PURPOSEFUL WIDGETS
+           ==================================================================== -->
+      <aside class="lg:col-span-4 space-y-5">
+
+        <!-- WIDGET A: CIRCULAR LEARNING PROGRESS RING & MILESTONE -->
+        <section class="bento-card p-5 bg-gradient-to-br from-white via-indigo-50/40 to-sky-50/50">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              Your Learning Progress
+            </h3>
+            <button id="reset-progress-btn" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 hover:bg-rose-50 transition-colors">
+              Reset
+            </button>
+          </div>
+
+          <div class="flex items-center gap-4 p-3.5 rounded-2xl bg-white/90 border border-indigo-100">
+            <div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
+              <svg class="w-16 h-16" viewBox="0 0 64 64">
+                <circle cx="32" cy="32" r="26" fill="none" stroke="#e2e8f0" stroke-width="6"></circle>
+                <circle id="sidebar-ring-circle" class="progress-ring-circle" cx="32" cy="32" r="26" fill="none" stroke="url(#pastelRingGrad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="163.36" stroke-dashoffset="163.36"></circle>
+                <defs>
+                  <linearGradient id="pastelRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#6366f1"/>
+                    <stop offset="50%" stop-color="#0ea5e9"/>
+                    <stop offset="100%" stop-color="#10b981"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span id="sidebar-ring-pct" class="absolute font-mono-code text-xs font-extrabold text-slate-900">0%</span>
+            </div>
+
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-semibold text-slate-500">Completed Steps</span>
+                <span id="sidebar-step-count" class="font-mono-code text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">0 / 9</span>
+              </div>
+              <div id="milestone-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200/80">
+                <span>🌱</span>
+                <span>Milestone: Getting Started</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- WIDGET B: CAREER LEVELS (L1 SKY, L2 MINT, L3 PEACH) -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">Career Levels</h3>
+            <button id="toggle-levels-view" class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors">
+              Show All Levels
+            </button>
+          </div>
+
+          <div id="level-tabs-bar" class="grid grid-cols-3 gap-1.5 mb-3">
+            <button class="level-pill-tab active py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l1">Quantum Dev / L1</button>
+            <button class="level-pill-tab py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l2">Quantum Eng / L2</button>
+            <button class="level-pill-tab py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l3">Principal / L3</button>
+          </div>
+
+          <div id="career-levels-container" class="space-y-2.5">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <!-- WIDGET C: 12 CORE TOOLS & TECH COVERED -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">Quantum Tools Covered</h3>
+            <span class="text-[11px] font-mono-code font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">12 Essential</span>
+          </div>
+
+          <div id="tools-grid" class="grid grid-cols-2 gap-2">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <!-- WIDGET D: 3 HANDS-ON CAPSTONE PROJECTS -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">Hands-On Capstone Projects</h3>
+            <span class="text-[11px] font-mono-code font-semibold text-indigo-600">Portfolio</span>
+          </div>
+
+          <div id="projects-list" class="space-y-2.5">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <!-- WIDGET E: ENGINEERING PRINCIPLE QUOTE CARD -->
+        <section class="rounded-2xl p-5 border border-indigo-200/80" style="background: linear-gradient(135deg, #eef2ff 0%, #f3e8ff 52%, #e0f2fe 100%);">
+          <div class="flex items-center gap-2 text-xs font-mono-code font-bold uppercase tracking-wider text-indigo-700 mb-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+            <span>Quantum Engineering Principle</span>
+          </div>
+          <p class="text-sm font-semibold italic text-slate-800 leading-relaxed mb-3">
+            "Quantum advantage requires mastering both unitary evolution and noise mitigation. Qubits are fragile; robust error correction and variational compilation are paramount."
+          </p>
+          <div class="p-3 rounded-xl bg-white/75 border border-white text-xs text-slate-700 leading-relaxed">
+            <strong class="text-indigo-700">2026 Mastery Tip:</strong> Bridge linear algebra with real hardware execution using Qiskit Runtime, pulse-level control, and fault-tolerant surface codes.
+          </div>
+        </section>
+
+      </aside>
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       COMPLETION CELEBRATION TOAST
+       ======================================================================== -->
+  <div id="toast-banner" class="fixed bottom-5 right-5 z-50 max-w-sm translate-y-28 opacity-0 pointer-events-none">
+    <div class="p-4 rounded-2xl bg-white border-2 border-emerald-300 shadow-xl flex items-start gap-3">
+      <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-base">
+        🎉
+      </div>
+      <div>
+        <div class="text-sm font-bold text-emerald-800">Quantum Computing Engineer Roadmap 100% Completed!</div>
+        <p class="text-xs text-slate-600 mt-0.5">Outstanding milestone! You have completed all 9 modules of the Quantum Computing Engineer roadmap.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       QUANTUM COMPUTING ENGINEER ROADMAP DATA & INTERACTIVE ENGINE
+       ======================================================================== -->
+  <script>
+    const WF_STYLES = [
+      { bg: "bg-indigo-50/60 border-indigo-200/80", badge: "bg-indigo-100 text-indigo-700" },
+      { bg: "bg-sky-50/60 border-sky-200/80", badge: "bg-sky-100 text-sky-700" },
+      { bg: "bg-purple-50/60 border-purple-200/80", badge: "bg-purple-100 text-purple-700" },
+      { bg: "bg-emerald-50/60 border-emerald-200/80", badge: "bg-emerald-100 text-emerald-700" },
+      { bg: "bg-amber-50/60 border-amber-200/80", badge: "bg-amber-100 text-amber-700" },
+      { bg: "bg-rose-50/60 border-rose-200/80", badge: "bg-rose-100 text-rose-700" }
+    ];
+
+    const DOMAIN_STYLES = [
+      { iconBg: "bg-orange-100 text-orange-700", tagBg: "bg-orange-50 text-orange-700 border-orange-200/70" },
+      { iconBg: "bg-sky-100 text-sky-700", tagBg: "bg-sky-50 text-sky-700 border-sky-200/70" },
+      { iconBg: "bg-indigo-100 text-indigo-700", tagBg: "bg-indigo-50 text-indigo-700 border-indigo-200/70" },
+      { iconBg: "bg-emerald-100 text-emerald-700", tagBg: "bg-emerald-50 text-emerald-700 border-emerald-200/70" },
+      { iconBg: "bg-amber-100 text-amber-700", tagBg: "bg-amber-50 text-amber-700 border-amber-200/70" },
+      { iconBg: "bg-purple-100 text-purple-700", tagBg: "bg-purple-50 text-purple-700 border-purple-200/70" }
+    ];
+
+    const STEP_BADGE_COLORS = [
+      "bg-orange-50 text-orange-700 border-orange-200",
+      "bg-sky-50 text-sky-700 border-sky-200",
+      "bg-amber-50 text-amber-700 border-amber-200",
+      "bg-rose-50 text-rose-700 border-rose-200",
+      "bg-indigo-50 text-indigo-700 border-indigo-200",
+      "bg-purple-50 text-purple-700 border-purple-200",
+      "bg-emerald-50 text-emerald-700 border-emerald-200",
+      "bg-teal-50 text-teal-700 border-teal-200",
+      "bg-violet-50 text-violet-700 border-violet-200"
+    ];
+
+    const TOOL_PASTELS = [
+      { bg: "bg-orange-50", text: "text-orange-700" },
+      { bg: "bg-sky-50", text: "text-sky-700" },
+      { bg: "bg-amber-50", text: "text-amber-700" },
+      { bg: "bg-blue-50", text: "text-blue-700" },
+      { bg: "bg-cyan-50", text: "text-cyan-700" },
+      { bg: "bg-indigo-50", text: "text-indigo-700" },
+      { bg: "bg-teal-50", text: "text-teal-700" },
+      { bg: "bg-rose-50", text: "text-rose-700" },
+      { bg: "bg-purple-50", text: "text-purple-700" },
+      { bg: "bg-emerald-50", text: "text-emerald-700" },
+      { bg: "bg-pink-50", text: "text-pink-700" },
+      { bg: "bg-slate-100", text: "text-slate-700" }
+    ];
+
+    const QUANTUM_DATA = {
+      skills: ["Linear Algebra & Complex Numbers", "Quantum Mechanics Foundations", "Qubits, Superposition & Entanglement", "Quantum Gates & Circuit Design", "Qiskit & PennyLane Frameworks", "Quantum Algorithms (Grover/Shor)", "Variational Algorithms (VQE/QAOA)", "Quantum Error Correction & Noise"],
+      workflow: [
+        ["Formulate", "Translate problem statements into mathematical quantum states."],
+        ["Design", "Construct quantum circuits using single and multi-qubit gates."],
+        ["Simulate", "Run statevector and density matrix simulations on classical hardware."],
+        ["Optimize", "Apply transpilation, pulse-level control, and error mitigation."],
+        ["Execute", "Submit jobs to superconducting or trapped-ion QPUs via cloud APIs."],
+        ["Analyze", "Measure outcomes, compute expectation values, and iterate."]
+      ],
+      domains: [
+        ["Mathematical Foundations", "Complex vector spaces, Hilbert spaces, tensor products, and unitary matrices.", ["Linear Algebra & Complex Numbers", "Quantum Mechanics Foundations"]],
+        ["Quantum Information Theory", "Superposition, entanglement, Bloch sphere representation, and density operators.", ["Qubits, Superposition & Entanglement"]],
+        ["Circuit Architecture & Gates", "Clifford + T gates, controlled operations, phase kickback, and circuit transposition.", ["Quantum Gates & Circuit Design"]],
+        ["Software & SDK Development", "IBM Qiskit, Xanadu PennyLane, Braket, and quantum compiler transpilers.", ["Qiskit & PennyLane Frameworks"]],
+        ["Algorithms & Applications", "Quantum Fourier Transform, Grover's search, Shor's factoring, and VQE/QAOA.", ["Quantum Algorithms (Grover/Shor)", "Variational Algorithms (VQE/QAOA)"]],
+        ["Hardware & Error Mitigation", "NISQ noise models, error correction codes (surface codes), and fault tolerance.", ["Quantum Error Correction & Noise"]]
+      ],
+      steps: [
+        [
+          "Linear Algebra & Complex Numbers for Quantum Computing",
+          "3 Wks",
+          "Master the mathematical bedrock of quantum mechanics: complex numbers, matrices, and vector spaces.",
+          ["Linear Algebra & Complex Numbers"],
+          [
+            "Complex numbers, polar form, Euler's formula, and complex vector spaces",
+            "Vector spaces, inner products, orthonormal bases, and dual vectors (Bra-Ket notation)",
+            "Matrix operations: tensor products (Kronecker product), eigenvalues, eigenvectors, and spectral theorem",
+            "Unitary matrices and Hermitian operators in quantum mechanics"
+          ],
+          "Write a Python script from scratch using NumPy to compute tensor products and eigenvalues of multi-qubit operators."
+        ],
+        [
+          "Quantum Mechanics Foundations & The Postulates",
+          "3 Wks",
+          "Understand the physical principles governing quantum states, measurements, and evolution.",
+          ["Quantum Mechanics Foundations"],
+          [
+            "The four postulates of quantum mechanics",
+            "State spaces and Hilbert spaces (C² for single qubits)",
+            "Unitary time evolution and the Schrödinger equation overview",
+            "Quantum measurement: projective measurements, POVMs, and Born's rule"
+          ],
+          "Simulate quantum measurement probabilities and wave function collapse using Python."
+        ],
+        [
+          "Qubits, Bloch Sphere & Multi-Qubit Entanglement",
+          "3 Wks",
+          "Explore single-qubit states on the Bloch sphere and multi-qubit entanglement phenomena.",
+          ["Qubits, Superposition & Entanglement"],
+          [
+            "The single-qubit state vector: alpha and beta amplitudes, global vs relative phase",
+            "Geometric representation: The Bloch sphere coordinates and rotations",
+            "Multi-qubit systems, tensor products of state spaces, and product states",
+            "Entanglement: Bell states, EPR paradox, and quantum non-locality"
+          ],
+          "Construct and visualize arbitrary single-qubit states and Bell states on the Bloch sphere."
+        ],
+        [
+          "Quantum Gates, Circuits & Phase Kickback",
+          "3 Wks",
+          "Design quantum logic circuits using foundational single and multi-qubit quantum gates.",
+          ["Quantum Gates & Circuit Design"],
+          [
+            "Single-qubit gates: Pauli (X, Y, Z), Hadamard (H), Phase (S), T, and rotation gates (Rx, Ry, Rz)",
+            "Multi-qubit gates: CNOT, CZ, SWAP, and Toffoli gates",
+            "Circuit identities, universality of gate sets, and phase kickback phenomenon",
+            "Drawing and analyzing quantum circuit diagrams"
+          ],
+          "Implement a quantum circuit demonstrating phase kickback and conditional logic."
+        ],
+        [
+          "Quantum Programming with Qiskit & PennyLane",
+          "4 Wks",
+          "Build and execute quantum circuits using industry-standard Python SDKs Qiskit and PennyLane.",
+          ["Qiskit & PennyLane Frameworks"],
+          [
+            "IBM Qiskit core: QuantumCircuit, QuantumRegister, ClassicalRegister, and transpile",
+            "Executing circuits on Qiskit Aer simulators and IBM Quantum cloud QPUs",
+            "Xanadu PennyLane: Quantum machine learning integration, qnodes, and gradient computation",
+            "Circuit optimization, transpilation levels, and hardware mapping"
+          ],
+          "Write a complete Qiskit program to simulate a 4-qubit GHZ state and analyze hardware results."
+        ],
+        [
+          "Core Quantum Algorithms: Deutsch-Jozsa, Grover & Shor",
+          "4 Wks",
+          "Study foundational quantum algorithms offering exponential or polynomial speedups over classical computing.",
+          ["Quantum Algorithms (Grover/Shor)"],
+          [
+            "Oracle-based algorithms: Deutsch-Jozsa and Bernstein-Vazirani algorithms",
+            "Grover's Search Algorithm: amplitude amplification and quadratic speedup mechanics",
+            "Quantum Fourier Transform (QFT) mathematical derivation and circuit implementation",
+            "Shor's Algorithm for prime factorization and period finding overview"
+          ],
+          "Implement Grover's search algorithm in Qiskit to search an unstructured database of 4 items."
+        ],
+        [
+          "Variational Quantum Algorithms (VQE & QAOA)",
+          "3 Wks",
+          "Master hybrid quantum-classical algorithms tailored for NISQ (Noisy Intermediate-Scale Quantum) devices.",
+          ["Variational Algorithms (VQE/QAOA)"],
+          [
+            "The hybrid quantum-classical computing paradigm (NISQ era)",
+            "Variational Quantum Eigensolver (VQE) for molecular ground state energy calculation",
+            "Quantum Approximate Optimization Algorithm (QAOA) for combinatorial optimization",
+            "Parameter optimization loops using classical optimizers (COBYLA, SPSA)"
+          ],
+          "Build a VQE pipeline using PennyLane to calculate the ground state energy of a hydrogen molecule."
+        ],
+        [
+          "Quantum Error Correction & Noise Mitigation",
+          "3 Wks",
+          "Understand decoherence, quantum noise models, error-correcting codes, and fault tolerance.",
+          ["Quantum Error Correction & Noise"],
+          [
+            "Decoherence, relaxation (T1), dephasing (T2), and gate error models",
+            "Quantum error detection vs quantum error correction (QEC)",
+            "The 3-qubit bit-flip and phase-flip codes, and the Shor 9-qubit code",
+            "Surface codes, fault-tolerant threshold theorem, and error mitigation (ZNE, read-out mitigation)"
+          ],
+          "Simulate a 3-qubit bit-flip error correction code under a depolarizing noise channel."
+        ],
+        [
+          "Advanced Quantum Research & Industry Applications",
+          "2 Wks",
+          "Explore quantum chemistry, quantum machine learning (QML), and post-quantum cryptography.",
+          ["Qiskit & PennyLane Frameworks", "Variational Algorithms (VQE/QAOA)"],
+          [
+            "Quantum Machine Learning (QML): Parameterized quantum circuits, quantum kernels, and VQCs",
+            "Quantum simulation for material science and drug discovery",
+            "Post-Quantum Cryptography (PQC): lattice-based cryptography and migration strategies",
+            "Research paper reading, reading Qiskit/PennyLane source code, and career portfolio building"
+          ],
+          "Publish a research notebook implementing a Quantum Classifier on real-world tabular data."
+        ]
+      ],
+      levels: [
+        [
+          "Quantum Developer / L1",
+          "Quantum Software Associate",
+          "Write basic quantum circuits, execute statevector simulations, and use Qiskit/PennyLane.",
+          [
+            "Implement single and multi-qubit gates in Qiskit",
+            "Run local quantum circuit simulations and analyze measurement histograms",
+            "Understand basic linear algebra and complex amplitudes"
+          ]
+        ],
+        [
+          "Quantum Engineer / L2",
+          "Quantum Algorithm Engineer",
+          "Design variational algorithms (VQE/QAOA), optimize circuits for NISQ hardware, and mitigate noise.",
+          [
+            "Develop hybrid quantum-classical algorithms (VQE) for chemistry and optimization",
+            "Perform circuit transpilation, error mitigation, and cloud QPU job submission",
+            "Implement custom oracles and quantum subroutines"
+          ]
+        ],
+        [
+          "Principal Quantum Architect / L3",
+          "Principal Quantum Scientist & Architect",
+          "Lead quantum research initiatives, design fault-tolerant error correction protocols, and build hybrid supercomputing systems.",
+          [
+            "Architect fault-tolerant quantum error correction and surface code layouts",
+            "Drive enterprise quantum readiness and algorithm commercialization strategy",
+            "Lead cutting-edge quantum hardware-software co-design"
+          ]
+        ]
+      ],
+      tools: [
+        ["Qiskit (IBM)", "Quantum SDK", ["Qiskit & PennyLane Frameworks"]],
+        ["PennyLane (Xanadu)", "Quantum ML", ["Qiskit & PennyLane Frameworks"]],
+        ["Amazon Braket", "Cloud Quantum", ["Qiskit & PennyLane Frameworks"]],
+        ["Cirq (Google)", "NISQ Circuit Design", ["Quantum Gates & Circuit Design"]],
+        ["PyQuil (Rigetti)", "Quantum Programming", ["Qiskit & PennyLane Frameworks"]],
+        ["NumPy / SciPy", "Mathematical Compute", ["Linear Algebra & Complex Numbers"]],
+        ["Jupyter Notebooks", "Research & Prototyping", ["Qiskit & PennyLane Frameworks"]],
+        ["IBM Quantum Platform", "Cloud Hardware Access", ["Qiskit & PennyLane Frameworks"]],
+        ["SymPy", "Symbolic Math", ["Linear Algebra & Complex Numbers"]],
+        ["Qiskit Aer", "High-Perf Simulation", ["Qiskit & PennyLane Frameworks"]],
+        ["Docker", "Environment Packaging", ["Qiskit & PennyLane Frameworks"]],
+        ["Git / GitHub", "Version Control", ["Qiskit & PennyLane Frameworks"]]
+      ],
+      projects: [
+        [
+          "Multi-Qubit Entanglement & Teleportation Protocol",
+          "Beginner",
+          "Implementation of quantum teleportation and Bell state generation using Qiskit statevector simulation.",
+          ["Linear Algebra & Complex Numbers", "Qubits, Superposition & Entanglement", "Qiskit & PennyLane Frameworks"]
+        ],
+        [
+          "Hybrid VQE Molecular Ground State Energy Solver",
+          "Intermediate",
+          "Variational Quantum Eigensolver implemented in PennyLane to compute molecular hydrogen binding energy.",
+          ["Quantum Gates & Circuit Design", "Variational Algorithms (VQE/QAOA)", "Qiskit & PennyLane Frameworks"]
+        ],
+        [
+          "Noise-Resilient Quantum Error Correction Simulator",
+          "Advanced",
+          "Full simulation of surface codes and error mitigation techniques on noisy simulated quantum hardware channels.",
+          ["Quantum Error Correction & Noise", "Qiskit & PennyLane Frameworks"]
+        ]
+      ]
+    };
+
+    // ========================================================================
+    // APPLICATION STATE & STORAGE
+    // ========================================================================
+    const STORAGE_KEY = "careerpath_2026_quantum_progress";
+    let expandedSteps = new Set([1]);
+    let selectedSkill = null;
+    let searchQuery = "";
+    let activeLevelIdx = 0;
+    let showAllLevels = false;
+
+    function getCompletedSet() {
+      try {
+        return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+      } catch {
+        return new Set();
+      }
+    }
+
+    function saveCompletedSet(setObj) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...setObj]));
+    }
+
+    // ========================================================================
+    // RENDER FUNCTIONS
+    // ========================================================================
+    function renderPage() {
+      const completedSet = getCompletedSet();
+
+      // Skill Filter Pills
+      const clearSkillBtn = document.getElementById("clear-skill-btn");
+      clearSkillBtn.classList.toggle("hidden", !selectedSkill);
+
+      document.getElementById("hero-skill-pills").innerHTML = QUANTUM_DATA.skills.map(sk => `
+        <button
+          type="button"
+          onclick="toggleSkillFilter('${sk.replace(/'/g, "\\'")}')"
+          class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold ${selectedSkill === sk ? 'active' : ''}">
+          ${sk}
+        </button>
+      `).join("");
+
+      // 6-Step Workflow
+      document.getElementById("workflow-grid").innerHTML = QUANTUM_DATA.workflow.map((wf, idx) => {
+        const st = WF_STYLES[idx % WF_STYLES.length];
+        return `
+          <div class="workflow-tile p-3 ${st.bg}">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] font-mono-code font-bold px-1.5 py-0.5 rounded ${st.badge}">0${idx + 1}</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-400/60"></span>
+            </div>
+            <div class="text-xs font-bold uppercase text-slate-900 mb-0.5">${wf[0]}</div>
+            <p class="text-[11px] text-slate-600 leading-snug">${wf[1]}</p>
+          </div>
+        `;
+      }).join("");
+
+      // 6 Focus Domains
+      document.getElementById("domains-grid").innerHTML = QUANTUM_DATA.domains.map((dom, idx) => {
+        const st = DOMAIN_STYLES[idx % DOMAIN_STYLES.length];
+        return `
+          <div class="domain-tile p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2.5 mb-2">
+                <div class="w-8 h-8 rounded-lg ${st.iconBg} flex items-center justify-center shrink-0 font-mono-code text-xs font-extrabold">
+                  0${idx + 1}
+                </div>
+                <h3 class="font-bold text-sm text-slate-900">${dom[0]}</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-3">${dom[1]}</p>
+            </div>
+            <div class="flex flex-wrap gap-1">
+              ${dom[2].map(tag => `<span class="text-[10px] font-mono-code px-2 py-0.5 rounded border ${st.tagBg}">${tag}</span>`).join("")}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // 9-Step Interactive Roadmap List
+      renderStepsTimeline(completedSet);
+
+      // Career Levels
+      renderCareerLevels();
+
+      // 12 Tools
+      document.getElementById("tools-grid").innerHTML = QUANTUM_DATA.tools.map((tool, idx) => {
+        const st = TOOL_PASTELS[idx % TOOL_PASTELS.length];
+        const isHighlighted = selectedSkill && tool[2].includes(selectedSkill);
+        return `
+          <div class="tool-badge-card p-2.5 flex items-center gap-2 ${isHighlighted ? 'highlighted' : ''}">
+            <span class="w-6 h-6 rounded-lg ${st.bg} ${st.text} flex items-center justify-center text-xs font-bold shrink-0">✓</span>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-slate-900 truncate">${tool[0]}</div>
+              <div class="text-[10px] font-mono-code text-slate-500 truncate">${tool[1]}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // 3 Capstone Projects
+      const diffBadges = [
+        "bg-sky-100 text-sky-700",
+        "bg-emerald-100 text-emerald-700",
+        "bg-purple-100 text-purple-700"
+      ];
+      document.getElementById("projects-list").innerHTML = QUANTUM_DATA.projects.map((proj, idx) => `
+        <div class="project-mini-card p-3.5">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span class="text-xs font-bold text-slate-900">${idx + 1}. ${proj[0]}</span>
+            <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded ${diffBadges[idx % 3]} shrink-0">${proj[1]}</span>
+          </div>
+          <p class="text-[11px] text-slate-600 mb-2">${proj[2]}</p>
+          <div class="flex flex-wrap gap-1">
+            ${proj[3].map(t => `<span class="text-[10px] font-mono-code px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600">${t}</span>`).join("")}
+          </div>
+        </div>
+      `).join("");
+
+      // Sync Progress UI
+      syncProgressUI(completedSet);
+    }
+
+    function renderStepsTimeline(completedSet) {
+      const listEl = document.getElementById("roadmap-list");
+      const emptyMsg = document.getElementById("empty-search-msg");
+      const q = searchQuery.trim().toLowerCase();
+
+      const stepsWithIndex = QUANTUM_DATA.steps.map((s, idx) => ({
+        id: idx + 1,
+        title: s[0],
+        duration: s[1],
+        summary: s[2],
+        skills: s[3],
+        checklist: s[4],
+        miniProject: s[5],
+        badgeColor: STEP_BADGE_COLORS[idx % STEP_BADGE_COLORS.length]
+      }));
+
+      const filtered = stepsWithIndex.filter(step => {
+        if (!q) return true;
+        return step.title.toLowerCase().includes(q) ||
+               step.summary.toLowerCase().includes(q) ||
+               step.checklist.some(c => c.toLowerCase().includes(q)) ||
+               step.skills.some(sk => sk.toLowerCase().includes(q));
+      });
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = "";
+        emptyMsg.classList.remove("hidden");
+        return;
+      }
+
+      emptyMsg.classList.add("hidden");
+
+      const railHTML = `
+        <div class="timeline-rail">
+          <div id="timeline-rail-fill" class="timeline-rail-fill"></div>
+        </div>
+      `;
+
+      const rowsHTML = filtered.map(step => {
+        const isDone = completedSet.has(step.id);
+        const isOpen = expandedSteps.has(step.id);
+        const isMatch = selectedSkill && step.skills.includes(selectedSkill);
+
+        return `
+          <div class="step-row flex items-start gap-3.5 ${isDone ? 'completed' : ''} ${isOpen ? 'expanded' : ''} ${isMatch ? 'highlighted' : ''}">
+            <button
+              type="button"
+              onclick="toggleStepComplete(${step.id}, event)"
+              title="${isDone ? 'Mark incomplete' : 'Mark complete'}"
+              class="step-check-btn font-mono-code mt-1"
+              aria-label="Toggle step ${step.id}">
+              ${isDone
+                ? `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`
+                : step.id
+              }
+            </button>
+
+            <div class="step-card flex-1 p-4 cursor-pointer" onclick="toggleStepExpand(${step.id})">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h3 class="text-sm sm:text-base font-bold text-slate-900 ${isDone ? 'line-through text-slate-500' : ''}">
+                      ${step.title}
+                    </h3>
+                    <span class="text-[11px] font-mono-code font-semibold px-2 py-0.5 rounded-md border ${step.badgeColor}">
+                      ${step.duration}
+                    </span>
+                  </div>
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    ${step.summary}
+                  </p>
+                </div>
+
+                <span class="p-1 rounded-lg text-slate-400 hover:text-indigo-600 shrink-0">
+                  <svg class="w-4 h-4 step-chevron" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </span>
+              </div>
+
+              <div class="step-drawer">
+                <div class="step-drawer-inner">
+                  <div class="mt-3.5 pt-3.5 border-t border-slate-200/80 space-y-3">
+                    <div>
+                      <div class="text-[11px] font-mono-code font-bold uppercase tracking-wider text-indigo-700 mb-2">
+                        Sub-Topics & Actionable Checklist
+                      </div>
+                      <ul class="space-y-1.5">
+                        ${step.checklist.map(point => `
+                          <li class="flex items-start gap-2 text-xs text-slate-700">
+                            <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+                            </svg>
+                            <span>${point}</span>
+                          </li>
+                        `).join("")}
+                      </ul>
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-indigo-50/70 border border-indigo-100 flex items-start gap-2.5">
+                      <span class="text-sm shrink-0">🛠️</span>
+                      <div class="text-xs text-slate-700">
+                        <strong class="text-indigo-800">Recommended Mini-Project:</strong> ${step.miniProject}
+                      </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                      <div class="flex flex-wrap gap-1.5">
+                        ${step.skills.map(sk => `
+                          <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600">
+                            #${sk}
+                          </span>
+                        `).join("")}
+                      </div>
+
+                      <button
+                        type="button"
+                        onclick="toggleStepComplete(${step.id}, event)"
+                        class="px-3 py-1 rounded-lg text-xs font-semibold transition-colors ${isDone
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                          : 'bg-indigo-600 text-white hover:bg-indigo-700'}">
+                        ${isDone ? '✓ Completed' : 'Mark Complete'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      listEl.innerHTML = railHTML + rowsHTML;
+    }
+
+    function renderCareerLevels() {
+      const container = document.getElementById("career-levels-container");
+      const tabsBar = document.getElementById("level-tabs-bar");
+      const toggleBtn = document.getElementById("toggle-levels-view");
+
+      tabsBar.classList.toggle("hidden", showAllLevels);
+      toggleBtn.textContent = showAllLevels ? "Tab View" : "Show All Levels";
+
+      document.querySelectorAll(".level-pill-tab").forEach((btn, idx) => {
+        btn.classList.toggle("active", idx === activeLevelIdx);
+      });
+
+      const levelStyles = [
+        { card: "bg-sky-50/80 border-sky-200", badge: "bg-sky-100 text-sky-800" },
+        { card: "bg-emerald-50/80 border-emerald-200", badge: "bg-emerald-100 text-emerald-800" },
+        { card: "bg-orange-50/80 border-orange-200", badge: "bg-orange-100 text-orange-800" }
+      ];
+
+      const levelsToShow = showAllLevels
+        ? QUANTUM_DATA.levels.map((l, i) => ({ data: l, idx: i }))
+        : [{ data: QUANTUM_DATA.levels[activeLevelIdx], idx: activeLevelIdx }];
+
+      container.innerHTML = levelsToShow.map(({ data, idx }) => {
+        const st = levelStyles[idx];
+        return `
+          <div class="p-3.5 rounded-xl border ${st.card}">
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <span class="text-xs font-extrabold text-slate-900">${data[0]}</span>
+              <span class="text-[10px] font-mono-code font-bold px-2 py-0.5 rounded-md ${st.badge}">${data[1]}</span>
+            </div>
+            <p class="text-xs text-slate-700 leading-relaxed mb-2.5">${data[2]}</p>
+            <ul class="space-y-1">
+              ${data[3].map(exp => `
+                <li class="flex items-start gap-1.5 text-[11px] text-slate-700">
+                  <span class="font-bold text-emerald-600">✓</span>
+                  <span>${exp}</span>
+                </li>
+              `).join("")}
+            </ul>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function syncProgressUI(completedSet) {
+      const done = completedSet.size;
+      const pct = Math.round((done / 9) * 100);
+
+      document.getElementById("nav-progress-text").textContent = `${pct}% (${done}/9)`;
+      document.getElementById("nav-progress-fill").style.width = `${pct}%`;
+
+      const railFill = document.getElementById("timeline-rail-fill");
+      if (railFill) railFill.style.height = `${pct}%`;
+
+      const circumference = 163.36;
+      const offset = circumference - (pct / 100) * circumference;
+      document.getElementById("sidebar-ring-circle").style.strokeDashoffset = offset;
+      document.getElementById("sidebar-ring-pct").textContent = `${pct}%`;
+      document.getElementById("sidebar-step-count").textContent = `${done} / 9`;
+
+      const milestoneEl = document.getElementById("milestone-badge");
+      if (done === 0) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200/80";
+        milestoneEl.innerHTML = `<span>🌱</span><span>Milestone: Getting Started</span>`;
+      } else if (done <= 3) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80";
+        milestoneEl.innerHTML = `<span>🧱</span><span>Milestone: Linear Algebra & Qubits</span>`;
+      } else if (done <= 6) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/80";
+        milestoneEl.innerHTML = `<span>⚡</span><span>Milestone: Circuits & Algorithms</span>`;
+      } else if (done < 9) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200/80";
+        milestoneEl.innerHTML = `<span>🚀</span><span>Milestone: Variational & Error Correction</span>`;
+      } else {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80";
+        milestoneEl.innerHTML = `<span>🏆</span><span>Milestone: Quantum Mastery</span>`;
+      }
+    }
+
+    // ========================================================================
+    // INTERACTION HANDLERS
+    // ========================================================================
+    window.toggleStepComplete = function(stepId, event) {
+      if (event) event.stopPropagation();
+      const setObj = getCompletedSet();
+      const wasDone = setObj.size === 9;
+
+      if (setObj.has(stepId)) {
+        setObj.delete(stepId);
+      } else {
+        setObj.add(stepId);
+      }
+
+      saveCompletedSet(setObj);
+      renderPage();
+
+      if (setObj.size === 9 && !wasDone) {
+        showCelebrationToast();
+      }
+    };
+
+    window.toggleStepExpand = function(stepId) {
+      if (expandedSteps.has(stepId)) {
+        expandedSteps.delete(stepId);
+      } else {
+        expandedSteps.add(stepId);
+      }
+      const completedSet = getCompletedSet();
+      renderStepsTimeline(completedSet);
+      syncProgressUI(completedSet);
+    };
+
+    window.toggleSkillFilter = function(skill) {
+      selectedSkill = selectedSkill === skill ? null : skill;
+      renderPage();
+    };
+
+    // Clear Skill Filter
+    document.getElementById("clear-skill-btn").addEventListener("click", () => {
+      selectedSkill = null;
+      renderPage();
+    });
+
+    // Topic Search Input
+    const topicSearchInput = document.getElementById("topic-search-input");
+    const clearSearchBtn = document.getElementById("clear-search-btn");
+    topicSearchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      clearSearchBtn.classList.toggle("hidden", searchQuery.length === 0);
+      const completedSet = getCompletedSet();
+      renderStepsTimeline(completedSet);
+      syncProgressUI(completedSet);
+    });
+
+    clearSearchBtn.addEventListener("click", () => {
+      searchQuery = "";
+      topicSearchInput.value = "";
+      clearSearchBtn.classList.add("hidden");
+      const completedSet = getCompletedSet();
+      renderStepsTimeline(completedSet);
+      syncProgressUI(completedSet);
+    });
+
+    // Expand / Collapse All Steps
+    const expandAllBtn = document.getElementById("toggle-expand-all");
+    expandAllBtn.addEventListener("click", () => {
+      if (expandedSteps.size === 9) {
+        expandedSteps.clear();
+        expandAllBtn.textContent = "Expand All";
+      } else {
+        for (let i = 1; i <= 9; i++) expandedSteps.add(i);
+        expandAllBtn.textContent = "Collapse All";
+      }
+      const completedSet = getCompletedSet();
+      renderStepsTimeline(completedSet);
+      syncProgressUI(completedSet);
+    });
+
+    // Career Level Tabs & Show All Toggle
+    document.querySelectorAll(".level-pill-tab").forEach((btn, idx) => {
+      btn.addEventListener("click", () => {
+        activeLevelIdx = idx;
+        renderCareerLevels();
+      });
+    });
+
+    document.getElementById("toggle-levels-view").addEventListener("click", () => {
+      showAllLevels = !showAllLevels;
+      renderCareerLevels();
+    });
+
+    // Reset Progress
+    function handleReset() {
+      localStorage.removeItem(STORAGE_KEY);
+      renderPage();
+    }
+
+    document.getElementById("reset-progress-btn").addEventListener("click", handleReset);
+    document.getElementById("reset-nav-btn").addEventListener("click", handleReset);
+
+    // Toast Celebration
+    function showCelebrationToast() {
+      const toast = document.getElementById("toast-banner");
+      toast.classList.remove("translate-y-28", "opacity-0");
+      toast.classList.add("translate-y-0", "opacity-100");
+      setTimeout(() => {
+        toast.classList.add("translate-y-28", "opacity-0");
+        toast.classList.remove("translate-y-0", "opacity-100");
+      }, 4500);
+    }
+
+    // ========================================================================
+    // INITIALIZATION
+    // ========================================================================
+    renderPage();
+  </script>
+</body>
+</html>

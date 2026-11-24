@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend Developer Roadmap • Interactive Pastel Light Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* ==========================================================================
+       LIGHT & PASTEL DESIGN TOKENS
+       ========================================================================== */
+    :root {
+      --bg-page: #f4f7fb;
+      --bg-surface: #ffffff;
+      --bg-tinted: #f8faff;
+      --border-soft: #e2e8f0;
+      --border-accent: #c7d2fe;
+      --text-main: #0f172a;
+      --text-body: #475569;
+      --text-muted: #64748b;
+
+      /* Pastel Accents */
+      --pastel-indigo-bg: #eef2ff;
+      --pastel-indigo-text: #4338ca;
+      --pastel-sky-bg: #e0f2fe;
+      --pastel-sky-text: #0369a1;
+      --pastel-mint-bg: #dcfce7;
+      --pastel-mint-text: #15803d;
+      --pastel-peach-bg: #ffedd5;
+      --pastel-peach-text: #c2410c;
+      --pastel-lavender-bg: #f3e8ff;
+      --pastel-lavender-text: #7e22ce;
+      --pastel-rose-bg: #ffe4e6;
+      --pastel-rose-text: #be123c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ==========================================================================
+       PASTEL MESH HERO & STICKY NAVBAR
+       ========================================================================== */
+    .glass-navbar {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .pastel-hero {
+      background:
+        radial-gradient(circle at 8% 18%, rgba(224, 231, 255, 0.85) 0%, transparent 42%),
+        radial-gradient(circle at 88% 15%, rgba(220, 252, 231, 0.75) 0%, transparent 40%),
+        radial-gradient(circle at 60% 90%, rgba(255, 237, 213, 0.75) 0%, transparent 45%),
+        linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+      border-bottom: 1px solid var(--border-soft);
+      position: relative;
+    }
+
+    .hero-grid-pattern {
+      background-image:
+        linear-gradient(to right, rgba(99, 102, 241, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.045) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* ==========================================================================
+       BENTO CARDS & MICRO-INTERACTIONS
+       ========================================================================== */
+    .bento-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.03);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .bento-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 28px -6px rgba(79, 70, 229, 0.07);
+    }
+
+    .workflow-tile {
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .workflow-tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px -4px rgba(15, 23, 42, 0.08);
+    }
+
+    .domain-tile {
+      background: var(--bg-tinted);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      transition: all 0.22s ease;
+    }
+
+    .domain-tile:hover {
+      background: #ffffff;
+      border-color: #a5b4fc;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.12);
+    }
+
+    /* ==========================================================================
+       SKILL PILLS & STAT CHIPS
+       ========================================================================== */
+    .skill-pill {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      color: #334155;
+      transition: all 0.18s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .skill-pill:hover {
+      background: #eef2ff;
+      border-color: #818cf8;
+      color: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .skill-pill.active {
+      background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+      border-color: transparent;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+
+    /* ==========================================================================
+       INTERACTIVE ROADMAP TIMELINE
+       ========================================================================== */
+    .timeline-container {
+      position: relative;
+    }
+
+    .timeline-rail {
+      position: absolute;
+      left: 17px;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+
+    .timeline-rail-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(180deg, #6366f1, #0ea5e9, #10b981);
+      transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-row {
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-check-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: #ffffff;
+      border: 2px solid #c7d2fe;
+      color: #4338ca;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.08);
+    }
+
+    .step-check-btn:hover {
+      border-color: #6366f1;
+      background: #eef2ff;
+      transform: scale(1.06);
+    }
+
+    .step-row.completed .step-check-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-color: #10b981;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
+    }
+
+    .step-card {
+      background: #fafcff;
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .step-row:hover .step-card {
+      background: #ffffff;
+      border-color: #c7d2fe;
+    }
+
+    .step-row.completed .step-card {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .step-row.highlighted .step-card {
+      background: #eff6ff;
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+    }
+
+    /* Smooth Accordion Drawer */
+    .step-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-row.expanded .step-drawer {
+      grid-template-rows: 1fr;
+    }
+
+    .step-drawer-inner {
+      overflow: hidden;
+    }
+
+    .step-chevron {
+      transition: transform 0.25s ease;
+    }
+
+    .step-row.expanded .step-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* ==========================================================================
+       SIDEBAR WIDGETS (CAREER TABS, TOOLS, PROJECTS)
+       ========================================================================== */
+    .level-pill-tab {
+      border: 1px solid var(--border-soft);
+      background: #f8fafc;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .level-pill-tab.active[data-lvl="l1"] {
+      background: var(--pastel-sky-bg);
+      border-color: #7dd3fc;
+      color: var(--pastel-sky-text);
+    }
+
+    .level-pill-tab.active[data-lvl="l2"] {
+      background: var(--pastel-mint-bg);
+      border-color: #86efac;
+      color: var(--pastel-mint-text);
+    }
+
+    .level-pill-tab.active[data-lvl="l3"] {
+      background: var(--pastel-peach-bg);
+      border-color: #fdba74;
+      color: var(--pastel-peach-text);
+    }
+
+    .tool-badge-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      transition: all 0.18s ease;
+    }
+
+    .tool-badge-card:hover {
+      background: #ffffff;
+      border-color: #a5b4fc;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+    }
+
+    .tool-badge-card.highlighted {
+      background: #eef2ff;
+      border-color: #818cf8;
+      box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.22);
+    }
+
+    .project-mini-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-soft);
+      border-radius: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .project-mini-card:hover {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      transform: translateX(3px);
+    }
+
+    /* Circular SVG Progress Ring */
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    /* Toast Notification */
+    #toast-banner {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+    }
+  </style>
+<!-- sx:begin --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../css/soxit-theme.css?v=20261120_direct_v5"><script src="../../js/site-shell.js?v=20261120_direct_v5" defer></script><!-- sx:end -->
+</head>
+<body class="antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- ========================================================================
+       STICKY LIGHT GLASS NAVBAR WITH LIVE PROGRESS BAR
+       ======================================================================== -->
+  <nav class="glass-navbar sticky top-0 z-40">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        <span>Back to roadmaps</span>
+      </a>
+
+      <!-- Center Live Progress Bar -->
+      <div class="flex-1 max-w-md flex items-center gap-3">
+        <div class="w-full">
+          <div class="flex items-center justify-between text-[11px] font-semibold mb-1">
+            <span class="text-slate-500 uppercase tracking-wider">Roadmap Completion</span>
+            <span id="nav-progress-text" class="font-mono-code text-indigo-600 font-bold">0% (0/9)</span>
+          </div>
+          <div class="w-full h-2 rounded-full bg-slate-200/80 overflow-hidden">
+            <div id="nav-progress-fill" class="h-full rounded-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 transition-all duration-500" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Jump Links -->
+      <div class="hidden md:flex items-center gap-2 text-xs font-semibold">
+        <a href="#domains-section" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-colors">Domains</a>
+        <a href="#roadmap-section" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-colors">9-Step Path</a>
+        <a href="#projects-section" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-colors">Projects</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       BRIGHT PASTEL MESH HERO SECTION
+       ======================================================================== -->
+  <header class="pastel-hero hero-grid-pattern py-9 sm:py-12">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+
+        <!-- Left 8 Cols: Title, Subtitle, Skill Filter Pills -->
+        <div class="lg:col-span-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono-code font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/80 mb-3.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            SOFTWARE DEVELOPMENT • BEGINNER TO ADVANCED
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 mb-3">
+            Frontend <span class="bg-gradient-to-r from-indigo-600 via-sky-600 to-emerald-600 bg-clip-text text-transparent">Developer</span> Roadmap
+          </h1>
+
+          <p class="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed mb-5">
+            A Frontend Developer turns product requirements and design mockups into fast, responsive, and accessible web application interfaces that users interact with.
+          </p>
+
+          <!-- Interactive Skill Filter Pills -->
+          <div>
+            <div class="flex items-center gap-2 text-[11px] font-mono-code font-semibold uppercase tracking-wider text-slate-500 mb-2">
+              <span>Click a skill tag to highlight matching modules & tools:</span>
+              <button id="clear-skill-btn" class="hidden text-indigo-600 hover:underline font-bold">Clear filter ×</button>
+            </div>
+            <div id="hero-skill-pills" class="flex flex-wrap gap-2">
+              <button class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold" data-skill="HTML5">HTML5</button>
+              <button class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold" data-skill="CSS3">CSS3</button>
+              <button class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold" data-skill="JavaScript">JavaScript</button>
+              <button class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold" data-skill="React">React</button>
+              <button class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold" data-skill="Next.js">Next.js</button>
+              <button class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold" data-skill="Git">Git</button>
+              <button class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold" data-skill="REST APIs">REST APIs</button>
+              <button class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold" data-skill="Web Performance">Web Performance</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right 4 Cols: 2x2 Quick-Stat Pastel Chips (Fills Hero Space Harmoniously) -->
+        <div class="lg:col-span-4 grid grid-cols-2 gap-3">
+          <div class="p-4 rounded-2xl bg-indigo-50/90 border border-indigo-200/70">
+            <div class="text-xs font-mono-code font-semibold text-indigo-600 mb-1">CURRICULUM</div>
+            <div class="text-2xl font-extrabold text-slate-900">9 Core</div>
+            <div class="text-xs text-slate-600">Structured Modules</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-sky-50/90 border border-sky-200/70">
+            <div class="text-xs font-mono-code font-semibold text-sky-700 mb-1">SPECIALTIES</div>
+            <div class="text-2xl font-extrabold text-slate-900">6 Focus</div>
+            <div class="text-xs text-slate-600">Engineering Domains</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200/70">
+            <div class="text-xs font-mono-code font-semibold text-emerald-700 mb-1">TECH STACK</div>
+            <div class="text-2xl font-extrabold text-slate-900">12 Tools</div>
+            <div class="text-xs text-slate-600">Industry Standard</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-amber-50/90 border border-amber-200/70">
+            <div class="text-xs font-mono-code font-semibold text-amber-700 mb-1">EST. TIMELINE</div>
+            <div class="text-2xl font-extrabold text-slate-900">16–24 Wks</div>
+            <div class="text-xs text-slate-600">Job-Ready Pace</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       BALANCED 2-COLUMN BENTO GRID (MAX-W 1280PX, TIGHT 20PX GAP)
+       ======================================================================== -->
+  <main class="max-w-[1280px] mx-auto px-4 sm:px-6 py-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+      <!-- ====================================================================
+           LEFT COLUMN (8 COLUMNS): ROLE OVERVIEW + FOCUS DOMAINS + 9-STEP ROADMAP
+           ==================================================================== -->
+      <div class="lg:col-span-8 space-y-5">
+
+        <!-- CARD 1: WHAT DOES A FRONTEND DEVELOPER DO? + 6-STEP WORKFLOW -->
+        <section class="bento-card p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">What does a Frontend Developer do?</h2>
+                <p class="text-[11px] font-mono-code uppercase tracking-wider text-slate-500">Role Scope & Daily Engineering Lifecycle</p>
+              </div>
+            </div>
+
+            <!-- Daily Responsibility Badges -->
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-sky-50 text-sky-700 border border-sky-200/70">Responsive UI</span>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/70">API Binding</span>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-purple-50 text-purple-700 border border-purple-200/70">Web Vitals</span>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 leading-relaxed mb-5">
+            Frontend Developers focus on everything the user sees, clicks, and experiences on a web app—ensuring high performance, fluid animations, cross-browser support, and seamless API data binding.
+          </p>
+
+          <!-- 6-Step Horizontal Pipeline -->
+          <div>
+            <div class="text-xs font-mono-code font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              Frontend Workflow & Responsibilities
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2.5">
+              <!-- 1. Understand -->
+              <div class="workflow-tile p-3 bg-indigo-50/60 border-indigo-200/80">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-mono-code font-bold px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700">01</span>
+                  <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                  </svg>
+                </div>
+                <div class="text-xs font-bold uppercase text-slate-900 mb-0.5">Understand</div>
+                <p class="text-[11px] text-slate-600 leading-snug">UI requirements & user stories.</p>
+              </div>
+
+              <!-- 2. Plan -->
+              <div class="workflow-tile p-3 bg-sky-50/60 border-sky-200/80">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-mono-code font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-700">02</span>
+                  <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                  </svg>
+                </div>
+                <div class="text-xs font-bold uppercase text-slate-900 mb-0.5">Plan</div>
+                <p class="text-[11px] text-slate-600 leading-snug">Component hierarchy & state design.</p>
+              </div>
+
+              <!-- 3. Design -->
+              <div class="workflow-tile p-3 bg-purple-50/60 border-purple-200/80">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-mono-code font-bold px-1.5 py-0.5 rounded bg-purple-100 text-purple-700">03</span>
+                  <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+                  </svg>
+                </div>
+                <div class="text-xs font-bold uppercase text-slate-900 mb-0.5">Design</div>
+                <p class="text-[11px] text-slate-600 leading-snug">Implement Figma designs into code.</p>
+              </div>
+
+              <!-- 4. Develop -->
+              <div class="workflow-tile p-3 bg-emerald-50/60 border-emerald-200/80">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-mono-code font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">04</span>
+                  <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <div class="text-xs font-bold uppercase text-slate-900 mb-0.5">Develop</div>
+                <p class="text-[11px] text-slate-600 leading-snug">Build HTML, CSS & React components.</p>
+              </div>
+
+              <!-- 5. Test -->
+              <div class="workflow-tile p-3 bg-amber-50/60 border-amber-200/80">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-mono-code font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">05</span>
+                  <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div class="text-xs font-bold uppercase text-slate-900 mb-0.5">Test</div>
+                <p class="text-[11px] text-slate-600 leading-snug">Check accessibility, DOM & browsers.</p>
+              </div>
+
+              <!-- 6. Deploy -->
+              <div class="workflow-tile p-3 bg-rose-50/60 border-rose-200/80">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-mono-code font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-700">06</span>
+                  <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                </div>
+                <div class="text-xs font-bold uppercase text-slate-900 mb-0.5">Deploy</div>
+                <p class="text-[11px] text-slate-600 leading-snug">Optimize bundles, deploy to Vercel/CDN.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CARD 2: FRONTEND FOCUS DOMAINS (DENSE 3x2 GRID) -->
+        <section id="domains-section" class="bento-card p-5 sm:p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 border border-sky-200 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">Frontend Focus Domains</h2>
+                <p class="text-[11px] font-mono-code uppercase tracking-wider text-slate-500">6 Core Pillars of Modern Client-Side Architecture</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <!-- Domain 1 -->
+            <div class="domain-tile p-4 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2.5 mb-2">
+                  <div class="w-8 h-8 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+                    </svg>
+                  </div>
+                  <h3 class="font-bold text-sm text-slate-900">Semantic Markup</h3>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">Accessible HTML5, ARIA roles, & Web standards.</p>
+              </div>
+              <div class="flex flex-wrap gap-1">
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-orange-50 text-orange-700 border border-orange-200/70">HTML5</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-orange-50 text-orange-700 border border-orange-200/70">ARIA</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-orange-50 text-orange-700 border border-orange-200/70">SEO</span>
+              </div>
+            </div>
+
+            <!-- Domain 2 -->
+            <div class="domain-tile p-4 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2.5 mb-2">
+                  <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                    </svg>
+                  </div>
+                  <h3 class="font-bold text-sm text-slate-900">CSS & Styling</h3>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">Flexbox, Grid, CSS Modules, & Tailwind CSS.</p>
+              </div>
+              <div class="flex flex-wrap gap-1">
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-sky-50 text-sky-700 border border-sky-200/70">Flex/Grid</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-sky-50 text-sky-700 border border-sky-200/70">Tailwind</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-sky-50 text-sky-700 border border-sky-200/70">Animations</span>
+              </div>
+            </div>
+
+            <!-- Domain 3 -->
+            <div class="domain-tile p-4 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2.5 mb-2">
+                  <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"/>
+                    </svg>
+                  </div>
+                  <h3 class="font-bold text-sm text-slate-900">JS Frameworks</h3>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">React, Next.js, state management, & hooks.</p>
+              </div>
+              <div class="flex flex-wrap gap-1">
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200/70">React</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200/70">Next.js</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200/70">Hooks</span>
+              </div>
+            </div>
+
+            <!-- Domain 4 -->
+            <div class="domain-tile p-4 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2.5 mb-2">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                    </svg>
+                  </div>
+                  <h3 class="font-bold text-sm text-slate-900">API Data Integration</h3>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">Fetch, Axios, REST APIs, GraphQL, & SWR.</p>
+              </div>
+              <div class="flex flex-wrap gap-1">
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200/70">REST</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200/70">GraphQL</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200/70">TanStack</span>
+              </div>
+            </div>
+
+            <!-- Domain 5 -->
+            <div class="domain-tile p-4 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2.5 mb-2">
+                  <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                  </div>
+                  <h3 class="font-bold text-sm text-slate-900">UI Testing & A11y</h3>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">Jest, React Testing Library, Accessibility.</p>
+              </div>
+              <div class="flex flex-wrap gap-1">
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200/70">Jest</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200/70">WCAG</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200/70">Lighthouse</span>
+              </div>
+            </div>
+
+            <!-- Domain 6 -->
+            <div class="domain-tile p-4 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2.5 mb-2">
+                  <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    </svg>
+                  </div>
+                  <h3 class="font-bold text-sm text-slate-900">AI Frontend Tools</h3>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">Integrating AI chat components & LLM streaming APIs.</p>
+              </div>
+              <div class="flex flex-wrap gap-1">
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200/70">AI SDK</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200/70">SSE Streams</span>
+                <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200/70">GenUI</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CARD 3: INTERACTIVE LEARNING ROADMAP (ALL 9 STEPS WITH SEARCH & EXPANDABLE DETAILS) -->
+        <section id="roadmap-section" class="bento-card p-5 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">Interactive Learning Roadmap</h2>
+                <p class="text-xs text-slate-500">Click the step badge to mark complete • Click any card for checklist & mini-project</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="toggle-expand-all" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 transition-colors">
+                Expand All
+              </button>
+            </div>
+          </div>
+
+          <!-- Search / Topic Filter Bar -->
+          <div class="relative mb-5">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input
+              id="topic-search-input"
+              type="text"
+              placeholder="Search roadmap steps, topics, or tools (e.g., Flexbox, Hooks, Jest, Streaming)..."
+              class="w-full pl-10 pr-20 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
+            />
+            <button id="clear-search-btn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 hover:text-indigo-600">
+              Clear
+            </button>
+          </div>
+
+          <!-- Empty Search State -->
+          <div id="empty-search-msg" class="hidden text-center py-8 px-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300">
+            <p class="text-sm font-semibold text-slate-700 mb-1">No matching roadmap modules found</p>
+            <p class="text-xs text-slate-500">Try searching for another keyword like "React", "CSS", "API", or "Testing".</p>
+          </div>
+
+          <!-- 9-Step Timeline List -->
+          <div id="roadmap-list" class="timeline-container space-y-3">
+            <!-- Populated dynamically by JS -->
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ====================================================================
+           RIGHT SIDEBAR (4 COLUMNS): DENSELY PACKED WITH 5 PURPOSEFUL WIDGETS
+           ==================================================================== -->
+      <aside class="lg:col-span-4 space-y-5">
+
+        <!-- WIDGET A: YOUR LEARNING PROGRESS RING & MILESTONE -->
+        <section class="bento-card p-5 bg-gradient-to-br from-white via-indigo-50/40 to-sky-50/50">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              Your Learning Progress
+            </h3>
+            <button id="reset-progress-btn" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 hover:bg-rose-50 transition-colors">
+              Reset Progress
+            </button>
+          </div>
+
+          <div class="flex items-center gap-4 p-3.5 rounded-2xl bg-white/90 border border-indigo-100">
+            <!-- Circular Progress Ring -->
+            <div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
+              <svg class="w-16 h-16" viewBox="0 0 64 64">
+                <circle cx="32" cy="32" r="26" fill="none" stroke="#e2e8f0" stroke-width="6"></circle>
+                <circle id="sidebar-ring-circle" class="progress-ring-circle" cx="32" cy="32" r="26" fill="none" stroke="url(#pastelRingGrad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="163.36" stroke-dashoffset="163.36"></circle>
+                <defs>
+                  <linearGradient id="pastelRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#6366f1"/>
+                    <stop offset="50%" stop-color="#0ea5e9"/>
+                    <stop offset="100%" stop-color="#10b981"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span id="sidebar-ring-pct" class="absolute font-mono-code text-xs font-extrabold text-slate-900">0%</span>
+            </div>
+
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-semibold text-slate-500">Completed Steps</span>
+                <span id="sidebar-step-count" class="font-mono-code text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">0 / 9</span>
+              </div>
+              <div id="milestone-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200/80">
+                <span>🌱</span>
+                <span>Milestone: Getting Started</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- WIDGET B: CAREER LEVELS (L1 SKY, L2 MINT, L3 PEACH) WITH TAB & FULL VIEW TOGGLE -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">Career Levels</h3>
+            <button id="toggle-levels-view" class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors">
+              Show All Levels
+            </button>
+          </div>
+
+          <!-- Interactive Tab Filter -->
+          <div id="level-tabs-bar" class="grid grid-cols-3 gap-1.5 mb-3">
+            <button class="level-pill-tab active py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l1">Junior / L1</button>
+            <button class="level-pill-tab py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l2">Mid / L2</button>
+            <button class="level-pill-tab py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l3">Senior / L3</button>
+          </div>
+
+          <!-- Dynamic Career Level Content -->
+          <div id="career-levels-container" class="space-y-2.5">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- WIDGET C: FRONTEND TOOLS COVERED (12 CORE TOOLS IN 2-COL PASTEL GRID) -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">Frontend Tools Covered</h3>
+            <span class="text-[11px] font-mono-code font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">12 Essential</span>
+          </div>
+
+          <div id="tools-grid" class="grid grid-cols-2 gap-2">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- WIDGET D: HANDS-ON CAPSTONE PROJECTS (3 PORTFOLIO PROJECTS) -->
+        <section id="projects-section" class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">Hands-On Capstone Projects</h3>
+            <span class="text-[11px] font-mono-code font-semibold text-indigo-600">Portfolio</span>
+          </div>
+
+          <div class="space-y-2.5">
+            <!-- Project 1 -->
+            <div class="project-mini-card p-3.5">
+              <div class="flex items-center justify-between gap-2 mb-1">
+                <span class="text-xs font-bold text-slate-900">1. Responsive SaaS Landing Page</span>
+                <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded bg-sky-100 text-sky-700 shrink-0">Beginner</span>
+              </div>
+              <p class="text-[11px] text-slate-600 mb-2">Build an accessible marketing site with CSS Grid, Flexbox, and fluid mobile navigation.</p>
+              <div class="flex flex-wrap gap-1">
+                <span class="text-[10px] font-mono-code px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600">HTML5</span>
+                <span class="text-[10px] font-mono-code px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600">Tailwind CSS</span>
+              </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-mini-card p-3.5">
+              <div class="flex items-center justify-between gap-2 mb-1">
+                <span class="text-xs font-bold text-slate-900">2. Real-Time Weather & API Dashboard</span>
+                <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 shrink-0">Intermediate</span>
+              </div>
+              <p class="text-[11px] text-slate-600 mb-2">Fetch live REST API forecasts with async loading states, search caching, and charts.</p>
+              <div class="flex flex-wrap gap-1">
+                <span class="text-[10px] font-mono-code px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600">React</span>
+                <span class="text-[10px] font-mono-code px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600">REST APIs</span>
+              </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-mini-card p-3.5">
+              <div class="flex items-center justify-between gap-2 mb-1">
+                <span class="text-xs font-bold text-slate-900">3. AI Streaming Chat Interface</span>
+                <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded bg-purple-100 text-purple-700 shrink-0">Advanced</span>
+              </div>
+              <p class="text-[11px] text-slate-600 mb-2">Create a generative UI assistant with token-by-token streaming and markdown rendering.</p>
+              <div class="flex flex-wrap gap-1">
+                <span class="text-[10px] font-mono-code px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600">Next.js</span>
+                <span class="text-[10px] font-mono-code px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600">AI SDK</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- WIDGET E: PASTEL LAVENDER-SKY ENGINEERING PRINCIPLE QUOTE CARD -->
+        <section class="rounded-2xl p-5 border border-indigo-200/80" style="background: linear-gradient(135deg, #eef2ff 0%, #f3e8ff 52%, #e0f2fe 100%);">
+          <div class="flex items-center gap-2 text-xs font-mono-code font-bold uppercase tracking-wider text-indigo-700 mb-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+            <span>Engineering Principle</span>
+          </div>
+          <p class="text-sm font-semibold italic text-slate-800 leading-relaxed mb-3">
+            "Frontend development is where user experience meets technological precision."
+          </p>
+          <div class="p-3 rounded-xl bg-white/75 border border-white text-xs text-slate-700 leading-relaxed">
+            <strong class="text-indigo-700">Quick Study Tip:</strong> Build one small UI component after every module instead of passively watching tutorials—retention jumps dramatically when you ship code.
+          </div>
+        </section>
+
+      </aside>
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       COMPLETION CELEBRATION TOAST
+       ======================================================================== -->
+  <div id="toast-banner" class="fixed bottom-5 right-5 z-50 max-w-sm translate-y-28 opacity-0 pointer-events-none">
+    <div class="p-4 rounded-2xl bg-white border-2 border-emerald-300 shadow-xl flex items-start gap-3">
+      <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-base">
+        🎉
+      </div>
+      <div>
+        <div class="text-sm font-bold text-emerald-800">All 9 Roadmap Steps Completed!</div>
+        <p class="text-xs text-slate-600 mt-0.5">Fantastic work! You have covered the complete Frontend Developer learning path.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       VANILLA JAVASCRIPT INTERACTIVITY & STATE PERSISTENCE
+       ======================================================================== -->
+  <script>
+    // ------------------------------------------------------------------------
+    // 1. ROADMAP DATA (ALL 9 STEPS FROM FRONTED.HTML + SUBTOPICS & MINI-PROJECTS)
+    // ------------------------------------------------------------------------
+    const ROADMAP_MODULES = [
+      {
+        id: 1,
+        title: "Web Fundamentals & Semantic Structure",
+        summary: "Learn core HTML5 tags, accessibility standards, DOM, and Web principles.",
+        duration: "1–2 Weeks",
+        badgeColor: "bg-orange-50 text-orange-700 border-orange-200",
+        skills: ["HTML5", "Web Performance"],
+        checklist: [
+          "Understand HTTP/HTTPS, DNS resolution, and how browsers render pages",
+          "Write semantic HTML5 landmarks (&lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;article&gt;, &lt;footer&gt;)",
+          "Build accessible forms with native validation, labels, and ARIA attributes",
+          "Optimize document structure for SEO and screen readers"
+        ],
+        miniProject: "Build a semantic, 100%-accessible multi-section Developer Resume & Portfolio page using pure HTML5."
+      },
+      {
+        id: 2,
+        title: "CSS3 & Responsive Design",
+        summary: "Master CSS Layouts, Flexbox, CSS Grid, animations, and media queries.",
+        duration: "2–3 Weeks",
+        badgeColor: "bg-sky-50 text-sky-700 border-sky-200",
+        skills: ["CSS3", "Web Performance"],
+        checklist: [
+          "Master the CSS Box Model, specificity, cascade, and custom CSS variables",
+          "Build 1D component alignments with Flexbox and 2D page layouts with CSS Grid",
+          "Implement mobile-first breakpoints, fluid clamp() typography, and responsive images",
+          "Apply utility-first styling with Tailwind CSS and smooth keyframe transitions"
+        ],
+        miniProject: "Create a responsive Bento-grid Pricing & Feature Showcase with smooth hover micro-interactions."
+      },
+      {
+        id: 3,
+        title: "JavaScript Fundamentals",
+        summary: "Variables, functions, async/await, ES6+ features, and event handling.",
+        duration: "3–4 Weeks",
+        badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+        skills: ["JavaScript", "Web Performance"],
+        checklist: [
+          "Understand lexical scope, closures, hoisting, and the 'this' keyword",
+          "Use modern ES6+ features: destructuring, spread/rest, arrow functions, and modules",
+          "Manipulate the DOM efficiently using event delegation and localStorage",
+          "Master asynchronous patterns: Event Loop, Promises, async/await, and error handling"
+        ],
+        miniProject: "Build an interactive Kanban Task Board with drag-and-drop columns and localStorage persistence."
+      },
+      {
+        id: 4,
+        title: "Git & Version Control",
+        summary: "Git basics, branching strategies, commits, and GitHub collaboration.",
+        duration: "1 Week",
+        badgeColor: "bg-rose-50 text-rose-700 border-rose-200",
+        skills: ["Git"],
+        checklist: [
+          "Initialize repositories, stage changes, and write clean conventional commits",
+          "Create feature branches, merge pull requests, and resolve merge conflicts",
+          "Collaborate via GitHub issues, code reviews, and protected main branches",
+          "Configure .gitignore files and tag semantic release versions"
+        ],
+        miniProject: "Set up a GitHub repository with feature branches, pull request templates, and live GitHub Pages deployment."
+      },
+      {
+        id: 5,
+        title: "React & Component Architecture",
+        summary: "JSX, components, hooks, state management, and modern SPA design.",
+        duration: "4–5 Weeks",
+        badgeColor: "bg-indigo-50 text-indigo-700 border-indigo-200",
+        skills: ["React", "Next.js", "JavaScript"],
+        checklist: [
+          "Design reusable, composable UI components using JSX and TypeScript props",
+          "Manage component lifecycle and state with useState, useEffect, useMemo, and custom hooks",
+          "Implement client-side routing and SSR/SSG patterns with Next.js App Router",
+          "Prevent unnecessary re-renders and structure scalable folder architectures"
+        ],
+        miniProject: "Build a multi-view Movie & Book Discovery SPA with custom search hooks and favorites state."
+      },
+      {
+        id: 6,
+        title: "Frontend Build Tools & Package Managers",
+        summary: "NPM/PNPM, Vite, Webpack, module bundling, and environment setup.",
+        duration: "1–2 Weeks",
+        badgeColor: "bg-purple-50 text-purple-700 border-purple-200",
+        skills: ["JavaScript", "Web Performance", "React"],
+        checklist: [
+          "Manage dependencies and scripts with npm or pnpm and semantic versioning",
+          "Configure fast development servers and production bundles using Vite",
+          "Enforce code quality automatically with ESLint and Prettier",
+          "Optimize bundle size via code-splitting, lazy loading, and tree-shaking"
+        ],
+        miniProject: "Configure a production-ready Vite + TypeScript + Tailwind starter template with automated linting."
+      },
+      {
+        id: 7,
+        title: "API Integration & State Management",
+        summary: "Fetching REST & GraphQL APIs, async loading states, TanStack Query, and Redux/Zustand.",
+        duration: "2–3 Weeks",
+        badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+        skills: ["REST APIs", "React", "Next.js", "JavaScript"],
+        checklist: [
+          "Fetch, paginate, and mutate REST and GraphQL APIs using Fetch and Axios",
+          "Handle caching, background refetching, and optimistic UI with TanStack Query",
+          "Manage global client state cleanly with Zustand or Redux Toolkit",
+          "Implement secure authentication flows using JWTs and protected routes"
+        ],
+        miniProject: "Develop a Crypto & Stock Market Tracker with cached API queries, skeletons, and live filtering."
+      },
+      {
+        id: 8,
+        title: "Testing & Web Accessibility (a11y)",
+        summary: "Unit testing with Jest, React Testing Library, Lighthouse audits, and WCAG compliance.",
+        duration: "2 Weeks",
+        badgeColor: "bg-teal-50 text-teal-700 border-teal-200",
+        skills: ["Web Performance", "React", "HTML5"],
+        checklist: [
+          "Write unit and component integration tests with Jest and React Testing Library",
+          "Verify keyboard navigation, focus management, and color contrast for WCAG 2.1 AA",
+          "Audit Core Web Vitals (LCP, INP, CLS) using Chrome DevTools & Lighthouse",
+          "Eliminate layout shifts and optimize font/asset loading strategies"
+        ],
+        miniProject: "Audit an existing web app to achieve a 98+ Lighthouse score across Performance and Accessibility."
+      },
+      {
+        id: 9,
+        title: "AI Integration & LLMs for Frontend",
+        summary: "Building generative UI features, streaming OpenAI/Vercel AI SDK responses, and smart UI components.",
+        duration: "2 Weeks",
+        badgeColor: "bg-violet-50 text-violet-700 border-violet-200",
+        skills: ["React", "Next.js", "REST APIs", "JavaScript"],
+        checklist: [
+          "Stream real-time LLM responses into the UI using Server-Sent Events (SSE)",
+          "Build conversational chat interfaces and generative UI with the Vercel AI SDK",
+          "Render rich markdown, syntax-highlighted code blocks, and stop/regenerate controls",
+          "Design optimistic UX states and graceful fallbacks for AI latency"
+        ],
+        miniProject: "Create an AI Code Explainer & UI Assistant that streams formatted responses in real time."
+      }
+    ];
+
+    const CAREER_LEVEL_DATA = [
+      {
+        id: "l1",
+        title: "Junior / L1",
+        subtitle: "Foundation & Execution",
+        cardBg: "bg-sky-50/80 border-sky-200",
+        badgeBg: "bg-sky-100 text-sky-800",
+        summary: "Build responsive UI components, fix styling bugs, and work with basic JavaScript/React patterns.",
+        expectations: [
+          "Translate Figma mockups into clean, responsive HTML/CSS/React",
+          "Fix cross-browser layout bugs and write modular components",
+          "Participate in Git pull requests and team code reviews"
+        ]
+      },
+      {
+        id: "l2",
+        title: "Mid / L2",
+        subtitle: "Architecture & Ownership",
+        cardBg: "bg-emerald-50/80 border-emerald-200",
+        badgeBg: "bg-emerald-100 text-emerald-800",
+        summary: "Own client-side architecture, integrate complex REST/GraphQL APIs, and optimize bundle performance.",
+        expectations: [
+          "Architect state management and server-caching layers",
+          "Ensure WCAG accessibility compliance and automated test coverage",
+          "Optimize Core Web Vitals and frontend build pipelines"
+        ]
+      },
+      {
+        id: "l3",
+        title: "Senior / L3",
+        subtitle: "Systems & Technical Leadership",
+        cardBg: "bg-orange-50/80 border-orange-200",
+        badgeBg: "bg-orange-100 text-orange-800",
+        summary: "Design modern design systems, lead micro-frontend solutions, mentor developers, and build AI-powered UIs.",
+        expectations: [
+          "Lead multi-team design systems and scalable frontend architecture",
+          "Mentor junior/mid engineers and set engineering quality standards",
+          "Pioneer AI-native user interfaces and real-time streaming UX"
+        ]
+      }
+    ];
+
+    const FRONTEND_TOOLS = [
+      { name: "HTML5", category: "Markup", bg: "bg-orange-50", text: "text-orange-700", skills: ["HTML5"] },
+      { name: "CSS3 / Grid", category: "Layout", bg: "bg-sky-50", text: "text-sky-700", skills: ["CSS3"] },
+      { name: "JavaScript", category: "Core Lang", bg: "bg-amber-50", text: "text-amber-700", skills: ["JavaScript"] },
+      { name: "TypeScript", category: "Type Safety", bg: "bg-blue-50", text: "text-blue-700", skills: ["JavaScript", "React"] },
+      { name: "React", category: "UI Library", bg: "bg-cyan-50", text: "text-cyan-700", skills: ["React"] },
+      { name: "Next.js", category: "Framework", bg: "bg-indigo-50", text: "text-indigo-700", skills: ["Next.js", "React"] },
+      { name: "Tailwind CSS", category: "Styling", bg: "bg-teal-50", text: "text-teal-700", skills: ["CSS3"] },
+      { name: "Git / GitHub", category: "Version Ctrl", bg: "bg-rose-50", text: "text-rose-700", skills: ["Git"] },
+      { name: "Vite / Webpack", category: "Bundler", bg: "bg-purple-50", text: "text-purple-700", skills: ["Web Performance"] },
+      { name: "REST / GraphQL", category: "Data Layer", bg: "bg-emerald-50", text: "text-emerald-700", skills: ["REST APIs"] },
+      { name: "Figma", category: "UI Handoff", bg: "bg-pink-50", text: "text-pink-700", skills: ["CSS3"] },
+      { name: "VS Code", category: "IDE", bg: "bg-slate-100", text: "text-slate-700", skills: ["JavaScript", "HTML5"] }
+    ];
+
+    // ------------------------------------------------------------------------
+    // 2. APPLICATION STATE & STORAGE
+    // ------------------------------------------------------------------------
+    const STORAGE_KEY = "fe_light_roadmap_completed_v1";
+    let completedSet = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+    let expandedSet = new Set([1]); // Step 1 expanded initially for immediate richness
+    let selectedSkill = null;
+    let searchQuery = "";
+    let activeLevelId = "l1";
+    let showAllLevels = false;
+    let hasCelebrated = completedSet.size === ROADMAP_MODULES.length;
+
+    // ------------------------------------------------------------------------
+    // 3. RENDER FUNCTIONS
+    // ------------------------------------------------------------------------
+    function renderRoadmapList() {
+      const listEl = document.getElementById("roadmap-list");
+      const emptyMsg = document.getElementById("empty-search-msg");
+      const query = searchQuery.trim().toLowerCase();
+
+      const filtered = ROADMAP_MODULES.filter(step => {
+        if (!query) return true;
+        const inTitle = step.title.toLowerCase().includes(query);
+        const inSummary = step.summary.toLowerCase().includes(query);
+        const inChecklist = step.checklist.some(item => item.toLowerCase().includes(query));
+        const inSkills = step.skills.some(s => s.toLowerCase().includes(query));
+        return inTitle || inSummary || inChecklist || inSkills;
+      });
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = "";
+        emptyMsg.classList.remove("hidden");
+        return;
+      }
+
+      emptyMsg.classList.add("hidden");
+
+      const railHTML = `
+        <div class="timeline-rail">
+          <div id="timeline-rail-fill" class="timeline-rail-fill"></div>
+        </div>
+      `;
+
+      const itemsHTML = filtered.map(step => {
+        const isDone = completedSet.has(step.id);
+        const isOpen = expandedSet.has(step.id);
+        const isMatchSkill = selectedSkill && step.skills.includes(selectedSkill);
+        return `
+          <div class="step-row flex items-start gap-3.5 ${isDone ? 'completed' : ''} ${isOpen ? 'expanded' : ''} ${isMatchSkill ? 'highlighted' : ''}">
+            <!-- Step Checkbox / Number Badge -->
+            <button
+              type="button"
+              onclick="handleToggleComplete(${step.id}, event)"
+              title="${isDone ? 'Mark step incomplete' : 'Mark step complete'}"
+              class="step-check-btn font-mono-code mt-1"
+              aria-label="Mark step ${step.id} complete">
+              ${isDone
+                ? `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`
+                : step.id
+              }
+            </button>
+
+            <!-- Step Main Card -->
+            <div class="step-card flex-1 p-4 cursor-pointer" onclick="handleToggleExpand(${step.id})">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h3 class="text-sm sm:text-base font-bold text-slate-900 ${isDone ? 'line-through text-slate-500' : ''}">
+                      ${step.title}
+                    </h3>
+                    <span class="text-[11px] font-mono-code font-semibold px-2 py-0.5 rounded-md border ${step.badgeColor}">
+                      ${step.duration}
+                    </span>
+                  </div>
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    ${step.summary}
+                  </p>
+                </div>
+
+                <span class="p-1 rounded-lg text-slate-400 hover:text-indigo-600 shrink-0">
+                  <svg class="w-4 h-4 step-chevron" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </span>
+              </div>
+
+              <!-- Expandable Checklist & Mini-Project Drawer -->
+              <div class="step-drawer">
+                <div class="step-drawer-inner">
+                  <div class="mt-3.5 pt-3.5 border-t border-slate-200/80 space-y-3">
+                    <div>
+                      <div class="text-[11px] font-mono-code font-bold uppercase tracking-wider text-indigo-700 mb-2">
+                        Sub-Topics & Actionable Checklist
+                      </div>
+                      <ul class="space-y-1.5">
+                        ${step.checklist.map(point => `
+                          <li class="flex items-start gap-2 text-xs text-slate-700">
+                            <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+                            </svg>
+                            <span>${point}</span>
+                          </li>
+                        `).join('')}
+                      </ul>
+                    </div>
+
+                    <!-- Recommended Mini-Project Callout -->
+                    <div class="p-3 rounded-xl bg-indigo-50/70 border border-indigo-100 flex items-start gap-2.5">
+                      <span class="text-sm shrink-0">🛠️</span>
+                      <div class="text-xs text-slate-700">
+                        <strong class="text-indigo-800">Recommended Mini-Project:</strong> ${step.miniProject}
+                      </div>
+                    </div>
+
+                    <!-- Bottom Tags + Complete Button -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                      <div class="flex flex-wrap gap-1.5">
+                        ${step.skills.map(sk => `
+                          <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600">
+                            #${sk}
+                          </span>
+                        `).join('')}
+                      </div>
+
+                      <button
+                        type="button"
+                        onclick="handleToggleComplete(${step.id}, event)"
+                        class="px-3 py-1 rounded-lg text-xs font-semibold transition-colors ${isDone
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                          : 'bg-indigo-600 text-white hover:bg-indigo-700'}">
+                        ${isDone ? '✓ Completed' : 'Mark Complete'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      listEl.innerHTML = railHTML + itemsHTML;
+      syncProgressIndicators();
+    }
+
+    function syncProgressIndicators() {
+      const total = ROADMAP_MODULES.length;
+      const done = completedSet.size;
+      const pct = Math.round((done / total) * 100);
+
+      // Navbar bar
+      document.getElementById("nav-progress-text").textContent = `${pct}% (${done}/${total})`;
+      document.getElementById("nav-progress-fill").style.width = `${pct}%`;
+
+      // Timeline rail fill
+      const railFill = document.getElementById("timeline-rail-fill");
+      if (railFill) railFill.style.height = `${pct}%`;
+
+      // Sidebar Circular Ring (circumference = 2 * PI * 26 = 163.36)
+      const circumference = 163.36;
+      const offset = circumference - (pct / 100) * circumference;
+      document.getElementById("sidebar-ring-circle").style.strokeDashoffset = offset;
+      document.getElementById("sidebar-ring-pct").textContent = `${pct}%`;
+      document.getElementById("sidebar-step-count").textContent = `${done} / ${total}`;
+
+      // Dynamic Milestone Badge
+      const milestoneEl = document.getElementById("milestone-badge");
+      if (done === 0) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200/80";
+        milestoneEl.innerHTML = `<span>🌱</span><span>Milestone: Getting Started</span>`;
+      } else if (done <= 3) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80";
+        milestoneEl.innerHTML = `<span>🧱</span><span>Milestone: Web Core Builder</span>`;
+      } else if (done <= 6) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/80";
+        milestoneEl.innerHTML = `<span>⚛️</span><span>Milestone: Modern SPA Developer</span>`;
+      } else if (done < total) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200/80";
+        milestoneEl.innerHTML = `<span>🚀</span><span>Milestone: Production Engineer</span>`;
+      } else {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80";
+        milestoneEl.innerHTML = `<span>🏆</span><span>Milestone: Job-Ready Frontend Dev</span>`;
+      }
+
+      // Celebration toast at 100%
+      if (done === total && !hasCelebrated) {
+        hasCelebrated = true;
+        showToastBanner();
+      } else if (done < total) {
+        hasCelebrated = false;
+      }
+    }
+
+    function renderCareerLevels() {
+      const container = document.getElementById("career-levels-container");
+      const tabsBar = document.getElementById("level-tabs-bar");
+      const toggleBtn = document.getElementById("toggle-levels-view");
+
+      tabsBar.classList.toggle("hidden", showAllLevels);
+      toggleBtn.textContent = showAllLevels ? "Tab View" : "Show All Levels";
+
+      document.querySelectorAll(".level-pill-tab").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lvl === activeLevelId);
+      });
+
+      const levelsToRender = showAllLevels
+        ? CAREER_LEVEL_DATA
+        : CAREER_LEVEL_DATA.filter(lvl => lvl.id === activeLevelId);
+
+      container.innerHTML = levelsToRender.map(lvl => `
+        <div class="p-3.5 rounded-xl border ${lvl.cardBg} transition-all">
+          <div class="flex items-center justify-between gap-2 mb-1.5">
+            <span class="text-xs font-extrabold text-slate-900">${lvl.title}</span>
+            <span class="text-[10px] font-mono-code font-bold px-2 py-0.5 rounded-md ${lvl.badgeBg}">${lvl.subtitle}</span>
+          </div>
+          <p class="text-xs text-slate-700 leading-relaxed mb-2.5">${lvl.summary}</p>
+          <ul class="space-y-1">
+            ${lvl.expectations.map(exp => `
+              <li class="flex items-start gap-1.5 text-[11px] text-slate-700">
+                <span class="font-bold text-emerald-600">✓</span>
+                <span>${exp}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `).join('');
+    }
+
+    function renderToolsGrid() {
+      const grid = document.getElementById("tools-grid");
+      grid.innerHTML = FRONTEND_TOOLS.map(tool => {
+        const isHighlighted = selectedSkill && tool.skills.includes(selectedSkill);
+        return `
+          <div class="tool-badge-card p-2.5 flex items-center gap-2 ${isHighlighted ? 'highlighted' : ''}">
+            <span class="w-6 h-6 rounded-lg ${tool.bg} ${tool.text} flex items-center justify-center text-xs font-bold shrink-0">
+              ✓
+            </span>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-slate-900 truncate">${tool.name}</div>
+              <div class="text-[10px] font-mono-code text-slate-500 truncate">${tool.category}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ------------------------------------------------------------------------
+    // 4. EVENT HANDLERS
+    // ------------------------------------------------------------------------
+    window.handleToggleComplete = function(stepId, event) {
+      if (event) event.stopPropagation();
+      if (completedSet.has(stepId)) {
+        completedSet.delete(stepId);
+      } else {
+        completedSet.add(stepId);
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...completedSet]));
+      renderRoadmapList();
+    };
+
+    window.handleToggleExpand = function(stepId) {
+      if (expandedSet.has(stepId)) {
+        expandedSet.delete(stepId);
+      } else {
+        expandedSet.add(stepId);
+      }
+      renderRoadmapList();
+    };
+
+    // Expand / Collapse All Button
+    const toggleExpandAllBtn = document.getElementById("toggle-expand-all");
+    toggleExpandAllBtn.addEventListener("click", () => {
+      if (expandedSet.size === ROADMAP_MODULES.length) {
+        expandedSet.clear();
+        toggleExpandAllBtn.textContent = "Expand All";
+      } else {
+        ROADMAP_MODULES.forEach(m => expandedSet.add(m.id));
+        toggleExpandAllBtn.textContent = "Collapse All";
+      }
+      renderRoadmapList();
+    });
+
+    // Hero Skill Filter Pills
+    const clearSkillBtn = document.getElementById("clear-skill-btn");
+    document.querySelectorAll(".skill-pill").forEach(pill => {
+      pill.addEventListener("click", () => {
+        const skill = pill.dataset.skill;
+        selectedSkill = selectedSkill === skill ? null : skill;
+
+        document.querySelectorAll(".skill-pill").forEach(p => {
+          p.classList.toggle("active", p.dataset.skill === selectedSkill);
+        });
+
+        clearSkillBtn.classList.toggle("hidden", !selectedSkill);
+        renderRoadmapList();
+        renderToolsGrid();
+      });
+    });
+
+    clearSkillBtn.addEventListener("click", () => {
+      selectedSkill = null;
+      document.querySelectorAll(".skill-pill").forEach(p => p.classList.remove("active"));
+      clearSkillBtn.classList.add("hidden");
+      renderRoadmapList();
+      renderToolsGrid();
+    });
+
+    // Topic Search Bar
+    const searchInput = document.getElementById("topic-search-input");
+    const clearSearchBtn = document.getElementById("clear-search-btn");
+
+    searchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      clearSearchBtn.classList.toggle("hidden", searchQuery.length === 0);
+      renderRoadmapList();
+    });
+
+    clearSearchBtn.addEventListener("click", () => {
+      searchQuery = "";
+      searchInput.value = "";
+      clearSearchBtn.classList.add("hidden");
+      renderRoadmapList();
+    });
+
+    // Career Level Tabs & Show-All Toggle
+    document.querySelectorAll(".level-pill-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        activeLevelId = tab.dataset.lvl;
+        renderCareerLevels();
+      });
+    });
+
+    document.getElementById("toggle-levels-view").addEventListener("click", () => {
+      showAllLevels = !showAllLevels;
+      renderCareerLevels();
+    });
+
+    // Reset Progress Button
+    document.getElementById("reset-progress-btn").addEventListener("click", () => {
+      completedSet.clear();
+      hasCelebrated = false;
+      localStorage.removeItem(STORAGE_KEY);
+      renderRoadmapList();
+    });
+
+    // Toast Notification Helper
+    function showToastBanner() {
+      const toast = document.getElementById("toast-banner");
+      toast.classList.remove("translate-y-28", "opacity-0");
+      toast.classList.add("translate-y-0", "opacity-100");
+      setTimeout(() => {
+        toast.classList.add("translate-y-28", "opacity-0");
+        toast.classList.remove("translate-y-0", "opacity-100");
+      }, 4500);
+    }
+
+    // ------------------------------------------------------------------------
+    // 5. INITIALIZE PAGE
+    // ------------------------------------------------------------------------
+    renderRoadmapList();
+    renderCareerLevels();
+    renderToolsGrid();
+  </script>
+</body>
+</html>

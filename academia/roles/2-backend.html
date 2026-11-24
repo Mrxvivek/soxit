@@ -1,0 +1,2141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backend Developer Roadmap • Interactive Career & Engineering Guide</title>
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS & SOFT-PASTEL LIGHT THEME VARIABLES
+       ========================================================================== */
+    :root {
+      --bg-canvas: #f4f7fb;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8fafc;
+      --border-soft: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+
+      /* Pastel Accents */
+      --indigo-bg: #eef2ff;
+      --indigo-border: #c7d2fe;
+      --indigo-text: #4338ca;
+      --indigo-solid: #4f46e5;
+
+      --emerald-bg: #ecfdf5;
+      --emerald-border: #a7f3d0;
+      --emerald-text: #047857;
+      --emerald-solid: #10b981;
+
+      --sky-bg: #f0f9ff;
+      --sky-border: #bae6fd;
+      --sky-text: #0369a1;
+      --sky-solid: #0284c7;
+
+      --amber-bg: #fffbeb;
+      --amber-border: #fde68a;
+      --amber-text: #b45309;
+      --amber-solid: #f59e0b;
+
+      --rose-bg: #fff1f2;
+      --rose-border: #fecdd3;
+      --rose-text: #be123c;
+      --rose-solid: #e11d48;
+
+      --violet-bg: #f5f3ff;
+      --violet-border: #ddd6fe;
+      --violet-text: #6d28d9;
+      --violet-solid: #7c3aed;
+
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-pill: 9999px;
+
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+      --shadow-md: 0 6px 18px -4px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+      --shadow-highlight: 0 0 0 2.5px rgba(79, 70, 229, 0.28), 0 8px 20px -4px rgba(79, 70, 229, 0.14);
+
+      --transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ==========================================================================
+       2. GLOBAL RESET & BASE TYPOGRAPHY
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    button, input {
+      font-family: inherit;
+    }
+
+    /* ==========================================================================
+       3. STICKY TOP NAVIGATION BAR
+       ========================================================================== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .topbar-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-pill);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-soft);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .back-link:hover {
+      background: var(--indigo-bg);
+      border-color: var(--indigo-border);
+      color: var(--indigo-text);
+    }
+
+    .topbar-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .topbar-role {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .topbar-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.22rem 0.65rem;
+      border-radius: var(--radius-pill);
+      background: var(--indigo-bg);
+      color: var(--indigo-text);
+      border: 1px solid var(--indigo-border);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .progress-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-pill);
+      background: var(--emerald-bg);
+      border: 1px solid var(--emerald-border);
+      color: var(--emerald-text);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald-solid);
+    }
+
+    .btn-reset {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.42rem 0.85rem;
+      border-radius: var(--radius-pill);
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-reset:hover {
+      background: var(--rose-bg);
+      border-color: var(--rose-border);
+      color: var(--rose-text);
+    }
+
+    /* ==========================================================================
+       4. MAIN CONTAINER & HERO BENTO BANNER
+       ========================================================================== */
+    .container {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f5f8ff 55%, #f0fdf9 100%);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .hero-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--indigo-text);
+      background: var(--indigo-bg);
+      border: 1px solid var(--indigo-border);
+      padding: 0.28rem 0.75rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-subtitle {
+      font-size: 0.96rem;
+      color: var(--text-secondary);
+      max-width: 68ch;
+      margin-bottom: 1.1rem;
+      line-height: 1.55;
+    }
+
+    .skill-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .filter-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-right: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .skill-pill {
+      padding: 0.38rem 0.78rem;
+      border-radius: var(--radius-pill);
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .skill-pill:hover {
+      border-color: var(--indigo-border);
+      background: var(--indigo-bg);
+      color: var(--indigo-text);
+      transform: translateY(-1px);
+    }
+
+    .skill-pill.active {
+      background: var(--indigo-solid);
+      border-color: var(--indigo-solid);
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgba(79, 70, 229, 0.28);
+    }
+
+    /* Hero Right 2x2 Quick-Stat Grid */
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .stat-box {
+      padding: 0.95rem 1rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .stat-box.indigo { background: var(--indigo-bg); border-color: var(--indigo-border); }
+    .stat-box.emerald { background: var(--emerald-bg); border-color: var(--emerald-border); }
+    .stat-box.sky { background: var(--sky-bg); border-color: var(--sky-border); }
+    .stat-box.amber { background: var(--amber-bg); border-color: var(--amber-border); }
+
+    .stat-value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .stat-box.indigo .stat-value { color: var(--indigo-text); }
+    .stat-box.emerald .stat-value { color: var(--emerald-text); }
+    .stat-box.sky .stat-value { color: var(--sky-text); }
+    .stat-box.amber .stat-value { color: var(--amber-text); }
+
+    .stat-label {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-top: 0.15rem;
+    }
+
+    /* ==========================================================================
+       5. BALANCED 2-COLUMN MAIN BENTO GRID
+       ========================================================================== */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 1.15rem;
+      align-items: start;
+    }
+
+    .bento-col-left,
+    .bento-col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-xl);
+      padding: 1.35rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .card-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.015em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    /* ==========================================================================
+       6. LEFT COL: ROLE OVERVIEW & 6-STEP WORKFLOW PIPELINE
+       ========================================================================== */
+    .role-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .resp-chips {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .resp-chip {
+      padding: 0.65rem 0.75rem;
+      border-radius: var(--radius-md);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+      border: 1px solid transparent;
+    }
+
+    .resp-chip.indigo { background: var(--indigo-bg); border-color: var(--indigo-border); color: var(--indigo-text); }
+    .resp-chip.emerald { background: var(--emerald-bg); border-color: var(--emerald-border); color: var(--emerald-text); }
+    .resp-chip.rose { background: var(--rose-bg); border-color: var(--rose-border); color: var(--rose-text); }
+    .resp-chip.amber { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber-text); }
+
+    .pipeline-wrapper {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 0.95rem 1rem;
+    }
+
+    .pipeline-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.65rem;
+    }
+
+    .pipeline-track {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.5rem;
+      position: relative;
+    }
+
+    .pipeline-step {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 0.6rem 0.5rem;
+      text-align: center;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .pipeline-step:hover {
+      border-color: var(--indigo-border);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pipeline-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--indigo-bg);
+      color: var(--indigo-text);
+      font-size: 0.68rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+
+    .pipeline-name {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* ==========================================================================
+       7. LEFT COL: 3x2 BACKEND FOCUS DOMAINS GRID
+       ========================================================================== */
+    .domains-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+    }
+
+    .domain-card {
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      border: 1px solid var(--border-soft);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.65rem;
+    }
+
+    .domain-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .domain-card.indigo { background: linear-gradient(180deg, var(--indigo-bg) 0%, #ffffff 65%); border-color: var(--indigo-border); }
+    .domain-card.emerald { background: linear-gradient(180deg, var(--emerald-bg) 0%, #ffffff 65%); border-color: var(--emerald-border); }
+    .domain-card.sky { background: linear-gradient(180deg, var(--sky-bg) 0%, #ffffff 65%); border-color: var(--sky-border); }
+    .domain-card.rose { background: linear-gradient(180deg, var(--rose-bg) 0%, #ffffff 65%); border-color: var(--rose-border); }
+    .domain-card.amber { background: linear-gradient(180deg, var(--amber-bg) 0%, #ffffff 65%); border-color: var(--amber-border); }
+    .domain-card.violet { background: linear-gradient(180deg, var(--violet-bg) 0%, #ffffff 65%); border-color: var(--violet-border); }
+
+    .domain-top {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .domain-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #ffffff;
+      border: 1px solid var(--border-soft);
+    }
+
+    .domain-card.indigo .domain-icon { color: var(--indigo-text); }
+    .domain-card.emerald .domain-icon { color: var(--emerald-text); }
+    .domain-card.sky .domain-icon { color: var(--sky-text); }
+    .domain-card.rose .domain-icon { color: var(--rose-text); }
+    .domain-card.amber .domain-icon { color: var(--amber-text); }
+    .domain-card.violet .domain-icon { color: var(--violet-text); }
+
+    .domain-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.25;
+    }
+
+    .domain-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    .domain-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .domain-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.18rem 0.5rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--border-soft);
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       8. LEFT COL: INTERACTIVE LEARNING ROADMAP TIMELINE
+       ========================================================================== */
+    .search-bar-wrap {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .roadmap-search {
+      width: 100%;
+      padding: 0.68rem 2.4rem 0.68rem 2.45rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-soft);
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      font-size: 0.86rem;
+      transition: var(--transition);
+    }
+
+    .roadmap-search:focus {
+      outline: none;
+      background: #ffffff;
+      border-color: var(--indigo-solid);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+    }
+
+    .clear-search-btn {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--border-soft);
+      border: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .clear-search-btn.visible {
+      display: inline-flex;
+    }
+
+    .completion-banner {
+      display: none;
+      background: linear-gradient(135deg, var(--emerald-bg) 0%, var(--sky-bg) 100%);
+      border: 1px solid var(--emerald-border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.15rem;
+      margin-bottom: 1rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .completion-banner.visible {
+      display: flex;
+    }
+
+    .completion-banner-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--emerald-text);
+    }
+
+    .completion-banner-sub {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .timeline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+    }
+
+    .step-card {
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .step-card:hover {
+      border-color: var(--border-strong);
+    }
+
+    .step-card.completed {
+      background: #f9fefb;
+      border-color: var(--emerald-border);
+    }
+
+    .step-card.skill-match {
+      box-shadow: var(--shadow-highlight);
+      border-color: var(--indigo-solid);
+    }
+
+    .step-card.hidden {
+      display: none;
+    }
+
+    .step-header {
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .step-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+
+    .step-checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      border: 2px solid var(--border-strong);
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: var(--transition);
+      color: transparent;
+    }
+
+    .step-checkbox:hover {
+      border-color: var(--emerald-solid);
+    }
+
+    .step-card.completed .step-checkbox {
+      background: var(--emerald-solid);
+      border-color: var(--emerald-solid);
+      color: #ffffff;
+    }
+
+    .step-num-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-pill);
+      background: var(--indigo-bg);
+      color: var(--indigo-text);
+      flex-shrink: 0;
+    }
+
+    .step-card.completed .step-num-pill {
+      background: var(--emerald-bg);
+      color: var(--emerald-text);
+    }
+
+    .step-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .step-card.completed .step-title {
+      color: var(--text-secondary);
+    }
+
+    .step-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    .duration-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.22rem 0.6rem;
+      border-radius: var(--radius-pill);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-soft);
+      color: var(--text-secondary);
+    }
+
+    .chevron-icon {
+      color: var(--text-muted);
+      transition: transform 0.22s ease;
+    }
+
+    .step-card.expanded .chevron-icon {
+      transform: rotate(180deg);
+      color: var(--indigo-text);
+    }
+
+    .step-drawer {
+      display: none;
+      padding: 0 1rem 1rem 1rem;
+      border-top: 1px dashed var(--border-soft);
+      background: var(--bg-subtle);
+    }
+
+    .step-card.expanded .step-drawer {
+      display: block;
+    }
+
+    .subtopics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      margin-top: 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .subtopic-item {
+      background: #ffffff;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 0.55rem 0.7rem;
+      font-size: 0.79rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+    }
+
+    .subtopic-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--indigo-solid);
+      margin-top: 0.42rem;
+      flex-shrink: 0;
+    }
+
+    .mini-project-box {
+      background: var(--amber-bg);
+      border: 1px solid var(--amber-border);
+      border-radius: var(--radius-md);
+      padding: 0.7rem 0.85rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .mini-project-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: #ffffff;
+      color: var(--amber-text);
+      border: 1px solid var(--amber-border);
+      padding: 0.16rem 0.5rem;
+      border-radius: var(--radius-pill);
+      flex-shrink: 0;
+      margin-top: 0.08rem;
+    }
+
+    .mini-project-text {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .no-results-msg {
+      display: none;
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      background: var(--bg-subtle);
+      border-radius: var(--radius-lg);
+      border: 1px dashed var(--border-soft);
+    }
+
+    /* ==========================================================================
+       9. RIGHT SIDEBAR: PROGRESS RING, CAREER LEVELS, TOOLS, CAPSTONES, QUOTE
+       ========================================================================== */
+    .ring-widget {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+    }
+
+    .ring-svg-wrap {
+      position: relative;
+      width: 96px;
+      height: 96px;
+      flex-shrink: 0;
+    }
+
+    .ring-svg {
+      transform: rotate(-90deg);
+      width: 96px;
+      height: 96px;
+    }
+
+    .ring-track {
+      fill: none;
+      stroke: var(--indigo-bg);
+      stroke-width: 9;
+    }
+
+    .ring-fill {
+      fill: none;
+      stroke: var(--emerald-solid);
+      stroke-width: 9;
+      stroke-linecap: round;
+      stroke-dasharray: 251.33;
+      stroke-dashoffset: 251.33;
+      transition: stroke-dashoffset 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .ring-center-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .ring-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .ring-count {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .milestone-pill {
+      display: inline-block;
+      width: fit-content;
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 0.24rem 0.65rem;
+      border-radius: var(--radius-pill);
+      background: var(--indigo-bg);
+      color: var(--indigo-text);
+      border: 1px solid var(--indigo-border);
+    }
+
+    /* Career Levels */
+    .level-toggle-btn {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.28rem 0.65rem;
+      border-radius: var(--radius-pill);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-soft);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .level-toggle-btn:hover {
+      background: var(--indigo-bg);
+      color: var(--indigo-text);
+      border-color: var(--indigo-border);
+    }
+
+    .levels-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .level-card {
+      padding: 0.85rem 0.95rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: var(--bg-subtle);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .level-card:hover {
+      border-color: var(--indigo-border);
+      background: #ffffff;
+    }
+
+    .level-card.active {
+      background: var(--indigo-bg);
+      border-color: var(--indigo-border);
+    }
+
+    .level-card.hidden {
+      display: none;
+    }
+
+    .level-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.3rem;
+    }
+
+    .level-name {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .level-exp {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.16rem 0.5rem;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      color: var(--indigo-text);
+      border: 1px solid var(--indigo-border);
+    }
+
+    .level-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* 2x6 Tools Covered Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    .tool-badge {
+      padding: 0.52rem 0.65rem;
+      border-radius: var(--radius-md);
+      font-size: 0.77rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      border: 1px solid var(--border-soft);
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      transition: var(--transition);
+    }
+
+    .tool-badge:hover {
+      transform: translateY(-1px);
+    }
+
+    .tool-badge.skill-match {
+      box-shadow: var(--shadow-highlight);
+      border-color: var(--indigo-solid);
+      background: var(--indigo-bg);
+      color: var(--indigo-text);
+    }
+
+    .tool-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Capstone Projects */
+    .capstones-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .capstone-card {
+      padding: 0.85rem 0.95rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: var(--bg-subtle);
+      transition: var(--transition);
+    }
+
+    .capstone-card:hover {
+      background: #ffffff;
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .capstone-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 0.45rem;
+      line-height: 1.3;
+    }
+
+    .capstone-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .diff-badge {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 0.16rem 0.52rem;
+      border-radius: var(--radius-pill);
+    }
+
+    .diff-badge.inter { background: var(--sky-bg); color: var(--sky-text); border: 1px solid var(--sky-border); }
+    .diff-badge.adv { background: var(--rose-bg); color: var(--rose-text); border: 1px solid var(--rose-border); }
+    .diff-badge.arch { background: var(--violet-bg); color: var(--violet-text); border: 1px solid var(--violet-border); }
+
+    .stack-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.16rem 0.52rem;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-soft);
+    }
+
+    /* Engineering Quote Card */
+    .quote-card {
+      background: linear-gradient(135deg, var(--indigo-bg) 0%, var(--emerald-bg) 100%);
+      border: 1px solid var(--indigo-border);
+      border-radius: var(--radius-xl);
+      padding: 1.25rem;
+      position: relative;
+    }
+
+    .quote-mark {
+      font-size: 1.75rem;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--indigo-solid);
+      opacity: 0.45;
+      margin-bottom: 0.25rem;
+    }
+
+    .quote-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--text-primary);
+      line-height: 1.55;
+      margin-bottom: 0.55rem;
+    }
+
+    .quote-caption {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--indigo-text);
+    }
+
+    /* ==========================================================================
+       10. TOAST NOTIFICATION (NON-BLOCKING FEEDBACK)
+       ========================================================================== */
+    .toast {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      background: var(--text-primary);
+      color: #ffffff;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: var(--transition);
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       11. RESPONSIVE ADAPTATIONS (TABLET & MOBILE)
+       ========================================================================== */
+    @media (max-width: 1060px) {
+      .hero-card {
+        grid-template-columns: 1fr;
+      }
+
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .domains-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        padding: 0.85rem;
+      }
+
+      .resp-chips {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pipeline-track {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .domains-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .subtopics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-badge {
+        display: none;
+      }
+    }
+  </style>
+<!-- sx:begin --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../css/soxit-theme.css?v=20261120_direct_v5"><script src="../../js/site-shell.js?v=20261120_direct_v5" defer></script><!-- sx:end -->
+</head>
+<body>
+
+  <!-- ========================================================================
+       STICKY TOP BAR
+       ======================================================================== -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="index.html" class="back-link" aria-label="Back to all roadmaps">
+          <span>← Back to roadmaps</span>
+        </a>
+        <div class="topbar-title-group">
+          <span class="topbar-role">Backend Developer</span>
+          <span class="topbar-badge">SOFTWARE ENGINEERING • BEGINNER TO ADVANCED</span>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="progress-pill" aria-live="polite">
+          <span class="progress-dot"></span>
+          <span id="topbar-progress-text">0% Complete</span>
+        </div>
+        <button type="button" class="btn-reset" id="reset-progress-btn" title="Reset saved roadmap progress">
+          Reset Progress
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       MAIN PAGE CONTAINER
+       ======================================================================== -->
+  <main class="container">
+
+    <!-- ======================================================================
+         PASTEL HERO BANNER
+         ====================================================================== -->
+    <section class="hero-card" aria-labelledby="hero-heading">
+      <div>
+        <div class="hero-category">SOFTWARE ENGINEERING • BEGINNER TO ADVANCED</div>
+        <h1 class="hero-title" id="hero-heading">Backend Developer</h1>
+        <p class="hero-subtitle">
+          A Backend Developer architects server-side logic, resilient APIs, scalable databases, and distributed systems that power modern applications reliably and securely.
+        </p>
+
+        <div class="skill-filter-bar" role="group" aria-label="Highlight roadmap steps by skill">
+          <span class="filter-label">Highlight Skill:</span>
+          <button type="button" class="skill-pill" data-skill="Node.js / Python">Node.js / Python</button>
+          <button type="button" class="skill-pill" data-skill="REST & GraphQL">REST & GraphQL</button>
+          <button type="button" class="skill-pill" data-skill="PostgreSQL">PostgreSQL</button>
+          <button type="button" class="skill-pill" data-skill="Redis">Redis</button>
+          <button type="button" class="skill-pill" data-skill="Docker">Docker</button>
+          <button type="button" class="skill-pill" data-skill="System Design">System Design</button>
+          <button type="button" class="skill-pill" data-skill="Authentication">Authentication</button>
+          <button type="button" class="skill-pill" data-skill="Microservices">Microservices</button>
+        </div>
+      </div>
+
+      <!-- Right 2x2 Quick-Stat Grid -->
+      <div class="hero-stats-grid">
+        <div class="stat-box indigo">
+          <span class="stat-value">9 Core Modules</span>
+          <span class="stat-label">Structured Path</span>
+        </div>
+        <div class="stat-box emerald">
+          <span class="stat-value">6 Focus Domains</span>
+          <span class="stat-label">System Pillars</span>
+        </div>
+        <div class="stat-box sky">
+          <span class="stat-value">12 Backend Tools</span>
+          <span class="stat-label">Production Stack</span>
+        </div>
+        <div class="stat-box amber">
+          <span class="stat-value">18–26 Wks Timeline</span>
+          <span class="stat-label">Job-Ready Pace</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         2-COLUMN MAIN BENTO GRID
+         ====================================================================== -->
+    <div class="bento-grid">
+
+      <!-- ====================================================================
+           LEFT COLUMN
+           ==================================================================== -->
+      <div class="bento-col-left">
+
+        <!-- 1. WHAT DOES THIS ROLE DO? -->
+        <section class="card" aria-labelledby="role-overview-title">
+          <div class="card-header">
+            <h2 class="card-title" id="role-overview-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+              What does this role do?
+            </h2>
+          </div>
+          <p class="role-desc">
+            Backend developers build and maintain the invisible engine behind web and mobile applications. They translate business requirements into fault-tolerant services, design normalized and high-throughput data stores, enforce strict authentication boundaries, and ensure low-latency performance under heavy traffic spikes.
+          </p>
+
+          <!-- 4 Daily Responsibility Pastel Chips -->
+          <div class="resp-chips">
+            <div class="resp-chip indigo">API Design &amp; Routing</div>
+            <div class="resp-chip emerald">Database Schema &amp; Queries</div>
+            <div class="resp-chip rose">Auth &amp; Data Security</div>
+            <div class="resp-chip amber">Caching &amp; Queue Workers</div>
+          </div>
+
+          <!-- 6-Step Horizontal Workflow Pipeline -->
+          <div class="pipeline-wrapper">
+            <div class="pipeline-label">Backend Engineering Delivery Pipeline</div>
+            <div class="pipeline-track">
+              <div class="pipeline-step">
+                <span class="pipeline-num">1</span>
+                <span class="pipeline-name">Model</span>
+              </div>
+              <div class="pipeline-step">
+                <span class="pipeline-num">2</span>
+                <span class="pipeline-name">Architect</span>
+              </div>
+              <div class="pipeline-step">
+                <span class="pipeline-num">3</span>
+                <span class="pipeline-name">Build</span>
+              </div>
+              <div class="pipeline-step">
+                <span class="pipeline-num">4</span>
+                <span class="pipeline-name">Secure</span>
+              </div>
+              <div class="pipeline-step">
+                <span class="pipeline-num">5</span>
+                <span class="pipeline-name">Scale</span>
+              </div>
+              <div class="pipeline-step">
+                <span class="pipeline-num">6</span>
+                <span class="pipeline-name">Monitor</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. BACKEND FOCUS DOMAINS (3x2 GRID) -->
+        <section class="card" aria-labelledby="domains-title">
+          <div class="card-header">
+            <h2 class="card-title" id="domains-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              Backend Focus Domains
+            </h2>
+          </div>
+
+          <div class="domains-grid">
+            <!-- Domain 1 -->
+            <div class="domain-card indigo">
+              <div>
+                <div class="domain-top">
+                  <div class="domain-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </div>
+                  <h3 class="domain-title">API &amp; Protocol Engineering</h3>
+                </div>
+                <p class="domain-desc" style="margin-top:0.5rem;">Versioned contracts, pagination, idempotency, schema validation, and high-speed RPC payloads.</p>
+              </div>
+              <div class="domain-tags">
+                <span class="domain-tag">REST</span>
+                <span class="domain-tag">GraphQL</span>
+                <span class="domain-tag">gRPC</span>
+                <span class="domain-tag">OpenAPI</span>
+              </div>
+            </div>
+
+            <!-- Domain 2 -->
+            <div class="domain-card emerald">
+              <div>
+                <div class="domain-top">
+                  <div class="domain-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                  </div>
+                  <h3 class="domain-title">Relational &amp; NoSQL Databases</h3>
+                </div>
+                <p class="domain-desc" style="margin-top:0.5rem;">ACID transactions, B-Tree &amp; GIN indexing, query plan tuning, migrations, and document modeling.</p>
+              </div>
+              <div class="domain-tags">
+                <span class="domain-tag">PostgreSQL</span>
+                <span class="domain-tag">MongoDB</span>
+                <span class="domain-tag">Prisma / ORM</span>
+              </div>
+            </div>
+
+            <!-- Domain 3 -->
+            <div class="domain-card amber">
+              <div>
+                <div class="domain-top">
+                  <div class="domain-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  </div>
+                  <h3 class="domain-title">Caching &amp; Message Brokers</h3>
+                </div>
+                <p class="domain-desc" style="margin-top:0.5rem;">Sub-millisecond in-memory lookups, TTL invalidation, pub/sub streams, and dead-letter queues.</p>
+              </div>
+              <div class="domain-tags">
+                <span class="domain-tag">Redis</span>
+                <span class="domain-tag">Kafka</span>
+                <span class="domain-tag">RabbitMQ</span>
+              </div>
+            </div>
+
+            <!-- Domain 4 -->
+            <div class="domain-card rose">
+              <div>
+                <div class="domain-top">
+                  <div class="domain-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
+                  <h3 class="domain-title">Auth &amp; Zero-Trust Security</h3>
+                </div>
+                <p class="domain-desc" style="margin-top:0.5rem;">Stateless token rotation, OAuth2/OIDC flows, RBAC policies, rate limiting, and OWASP hardening.</p>
+              </div>
+              <div class="domain-tags">
+                <span class="domain-tag">JWT</span>
+                <span class="domain-tag">OAuth 2.0</span>
+                <span class="domain-tag">RBAC</span>
+                <span class="domain-tag">TLS</span>
+              </div>
+            </div>
+
+            <!-- Domain 5 -->
+            <div class="domain-card sky">
+              <div>
+                <div class="domain-top">
+                  <div class="domain-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                  </div>
+                  <h3 class="domain-title">Containers &amp; CI/CD Pipelines</h3>
+                </div>
+                <p class="domain-desc" style="margin-top:0.5rem;">Multi-stage Docker builds, automated integration suites, reverse proxies, and zero-downtime deploys.</p>
+              </div>
+              <div class="domain-tags">
+                <span class="domain-tag">Docker</span>
+                <span class="domain-tag">GitHub Actions</span>
+                <span class="domain-tag">Nginx</span>
+              </div>
+            </div>
+
+            <!-- Domain 6 -->
+            <div class="domain-card violet">
+              <div>
+                <div class="domain-top">
+                  <div class="domain-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                  </div>
+                  <h3 class="domain-title">Distributed Systems &amp; Scale</h3>
+                </div>
+                <p class="domain-desc" style="margin-top:0.5rem;">Horizontal sharding, load balancing, circuit breakers, OpenTelemetry tracing, and SLOs.</p>
+              </div>
+              <div class="domain-tags">
+                <span class="domain-tag">Load Balancing</span>
+                <span class="domain-tag">Sharding</span>
+                <span class="domain-tag">Telemetry</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. INTERACTIVE LEARNING ROADMAP -->
+        <section class="card" aria-labelledby="roadmap-title">
+          <div class="card-header">
+            <h2 class="card-title" id="roadmap-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              Interactive Learning Roadmap
+            </h2>
+            <span style="font-size:0.78rem; color:var(--text-muted); font-weight:600;">Click step to expand • Check box to track</span>
+          </div>
+
+          <!-- Search Filter Input -->
+          <div class="search-bar-wrap">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input
+              type="text"
+              id="roadmap-search"
+              class="roadmap-search"
+              placeholder="Filter topics, tools, or modules..."
+              aria-label="Filter topics, tools, or modules"
+            />
+            <button type="button" id="clear-search-btn" class="clear-search-btn" aria-label="Clear search">✕</button>
+          </div>
+
+          <!-- 100% Completion Celebration Banner -->
+          <div class="completion-banner" id="completion-banner" role="status">
+            <div>
+              <div class="completion-banner-title">🎉 All 9 Backend Modules Completed!</div>
+              <div class="completion-banner-sub">You've mastered the core backend stack—ready to build production distributed systems.</div>
+            </div>
+            <span class="topbar-badge" style="background:var(--emerald-solid); color:#fff; border:none;">100% READY</span>
+          </div>
+
+          <!-- Vertical Timeline Steps Container -->
+          <div class="timeline-list" id="timeline-list"></div>
+          <div class="no-results-msg" id="no-results-msg">No roadmap modules match your filter query. Try another keyword!</div>
+        </section>
+      </div>
+
+      <!-- ====================================================================
+           RIGHT SIDEBAR
+           ==================================================================== -->
+      <aside class="bento-col-right">
+
+        <!-- 1. LEARNING PROGRESS RING -->
+        <section class="card" aria-labelledby="progress-widget-title">
+          <div class="card-header" style="margin-bottom:0.75rem;">
+            <h2 class="card-title" id="progress-widget-title">Learning Progress</h2>
+          </div>
+          <div class="ring-widget">
+            <div class="ring-svg-wrap">
+              <svg class="ring-svg" viewBox="0 0 96 96">
+                <circle class="ring-track" cx="48" cy="48" r="40"></circle>
+                <circle class="ring-fill" id="ring-fill-circle" cx="48" cy="48" r="40"></circle>
+              </svg>
+              <div class="ring-center-text" id="ring-percent-text">0%</div>
+            </div>
+            <div class="ring-info">
+              <div class="ring-count" id="ring-module-count">0 / 9 Modules</div>
+              <p style="font-size:0.78rem; color:var(--text-secondary);">Saved automatically in your browser.</p>
+              <span class="milestone-pill" id="milestone-status-pill">Getting Started</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. CAREER LEVELS -->
+        <section class="card" aria-labelledby="career-levels-title">
+          <div class="card-header">
+            <h2 class="card-title" id="career-levels-title">Career Levels</h2>
+            <button type="button" class="level-toggle-btn" id="level-view-toggle">Focus Single Level</button>
+          </div>
+
+          <div class="levels-stack" id="levels-stack">
+            <div class="level-card active" data-level="L1">
+              <div class="level-top">
+                <span class="level-name">Junior / L1</span>
+                <span class="level-exp">0–2 Yrs</span>
+              </div>
+              <p class="level-desc">Builds CRUD REST endpoints, writes SQL queries &amp; migrations, implements JWT auth, and writes unit/integration tests.</p>
+            </div>
+
+            <div class="level-card" data-level="L2">
+              <div class="level-top">
+                <span class="level-name">Mid / L2</span>
+                <span class="level-exp">2–5 Yrs</span>
+              </div>
+              <p class="level-desc">Designs relational &amp; Redis caching layers, owns async queue workers, optimizes slow DB indexes, and leads service deployments.</p>
+            </div>
+
+            <div class="level-card" data-level="L3">
+              <div class="level-top">
+                <span class="level-name">Senior / L3</span>
+                <span class="level-exp">5+ Yrs</span>
+              </div>
+              <p class="level-desc">Architects multi-region distributed systems, event-driven microservices, zero-downtime data migrations, and SLO observability.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. BACKEND TOOLS COVERED (2x6 GRID) -->
+        <section class="card" aria-labelledby="tools-title">
+          <div class="card-header">
+            <h2 class="card-title" id="tools-title">Backend Tools Covered</h2>
+          </div>
+
+          <div class="tools-grid" id="tools-grid">
+            <div class="tool-badge" data-skills="Node.js / Python"><span class="tool-dot" style="background:#10b981;"></span>Node.js</div>
+            <div class="tool-badge" data-skills="Node.js / Python"><span class="tool-dot" style="background:#0284c7;"></span>Python / Go</div>
+            <div class="tool-badge" data-skills="PostgreSQL"><span class="tool-dot" style="background:#4f46e5;"></span>PostgreSQL</div>
+            <div class="tool-badge" data-skills="PostgreSQL"><span class="tool-dot" style="background:#059669;"></span>MongoDB</div>
+            <div class="tool-badge" data-skills="Redis"><span class="tool-dot" style="background:#e11d48;"></span>Redis</div>
+            <div class="tool-badge" data-skills="REST & GraphQL"><span class="tool-dot" style="background:#7c3aed;"></span>REST / GraphQL</div>
+            <div class="tool-badge" data-skills="Docker"><span class="tool-dot" style="background:#0284c7;"></span>Docker</div>
+            <div class="tool-badge" data-skills="Microservices"><span class="tool-dot" style="background:#f59e0b;"></span>Kafka / RabbitMQ</div>
+            <div class="tool-badge" data-skills="Authentication"><span class="tool-dot" style="background:#e11d48;"></span>JWT / OAuth2</div>
+            <div class="tool-badge" data-skills="System Design"><span class="tool-dot" style="background:#10b981;"></span>Nginx</div>
+            <div class="tool-badge" data-skills="Docker"><span class="tool-dot" style="background:#475569;"></span>Git / Linux</div>
+            <div class="tool-badge" data-skills="System Design,Microservices"><span class="tool-dot" style="background:#f59e0b;"></span>AWS / Cloud</div>
+          </div>
+        </section>
+
+        <!-- 4. HANDS-ON CAPSTONE PROJECTS -->
+        <section class="card" aria-labelledby="capstones-title">
+          <div class="card-header">
+            <h2 class="card-title" id="capstones-title">Hands-On Capstone Projects</h2>
+          </div>
+
+          <div class="capstones-stack">
+            <div class="capstone-card">
+              <div class="capstone-title">Multi-Tenant SaaS Billing &amp; Auth API</div>
+              <div class="capstone-badges">
+                <span class="diff-badge inter">Intermediate</span>
+                <span class="stack-badge">Node.js</span>
+                <span class="stack-badge">PostgreSQL</span>
+                <span class="stack-badge">JWT / RBAC</span>
+              </div>
+            </div>
+
+            <div class="capstone-card">
+              <div class="capstone-title">Real-Time Event-Driven Order &amp; Queue Engine</div>
+              <div class="capstone-badges">
+                <span class="diff-badge adv">Advanced</span>
+                <span class="stack-badge">Python / Go</span>
+                <span class="stack-badge">RabbitMQ</span>
+                <span class="stack-badge">Docker</span>
+              </div>
+            </div>
+
+            <div class="capstone-card">
+              <div class="capstone-title">High-Throughput URL Shortener with Redis &amp; Sharding</div>
+              <div class="capstone-badges">
+                <span class="diff-badge arch">System Design</span>
+                <span class="stack-badge">Redis</span>
+                <span class="stack-badge">PostgreSQL</span>
+                <span class="stack-badge">Nginx</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. ENGINEERING PRINCIPLE QUOTE CARD -->
+        <section class="quote-card" aria-label="Engineering Principle">
+          <div class="quote-mark">“</div>
+          <p class="quote-text">
+            Great backend engineering makes complex distributed systems feel effortless, instant, and unbreakable.
+          </p>
+          <div class="quote-caption">Backend Architecture Principle</div>
+        </section>
+
+      </aside>
+    </div>
+  </main>
+
+  <!-- Toast feedback element -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ========================================================================
+       VANILLA JAVASCRIPT: ROADMAP DATA, STATE PERSISTENCE & INTERACTIVITY
+       ======================================================================== -->
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE_KEY = "backend_roadmap_v1";
+
+      /* ----------------------------------------------------------------------
+         9 CORE BACKEND ROADMAP MODULES
+         ---------------------------------------------------------------------- */
+      const ROADMAP_STEPS = [
+        {
+          id: 1,
+          title: "Internet, HTTP/HTTPS & Server Fundamentals",
+          duration: "1–2 Wks",
+          skills: ["REST & GraphQL", "System Design"],
+          subtopics: [
+            "DNS resolution, TCP/IP handshake, TLS/SSL certificates & HTTPS encryption",
+            "HTTP/1.1 vs HTTP/2 vs HTTP/3, request/response lifecycle & status codes",
+            "Headers, cookies, CORS preflight mechanics, content negotiation & compression",
+            "How web servers, reverse proxies, and application runtimes process sockets"
+          ],
+          project: "Build a raw HTTP request/response inspector & static file server from scratch without a framework."
+        },
+        {
+          id: 2,
+          title: "Backend Language Mastery (Node.js / Python / Go)",
+          duration: "3–4 Wks",
+          skills: ["Node.js / Python"],
+          subtopics: [
+            "Event loop concurrency (Node.js) vs async/await coroutines (Python FastAPI) vs Goroutines (Go)",
+            "Layered clean architecture: controllers, services, repositories & dependency injection",
+            "Environment configuration, structured logging, custom error hierarchies & validation",
+            "Memory management, streams, file I/O, and handling graceful process shutdowns"
+          ],
+          project: "Create a structured CLI & HTTP task worker service with clean layered architecture and strict schema validation."
+        },
+        {
+          id: 3,
+          title: "Git, Linux CLI & Shell Scripting",
+          duration: "1–2 Wks",
+          skills: ["Docker"],
+          subtopics: [
+            "Git branching strategies, interactive rebase, bisect debugging & semantic commits",
+            "Linux filesystem hierarchy, file permissions (chmod/chown), SSH keys & systemd services",
+            "Process & network diagnostics with ps, htop, lsof, netstat, curl, and journalctl",
+            "Writing idempotent Bash automation scripts for backups, log rotation & health checks"
+          ],
+          project: "Automate a Linux server provisioning & log-monitoring Bash script with systemd service management."
+        },
+        {
+          id: 4,
+          title: "Relational Databases & SQL Optimization",
+          duration: "3–4 Wks",
+          skills: ["PostgreSQL"],
+          subtopics: [
+            "Relational schema design, normalization (1NF–3NF), foreign keys & constraints",
+            "Complex JOINs, CTEs, window functions, aggregations & ACID transaction isolation levels",
+            "B-Tree, Hash, GIN & composite indexes + reading EXPLAIN ANALYZE query plans",
+            "Connection pooling (PgBouncer), zero-downtime schema migrations & N+1 query fixes"
+          ],
+          project: "Design a multi-tenant ledger database in PostgreSQL with ACID transfers, composite indexes & benchmarked queries."
+        },
+        {
+          id: 5,
+          title: "NoSQL Databases & Caching (MongoDB & Redis)",
+          duration: "2–3 Wks",
+          skills: ["PostgreSQL", "Redis"],
+          subtopics: [
+            "Document modeling in MongoDB: embedding vs referencing & aggregation pipelines",
+            "Redis data structures: Strings, Hashes, Sorted Sets, Streams & HyperLogLog",
+            "Cache-aside, write-through & write-behind patterns with TTL jitter & stampede prevention",
+            "Distributed locking (Redlock) and sliding-window rate limiters backed by Redis"
+          ],
+          project: "Implement a Redis cache-aside layer & distributed sliding-window rate limiter protecting a high-read catalog API."
+        },
+        {
+          id: 6,
+          title: "RESTful APIs, GraphQL & gRPC Design",
+          duration: "2–3 Wks",
+          skills: ["REST & GraphQL", "Node.js / Python"],
+          subtopics: [
+            "REST resource modeling, cursor-based pagination, filtering, sorting & idempotency keys",
+            "OpenAPI / Swagger documentation generation & strict request/response DTO contracts",
+            "GraphQL schemas, resolvers, DataLoader batching to prevent N+1 queries & subscriptions",
+            "High-performance inter-service communication with Protocol Buffers and gRPC"
+          ],
+          project: "Build a versioned REST + GraphQL API gateway with OpenAPI docs, cursor pagination, and idempotent payment endpoints."
+        },
+        {
+          id: 7,
+          title: "Authentication, Authorization & API Security",
+          duration: "2–3 Wks",
+          skills: ["Authentication"],
+          subtopics: [
+            "Password hashing with Argon2id/bcrypt, salted hashes & secure session management",
+            "JWT access/refresh token rotation, token revocation lists & HttpOnly SameSite cookies",
+            "OAuth 2.0 & OpenID Connect (OIDC) social login flows + RBAC / ABAC permission engines",
+            "OWASP Top 10 defense: SQL injection, SSRF, CSRF, XSS sanitization & helmet headers"
+          ],
+          project: "Develop an Auth & RBAC microservice supporting OAuth2 login, refresh token rotation, and scoped API keys."
+        },
+        {
+          id: 8,
+          title: "Message Queues, Async Workers & Microservices",
+          duration: "2–3 Wks",
+          skills: ["Microservices", "Redis"],
+          subtopics: [
+            "Decoupling slow workloads with RabbitMQ, Apache Kafka, or BullMQ background workers",
+            "At-least-once delivery, idempotent consumers, exponential backoff retries & dead-letter queues",
+            "Event-driven architecture, transactional outbox pattern & Saga orchestration",
+            "Service discovery, API gateways, circuit breakers, timeouts & bulkheads"
+          ],
+          project: "Architect an asynchronous order-processing pipeline with RabbitMQ/Kafka workers, retries, and dead-letter recovery."
+        },
+        {
+          id: 9,
+          title: "Docker, Testing, Observability & System Design",
+          duration: "2–3 Wks",
+          skills: ["Docker", "System Design", "Microservices"],
+          subtopics: [
+            "Multi-stage Dockerfiles, Docker Compose local stacks & container security hardening",
+            "Unit, integration (Testcontainers) & k6 load testing in automated CI/CD pipelines",
+            "Structured JSON logging, Prometheus metrics, Grafana dashboards & OpenTelemetry traces",
+            "System design fundamentals: load balancing, read replicas, sharding, CDNs & CAP theorem"
+          ],
+          project: "Containerize a multi-service backend with Nginx reverse proxy, CI integration tests, and Prometheus/Grafana metrics."
+        }
+      ];
+
+      /* ----------------------------------------------------------------------
+         APPLICATION STATE
+         ---------------------------------------------------------------------- */
+      let completedIds = new Set();
+      let expandedIds = new Set([1]); // Expand first step by default for immediate discoverability
+      let activeSkill = null;
+      let searchQuery = "";
+      let singleLevelFocus = false;
+      let selectedLevel = "L1";
+
+      /* ----------------------------------------------------------------------
+         DOM REFERENCES
+         ---------------------------------------------------------------------- */
+      const timelineList = document.getElementById("timeline-list");
+      const searchInput = document.getElementById("roadmap-search");
+      const clearSearchBtn = document.getElementById("clear-search-btn");
+      const noResultsMsg = document.getElementById("no-results-msg");
+      const completionBanner = document.getElementById("completion-banner");
+
+      const topbarProgressText = document.getElementById("topbar-progress-text");
+      const ringFillCircle = document.getElementById("ring-fill-circle");
+      const ringPercentText = document.getElementById("ring-percent-text");
+      const ringModuleCount = document.getElementById("ring-module-count");
+      const milestoneStatusPill = document.getElementById("milestone-status-pill");
+      const resetProgressBtn = document.getElementById("reset-progress-btn");
+
+      const skillPills = document.querySelectorAll(".skill-pill");
+      const toolBadges = document.querySelectorAll(".tool-badge");
+      const levelCards = document.querySelectorAll(".level-card");
+      const levelViewToggle = document.getElementById("level-view-toggle");
+      const toastEl = document.getElementById("toast");
+
+      /* ----------------------------------------------------------------------
+         STORAGE HELPERS
+         ---------------------------------------------------------------------- */
+      function loadProgress() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) {
+              completedIds = new Set(parsed.filter((id) => typeof id === "number"));
+            }
+          }
+        } catch (err) {
+          console.warn("Unable to read progress from localStorage:", err);
+        }
+      }
+
+      function saveProgress() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(completedIds)));
+        } catch (err) {
+          console.warn("Unable to save progress to localStorage:", err);
+        }
+      }
+
+      let toastTimer = null;
+      function showToast(message) {
+        toastEl.textContent = message;
+        toastEl.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toastEl.classList.remove("show");
+        }, 2200);
+      }
+
+      /* ----------------------------------------------------------------------
+         RENDER ROADMAP STEPS
+         ---------------------------------------------------------------------- */
+      function renderRoadmap() {
+        timelineList.innerHTML = "";
+        let visibleCount = 0;
+        const normalizedQuery = searchQuery.trim().toLowerCase();
+
+        ROADMAP_STEPS.forEach((step) => {
+          // Search filter check
+          const searchableBlob = [
+            step.title,
+            step.duration,
+            ...step.skills,
+            ...step.subtopics,
+            step.project
+          ]
+            .join(" ")
+            .toLowerCase();
+
+          const matchesSearch = !normalizedQuery || searchableBlob.includes(normalizedQuery);
+          if (matchesSearch) visibleCount++;
+
+          const isCompleted = completedIds.has(step.id);
+          const isExpanded = expandedIds.has(step.id);
+          const isSkillMatch = activeSkill && step.skills.includes(activeSkill);
+
+          const card = document.createElement("article");
+          card.className = "step-card";
+          if (isCompleted) card.classList.add("completed");
+          if (isExpanded) card.classList.add("expanded");
+          if (isSkillMatch) card.classList.add("skill-match");
+          if (!matchesSearch) card.classList.add("hidden");
+
+          card.innerHTML = `
+            <div class="step-header" data-step-id="${step.id}">
+              <div class="step-header-left">
+                <button
+                  type="button"
+                  class="step-checkbox"
+                  data-check-id="${step.id}"
+                  aria-label="Mark module ${step.id} as ${isCompleted ? "incomplete" : "complete"}"
+                  aria-pressed="${isCompleted}"
+                >
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </button>
+                <span class="step-num-pill">Step ${step.id}</span>
+                <h3 class="step-title">${step.title}</h3>
+              </div>
+              <div class="step-header-right">
+                <span class="duration-badge">${step.duration}</span>
+                <svg class="chevron-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+            <div class="step-drawer">
+              <div class="subtopics-grid">
+                ${step.subtopics
+                  .map(
+                    (topic) => `
+                  <div class="subtopic-item">
+                    <span class="subtopic-bullet"></span>
+                    <span>${topic}</span>
+                  </div>
+                `
+                  )
+                  .join("")}
+              </div>
+              <div class="mini-project-box">
+                <span class="mini-project-badge">Mini-Project</span>
+                <span class="mini-project-text">${step.project}</span>
+              </div>
+            </div>
+          `;
+
+          timelineList.appendChild(card);
+        });
+
+        noResultsMsg.style.display = visibleCount === 0 ? "block" : "none";
+      }
+
+      /* ----------------------------------------------------------------------
+         UPDATE PROGRESS RING, TOPBAR & MILESTONE STATUS
+         ---------------------------------------------------------------------- */
+      function updateProgressUI() {
+        const total = ROADMAP_STEPS.length;
+        const done = completedIds.size;
+        const pct = Math.round((done / total) * 100);
+
+        topbarProgressText.textContent = `${pct}% Complete`;
+        ringPercentText.textContent = `${pct}%`;
+        ringModuleCount.textContent = `${done} / ${total} Modules`;
+
+        // Circle circumference: 2 * PI * 40 ≈ 251.33
+        const circumference = 251.33;
+        const offset = circumference - (pct / 100) * circumference;
+        ringFillCircle.style.strokeDashoffset = offset.toFixed(2);
+
+        // Milestone badge text & color
+        if (done === 0) {
+          milestoneStatusPill.textContent = "Getting Started";
+          milestoneStatusPill.style.background = "var(--indigo-bg)";
+          milestoneStatusPill.style.color = "var(--indigo-text)";
+          milestoneStatusPill.style.borderColor = "var(--indigo-border)";
+        } else if (done <= 3) {
+          milestoneStatusPill.textContent = "Core Foundations";
+          milestoneStatusPill.style.background = "var(--sky-bg)";
+          milestoneStatusPill.style.color = "var(--sky-text)";
+          milestoneStatusPill.style.borderColor = "var(--sky-border)";
+        } else if (done <= 6) {
+          milestoneStatusPill.textContent = "API & Data Builder";
+          milestoneStatusPill.style.background = "var(--amber-bg)";
+          milestoneStatusPill.style.color = "var(--amber-text)";
+          milestoneStatusPill.style.borderColor = "var(--amber-border)";
+        } else if (done < total) {
+          milestoneStatusPill.textContent = "Distributed Systems";
+          milestoneStatusPill.style.background = "var(--violet-bg)";
+          milestoneStatusPill.style.color = "var(--violet-text)";
+          milestoneStatusPill.style.borderColor = "var(--violet-border)";
+        } else {
+          milestoneStatusPill.textContent = "Backend Ready 🚀";
+          milestoneStatusPill.style.background = "var(--emerald-bg)";
+          milestoneStatusPill.style.color = "var(--emerald-text)";
+          milestoneStatusPill.style.borderColor = "var(--emerald-border)";
+        }
+
+        // Toggle 100% completion banner
+        if (done === total) {
+          completionBanner.classList.add("visible");
+        } else {
+          completionBanner.classList.remove("visible");
+        }
+      }
+
+      /* ----------------------------------------------------------------------
+         SKILL HIGHLIGHT FILTER LOGIC
+         ---------------------------------------------------------------------- */
+      function updateSkillHighlights() {
+        skillPills.forEach((pill) => {
+          const isSelected = pill.dataset.skill === activeSkill;
+          pill.classList.toggle("active", isSelected);
+        });
+
+        toolBadges.forEach((badge) => {
+          const skills = (badge.dataset.skills || "").split(",");
+          const match = activeSkill && skills.includes(activeSkill);
+          badge.classList.toggle("skill-match", Boolean(match));
+        });
+
+        renderRoadmap();
+      }
+
+      skillPills.forEach((pill) => {
+        pill.addEventListener("click", () => {
+          const clickedSkill = pill.dataset.skill;
+          if (activeSkill === clickedSkill) {
+            activeSkill = null;
+            showToast("Cleared skill highlight");
+          } else {
+            activeSkill = clickedSkill;
+            // Auto-expand matching steps so user immediately sees relevant content
+            ROADMAP_STEPS.forEach((step) => {
+              if (step.skills.includes(activeSkill)) {
+                expandedIds.add(step.id);
+              }
+            });
+            showToast(`Highlighting modules for ${activeSkill}`);
+          }
+          updateSkillHighlights();
+        });
+      });
+
+      /* ----------------------------------------------------------------------
+         TIMELINE CLICK DELEGATION (CHECKBOX + EXPAND DRAWER)
+         ---------------------------------------------------------------------- */
+      timelineList.addEventListener("click", (e) => {
+        const checkBtn = e.target.closest("[data-check-id]");
+        if (checkBtn) {
+          e.stopPropagation();
+          const id = Number(checkBtn.dataset.checkId);
+          if (completedIds.has(id)) {
+            completedIds.delete(id);
+            showToast(`Module ${id} marked incomplete`);
+          } else {
+            completedIds.add(id);
+            showToast(`Module ${id} completed!`);
+          }
+          saveProgress();
+          renderRoadmap();
+          updateProgressUI();
+          return;
+        }
+
+        const header = e.target.closest("[data-step-id]");
+        if (header) {
+          const id = Number(header.dataset.stepId);
+          if (expandedIds.has(id)) {
+            expandedIds.delete(id);
+          } else {
+            expandedIds.add(id);
+          }
+          renderRoadmap();
+        }
+      });
+
+      /* ----------------------------------------------------------------------
+         SEARCH FILTER INPUT
+         ---------------------------------------------------------------------- */
+      searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        clearSearchBtn.classList.toggle("visible", searchQuery.length > 0);
+        renderRoadmap();
+      });
+
+      clearSearchBtn.addEventListener("click", () => {
+        searchQuery = "";
+        searchInput.value = "";
+        clearSearchBtn.classList.remove("visible");
+        searchInput.focus();
+        renderRoadmap();
+      });
+
+      /* ----------------------------------------------------------------------
+         RESET PROGRESS BUTTON (NO alert/confirm DIALOGS)
+         ---------------------------------------------------------------------- */
+      resetProgressBtn.addEventListener("click", () => {
+        completedIds.clear();
+        activeSkill = null;
+        searchQuery = "";
+        searchInput.value = "";
+        clearSearchBtn.classList.remove("visible");
+        saveProgress();
+        updateSkillHighlights();
+        updateProgressUI();
+        showToast("Roadmap progress reset to 0%");
+      });
+
+      /* ----------------------------------------------------------------------
+         CAREER LEVELS INTERACTIVE TOGGLE
+         ---------------------------------------------------------------------- */
+      function renderCareerLevels() {
+        levelCards.forEach((card) => {
+          const lvl = card.dataset.level;
+          const isSelected = lvl === selectedLevel;
+          card.classList.toggle("active", isSelected);
+          if (singleLevelFocus) {
+            card.classList.toggle("hidden", !isSelected);
+          } else {
+            card.classList.remove("hidden");
+          }
+        });
+
+        levelViewToggle.textContent = singleLevelFocus ? "All Levels" : "Focus Single Level";
+      }
+
+      levelCards.forEach((card) => {
+        card.addEventListener("click", () => {
+          selectedLevel = card.dataset.level;
+          renderCareerLevels();
+        });
+      });
+
+      levelViewToggle.addEventListener("click", () => {
+        singleLevelFocus = !singleLevelFocus;
+        renderCareerLevels();
+      });
+
+      /* ----------------------------------------------------------------------
+         INITIALIZE ON LOAD
+         ---------------------------------------------------------------------- */
+      loadProgress();
+      renderRoadmap();
+      updateProgressUI();
+      renderCareerLevels();
+    })();
+  </script>
+</body>
+</html>

@@ -4,48 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SOXIT — Innovate. Learn. Transform.</title>
+    <meta name="description" content="SOXIT is a unified enterprise platform delivering excellence across Consulting, Academia, and Open Media." />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://stage2.soxit.in/" />
+    <meta property="og:title" content="SOXIT — Innovate. Learn. Transform." />
+    <meta property="og:description" content="Unified enterprise platform delivering excellence across Consulting, Academia, and Open Media." />
+    <meta property="og:image" content="https://stage2.soxit.in/resources/soxit.webp" />
+    <meta property="og:url" content="https://stage2.soxit.in/" />
+    <meta property="og:type" content="website" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
     <style>
-      /* Animated Background Video and Highlights */
       .hero {
         position: relative;
         overflow: hidden;
-      }
-
-      .hero-bg-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 0;
-        opacity: 0.35;
-        filter: brightness(0.8) contrast(1.1);
-      }
-
-      .hero-bg-overlay {
-        position: absolute;
-        inset: 0;
-        background:
-          radial-gradient(
-            circle at 50% 40%,
-            rgba(0, 150, 255, 0.25),
-            transparent 60%
-          ),
-          linear-gradient(
-            to bottom,
-            rgba(10, 15, 25, 0.4),
-            rgba(10, 15, 25, 0.85)
-          );
-        z-index: 1;
-        pointer-events: none;
       }
 
       .hero-content {
@@ -64,25 +41,102 @@
       }
 
       .about-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(145deg, #0d1422, #0a101c);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 20px;
+        padding: 1rem 2rem 2rem;
         backdrop-filter: blur(10px);
+      }
+
+      .about-card > .eyebrow {
+        align-self: flex-start;
+        margin: 0 0 0.8rem;
+        padding: 0.28rem 0.65rem;
+        border: 1px solid rgba(249, 115, 22, 0.35);
+        border-radius: 7px;
+        color: #fb923c;
+        font-size: 0.65rem;
+      }
+
+      .about-card h2 {
+        color: #f8fafc;
+        font-family: var(--font-display);
+        font-size: 1.8rem;
+        line-height: 1.2;
+        letter-spacing: -0.04em;
+      }
+
+      .about-description {
+        max-width: none;
+        margin: 1rem 0 0;
+        color: #cbd5e1;
+        font-size: 0.95rem;
+        line-height: 1.55;
+      }
+
+      .about-proof {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        margin-top: 0;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(148, 163, 184, 0.2);
+      }
+
+      .about-proof-item {
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      .about-proof-item strong {
+        color: #fb923c;
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+      }
+
+      .about-proof-item:nth-child(2) strong {
+        color: #34d399;
+      }
+
+      .about-proof-item:nth-child(3) strong {
+        color: #fbbf24;
+      }
+
+      .about-proof-item span {
+        color: #e2e8f0;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      @media (max-width: 600px) {
+        .about-section {
+          padding: 0.75rem 0.25rem;
+        }
+
+        .about-card {
+          padding: 1rem 2rem 2rem;
+        }
       }
 
       .mv-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+        gap: 1.15rem;
         margin-top: 2rem;
       }
 
       .mv-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 1rem;
+        display: grid;
+        grid-template-columns: 40px minmax(0, 1fr);
+        column-gap: 0.7rem;
+        align-content: start;
+        background: linear-gradient(135deg, rgba(13, 20, 34, 0.98), rgba(8, 14, 25, 0.98));
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-left: 3px solid rgba(148, 163, 184, 0.3);
+        border-radius: 20px;
+        padding: 1.5rem 1.6rem;
         backdrop-filter: blur(10px);
         transition:
           transform 0.3s ease,
@@ -90,26 +144,65 @@
       }
 
       .mv-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-2px);
         border-color: rgba(255, 255, 255, 0.25);
       }
 
       .mv-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        width: 40px;
+        height: 40px;
+        border-radius: 13px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 1.2rem;
+        margin: 0;
+      }
+      .mv-icon svg {
+        width: 20px;
+        height: 20px;
       }
       .mv-card[data-tone="mission"] .mv-icon {
-        background: var(--orange-light);
+        background: rgba(249, 115, 22, 0.12);
         color: var(--orange-primary);
+        border: 1px solid rgba(249, 115, 22, 0.3);
+      }
+      .mv-card[data-tone="mission"] {
+        border-left-color: #f97316;
       }
       .mv-card[data-tone="vision"] .mv-icon {
-        background: var(--green-light);
-        color: var(--green-primary);
+        background: rgba(16, 185, 129, 0.12);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+      }
+      .mv-card[data-tone="vision"] {
+        border-left-color: rgba(148, 163, 184, 0.35);
+      }
+      .mv-card h3 {
+        grid-column: 2;
+        margin: 0;
+        color: #f1f5f9;
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        line-height: 1.35;
+      }
+      .mv-card p {
+        grid-column: 2;
+        margin: 0.35rem 0 0;
+        color: #cbd5e1 !important;
+        font-size: 0.84rem;
+        line-height: 1.5 !important;
+      }
+
+      @media (max-width: 600px) {
+        .mv-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        .mv-card {
+          padding: 1.5rem 1.6rem;
+        }
       }
 
       /* Hero headline word-in animation */
@@ -140,6 +233,8 @@
       .nav-cta {
         white-space: nowrap;
       }
+
+
       @media (max-width: 980px) {
         .nav-cta {
           display: none;
@@ -154,52 +249,96 @@
       }
       .stats-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.85rem;
       }
       .stat-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 101px;
+        background: linear-gradient(145deg, #101827, #0c121e);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 14px;
+        padding: 1rem 0.75rem;
         text-align: center;
       }
       .stat-number {
         font-family: var(--font-display);
         font-weight: 800;
-        font-size: clamp(2rem, 4vw, 2.75rem);
+        font-size: clamp(1.9rem, 3.2vw, 2.5rem);
         letter-spacing: -0.02em;
         line-height: 1;
       }
-      .stat-card:nth-child(3n + 1) .stat-number {
-        color: var(--orange-primary);
+      .stat-card:nth-child(4n + 1) .stat-number,
+      .stat-card:nth-child(4n + 4) .stat-number {
+        color: #ff8b38;
       }
-      .stat-card:nth-child(3n + 2) .stat-number {
-        color: var(--green-primary);
+      .stat-card:nth-child(4n + 2) .stat-number {
+        color: #25d6a5;
       }
-      .stat-card:nth-child(3n + 3) .stat-number {
-        color: var(--yellow-primary);
-      }    .stat-label {
-        margin-top: 0.6rem;
-        font-size: 0.92rem;
-        color: var(--text-muted);
+      .stat-card:nth-child(4n + 3) .stat-number {
+        color: #ffbd24;
+      }
+      .stat-label {
+        margin-top: 0.5rem;
+        font-size: 0.72rem;
+        color: #94a3b8;
+      }
+      @media (max-width: 760px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.75rem;
+        }
       }
 
       /* Interactive Technology Network */
       .tech-network-section {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 3.5rem 2rem;
+        max-width: 1280px;
+        margin: 0 auto 4rem;
+        padding: 3rem 2rem 2.5rem;
+        background: radial-gradient(circle at top, rgba(9, 22, 38, 0.96), rgba(2, 8, 18, 0.98));
+        border: 1px solid rgba(147, 177, 219, 0.15);
+        border-radius: 28px;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 30px 80px rgba(2, 6, 23, 0.4);
+      }
+      .tech-network-shell {
         display: grid;
-        grid-template-columns: minmax(280px, 460px) 1fr;
-        gap: 3rem;
+        grid-template-columns: minmax(280px, 520px) minmax(0, 1fr);
+        gap: 2.25rem;
         align-items: center;
+      }
+      .tech-network-copy {
+        padding-left: 0.5rem;
+      }
+      .tech-network-kicker {
+        margin: 0 0 0.8rem;
+        color: var(--orange-primary);
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.34em;
+        text-transform: uppercase;
+      }
+      .tech-network-copy h2 {
+        margin: 0 0 1rem;
+        font-family: var(--font-display);
+        font-size: clamp(2.2rem, 2.1vw + 1.1rem, 4rem);
+        line-height: 1.05;
+        letter-spacing: -0.05em;
+        color: #edf4ff;
+      }
+      .tech-network-subhead {
+        margin: 0 0 1.6rem;
+        max-width: 620px;
+        color: rgba(196, 210, 228, 0.8);
+        line-height: 1.6;
+        font-size: 1.08rem;
       }
       .tech-network-diagram {
         position: relative;
         width: 100%;
+        max-width: 500px;
         aspect-ratio: 1 / 1;
-        max-width: 460px;
         margin: 0 auto;
         perspective: 900px;
       }
@@ -210,9 +349,9 @@
         height: 100%;
       }
       .tech-network-lines line {
-        stroke: rgba(255, 255, 255, 0.12);
-        stroke-width: 0.8;
-        stroke-dasharray: 2 3;
+        stroke: rgba(159, 181, 211, 0.28);
+        stroke-width: 1.15;
+        stroke-dasharray: 4 7;
         vector-effect: non-scaling-stroke;
         transition:
           stroke 0.3s ease,
@@ -220,19 +359,20 @@
         animation: network-flow 5s linear infinite;
       }
       .tech-network-lines line.is-active {
-        stroke: rgba(15, 23, 42, 0.35);
-        stroke-width: 1;
+        stroke: rgba(249, 115, 22, 0.9);
+        stroke-width: 2;
       }
       .tech-hub {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 132px;
-        height: 132px;
+        width: 170px;
+        height: 170px;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 18px 40px rgba(4, 10, 22, 0.38);
         backdrop-filter: blur(8px);
         display: flex;
         align-items: center;
@@ -240,23 +380,23 @@
         flex-direction: column;
         text-align: center;
         z-index: 2;
-        box-shadow: 0 18px 35px rgba(15, 23, 42, 0.14), inset 0 0 22px rgba(255, 255, 255, 0.55);
-        transform-style: preserve-3d;
         animation: hub-float 5s ease-in-out infinite;
       }
       .tech-hub strong {
         font-family: var(--font-display);
         font-weight: 800;
-        font-size: 1.35rem;
+        font-size: clamp(2rem, 1vw + 1.2rem, 2.8rem);
+        line-height: 1;
         letter-spacing: 0.04em;
+        color: #f4f7fb;
       }
       .tech-hub span {
         font-family: var(--font-mono);
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        margin-top: 0.2rem;
+        font-size: 0.72rem;
+        color: rgba(214, 227, 247, 0.78);
+        margin-top: 0.35rem;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.18em;
       }
       .tech-node {
         position: absolute;
@@ -264,58 +404,54 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.4rem;
+        gap: 0.65rem;
         background: none;
         border: none;
         cursor: pointer;
-        padding: 0.4rem;
+        padding: 0.25rem;
         font-family: inherit;
         z-index: 3;
-        transition:
-          opacity 0.3s ease,
-          transform 0.3s var(--ease-spring);
+        transition: opacity 0.3s ease, transform 0.3s var(--ease-spring);
       }
       .tech-node-dot {
-        width: 76px;
-        height: 76px;
-        border-radius: 50%;
+        width: 68px;
+        height: 68px;
+        border-radius: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #ffffff;
-        border: 1.5px solid var(--glass-border);
-        box-shadow: 0 16px 28px -12px rgba(15, 23, 42, 0.45), inset 0 0 14px rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(158, 169, 182, 0.24);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02), 0 16px 28px -18px rgba(15, 23, 42, 0.8);
         transform-style: preserve-3d;
-        transition:
-          transform 0.3s var(--ease-spring),
-          box-shadow 0.3s ease,
-          border-color 0.3s ease;
+        transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease, border-color 0.3s ease;
       }
       .tech-node-dot svg {
-        width: 34px;
-        height: 34px;
-        filter: drop-shadow(0 3px 3px rgba(15, 23, 42, 0.15));
+        width: 26px;
+        height: 26px;
+        filter: drop-shadow(0 3px 2px rgba(15, 23, 42, 0.2));
       }
       .tech-node-label {
-        font-size: 0.78rem;
+        font-size: 0.82rem;
         font-weight: 600;
-        color: var(--text-muted);
+        letter-spacing: 0.01em;
+        color: rgba(229, 236, 247, 0.9);
         white-space: nowrap;
       }
       .tech-node:focus-visible .tech-node-dot,
       .tech-node.is-active .tech-node-dot {
-        transform: scale(1.16);
+        transform: scale(1.08);
       }
       .tech-node.is-active .tech-node-label {
-        color: var(--text-main);
+        color: #f4f8ff;
       }
       .tech-node.is-dimmed {
-        opacity: 0.35;
+        opacity: 0.45;
       }
       .tech-node:hover .tech-node-dot,
       .tech-node:focus-visible .tech-node-dot {
-        transform: translateY(-6px) rotateX(10deg) rotateY(-8deg) scale(1.08);
-        box-shadow: 0 22px 34px -12px rgba(15, 23, 42, 0.5), 0 0 0 5px rgba(249, 115, 22, 0.12);
+        transform: translateY(-4px) scale(1.04);
+        box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.08), 0 18px 24px -14px rgba(0, 0, 0, 0.42);
       }
       .tech-node[data-tone="orange"] .tech-node-dot {
         color: var(--orange-primary);
@@ -327,16 +463,16 @@
         color: var(--yellow-primary);
       }
       .tech-node.is-active[data-tone="orange"] .tech-node-dot {
-        border-color: var(--orange-primary);
-        box-shadow: 0 0 0 4px var(--orange-light);
+        border-color: rgba(249, 115, 22, 0.85);
+        box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       }
       .tech-node.is-active[data-tone="green"] .tech-node-dot {
-        border-color: var(--green-primary);
-        box-shadow: 0 0 0 4px var(--green-light);
+        border-color: rgba(34, 197, 94, 0.85);
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.14), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       }
       .tech-node.is-active[data-tone="yellow"] .tech-node-dot {
-        border-color: var(--yellow-primary);
-        box-shadow: 0 0 0 4px var(--yellow-light);
+        border-color: rgba(234, 179, 8, 0.85);
+        box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       }
       @keyframes network-flow {
         to {
@@ -345,10 +481,10 @@
       }
       @keyframes hub-float {
         0%, 100% {
-          margin-top: 0;
+          transform: translate(-50%, -50%);
         }
         50% {
-          margin-top: -5px;
+          transform: translate(-50%, -52%);
         }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -359,29 +495,135 @@
       }
 
       .tech-network-info {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 2.5rem;
-        min-height: 220px;
+        background: rgba(13, 22, 35, 0.72);
+        --tech-accent: #f97316;
+        --tech-accent-soft: rgba(249, 115, 22, 0.12);
+        --tech-accent-border: rgba(249, 115, 22, 0.42);
+        border: 1px solid var(--tech-accent-border);
+        border-radius: 14px;
+        padding: 1.5rem 1.5rem 1.35rem;
+        min-height: 274px;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
       }
-      .tech-network-info .eyebrow {
-        margin-bottom: 0.6rem;
+      .tech-network-info[data-tone="green"] {
+        --tech-accent: #34d399;
+        --tech-accent-soft: rgba(16, 185, 129, 0.12);
+        --tech-accent-border: rgba(16, 185, 129, 0.42);
+      }
+      .tech-network-info[data-tone="yellow"] {
+        --tech-accent: #facc15;
+        --tech-accent-soft: rgba(234, 179, 8, 0.12);
+        --tech-accent-border: rgba(234, 179, 8, 0.42);
+      }
+      .tech-network-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.85rem;
+      }
+      .tech-network-tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+        border: 1px solid var(--tech-accent-border);
+        background: var(--tech-accent-soft);
+        color: var(--tech-accent);
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .tech-network-source {
+        color: rgba(206, 218, 235, 0.7);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
       .tech-network-info h3 {
         font-family: var(--font-display);
-        font-size: 1.5rem;
-        margin-bottom: 0.8rem;
+        font-size: 1.25rem;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+        margin: 0 0 0.55rem;
+        color: #edf4ff;
         transition: opacity 0.25s ease;
       }
       .tech-network-info p {
-        color: var(--text-muted);
-        line-height: 1.7;
+        color: rgba(191, 205, 226, 0.82);
+        line-height: 1.5;
+        font-size: 0.88rem;
         transition: opacity 0.25s ease;
+      }
+      .tech-network-info #techNetworkDesc {
+        margin: 0;
+      }
+      .tech-network-deliverables-label {
+        margin: 1rem 0 0;
+        padding-top: 0.9rem;
+        border-top: 1px solid rgba(147, 177, 219, 0.16);
+        color: rgba(174, 191, 214, 0.7);
+        font-family: var(--font-mono);
+        font-size: 0.56rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .tech-network-deliverables {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(2, auto);
+        grid-auto-flow: column;
+        gap: 0.55rem 1rem;
+        margin: 0.8rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .tech-network-deliverable {
+        display: flex;
+        align-items: flex-start;
+        min-width: 0;
+        gap: 0.5rem;
+        color: #eff5ff;
+        font-weight: 600;
+        font-size: 0.74rem;
+        line-height: 1.35;
+        overflow-wrap: break-word;
+      }
+      .tech-network-deliverable::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        margin-top: 0.35em;
+        border-radius: 50%;
+        background: var(--tech-accent);
+        flex-shrink: 0;
+      }
+      @media (max-width: 980px) {
+        .tech-network-shell {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        .tech-network-copy {
+          padding-left: 0;
+        }
       }
       @media (max-width: 860px) {
         .tech-network-section {
+          padding: 2.5rem 1rem;
+        }
+        .tech-network-diagram {
+          max-width: 400px;
+        }
+      }
+      @media (max-width: 560px) {
+        .tech-network-deliverables {
           grid-template-columns: 1fr;
+          grid-template-rows: none;
+          grid-auto-flow: row;
+          gap: 0.65rem;
         }
       }
 
@@ -401,21 +643,22 @@
       }
       .testimonials-track {
         display: flex;
-        gap: 1.5rem;
+        gap: 1rem;
         transition: transform 0.6s var(--ease-out);
       }
       .testimonial-card {
-        flex: 0 0 calc(33.333% - 1rem);
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 1.8rem;
+        flex: 0 0 calc((100% - 2rem) / 3);
+        min-height: 230px;
+        background: linear-gradient(145deg, #101827, #0c121e);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 18px;
+        padding: 1.3rem 1.35rem 1.15rem;
         display: flex;
         flex-direction: column;
       }
       @media (max-width: 980px) {
         .testimonial-card {
-          flex: 0 0 calc(50% - 0.75rem);
+          flex: 0 0 calc((100% - 1rem) / 2);
         }
       }
       @media (max-width: 640px) {
@@ -423,27 +666,57 @@
           flex: 0 0 100%;
         }
       }
+      .testimonial-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
       .testimonial-stars {
-        color: var(--yellow-primary);
-        font-size: 0.9rem;
+        color: #ffbd24;
+        font-size: 0.78rem;
         letter-spacing: 0.1em;
+        line-height: 1;
+      }
+      .testimonial-category {
+        flex-shrink: 0;
+        padding: 0.24rem 0.55rem;
+        border-radius: 999px;
+        font-family: var(--font-mono);
+        font-size: 0.55rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+      .testimonial-card[data-category="consulting"] .testimonial-category {
+        color: #fb923c;
+        background: rgba(249, 115, 22, 0.14);
+      }
+      .testimonial-card[data-category="academia"] .testimonial-category {
+        color: #34d399;
+        background: rgba(16, 185, 129, 0.14);
+      }
+      .testimonial-card[data-category="open-media"] .testimonial-category {
+        color: #fbbf24;
+        background: rgba(234, 179, 8, 0.14);
       }
       .testimonial-quote {
-        margin-top: 0.8rem;
-        color: var(--text-main);
-        line-height: 1.65;
-        font-size: 0.98rem;
+        margin-top: 1rem;
+        color: #d7deea;
+        line-height: 1.5;
+        font-size: 0.82rem;
         flex-grow: 1;
       }
       .testimonial-person {
         display: flex;
         align-items: center;
-        gap: 0.8rem;
-        margin-top: 1.5rem;
+        gap: 0.7rem;
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(148, 163, 184, 0.18);
       }
       .testimonial-avatar {
-        width: 42px;
-        height: 42px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -456,12 +729,14 @@
       }
       .testimonial-person strong {
         display: block;
-        font-size: 0.9rem;
+        color: #f1f5f9;
+        font-size: 0.75rem;
       }
       .testimonial-person span {
         display: block;
-        font-size: 0.8rem;
-        color: var(--text-muted);
+        font-size: 0.64rem;
+        line-height: 1.4;
+        color: #94a3b8;
       }
       .testimonials-controls {
         max-width: 1200px;
@@ -558,24 +833,42 @@
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
         margin: 2.5rem auto 0;
-        max-width: 780px;
+        width: min(820px, calc(100vw - 2rem));
+        max-width: none;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
         perspective: 900px;
       }
       .build-option {
-        padding: 1.2rem;
+        --build-option-glow: 249, 115, 22;
+        min-height: 152px;
+        padding: 1.15rem;
         text-align: left;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 14px;
+        background: linear-gradient(
+          145deg,
+          rgba(20, 25, 36, 0.96),
+          rgba(11, 16, 27, 0.96)
+        );
         transition:
-          transform 0.35s var(--ease-spring),
-          border-color 0.35s ease,
-          background 0.35s ease;
+          transform 0.25s ease,
+          border-color 0.25s ease;
       }
       .build-option:hover {
-        transform: translateY(-8px) rotateX(4deg) rotateY(-4deg);
-        border-color: var(--orange-primary);
-        background: rgba(255, 255, 255, 0.12);
+        transform: translateY(-2px);
+        border-color: rgba(var(--build-option-glow), 0.72);
+        box-shadow:
+          0 0 0 1px rgba(var(--build-option-glow), 0.12),
+          0 0 26px rgba(var(--build-option-glow), 0.2),
+          inset 0 0 20px rgba(var(--build-option-glow), 0.05);
+      }
+      .build-option:nth-child(2) {
+        --build-option-glow: 16, 185, 129;
+      }
+      .build-option:nth-child(3) {
+        --build-option-glow: 234, 179, 8;
       }
       .build-option-icon {
         width: 36px;
@@ -584,86 +877,162 @@
         place-items: center;
         border-radius: 10px;
         margin-bottom: 0.8rem;
-        background: var(--orange-light);
+        border: 1px solid rgba(249, 115, 22, 0.32);
+        background: rgba(249, 115, 22, 0.12);
         color: var(--orange-primary);
       }
       .build-option:nth-child(2) .build-option-icon {
-        background: var(--green-light);
+        border-color: rgba(16, 185, 129, 0.32);
+        background: rgba(16, 185, 129, 0.12);
         color: var(--green-primary);
       }
       .build-option:nth-child(3) .build-option-icon {
-        background: var(--yellow-light);
+        border-color: rgba(234, 179, 8, 0.32);
+        background: rgba(234, 179, 8, 0.12);
         color: var(--yellow-dark);
       }
       .build-option strong {
         display: block;
-        font-size: 0.92rem;
+        font-size: 0.9rem;
+        color: #f8fafc;
       }
       .build-option span {
         display: block;
-        margin-top: 0.25rem;
-        color: var(--text-muted);
+        margin-top: 0.5rem;
+        color: #94a3b8;
         font-size: 0.78rem;
-        line-height: 1.4;
+        line-height: 1.5;
       }
       .contact-layout {
         display: grid;
-        grid-template-columns: minmax(220px, 0.8fr) minmax(300px, 1.2fr);
-        gap: 2.5rem;
+        grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+        gap: 2rem;
         align-items: start;
-        max-width: 980px;
+        max-width: 780px;
         margin: 0 auto;
         text-align: left;
       }
       .contact-copy {
         padding-top: 0.5rem;
       }
+      .contact-copy > p:not(.eyebrow) {
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
       .contact-form {
         display: grid;
         gap: 1rem;
-        padding: 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 14px;
-        background: rgba(255, 255, 255, 0.04);
+        align-self: center;
+        max-width: 403px;
+        padding: 1.4rem;
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        border-radius: 11px;
+        background: rgba(7, 12, 20, 0.96);
         text-align: left;
       }
       .contact-form-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+        gap: 0.75rem;
       }
       .contact-field {
         display: grid;
-        gap: 0.4rem;
+        gap: 0.45rem;
       }
       .contact-field span {
-        font-size: 0.78rem;
-        font-weight: 700;
-        color: var(--text-muted);
+        color: rgba(203, 213, 225, 0.92);
+        font-size: 0.58rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
       }
-      .contact-field input,
-      .contact-field select,
-      .contact-field textarea {
+      .contact-form .contact-field .field-required::after {
+        color: #f97316;
+      }
+      .contact-form .contact-field input,
+      .contact-form .contact-field select,
+      .contact-form .contact-field textarea {
         width: 100%;
-        border: 1px solid var(--glass-border);
-        border-radius: 8px;
-        padding: 0.75rem 0.85rem;
-        color: var(--text-main);
-        background: rgba(255, 255, 255, 0.9);
-        font: inherit;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 10px;
+        padding: 0.5rem 0.7rem;
+        color: #edf5ff;
+        background: rgba(255, 255, 255, 0.07);
+        font-size: 0.7rem;
+        -webkit-text-fill-color: #edf5ff;
       }
-      .contact-field textarea {
-        min-height: 110px;
+      .contact-form .contact-field input,
+      .contact-form .contact-field select {
+        height: 34px;
+        min-height: 34px;
+      }
+      .contact-form .contact-field select {
+        appearance: none;
+        padding-right: 2.5rem;
+        background-image:
+          linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.7) 50%),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.7) 50%, transparent 50%);
+        background-position:
+          calc(100% - 20px) calc(50% - 2px),
+          calc(100% - 14px) calc(50% - 2px);
+        background-size: 6px 6px, 6px 6px;
+        background-repeat: no-repeat;
+      }
+      .contact-form .contact-field textarea {
+        min-height: 78px;
         resize: vertical;
       }
+      .contact-form .contact-field input::placeholder,
+      .contact-form .contact-field textarea::placeholder {
+        color: rgba(148, 163, 184, 0.72);
+      }
       .contact-field small {
-        color: var(--text-muted);
-        font-size: 0.72rem;
+        color: rgba(148, 163, 184, 0.72);
+        font-size: 0.52rem;
+      }
+      .contact-section .contact-form .contact-field input,
+      .contact-section .contact-form .contact-field select,
+      .contact-section .contact-form .contact-field textarea {
+        border-radius: 8px;
+      }
+      .contact-section .contact-form .contact-submit {
+        display: inline-flex;
+        align-items: center;
+        justify-self: start;
+        align-self: start;
+        width: 136px;
+        height: 32px;
+        min-height: 32px;
+        margin: 0.45rem 0 0;
+        padding: 0.5rem 0.9rem;
+        border: none;
+        border-radius: 10px;
+        background: #f97316;
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 800;
+        line-height: 1;
+        white-space: nowrap;
+        box-shadow: 0 12px 28px rgba(255, 125, 61, 0.25);
+      }
+      .contact-section .contact-form .contact-submit:hover {
+        background: #fb923c;
+        box-shadow: 0 16px 30px rgba(255, 125, 61, 0.3);
       }
       .contact-status {
         min-height: 1.2rem;
         color: var(--green-primary);
         font-size: 0.85rem;
+      }
+      @media (max-width: 980px) {
+        .contact-layout {
+          grid-template-columns: 1fr;
+        }
+        .contact-form {
+          max-width: 403px;
+          margin-left: auto;
+          margin-right: auto;
+        }
       }
       @media (max-width: 700px) {
         .build-options,
@@ -671,9 +1040,29 @@
         .contact-form-grid {
           grid-template-columns: 1fr;
         }
+        .contact-form {
+          max-width: none;
+          margin: 0;
+          padding: 1.25rem;
+          gap: 0.85rem;
+        }
+        .contact-form .contact-field input,
+        .contact-form .contact-field select {
+          height: 44px;
+          min-height: 44px;
+        }
+        .contact-form .contact-field textarea {
+          min-height: 104px;
+        }
+        .contact-section .contact-form .contact-submit {
+          width: 136px;
+          height: 40px;
+          min-height: 40px;
+        }
       }
     </style>
-  </head>
+  <!-- sx:begin --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/soxit-theme.css?v=20261120_direct_v5"><script src="js/site-shell.js?v=20261120_direct_v5" defer></script><!-- sx:end -->
+</head>
   <body>
     <div class="loader" id="loader" aria-hidden="true">
       <div class="loader-inner">
@@ -685,22 +1074,16 @@
       </div>
     </div>
 
-    <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
-
     <header class="navbar" id="navbar">
       <div class="nav-inner">
         <a href="index.html" class="nav-logo">
           <!-- UPDATED LOGO IMAGE -->
           <img
-            src="soxit.webp"
-            alt="error"
+            src="resources/soxit.webp"
+            alt="SOXIT logo"
             width="132"
             height="132"
             style="object-fit: contain"
-            onerror="
-              this.onerror = null;
-              this.src = 'logo.png';
-            "
           />
           <span></span>
         </a>
@@ -721,8 +1104,8 @@
             </button>
             <div class="nav-dropdown-menu" id="aboutMenu">
               <a href="#about" class="nav-dropdown-link">Get to Know Us</a>
-              <a href="#careers" class="nav-dropdown-link">Careers</a>
               <a href="#mission" class="nav-dropdown-link">Mission & Vision</a>
+              <a href="#careers" class="nav-dropdown-link">Careers</a>
             </div>
           </div>
           <a href="#about" class="nav-link nav-mobile-about">About Us</a>
@@ -747,23 +1130,6 @@
     </header>
 
     <section class="hero">
-      <!-- ANIMATED VIDEO BACKGROUND -->
-      <video class="hero-bg-video" autoplay loop muted playsinline>
-        <source
-          src="https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-41551-large.mp4"
-          type="video/mp4"
-        />
-      </video>
-
-      <!-- HIGHLIGHT OVERLAY -->
-      <div class="hero-bg-overlay"></div>
-
-      <canvas
-        id="particleCanvas"
-        class="hero-canvas"
-        style="position: absolute; inset: 0; pointer-events: none; z-index: 1"
-      ></canvas>
-
       <div
         class="hero-content glass-panel reveal"
         style="
@@ -827,25 +1193,25 @@
             data-decimals="1"
             data-suffix="%"
           >
-            0%
+            99.9%
           </div>
           <p class="stat-label">System Reliability</p>
         </div>
         <div class="stat-card reveal reveal-up">
           <div class="stat-number" data-count data-target="150" data-suffix="+">
-            0+
+            150+
           </div>
           <p class="stat-label">Projects Delivered</p>
         </div>
         <div class="stat-card reveal reveal-up">
           <div class="stat-number" data-count data-target="12" data-suffix="+">
-            0+
+            12+
           </div>
           <p class="stat-label">Years Combined Experience</p>
         </div>
         <div class="stat-card reveal reveal-up">
           <div class="stat-number" data-count data-target="35" data-suffix="+">
-            0+
+            35+
           </div>
           <p class="stat-label">Technology Specialists</p>
         </div>
@@ -857,20 +1223,27 @@
       <div class="about-card reveal">
         <p class="eyebrow">About SOXIT</p>
         <h2>Get to Know Us</h2>
-        <p
-          style="
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: var(--text-muted);
-            margin-top: 1rem;
-          "
-        >
+        <p class="about-description">
           At SOXIT, we operate at the intersection of technology, education, and
           digital storytelling. We serve as a comprehensive growth engine for
           enterprises looking to digitally transform, educational institutions
           building modern learning ecosystems, and individuals seeking
           open-access industry insights.
         </p>
+        <div class="about-proof" aria-label="SOXIT principles">
+          <div class="about-proof-item">
+            <strong>01</strong>
+            <span>Enterprise Scale</span>
+          </div>
+          <div class="about-proof-item">
+            <strong>02</strong>
+            <span>Academic Rigor</span>
+          </div>
+          <div class="about-proof-item">
+            <strong>03</strong>
+            <span>Open Knowledge</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -897,13 +1270,7 @@
             </svg>
           </div>
           <h3>Our Mission</h3>
-          <p
-            style="
-              color: var(--text-muted);
-              margin-top: 0.8rem;
-              line-height: 1.6;
-            "
-          >
+          <p>
             To empower organizations and learners by delivering cutting-edge AI
             and software consulting, accessible high-quality university academic
             frameworks, and open digital media to bridge knowledge gaps
@@ -926,13 +1293,7 @@
             </svg>
           </div>
           <h3>Our Vision</h3>
-          <p
-            style="
-              color: var(--text-muted);
-              margin-top: 0.8rem;
-              line-height: 1.6;
-            "
-          >
+          <p>
             To establish a globally recognized ecosystem where enterprise tech
             solutions, academic learning, and transparent digital publications
             seamlessly interface to drive continuous innovation.
@@ -1077,182 +1438,198 @@
 
     <!-- INTERACTIVE TECHNOLOGY NETWORK -->
     <section class="tech-network-section" id="tech-network">
-      <div class="tech-network-diagram reveal reveal-scale">
-        <svg
-          class="tech-network-lines"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <line x1="50" y1="50" x2="50" y2="8" data-line="ai" />
-          <line x1="50" y1="50" x2="86" y2="29" data-line="cloud" />
-          <line x1="50" y1="50" x2="86" y2="71" data-line="security" />
-          <line x1="50" y1="50" x2="50" y2="92" data-line="data" />
-          <line x1="50" y1="50" x2="14" y2="71" data-line="engineering" />
-          <line x1="50" y1="50" x2="14" y2="29" data-line="automation" />
-        </svg>
+      <div class="tech-network-shell">
+        <div class="tech-network-diagram reveal reveal-scale">
+          <svg
+            class="tech-network-lines"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <line x1="50" y1="50" x2="50" y2="8" data-line="ai" />
+            <line x1="50" y1="50" x2="86" y2="29" data-line="cloud" />
+            <line x1="50" y1="50" x2="86" y2="71" data-line="security" />
+            <line x1="50" y1="50" x2="50" y2="92" data-line="data" />
+            <line x1="50" y1="50" x2="14" y2="71" data-line="engineering" />
+            <line x1="50" y1="50" x2="14" y2="29" data-line="automation" />
+          </svg>
 
-        <div class="tech-hub">
-          <strong>SOXIT</strong>
-          <span>Core</span>
+          <div class="tech-hub">
+            <strong>SOXIT</strong>
+            <span>Core</span>
+          </div>
+
+          <button
+            class="tech-node"
+            data-tone="orange"
+            data-key="ai"
+            style="top: 8%; left: 50%"
+            data-title="AI &amp; Machine Learning"
+            data-desc="Predictive models and intelligent automation embedded into real production workflows, not proof-of-concept demos."
+          >
+            <span class="tech-node-dot">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"
+                />
+                <path d="M12 6v6l4 2" />
+              </svg>
+            </span>
+            <span class="tech-node-label">AI &amp; ML</span>
+          </button>
+
+          <button
+            class="tech-node"
+            data-tone="green"
+            data-key="cloud"
+            style="top: 29%; left: 86%"
+            data-title="Cloud Infrastructure"
+            data-desc="Multi-cloud architecture on AWS and Azure, built for elastic scale, resilience, and predictable cost."
+          >
+            <span class="tech-node-dot">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+              </svg>
+            </span>
+            <span class="tech-node-label">Cloud</span>
+          </button>
+
+          <button
+            class="tech-node"
+            data-tone="yellow"
+            data-key="security"
+            style="top: 71%; left: 86%"
+            data-title="Cybersecurity"
+            data-desc="Zero-trust frameworks and continuous threat monitoring that protect data, systems, and the people who rely on them."
+          >
+            <span class="tech-node-dot">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </span>
+            <span class="tech-node-label">Security</span>
+          </button>
+
+          <button
+            class="tech-node"
+            data-tone="orange"
+            data-key="data"
+            style="top: 92%; left: 50%"
+            data-title="Data &amp; Analytics"
+            data-desc="Turning raw operational data into dashboards and decisions that leadership can actually act on."
+          >
+            <span class="tech-node-dot">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M3 3v18h18" />
+                <path d="M18.5 8.5 13 14l-3-3-4.5 4.5" />
+              </svg>
+            </span>
+            <span class="tech-node-label">Data</span>
+          </button>
+
+          <button
+            class="tech-node"
+            data-tone="green"
+            data-key="engineering"
+            style="top: 71%; left: 14%"
+            data-title="Software Engineering"
+            data-desc="Production-grade applications built with senior engineering discipline, from architecture through deployment."
+          >
+            <span class="tech-node-dot">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+              </svg>
+            </span>
+            <span class="tech-node-label">Engineering</span>
+          </button>
+
+          <button
+            class="tech-node"
+            data-tone="yellow"
+            data-key="automation"
+            style="top: 29%; left: 14%"
+            data-title="Automation"
+            data-desc="Removing manual friction from operations end to end, so teams spend time on judgment calls, not busywork."
+          >
+            <span class="tech-node-dot">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </span>
+            <span class="tech-node-label">Automation</span>
+          </button>
         </div>
 
-        <button
-          class="tech-node"
-          data-tone="orange"
-          data-key="ai"
-          style="top: 8%; left: 50%"
-          data-title="AI &amp; Machine Learning"
-          data-desc="Predictive models and intelligent automation embedded into real production workflows, not proof-of-concept demos."
-        >
-          <span class="tech-node-dot">
-            <svg
-              viewBox="0 0 24 24"
-              width="20"
-              height="20"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"
-              />
-              <path d="M12 6v6l4 2" />
-            </svg>
-          </span>
-          <span class="tech-node-label">AI &amp; ML</span>
-        </button>
-
-        <button
-          class="tech-node"
-          data-tone="green"
-          data-key="cloud"
-          style="top: 29%; left: 86%"
-          data-title="Cloud Infrastructure"
-          data-desc="Multi-cloud architecture on AWS and Azure, built for elastic scale, resilience, and predictable cost."
-        >
-          <span class="tech-node-dot">
-            <svg
-              viewBox="0 0 24 24"
-              width="20"
-              height="20"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-            </svg>
-          </span>
-          <span class="tech-node-label">Cloud</span>
-        </button>
-
-        <button
-          class="tech-node"
-          data-tone="yellow"
-          data-key="security"
-          style="top: 71%; left: 86%"
-          data-title="Cybersecurity"
-          data-desc="Zero-trust frameworks and continuous threat monitoring that protect data, systems, and the people who rely on them."
-        >
-          <span class="tech-node-dot">
-            <svg
-              viewBox="0 0 24 24"
-              width="20"
-              height="20"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-          </span>
-          <span class="tech-node-label">Security</span>
-        </button>
-
-        <button
-          class="tech-node"
-          data-tone="orange"
-          data-key="data"
-          style="top: 92%; left: 50%"
-          data-title="Data &amp; Analytics"
-          data-desc="Turning raw operational data into dashboards and decisions that leadership can actually act on."
-        >
-          <span class="tech-node-dot">
-            <svg
-              viewBox="0 0 24 24"
-              width="20"
-              height="20"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M3 3v18h18" />
-              <path d="M18.5 8.5 13 14l-3-3-4.5 4.5" />
-            </svg>
-          </span>
-          <span class="tech-node-label">Data</span>
-        </button>
-
-        <button
-          class="tech-node"
-          data-tone="green"
-          data-key="engineering"
-          style="top: 71%; left: 14%"
-          data-title="Software Engineering"
-          data-desc="Production-grade applications built with senior engineering discipline, from architecture through deployment."
-        >
-          <span class="tech-node-dot">
-            <svg
-              viewBox="0 0 24 24"
-              width="20"
-              height="20"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="16 18 22 12 16 6" />
-              <polyline points="8 6 2 12 8 18" />
-            </svg>
-          </span>
-          <span class="tech-node-label">Engineering</span>
-        </button>
-
-        <button
-          class="tech-node"
-          data-tone="yellow"
-          data-key="automation"
-          style="top: 29%; left: 14%"
-          data-title="Automation"
-          data-desc="Removing manual friction from operations end to end, so teams spend time on judgment calls, not busywork."
-        >
-          <span class="tech-node-dot">
-            <svg
-              viewBox="0 0 24 24"
-              width="20"
-              height="20"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-          </span>
-          <span class="tech-node-label">Automation</span>
-        </button>
-      </div>
-
-      <div class="reveal reveal-right">
-        <p class="eyebrow">One Vision, Six Capabilities</p>
-        <h2 style="margin-bottom: 1rem">The SOXIT Technology Network</h2>
-        <div class="tech-network-info" id="techNetworkInfo">
-          <h3 id="techNetworkTitle">AI &amp; Machine Learning</h3>
-          <p id="techNetworkDesc">
-            Predictive models and intelligent automation embedded into real
-            production workflows, not proof-of-concept demos.
+        <div class="tech-network-copy reveal reveal-right">
+          <p class="tech-network-kicker">One Vision, Six Capabilities</p>
+          <h2>The SOXIT Technology Network</h2>
+          <p class="tech-network-subhead">
+            Hover or select any capability node around the SOXIT Core to inspect our architecture and deliverables.
           </p>
+          <div class="tech-network-info" id="techNetworkInfo" data-tone="orange">
+            <div class="tech-network-meta">
+              <span class="tech-network-tag">Capability 01 • Intelligence</span>
+              <span class="tech-network-source">SOXIT Core Integrated</span>
+            </div>
+            <h3 id="techNetworkTitle">AI &amp; Machine Learning</h3>
+            <p id="techNetworkDesc">
+              Predictive models and intelligent automation embedded into real
+              production workflows, not proof-of-concept demos.
+            </p>
+            <div class="tech-network-deliverables-label" id="techNetworkDeliverablesLabel">Key deliverables</div>
+            <ul class="tech-network-deliverables" id="techNetworkDeliverables" aria-labelledby="techNetworkDeliverablesLabel">
+              <li class="tech-network-deliverable">Production LLM &amp; RAG Pipelines</li>
+              <li class="tech-network-deliverable">MLOps &amp; Model Governance</li>
+              <li class="tech-network-deliverable">Predictive Forecasting Engines</li>
+              <li class="tech-network-deliverable">AI Readiness Audits</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -1267,10 +1644,14 @@
       <div class="testimonials-viewport">
         <div class="testimonials-track" id="testimonialsTrack">
           <article
-            class="testimonial-card tilt-card glow-follow interactive-card"
+            class="testimonial-card tilt-card"
+            data-category="consulting"
           >
-            <div class="testimonial-stars" aria-label="5 out of 5 stars">
-              ★★★★★
+            <div class="testimonial-card-header">
+              <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                ★★★★★
+              </div>
+              <span class="testimonial-category">Consulting</span>
             </div>
             <p class="testimonial-quote">
               "SOXIT rebuilt our cloud governance from the ground up. What used
@@ -1292,10 +1673,14 @@
           </article>
 
           <article
-            class="testimonial-card tilt-card glow-follow interactive-card"
+            class="testimonial-card tilt-card"
+            data-category="academia"
           >
-            <div class="testimonial-stars" aria-label="5 out of 5 stars">
-              ★★★★★
+            <div class="testimonial-card-header">
+              <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                ★★★★★
+              </div>
+              <span class="testimonial-category">Academia</span>
             </div>
             <p class="testimonial-quote">
               "The Academic Index Score gave our faculty a real benchmark
@@ -1307,10 +1692,10 @@
                 class="testimonial-avatar"
                 style="background: var(--green-primary)"
               >
-                AW
+                AP
               </div>
               <div>
-                <strong>Dr. Alan Whitfield</strong>
+                <strong>Dr. Ali Pathan</strong>
                 <span
                   >Program Director, Northbridge Institute of Technology</span
                 >
@@ -1319,10 +1704,14 @@
           </article>
 
           <article
-            class="testimonial-card tilt-card glow-follow interactive-card"
+            class="testimonial-card tilt-card"
+            data-category="open-media"
           >
-            <div class="testimonial-stars" aria-label="4 out of 5 stars">
-              ★★★★☆
+            <div class="testimonial-card-header">
+              <div class="testimonial-stars" aria-label="4 out of 5 stars">
+                ★★★★☆
+              </div>
+              <span class="testimonial-category">Open Media</span>
             </div>
             <p class="testimonial-quote">
               "SOXIT Signal is the one tech podcast on my commute I actually
@@ -1344,10 +1733,14 @@
           </article>
 
           <article
-            class="testimonial-card tilt-card glow-follow interactive-card"
+            class="testimonial-card tilt-card"
+            data-category="consulting"
           >
-            <div class="testimonial-stars" aria-label="5 out of 5 stars">
-              ★★★★★
+            <div class="testimonial-card-header">
+              <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                ★★★★★
+              </div>
+              <span class="testimonial-category">Consulting</span>
             </div>
             <p class="testimonial-quote">
               "We came in through consulting and ended up sending half our team
@@ -1515,17 +1908,17 @@
         <form class="careers-form" id="careersForm">
           <div class="careers-form-grid">
             <label class="careers-field">
-              <span>Your name</span>
-              <input name="name" type="text" autocomplete="name" required pattern="[A-Za-z]+(?:[ ][A-Za-z]+)*" minlength="2" maxlength="80" />
+              <span class="field-required">Your name</span>
+              <input name="name" type="text" autocomplete="name" placeholder="Alex Rivera" required pattern="[A-Za-z]+(?:[ ][A-Za-z]+)*" minlength="2" maxlength="80" />
             </label>
             <label class="careers-field">
-              <span>Email address</span>
-              <input name="email" type="email" autocomplete="email" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" />
+              <span class="field-required">Email address</span>
+              <input name="email" type="email" autocomplete="email" placeholder="alex@domain.com" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" />
             </label>
           </div>
           <div class="careers-form-grid">
             <label class="careers-field">
-              <span>Role of interest</span>
+              <span class="field-required">Role of interest</span>
               <select name="role" required>
                 <option value="" selected disabled>Select a role</option>
                 <option>Consulting</option>
@@ -1536,13 +1929,14 @@
             </label>
             <label class="careers-field">
               <span>Profile or portfolio link</span>
-              <input name="profile" type="url" placeholder="https://" />
+              <input name="profile" type="url" placeholder="https://github.com/username" />
             </label>
           </div>
           <label class="careers-field">
-            <span>Tell us about yourself</span>
+            <span class="field-required">Tell us about yourself</span>
             <textarea name="introduction" required minlength="10" maxlength="2000" placeholder="Share your experience and the work you want to do."></textarea>
           </label>
+                    <p class="form-consent" style="font-size: 0.78rem; color: var(--text-muted); margin: 0.75rem 0;">By submitting, you agree to our <a href="privacy.html" style="text-decoration: underline; color: inherit;">Privacy Policy</a> and consent to SOXIT processing your details to contact you regarding career opportunities.</p>
           <button class="btn btn-primary btn-ripple" type="submit">Send your profile &rarr;</button>
           <p class="careers-status" id="careersStatus" aria-live="polite"></p>
         </form>
@@ -1552,7 +1946,7 @@
     <section class="contact-section" id="contact">
       <div class="contact-layout">
         <div class="contact-copy">
-          <p class="eyebrow">Start a Conversation</p>
+          <p class="eyebrow">Contact</p>
           <h2>Let’s make the next move useful.</h2>
           <p>
             Tell us what you are building, where the friction is, and which
@@ -1561,56 +1955,66 @@
           </p>
           <div class="contact-points">
             <div>
-              <strong>Tell us what matters</strong>
-              <span>Share your goal, timeline, and the biggest constraint facing your team.</span>
+              <span class="contact-step">1</span>
+              <div>
+                <strong>Tell us what matters</strong>
+                <span>Share your goal, timeline, and the biggest constraint facing your team.</span>
+              </div>
             </div>
             <div>
-              <strong>Choose a starting point</strong>
-              <span>We can begin with consulting, academia, open media, or a combined path.</span>
+              <span class="contact-step">2</span>
+              <div>
+                <strong>Choose a starting point</strong>
+                <span>We can begin with consulting, academia, open media, or a combined path.</span>
+              </div>
             </div>
             <div>
-              <strong>Expect a practical reply</strong>
-              <span>We will review your note and respond with a useful next step.</span>
+              <span class="contact-step">3</span>
+              <div>
+                <strong>Expect a practical reply</strong>
+                <span>We will review your note and respond with a useful next step.</span>
+              </div>
             </div>
           </div>
-          <a class="btn btn-ghost btn-ripple" href="mailto:hello@soxit.example"
-            >Email SOXIT &rarr;</a
-          >
         </div>
+
         <form class="contact-form" id="contactForm">
           <div class="contact-form-grid">
-            <label class="contact-field"
-              ><span>Your name</span
-              ><input name="name" type="text" autocomplete="name" required
-              pattern="[A-Za-z]+(?:[ ][A-Za-z]+)*" minlength="2" maxlength="80"
-            /></label>
-            <label class="contact-field"
-              ><span>Email address</span
-              ><input name="email" type="email" autocomplete="email" required
-              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-            /></label>
-            <label class="contact-field"
-              ><span>Contact number</span
-              ><input name="phone" type="tel" inputmode="numeric" autocomplete="tel" required
-              pattern="[0-9]{10}" maxlength="10" minlength="10"
-              placeholder="10-digit number" aria-describedby="phoneHint"
-            /><small id="phoneHint">Enter 10 digits only.</small></label>
+            <label class="contact-field">
+              <span class="field-required">Your name</span>
+              <input name="name" type="text" autocomplete="off" placeholder="Jordan Taylor" required pattern="[A-Za-z]+(?:[ ][A-Za-z]+)*" minlength="2" maxlength="80" />
+            </label>
+            <label class="contact-field">
+              <span class="field-required">Email address</span>
+              <input name="email" type="email" autocomplete="off" placeholder="alex@company.com" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" />
+            </label>
           </div>
-          <label class="contact-field"
-            ><span>How can we help?</span
-            ><select name="interest" required>
-              <option value="" selected disabled>Select a path</option>
-              <option>Consulting</option>
-              <option>Academia</option>
-              <option>Open Media</option>
-              <option>Careers</option>
-            </select></label
-          >
-          <label class="contact-field"
-            ><span>Your project or question</span
-            ><textarea name="message" required minlength="10" maxlength="2000"></textarea>
+
+          <div class="contact-form-grid">
+            <label class="contact-field">
+              <span class="field-required">Contact number</span>
+              <input name="phone" type="tel" inputmode="tel" autocomplete="tel" required pattern="[\+]?[0-9\s\-\(\)]{7,20}" maxlength="20" minlength="7" placeholder="+91 98765 43210 or contact number" aria-describedby="phoneHint" />
+              <small id="phoneHint">Enter your contact number (include country code for international).</small>
+            </label>
+            <label class="contact-field">
+              <span class="field-required">How can we help?</span>
+              <select name="interest" required autocomplete="off">
+                <option value="" selected disabled>Select a path</option>
+                <option>Consulting</option>
+                <option>Academia</option>
+                <option>Open Media</option>
+                <option>Careers</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="contact-field">
+            <span class="field-required">Your project or question</span>
+            <textarea name="message" required minlength="10" maxlength="2000" placeholder="Describe your objectives, challenges, or timeline..."></textarea>
           </label>
-          <button class="btn btn-primary btn-ripple" type="submit">
+
+                    <p class="form-consent" style="font-size: 0.78rem; color: var(--text-muted); margin: 0.75rem 0;">By submitting, you agree to our <a href="privacy.html" style="text-decoration: underline; color: inherit;">Privacy Policy</a> and consent to SOXIT processing your enquiry details.</p>
+          <button class="btn btn-primary btn-ripple contact-submit" type="submit">
             Send enquiry &rarr;
           </button>
           <p class="contact-status" id="contactStatus" aria-live="polite"></p>
@@ -1620,9 +2024,9 @@
 
     <!-- UNIVERSAL REUSABLE LOGIN MODAL -->
     <div class="login-overlay" id="loginOverlay" aria-hidden="true">
-      <div class="login-panel" role="dialog" aria-modal="true">
-        <button class="login-close" id="loginClose">&times;</button>
-        <h3>Welcome to SOXIT</h3>
+      <div class="login-panel" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+        <button class="login-close" id="loginClose" aria-label="Close modal">&times;</button>
+        <h3 id="loginTitle">Welcome to SOXIT</h3>
         <p style="font-size: 0.88rem; color: var(--text-muted)">
           Sign in to access your dashboard
         </p>
@@ -1635,6 +2039,10 @@
             <span>Password</span>
             <input type="password" placeholder="••••••••" required minlength="8" />
           </label>
+          <div class="login-options" style="display:flex; justify-content:space-between; align-items:center; margin-top:0.6rem; font-size:0.82rem;">
+            <a href="mailto:support@soxit.org?subject=Password%20Reset%20Request" style="color:var(--text-muted); text-decoration:underline;">Forgot password?</a>
+            <span style="color:var(--text-muted)">Need access? <a href="#contact" onclick="document.getElementById('loginClose')?.click()" style="color:var(--blue-primary); font-weight:600;">Contact us</a></span>
+          </div>
           <button
             type="submit"
             class="btn btn-primary full btn-ripple"
@@ -1651,12 +2059,12 @@
       <div class="site-footer-inner">
         <div class="site-footer-grid">
           <div class="site-footer-brand">
-            <img src="soxit.webp" alt="SOXIT Logo" />
-            <p>Unified enterprise platform delivering consulting solutions across industries.</p>
+            <img src="resources/soxit.webp" alt="SOXIT Logo" />
+            <p>Unified enterprise platform delivering excellence across Consulting, Academia, and Open Media.</p>
             <div class="site-footer-socials">
-              <a href="#" aria-label="Website"><span aria-hidden="true">◎</span></a>
-              <a href="#" aria-label="LinkedIn"><span aria-hidden="true">in</span></a>
-              <a href="mailto:hello@soxit.example" aria-label="Email"><span aria-hidden="true">✉</span></a>
+              <a href="https://soxit.org" target="_blank" rel="noopener noreferrer" aria-label="Website"><span aria-hidden="true">◎</span></a>
+              <a href="https://www.linkedin.com/company/soxit" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><span aria-hidden="true">in</span></a>
+              <a href="mailto:consult@soxit.org" aria-label="Email"><span aria-hidden="true">✉</span></a>
             </div>
           </div>
           <div class="site-footer-column">
@@ -1681,12 +2089,12 @@
         </div>
         <div class="site-footer-bottom">
           <p>&copy; <span id="year"></span> SOXIT. All rights reserved.</p>
-          <p><a href="#">Privacy Policy</a> &nbsp; <a href="#">Terms of Service</a></p>
+          <p><a href="privacy.html">Privacy Policy</a> &nbsp; <a href="terms.html">Terms of Service</a></p>
         </div>
       </div>
     </footer>
 
-    <script src="script.js"></script>
-    <script src="home.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/home.js"></script>
   </body>
 </html>

@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerPath 2026 • DevOps Engineer Interactive Roadmap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-page: #f4f7fb;
+      --bg-surface: #ffffff;
+      --bg-tinted: #f8faff;
+      --border-soft: #e2e8f0;
+      --text-main: #0f172a;
+      --text-body: #475569;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .glass-navbar {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .pastel-hero {
+      background:
+        radial-gradient(circle at 8% 18%, rgba(224, 231, 255, 0.88) 0%, transparent 44%),
+        radial-gradient(circle at 88% 16%, rgba(220, 252, 231, 0.78) 0%, transparent 42%),
+        radial-gradient(circle at 60% 92%, rgba(255, 237, 213, 0.78) 0%, transparent 46%),
+        linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .hero-grid-pattern {
+      background-image:
+        linear-gradient(to right, rgba(99, 102, 241, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.045) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    .bento-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.03);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .bento-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 28px -6px rgba(79, 70, 229, 0.07);
+    }
+
+    .skill-pill {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      color: #334155;
+      transition: all 0.18s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .skill-pill:hover {
+      background: #eef2ff;
+      border-color: #818cf8;
+      color: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .skill-pill.active {
+      background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+      border-color: transparent;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+
+    .workflow-tile {
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .workflow-tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px -4px rgba(15, 23, 42, 0.08);
+    }
+
+    .domain-tile {
+      background: var(--bg-tinted);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      transition: all 0.22s ease;
+    }
+
+    .domain-tile:hover {
+      background: #ffffff;
+      border-color: #a5b4fc;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.12);
+    }
+
+    .timeline-container {
+      position: relative;
+    }
+
+    .timeline-rail {
+      position: absolute;
+      left: 17px;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+
+    .timeline-rail-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(180deg, #6366f1, #0ea5e9, #10b981);
+      transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-row {
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-check-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: #ffffff;
+      border: 2px solid #c7d2fe;
+      color: #4338ca;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.08);
+    }
+
+    .step-check-btn:hover {
+      border-color: #6366f1;
+      background: #eef2ff;
+      transform: scale(1.06);
+    }
+
+    .step-row.completed .step-check-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-color: #10b981;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
+    }
+
+    .step-card {
+      background: #fafcff;
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .step-row:hover .step-card {
+      background: #ffffff;
+      border-color: #c7d2fe;
+    }
+
+    .step-row.completed .step-card {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .step-row.highlighted .step-card {
+      background: #eff6ff;
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+    }
+
+    .step-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-row.expanded .step-drawer {
+      grid-template-rows: 1fr;
+    }
+
+    .step-drawer-inner {
+      overflow: hidden;
+    }
+
+    .step-chevron {
+      transition: transform 0.25s ease;
+    }
+
+    .step-row.expanded .step-chevron {
+      transform: rotate(180deg);
+    }
+
+    .level-pill-tab {
+      border: 1px solid var(--border-soft);
+      background: #f8fafc;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .level-pill-tab.active[data-lvl="l1"] {
+      background: #e0f2fe;
+      border-color: #7dd3fc;
+      color: #0369a1;
+    }
+
+    .level-pill-tab.active[data-lvl="l2"] {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #15803d;
+    }
+
+    .level-pill-tab.active[data-lvl="l3"] {
+      background: #ffedd5;
+      border-color: #fdba74;
+      color: #c2410c;
+    }
+
+    .tool-badge-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      transition: all 0.18s ease;
+    }
+
+    .tool-badge-card:hover {
+      background: #ffffff;
+      border-color: #a5b4fc;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+    }
+
+    .tool-badge-card.highlighted {
+      background: #eef2ff;
+      border-color: #818cf8;
+      box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.22);
+    }
+
+    .project-mini-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-soft);
+      border-radius: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .project-mini-card:hover {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      transform: translateX(3px);
+    }
+
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    #toast-banner {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+    }
+  </style>
+<!-- sx:begin --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../css/soxit-theme.css?v=20261120_direct_v5"><script src="../../js/site-shell.js?v=20261120_direct_v5" defer></script><!-- sx:end -->
+</head>
+<body class="antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- Top Navbar -->
+  <nav class="glass-navbar sticky top-0 z-40">
+    <div class="max-w-[1320px] mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-600 to-sky-500 text-white flex items-center justify-center font-extrabold text-sm shadow-sm">
+          03
+        </div>
+        <div>
+          <span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900">CareerPath <span class="text-indigo-600">2026</span></span>
+          <span class="hidden md:inline-block ml-2 text-xs font-mono-code text-slate-500">• DevOps Engineer Track</span>
+        </div>
+      </div>
+
+      <div class="flex-1 max-w-md">
+        <div class="flex items-center justify-between text-[11px] font-semibold mb-0.5">
+          <span class="text-slate-500 uppercase tracking-wider">Roadmap Progress</span>
+          <span id="nav-progress-text" class="font-mono-code text-indigo-600 font-bold">0% (0/9)</span>
+        </div>
+        <div class="w-full h-2 rounded-full bg-slate-200/80 overflow-hidden">
+          <div id="nav-progress-fill" class="h-full rounded-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 transition-all duration-500" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <button id="expand-all-nav-btn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 transition-colors">
+        Expand All
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="pastel-hero hero-grid-pattern py-8 sm:py-11">
+    <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div class="lg:col-span-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono-code font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/80 mb-3">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>#03 • INFRASTRUCTURE & SRE • INTERMEDIATE TO ADVANCED</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 mb-3">
+            <span class="bg-gradient-to-r from-indigo-600 via-sky-600 to-emerald-600 bg-clip-text text-transparent">DevOps</span> Engineer Roadmap
+          </h1>
+
+          <p class="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed mb-5">
+            Bridges software development and operations through automated CI/CD pipelines, Kubernetes orchestration, Infrastructure-as-Code, and SRE observability.
+          </p>
+
+          <div>
+            <div class="flex items-center gap-2 text-[11px] font-mono-code font-semibold uppercase tracking-wider text-slate-500 mb-2">
+              <span>Click a skill tag to highlight matching modules & tools:</span>
+              <button id="clear-skill-btn" type="button" class="hidden text-indigo-600 hover:underline font-bold">Clear filter ×</button>
+            </div>
+            <div id="hero-skill-pills" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 grid grid-cols-2 gap-3">
+          <div class="p-4 rounded-2xl bg-indigo-50/90 border border-indigo-200/70">
+            <div class="text-xs font-mono-code font-semibold text-indigo-600 mb-1">CURRICULUM</div>
+            <div class="text-2xl font-extrabold text-slate-900">9 Core</div>
+            <div class="text-xs text-slate-600">Structured Modules</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-sky-50/90 border border-sky-200/70">
+            <div class="text-xs font-mono-code font-semibold text-sky-700 mb-1">SPECIALTIES</div>
+            <div class="text-2xl font-extrabold text-slate-900">6 Focus</div>
+            <div class="text-xs text-slate-600">Engineering Domains</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200/70">
+            <div class="text-xs font-mono-code font-semibold text-emerald-700 mb-1">TECH STACK</div>
+            <div class="text-2xl font-extrabold text-slate-900">12 Tools</div>
+            <div class="text-xs text-slate-600">Industry Standard</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-amber-50/90 border border-amber-200/70">
+            <div class="text-xs font-mono-code font-semibold text-amber-700 mb-1">EST. TIMELINE</div>
+            <div class="text-2xl font-extrabold text-slate-900">20–26 Wks</div>
+            <div class="text-xs text-slate-600">Job-Ready Pace</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Bento Grid -->
+  <main class="max-w-[1320px] mx-auto px-4 sm:px-6 py-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+      <!-- Left Column (8 Cols) -->
+      <div class="lg:col-span-8 space-y-5">
+
+        <!-- Role Overview & 6-Step Workflow -->
+        <section class="bento-card p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center font-mono-code font-bold text-sm">
+                OPS
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">What does a DevOps Engineer do?</h2>
+                <p class="text-[11px] font-mono-code uppercase tracking-wider text-slate-500">Role Scope & End-to-End Execution Lifecycle</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border bg-sky-50 text-sky-700 border-sky-200/70">Infrastructure as Code</span>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border bg-emerald-50 text-emerald-700 border-emerald-200/70">K8s Orchestration</span>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border bg-purple-50 text-purple-700 border-purple-200/70">99.99% Uptime</span>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 leading-relaxed mb-5">
+            DevOps Engineers automate the entire software delivery lifecycle—eliminating manual deployments with Infrastructure as Code, self-healing Kubernetes clusters, and real-time telemetry.
+          </p>
+
+          <div>
+            <div class="text-xs font-mono-code font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              <span>Role Workflow & Core Responsibilities</span>
+            </div>
+            <div id="workflow-grid" class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2.5"></div>
+          </div>
+        </section>
+
+        <!-- 6 Focus Domains -->
+        <section class="bento-card p-5 sm:p-6">
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 border border-sky-200 flex items-center justify-center font-mono-code font-bold text-sm">
+              06
+            </div>
+            <div>
+              <h2 class="text-lg sm:text-xl font-bold text-slate-900">DevOps Focus Domains</h2>
+              <p class="text-[11px] font-mono-code uppercase tracking-wider text-slate-500">6 Core Pillars of Specialization</p>
+            </div>
+          </div>
+          <div id="domains-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+        </section>
+
+        <!-- Interactive 9-Step Roadmap -->
+        <section class="bento-card p-5 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center font-mono-code font-bold text-sm">
+                09
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">Interactive Learning Roadmap</h2>
+                <p class="text-xs text-slate-500">Click the numbered badge to mark complete • Click any card for checklist & mini-project</p>
+              </div>
+            </div>
+
+            <button id="toggle-expand-all" type="button" class="self-start sm:self-auto px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 transition-colors">
+              Expand All
+            </button>
+          </div>
+
+          <!-- Search Filter -->
+          <div class="relative mb-5">
+            <input
+              id="topic-search-input"
+              type="text"
+              placeholder="Search modules, subtopics, or tools (e.g., Terraform, Kubernetes, Prometheus)..."
+              class="w-full pl-4 pr-20 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
+            />
+            <button id="clear-search-btn" type="button" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 hover:text-indigo-600">
+              Clear
+            </button>
+          </div>
+
+          <div id="empty-search-msg" class="hidden text-center py-8 px-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300">
+            <p class="text-sm font-semibold text-slate-700 mb-1">No matching modules found</p>
+            <p class="text-xs text-slate-500">Try clearing your search filter to view all 9 steps.</p>
+          </div>
+
+          <div id="roadmap-list" class="timeline-container space-y-3"></div>
+        </section>
+
+      </div>
+
+      <!-- Right Sidebar (4 Cols) -->
+      <aside class="lg:col-span-4 space-y-5">
+
+        <!-- Progress Ring -->
+        <section class="bento-card p-5 bg-gradient-to-br from-white via-indigo-50/40 to-sky-50/50">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              Your Learning Progress
+            </h3>
+            <button id="reset-progress-btn" type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 hover:bg-rose-50 transition-colors">
+              Reset
+            </button>
+          </div>
+
+          <div class="flex items-center gap-4 p-3.5 rounded-2xl bg-white/90 border border-indigo-100">
+            <div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
+              <svg class="w-16 h-16" viewBox="0 0 64 64">
+                <circle cx="32" cy="32" r="26" fill="none" stroke="#e2e8f0" stroke-width="6"></circle>
+                <circle id="sidebar-ring-circle" class="progress-ring-circle" cx="32" cy="32" r="26" fill="none" stroke="url(#pastelRingGrad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="163.36" stroke-dashoffset="163.36"></circle>
+                <defs>
+                  <linearGradient id="pastelRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#6366f1" />
+                    <stop offset="50%" stop-color="#0ea5e9" />
+                    <stop offset="100%" stop-color="#10b981" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span id="sidebar-ring-pct" class="absolute font-mono-code text-xs font-extrabold text-slate-900">0%</span>
+            </div>
+
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-semibold text-slate-500">Completed Steps</span>
+                <span id="sidebar-step-count" class="font-mono-code text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">0 / 9</span>
+              </div>
+              <div id="milestone-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200/80">
+                <span>🌱</span>
+                <span>Milestone: Getting Started</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Career Levels -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">Career Levels</h3>
+            <button id="toggle-levels-view" type="button" class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors">
+              Show All Levels
+            </button>
+          </div>
+
+          <div id="level-tabs-bar" class="grid grid-cols-3 gap-1.5 mb-3">
+            <button type="button" class="level-pill-tab active py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l1">Junior / L1</button>
+            <button type="button" class="level-pill-tab py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l2">Mid / L2</button>
+            <button type="button" class="level-pill-tab py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l3">Senior / L3</button>
+          </div>
+
+          <div id="career-levels-container" class="space-y-2.5"></div>
+        </section>
+
+        <!-- 12 Tools -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">DevOps Tools Covered</h3>
+            <span class="text-[11px] font-mono-code font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">12 Essential</span>
+          </div>
+          <div id="tools-grid" class="grid grid-cols-2 gap-2"></div>
+        </section>
+
+        <!-- Capstone Projects -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">Hands-On Capstone Projects</h3>
+            <span class="text-[11px] font-mono-code font-semibold text-indigo-600">Portfolio</span>
+          </div>
+          <div id="projects-list" class="space-y-2.5"></div>
+        </section>
+
+        <!-- Engineering Principle -->
+        <section class="rounded-2xl p-5 border border-indigo-200/80" style="background: linear-gradient(135deg, #eef2ff 0%, #f3e8ff 52%, #e0f2fe 100%);">
+          <div class="text-xs font-mono-code font-bold uppercase tracking-wider text-indigo-700 mb-2">
+            Engineering Principle
+          </div>
+          <p class="text-sm font-semibold italic text-slate-800 leading-relaxed mb-3">
+            "If you have to deploy it manually twice, automate it once and forever."
+          </p>
+          <div class="p-3 rounded-xl bg-white/75 border border-white text-xs text-slate-700 leading-relaxed">
+            <strong class="text-indigo-700">2026 Mastery Tip:</strong> Complete each step's mini-project and push it to a public portfolio repository—demonstrable proof of work beats passive certificates every time.
+          </div>
+        </section>
+
+      </aside>
+    </div>
+  </main>
+
+  <!-- Toast Banner -->
+  <div id="toast-banner" class="fixed bottom-5 right-5 z-50 max-w-sm translate-y-28 opacity-0 pointer-events-none">
+    <div class="p-4 rounded-2xl bg-white border-2 border-emerald-300 shadow-xl flex items-start gap-3">
+      <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-base">
+        🎉
+      </div>
+      <div>
+        <div class="text-sm font-bold text-emerald-800">DevOps Engineer Roadmap 100% Completed!</div>
+        <p class="text-xs text-slate-600 mt-0.5">Outstanding milestone! You have completed every stage of this roadmap.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DEVOPS_DATA = {
+      id: "devops",
+      skills: ["Linux", "Docker", "Kubernetes", "Terraform", "CI/CD", "AWS / Cloud", "Prometheus", "GitOps"],
+      workflow: [
+        ["Provision", "Codify cloud networks & VPCs via Terraform."],
+        ["Containerize", "Build slim, reproducible OCI images."],
+        ["Automate", "Run CI tests, builds & artifact signing."],
+        ["Orchestrate", "Deploy workloads via GitOps & Helm."],
+        ["Observe", "Track SLIs, SLOs, traces & alerts."],
+        ["Optimize", "Auto-scale nodes & reduce cloud spend."]
+      ],
+      domains: [
+        ["Linux & Networking", "Kernel tuning, DNS, load balancers & TLS.", ["Linux", "NGINX", "TCP/IP"]],
+        ["CI/CD & GitOps", "GitHub Actions, ArgoCD & canary rollouts.", ["GitHub Actions", "ArgoCD", "GitOps"]],
+        ["Containers & K8s", "Docker, Kubernetes, Helm & service meshes.", ["Docker", "Kubernetes", "Helm"]],
+        ["Infrastructure as Code", "Terraform, OpenTofu & Ansible automation.", ["Terraform", "Ansible", "IaC"]],
+        ["Cloud Platforms", "AWS/GCP IAM, VPCs, EKS & object storage.", ["AWS", "IAM", "VPC"]],
+        ["Observability & SRE", "Prometheus, Grafana, Loki & incident response.", ["Prometheus", "Grafana", "SLOs"]]
+      ],
+      steps: [
+        ["Linux Internals & Shell Scripting", "2–3 Wks", "Master Bash/Python automation, systemd, networking, and file systems.", ["Linux"], ["Linux processes, permissions, cgroups & namespaces", "Bash & Python scripting for operational automation", "Networking fundamentals: DNS, BGP, HTTP/3, TLS & reverse proxies", "SSH hardening, firewalls (iptables/ufw) & troubleshooting"], "Write a Bash + Python server health & auto-remediation agent."],
+        ["Git Workflows & CI Pipeline Automation", "2 Wks", "Automate builds, tests, and artifact versioning on every pull request.", ["CI/CD"], ["Trunk-based development & semantic release tagging", "GitHub Actions / GitLab CI matrix builds & caching", "Container registry management (ECR, GHCR) & image tagging", "Automated rollback triggers & deployment approvals"], "Build a multi-stage CI pipeline with automated test gates."],
+        ["Docker & Container Engineering", "2 Wks", "Craft secure, minimal multi-stage container images and networks.", ["Docker"], ["Multi-stage builds, layer caching & distroless base images", "Docker networking, volumes & resource limits", "Rootless containers & non-root user execution", "Local multi-container orchestration with Docker Compose"], "Shrink a Node/Python container image by 75% using distroless."],
+        ["Cloud Foundations (AWS / GCP)", "3 Wks", "Architect VPCs, IAM least-privilege roles, load balancers, and managed DBs.", ["AWS / Cloud"], ["VPC subnets, NAT gateways, security groups & peering", "IAM roles, policies, OIDC federation & Secrets Manager", "Application Load Balancers, Auto Scaling Groups & S3", "Cloud cost tagging & FinOps rightsizing basics"], "Provision a highly available 3-tier VPC architecture on AWS."],
+        ["Infrastructure as Code (Terraform)", "3 Wks", "Declare, version, and drift-detect cloud infrastructure reproducibly.", ["Terraform", "AWS / Cloud"], ["Terraform HCL syntax, state backends (S3 + DynamoDB locking)", "Reusable Terraform modules & multi-environment workspaces", "Configuration management & immutable AMIs with Ansible/Packer", "Automated drift detection & policy checks in CI"], "Codify an entire AWS VPC + EKS cluster with modular Terraform."],
+        ["Kubernetes & Helm Orchestration", "4 Wks", "Deploy, scale, and network containerized microservices on Kubernetes.", ["Kubernetes", "Docker"], ["K8s architecture: Pods, Deployments, Services, Ingress & HPA", "ConfigMaps, Secrets, PersistentVolumes & StatefulSets", "Packaging & templating releases with Helm & Kustomize", "NetworkPolicies, RBAC & PodDisruptionBudgets"], "Deploy a self-healing microservices app on Kubernetes with HPA."],
+        ["GitOps & Progressive Delivery", "2 Wks", "Synchronize cluster state continuously with ArgoCD and canary rollouts.", ["GitOps", "Kubernetes", "CI/CD"], ["Declarative GitOps reconciliation loops with ArgoCD / Flux", "Zero-downtime blue-green & canary deployments (Argo Rollouts)", "Automated metric-driven rollbacks during canary analysis", "Multi-cluster environment promotion workflows"], "Implement an ArgoCD GitOps workflow with canary rollouts."],
+        ["Observability, Logging & SRE Practices", "2–3 Wks", "Build full-stack visibility with Prometheus, Grafana, Loki, and OpenTelemetry.", ["Prometheus", "Kubernetes"], ["Metrics collection with Prometheus & custom exporters", "Actionable Grafana dashboards & Alertmanager routing", "Centralized log aggregation with Loki / OpenSearch", "Defining SLIs, SLOs, error budgets & blameless postmortems"], "Build a complete Prometheus + Grafana + Loki observability stack."],
+        ["Service Mesh, FinOps & Chaos Engineering", "2 Wks", "Harden inter-service traffic and validate resilience under failure.", ["Kubernetes", "AWS / Cloud", "Prometheus"], ["mTLS encryption & traffic splitting with Istio / Cilium", "Kubernetes cost optimization with Karpenter & Kubecost", "Chaos engineering experiments (pod kills, latency injection)", "Disaster recovery drills & multi-region backup automation"], "Run a chaos experiment validating auto-recovery within SLOs."]
+      ],
+      levels: [
+        ["Junior / L1", "CI/CD & Cloud Ops", "Maintain CI pipelines, write Dockerfiles, and monitor cloud alerts.", ["Write clean Dockerfiles & maintain GitHub Actions", "Manage basic Terraform modules & cloud IAM permissions", "Respond to first-line alerts using runbooks"]],
+        ["Mid / L2", "Kubernetes & IaC Ownership", "Own production K8s clusters, GitOps workflows, and observability stacks.", ["Architect modular Terraform & ArgoCD GitOps pipelines", "Tune Kubernetes autoscaling, ingress & Helm charts", "Drive SLO tracking & incident postmortems"]],
+        ["Senior / L3", "Platform & SRE Architecture", "Design internal developer platforms, multi-region DR, and FinOps strategy.", ["Architect self-service Internal Developer Platforms (IDPs)", "Lead multi-cluster disaster recovery & chaos testing", "Optimize enterprise cloud FinOps & mentor SRE teams"]]
+      ],
+      tools: [
+        ["Linux / Bash", "OS Core", ["Linux"]], ["Docker", "Containers", ["Docker"]], ["Kubernetes", "Orchestrator", ["Kubernetes"]], ["Terraform", "IaC", ["Terraform"]],
+        ["AWS / GCP", "Cloud", ["AWS / Cloud"]], ["GitHub Actions", "CI/CD", ["CI/CD"]], ["ArgoCD", "GitOps", ["GitOps"]], ["Helm", "K8s Pkg", ["Kubernetes"]],
+        ["Prometheus", "Metrics", ["Prometheus"]], ["Grafana", "Dashboards", ["Prometheus"]], ["Ansible", "Config Mgmt", ["Terraform"]], ["NGINX / Cilium", "Networking", ["Linux"]]
+      ],
+      projects: [
+        ["Zero-Downtime CI/CD & Docker Pipeline", "Beginner", "Automated test, build, security scan & deploy pipeline.", ["Docker", "CI/CD"]],
+        ["Terraform AWS EKS + ArgoCD GitOps Stack", "Intermediate", "Declarative Kubernetes cluster managed 100% via Git.", ["Terraform", "Kubernetes"]],
+        ["Full-Stack SRE Observability & Chaos Lab", "Advanced", "Prometheus, Grafana, SLO alerts & automated fault recovery.", ["Prometheus", "GitOps"]]
+      ]
+    };
+
+    const STORAGE_KEY = "careerpath_2026_devops_completed_steps";
+    let expandedSteps = new Set([1]);
+    let selectedSkill = null;
+    let searchQuery = "";
+    let activeLevelIdx = 0;
+    let showAllLevels = false;
+
+    const WF_STYLES = [
+      { bg: "bg-indigo-50/60 border-indigo-200/80", badge: "bg-indigo-100 text-indigo-700" },
+      { bg: "bg-sky-50/60 border-sky-200/80", badge: "bg-sky-100 text-sky-700" },
+      { bg: "bg-purple-50/60 border-purple-200/80", badge: "bg-purple-100 text-purple-700" },
+      { bg: "bg-emerald-50/60 border-emerald-200/80", badge: "bg-emerald-100 text-emerald-700" },
+      { bg: "bg-amber-50/60 border-amber-200/80", badge: "bg-amber-100 text-amber-700" },
+      { bg: "bg-rose-50/60 border-rose-200/80", badge: "bg-rose-100 text-rose-700" }
+    ];
+
+    const DOMAIN_STYLES = [
+      { iconBg: "bg-orange-100 text-orange-700", tagBg: "bg-orange-50 text-orange-700 border-orange-200/70" },
+      { iconBg: "bg-sky-100 text-sky-700", tagBg: "bg-sky-50 text-sky-700 border-sky-200/70" },
+      { iconBg: "bg-indigo-100 text-indigo-700", tagBg: "bg-indigo-50 text-indigo-700 border-indigo-200/70" },
+      { iconBg: "bg-emerald-100 text-emerald-700", tagBg: "bg-emerald-50 text-emerald-700 border-emerald-200/70" },
+      { iconBg: "bg-amber-100 text-amber-700", tagBg: "bg-amber-50 text-amber-700 border-amber-200/70" },
+      { iconBg: "bg-purple-100 text-purple-700", tagBg: "bg-purple-50 text-purple-700 border-purple-200/70" }
+    ];
+
+    const STEP_BADGE_COLORS = [
+      "bg-orange-50 text-orange-700 border-orange-200",
+      "bg-sky-50 text-sky-700 border-sky-200",
+      "bg-amber-50 text-amber-700 border-amber-200",
+      "bg-rose-50 text-rose-700 border-rose-200",
+      "bg-indigo-50 text-indigo-700 border-indigo-200",
+      "bg-purple-50 text-purple-700 border-purple-200",
+      "bg-emerald-50 text-emerald-700 border-emerald-200",
+      "bg-teal-50 text-teal-700 border-teal-200",
+      "bg-violet-50 text-violet-700 border-violet-200"
+    ];
+
+    const TOOL_PASTELS = [
+      { bg: "bg-orange-50", text: "text-orange-700" },
+      { bg: "bg-sky-50", text: "text-sky-700" },
+      { bg: "bg-amber-50", text: "text-amber-700" },
+      { bg: "bg-blue-50", text: "text-blue-700" },
+      { bg: "bg-cyan-50", text: "text-cyan-700" },
+      { bg: "bg-indigo-50", text: "text-indigo-700" },
+      { bg: "bg-teal-50", text: "text-teal-700" },
+      { bg: "bg-rose-50", text: "text-rose-700" },
+      { bg: "bg-purple-50", text: "text-purple-700" },
+      { bg: "bg-emerald-50", text: "text-emerald-700" },
+      { bg: "bg-pink-50", text: "text-pink-700" },
+      { bg: "bg-slate-100", text: "text-slate-700" }
+    ];
+
+    function getCompletedSet() {
+      try {
+        return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+      } catch {
+        return new Set();
+      }
+    }
+
+    function saveCompletedSet(setObj) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...setObj]));
+    }
+
+    function renderSkills() {
+      document.getElementById("clear-skill-btn").classList.toggle("hidden", !selectedSkill);
+      document.getElementById("hero-skill-pills").innerHTML = DEVOPS_DATA.skills.map(sk => `
+        <button
+          type="button"
+          onclick="toggleSkillFilter('${sk.replace(/'/g, "\\'")}')"
+          class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold ${selectedSkill === sk ? 'active' : ''}">
+          ${sk}
+        </button>
+      `).join("");
+    }
+
+    function renderWorkflow() {
+      document.getElementById("workflow-grid").innerHTML = DEVOPS_DATA.workflow.map((wf, idx) => {
+        const st = WF_STYLES[idx % WF_STYLES.length];
+        return `
+          <div class="workflow-tile p-3 ${st.bg}">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] font-mono-code font-bold px-1.5 py-0.5 rounded ${st.badge}">0${idx + 1}</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-400/60"></span>
+            </div>
+            <div class="text-xs font-bold uppercase text-slate-900 mb-0.5">${wf[0]}</div>
+            <p class="text-[11px] text-slate-600 leading-snug">${wf[1]}</p>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderDomains() {
+      document.getElementById("domains-grid").innerHTML = DEVOPS_DATA.domains.map((dom, idx) => {
+        const st = DOMAIN_STYLES[idx % DOMAIN_STYLES.length];
+        return `
+          <div class="domain-tile p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2.5 mb-2">
+                <div class="w-8 h-8 rounded-lg ${st.iconBg} flex items-center justify-center shrink-0 font-mono-code text-xs font-extrabold">
+                  0${idx + 1}
+                </div>
+                <h3 class="font-bold text-sm text-slate-900">${dom[0]}</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-3">${dom[1]}</p>
+            </div>
+            <div class="flex flex-wrap gap-1">
+              ${dom[2].map(tag => `<span class="text-[10px] font-mono-code px-2 py-0.5 rounded border ${st.tagBg}">${tag}</span>`).join("")}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderSteps() {
+      const completedSet = getCompletedSet();
+      const listEl = document.getElementById("roadmap-list");
+      const emptyMsg = document.getElementById("empty-search-msg");
+      const q = searchQuery.trim().toLowerCase();
+
+      const stepsWithIndex = DEVOPS_DATA.steps.map((s, idx) => ({
+        id: idx + 1,
+        title: s[0],
+        duration: s[1],
+        summary: s[2],
+        skills: s[3],
+        checklist: s[4],
+        miniProject: s[5],
+        badgeColor: STEP_BADGE_COLORS[idx % STEP_BADGE_COLORS.length]
+      }));
+
+      const filtered = stepsWithIndex.filter(step => {
+        if (!q) return true;
+        return step.title.toLowerCase().includes(q) ||
+               step.summary.toLowerCase().includes(q) ||
+               step.checklist.some(c => c.toLowerCase().includes(q)) ||
+               step.skills.some(sk => sk.toLowerCase().includes(q));
+      });
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = "";
+        emptyMsg.classList.remove("hidden");
+        return;
+      }
+
+      emptyMsg.classList.add("hidden");
+
+      const railHTML = `<div class="timeline-rail"><div id="timeline-rail-fill" class="timeline-rail-fill"></div></div>`;
+      const rowsHTML = filtered.map(step => {
+        const isDone = completedSet.has(step.id);
+        const isOpen = expandedSteps.has(step.id);
+        const isMatch = selectedSkill && step.skills.includes(selectedSkill);
+
+        return `
+          <div class="step-row flex items-start gap-3.5 ${isDone ? 'completed' : ''} ${isOpen ? 'expanded' : ''} ${isMatch ? 'highlighted' : ''}">
+            <button
+              type="button"
+              onclick="toggleStepComplete(${step.id}, event)"
+              title="${isDone ? 'Mark incomplete' : 'Mark complete'}"
+              class="step-check-btn font-mono-code mt-1">
+              ${isDone
+                ? `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`
+                : step.id
+              }
+            </button>
+
+            <div class="step-card flex-1 p-4 cursor-pointer" onclick="toggleStepExpand(${step.id})">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h3 class="text-sm sm:text-base font-bold text-slate-900 ${isDone ? 'line-through text-slate-500' : ''}">
+                      ${step.title}
+                    </h3>
+                    <span class="text-[11px] font-mono-code font-semibold px-2 py-0.5 rounded-md border ${step.badgeColor}">
+                      ${step.duration}
+                    </span>
+                  </div>
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    ${step.summary}
+                  </p>
+                </div>
+
+                <span class="p-1 rounded-lg text-slate-400 hover:text-indigo-600 shrink-0">
+                  <svg class="w-4 h-4 step-chevron" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </span>
+              </div>
+
+              <div class="step-drawer">
+                <div class="step-drawer-inner">
+                  <div class="mt-3.5 pt-3.5 border-t border-slate-200/80 space-y-3">
+                    <div>
+                      <div class="text-[11px] font-mono-code font-bold uppercase tracking-wider text-indigo-700 mb-2">
+                        Sub-Topics & Actionable Checklist
+                      </div>
+                      <ul class="space-y-1.5">
+                        ${step.checklist.map(point => `
+                          <li class="flex items-start gap-2 text-xs text-slate-700">
+                            <span class="font-bold text-emerald-600">✓</span>
+                            <span>${point}</span>
+                          </li>
+                        `).join("")}
+                      </ul>
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-indigo-50/70 border border-indigo-100 flex items-start gap-2.5">
+                      <span class="text-sm shrink-0">🛠️</span>
+                      <div class="text-xs text-slate-700">
+                        <strong class="text-indigo-800">Recommended Mini-Project:</strong> ${step.miniProject}
+                      </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                      <div class="flex flex-wrap gap-1.5">
+                        ${step.skills.map(sk => `
+                          <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600">
+                            #${sk}
+                          </span>
+                        `).join("")}
+                      </div>
+
+                      <button
+                        type="button"
+                        onclick="toggleStepComplete(${step.id}, event)"
+                        class="px-3 py-1 rounded-lg text-xs font-semibold transition-colors ${isDone
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                          : 'bg-indigo-600 text-white hover:bg-indigo-700'}">
+                        ${isDone ? '✓ Completed' : 'Mark Complete'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      listEl.innerHTML = railHTML + rowsHTML;
+      syncProgressUI();
+    }
+
+    function renderLevels() {
+      const container = document.getElementById("career-levels-container");
+      const tabsBar = document.getElementById("level-tabs-bar");
+      const toggleBtn = document.getElementById("toggle-levels-view");
+
+      tabsBar.classList.toggle("hidden", showAllLevels);
+      toggleBtn.textContent = showAllLevels ? "Tab View" : "Show All Levels";
+
+      document.querySelectorAll(".level-pill-tab").forEach((btn, idx) => {
+        btn.classList.toggle("active", idx === activeLevelIdx);
+      });
+
+      const levelStyles = [
+        { card: "bg-sky-50/80 border-sky-200", badge: "bg-sky-100 text-sky-800" },
+        { card: "bg-emerald-50/80 border-emerald-200", badge: "bg-emerald-100 text-emerald-800" },
+        { card: "bg-orange-50/80 border-orange-200", badge: "bg-orange-100 text-orange-800" }
+      ];
+
+      const levelsToShow = showAllLevels
+        ? DEVOPS_DATA.levels.map((l, i) => ({ data: l, idx: i }))
+        : [{ data: DEVOPS_DATA.levels[activeLevelIdx], idx: activeLevelIdx }];
+
+      container.innerHTML = levelsToShow.map(({ data, idx }) => {
+        const st = levelStyles[idx];
+        return `
+          <div class="p-3.5 rounded-xl border ${st.card}">
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <span class="text-xs font-extrabold text-slate-900">${data[0]}</span>
+              <span class="text-[10px] font-mono-code font-bold px-2 py-0.5 rounded-md ${st.badge}">${data[1]}</span>
+            </div>
+            <p class="text-xs text-slate-700 leading-relaxed mb-2.5">${data[2]}</p>
+            <ul class="space-y-1">
+              ${data[3].map(exp => `
+                <li class="flex items-start gap-1.5 text-[11px] text-slate-700">
+                  <span class="font-bold text-emerald-600">✓</span>
+                  <span>${exp}</span>
+                </li>
+              `).join("")}
+            </ul>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderTools() {
+      document.getElementById("tools-grid").innerHTML = DEVOPS_DATA.tools.map((tool, idx) => {
+        const st = TOOL_PASTELS[idx % TOOL_PASTELS.length];
+        const isHighlighted = selectedSkill && tool[2].includes(selectedSkill);
+        return `
+          <div class="tool-badge-card p-2.5 flex items-center gap-2 ${isHighlighted ? 'highlighted' : ''}">
+            <span class="w-6 h-6 rounded-lg ${st.bg} ${st.text} flex items-center justify-center text-xs font-bold shrink-0">✓</span>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-slate-900 truncate">${tool[0]}</div>
+              <div class="text-[10px] font-mono-code text-slate-500 truncate">${tool[1]}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderProjects() {
+      const diffBadges = [
+        "bg-sky-100 text-sky-700",
+        "bg-emerald-100 text-emerald-700",
+        "bg-purple-100 text-purple-700"
+      ];
+      document.getElementById("projects-list").innerHTML = DEVOPS_DATA.projects.map((proj, idx) => `
+        <div class="project-mini-card p-3.5">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span class="text-xs font-bold text-slate-900">${idx + 1}. ${proj[0]}</span>
+            <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded ${diffBadges[idx % 3]} shrink-0">${proj[1]}</span>
+          </div>
+          <p class="text-[11px] text-slate-600 mb-2">${proj[2]}</p>
+          <div class="flex flex-wrap gap-1">
+            ${proj[3].map(t => `<span class="text-[10px] font-mono-code px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600">${t}</span>`).join("")}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function syncProgressUI() {
+      const completedSet = getCompletedSet();
+      const done = completedSet.size;
+      const pct = Math.round((done / 9) * 100);
+
+      document.getElementById("nav-progress-text").textContent = `${pct}% (${done}/9)`;
+      document.getElementById("nav-progress-fill").style.width = `${pct}%`;
+
+      const railFill = document.getElementById("timeline-rail-fill");
+      if (railFill) railFill.style.height = `${pct}%`;
+
+      const circumference = 163.36;
+      const offset = circumference - (pct / 100) * circumference;
+      document.getElementById("sidebar-ring-circle").style.strokeDashoffset = offset;
+      document.getElementById("sidebar-ring-pct").textContent = `${pct}%`;
+      document.getElementById("sidebar-step-count").textContent = `${done} / 9`;
+
+      const milestoneEl = document.getElementById("milestone-badge");
+      if (done === 0) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200/80";
+        milestoneEl.innerHTML = `<span>🌱</span><span>Milestone: Getting Started</span>`;
+      } else if (done <= 3) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80";
+        milestoneEl.innerHTML = `<span>🧱</span><span>Milestone: Core Foundations</span>`;
+      } else if (done <= 6) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/80";
+        milestoneEl.innerHTML = `<span>⚡</span><span>Milestone: Applied Builder</span>`;
+      } else if (done < 9) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200/80";
+        milestoneEl.innerHTML = `<span>🚀</span><span>Milestone: Production Ready</span>`;
+      } else {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80";
+        milestoneEl.innerHTML = `<span>🏆</span><span>Milestone: Role Mastery</span>`;
+      }
+    }
+
+    window.toggleStepComplete = function(stepId, event) {
+      if (event) event.stopPropagation();
+      const setObj = getCompletedSet();
+      const wasComplete = setObj.size === 9;
+      if (setObj.has(stepId)) setObj.delete(stepId);
+      else setObj.add(stepId);
+      saveCompletedSet(setObj);
+      renderSteps();
+      if (setObj.size === 9 && !wasComplete) {
+        const toast = document.getElementById("toast-banner");
+        toast.classList.remove("translate-y-28", "opacity-0");
+        toast.classList.add("translate-y-0", "opacity-100");
+        setTimeout(() => {
+          toast.classList.add("translate-y-28", "opacity-0");
+          toast.classList.remove("translate-y-0", "opacity-100");
+        }, 4500);
+      }
+    };
+
+    window.toggleStepExpand = function(stepId) {
+      if (expandedSteps.has(stepId)) expandedSteps.delete(stepId);
+      else expandedSteps.add(stepId);
+      renderSteps();
+    };
+
+    window.toggleSkillFilter = function(skill) {
+      selectedSkill = selectedSkill === skill ? null : skill;
+      renderSkills();
+      renderSteps();
+      renderTools();
+    };
+
+    document.getElementById("clear-skill-btn").addEventListener("click", () => {
+      selectedSkill = null;
+      renderSkills();
+      renderSteps();
+      renderTools();
+    });
+
+    const searchInput = document.getElementById("topic-search-input");
+    const clearSearchBtn = document.getElementById("clear-search-btn");
+    searchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      clearSearchBtn.classList.toggle("hidden", searchQuery.length === 0);
+      renderSteps();
+    });
+
+    clearSearchBtn.addEventListener("click", () => {
+      searchQuery = "";
+      searchInput.value = "";
+      clearSearchBtn.classList.add("hidden");
+      renderSteps();
+    });
+
+    function toggleExpandAll() {
+      const btn = document.getElementById("toggle-expand-all");
+      const navBtn = document.getElementById("expand-all-nav-btn");
+      if (expandedSteps.size === 9) {
+        expandedSteps.clear();
+        btn.textContent = "Expand All";
+        navBtn.textContent = "Expand All";
+      } else {
+        for (let i = 1; i <= 9; i++) expandedSteps.add(i);
+        btn.textContent = "Collapse All";
+        navBtn.textContent = "Collapse All";
+      }
+      renderSteps();
+    }
+
+    document.getElementById("toggle-expand-all").addEventListener("click", toggleExpandAll);
+    document.getElementById("expand-all-nav-btn").addEventListener("click", toggleExpandAll);
+
+    document.querySelectorAll(".level-pill-tab").forEach((btn, idx) => {
+      btn.addEventListener("click", () => {
+        activeLevelIdx = idx;
+        renderLevels();
+      });
+    });
+
+    document.getElementById("toggle-levels-view").addEventListener("click", () => {
+      showAllLevels = !showAllLevels;
+      renderLevels();
+    });
+
+    document.getElementById("reset-progress-btn").addEventListener("click", () => {
+      localStorage.removeItem(STORAGE_KEY);
+      renderSteps();
+    });
+
+    renderSkills();
+    renderWorkflow();
+    renderDomains();
+    renderSteps();
+    renderLevels();
+    renderTools();
+    renderProjects();
+  </script>
+</body>
+</html>
+```[cite: 1]

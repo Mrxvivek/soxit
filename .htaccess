@@ -1,0 +1,15 @@
+DirectoryIndex index.html
+
+<IfModule mod_headers.c>
+    # Disable aggressive caching for HTML, CSS, and JS on staging
+    <FilesMatch "\.(html|htm|js|css)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+
+    # Allow reasonable caching for media
+    <FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|webp|svg|mp4)$">
+        Header set Cache-Control "max-age=86400, public"
+    </FilesMatch>
+</IfModule>

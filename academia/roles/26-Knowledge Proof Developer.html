@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerPath 2026 • Zero-Knowledge (ZK) Proof Developer Interactive Roadmap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* ==========================================================================
+       LIGHT & PASTEL DESIGN TOKENS
+       ========================================================================== */
+    :root {
+      --bg-page: #f4f7fb;
+      --bg-surface: #ffffff;
+      --bg-tinted: #f8faff;
+      --border-soft: #e2e8f0;
+      --border-accent: #c7d2fe;
+      --text-main: #0f172a;
+      --text-body: #475569;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ==========================================================================
+       GLASS NAVBAR & PASTEL HERO MESH
+       ========================================================================== */
+    .glass-navbar {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .pastel-hero {
+      background:
+        radial-gradient(circle at 8% 18%, rgba(224, 231, 255, 0.88) 0%, transparent 44%),
+        radial-gradient(circle at 88% 16%, rgba(220, 252, 231, 0.78) 0%, transparent 42%),
+        radial-gradient(circle at 60% 92%, rgba(255, 237, 213, 0.78) 0%, transparent 46%),
+        linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .hero-grid-pattern {
+      background-image:
+        linear-gradient(to right, rgba(99, 102, 241, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.045) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* ==========================================================================
+       BENTO CARDS, PILLS & MICRO-INTERACTIONS
+       ========================================================================== */
+    .bento-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 18px;
+      box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.03);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .bento-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 28px -6px rgba(79, 70, 229, 0.07);
+    }
+
+    .skill-pill {
+      background: #ffffff;
+      border: 1px solid #dbeafe;
+      color: #334155;
+      transition: all 0.18s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .skill-pill:hover {
+      background: #eef2ff;
+      border-color: #818cf8;
+      color: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .skill-pill.active {
+      background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+      border-color: transparent;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+
+    .workflow-tile {
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .workflow-tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px -4px rgba(15, 23, 42, 0.08);
+    }
+
+    .domain-tile {
+      background: var(--bg-tinted);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      transition: all 0.22s ease;
+    }
+
+    .domain-tile:hover {
+      background: #ffffff;
+      border-color: #a5b4fc;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.12);
+    }
+
+    /* ==========================================================================
+       INTERACTIVE ROADMAP TIMELINE
+       ========================================================================== */
+    .timeline-container {
+      position: relative;
+    }
+
+    .timeline-rail {
+      position: absolute;
+      left: 17px;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+
+    .timeline-rail-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(180deg, #6366f1, #0ea5e9, #10b981);
+      transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-row {
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-check-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: #ffffff;
+      border: 2px solid #c7d2fe;
+      color: #4338ca;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.08);
+    }
+
+    .step-check-btn:hover {
+      border-color: #6366f1;
+      background: #eef2ff;
+      transform: scale(1.06);
+    }
+
+    .step-row.completed .step-check-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-color: #10b981;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
+    }
+
+    .step-card {
+      background: #fafcff;
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .step-row:hover .step-card {
+      background: #ffffff;
+      border-color: #c7d2fe;
+    }
+
+    .step-row.completed .step-card {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .step-row.highlighted .step-card {
+      background: #eff6ff;
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+    }
+
+    .step-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .step-row.expanded .step-drawer {
+      grid-template-rows: 1fr;
+    }
+
+    .step-drawer-inner {
+      overflow: hidden;
+    }
+
+    .step-chevron {
+      transition: transform 0.25s ease;
+    }
+
+    .step-row.expanded .step-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* ==========================================================================
+       SIDEBAR CARDS
+       ========================================================================== */
+    .level-pill-tab {
+      border: 1px solid var(--border-soft);
+      background: #f8fafc;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .level-pill-tab.active[data-lvl="l1"] {
+      background: #e0f2fe;
+      border-color: #7dd3fc;
+      color: #0369a1;
+    }
+
+    .level-pill-tab.active[data-lvl="l2"] {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #15803d;
+    }
+
+    .level-pill-tab.active[data-lvl="l3"] {
+      background: #ffedd5;
+      border-color: #fdba74;
+      color: #c2410c;
+    }
+
+    .tool-badge-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      transition: all 0.18s ease;
+    }
+
+    .tool-badge-card:hover {
+      background: #ffffff;
+      border-color: #a5b4fc;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+    }
+
+    .tool-badge-card.highlighted {
+      background: #eef2ff;
+      border-color: #818cf8;
+      box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.22);
+    }
+
+    .project-mini-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-soft);
+      border-radius: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .project-mini-card:hover {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      transform: translateX(3px);
+    }
+
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    #toast-banner {
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+    }
+  </style>
+<!-- sx:begin --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../css/soxit-theme.css?v=20261120_direct_v5"><script src="../../js/site-shell.js?v=20261120_direct_v5" defer></script><!-- sx:end -->
+</head>
+<body class="antialiased selection:bg-indigo-100 selection:text-indigo-900">
+
+  <!-- ========================================================================
+       STICKY TOP NAVBAR WITH PROGRESS TRACKER
+       ======================================================================== -->
+  <nav class="glass-navbar sticky top-0 z-40">
+    <div class="max-w-[1320px] mx-auto px-4 sm:px-6 h-15 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      <!-- Left: Brand -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-600 to-sky-500 text-white flex items-center justify-center font-extrabold text-sm shadow-sm">
+          16
+        </div>
+        <div>
+          <span class="font-extrabold text-sm sm:text-base tracking-tight text-slate-900">CareerPath <span class="text-indigo-600">2026</span></span>
+          <span class="hidden md:inline-block ml-2 text-xs font-mono-code font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200/70">Zero-Knowledge (ZK) Track</span>
+        </div>
+      </div>
+
+      <!-- Center: Active Progress Bar -->
+      <div class="flex-1 max-w-md">
+        <div class="flex items-center justify-between text-[11px] font-semibold mb-0.5">
+          <span class="text-slate-500 uppercase tracking-wider">ZK Mastery Progress</span>
+          <span id="nav-progress-text" class="font-mono-code text-indigo-600 font-bold">0% (0/9)</span>
+        </div>
+        <div class="w-full h-2 rounded-full bg-slate-200/80 overflow-hidden">
+          <div id="nav-progress-fill" class="h-full rounded-full bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 transition-all duration-500" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Right: Quick Actions -->
+      <div class="flex items-center gap-2">
+        <button id="reset-nav-btn" title="Reset Progress" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 hover:bg-rose-50 transition-colors">
+          Reset Progress
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       BRIGHT PASTEL MESH HERO SECTION
+       ======================================================================== -->
+  <header class="pastel-hero hero-grid-pattern py-8 sm:py-11">
+    <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+
+        <!-- Left 8 Cols: Category Tag, Role Title, Subtitle, Skill Filter Pills -->
+        <div class="lg:col-span-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono-code font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200/80 mb-3">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>#16 • CRYPTOGRAPHY, CIRCUITS & ZK-SNARKS • ADVANCED</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 mb-3">
+            <span class="bg-gradient-to-r from-indigo-600 via-sky-600 to-emerald-600 bg-clip-text text-transparent">Zero-Knowledge (ZK) Proof Developer</span> Roadmap
+          </h1>
+
+          <p class="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed mb-5">
+            Architects zero-knowledge circuits, writes cryptographic arithmetic constraints in Circom, Noir, and Cairo, deploys zk-rollups, and implements privacy-preserving blockchain protocols.
+          </p>
+
+          <!-- Interactive Skill Filter Pills -->
+          <div>
+            <div class="flex items-center gap-2 text-[11px] font-mono-code font-semibold uppercase tracking-wider text-slate-500 mb-2">
+              <span>Click a skill tag to highlight matching modules & tools:</span>
+              <button id="clear-skill-btn" class="hidden text-indigo-600 hover:underline font-bold">Clear filter ×</button>
+            </div>
+            <div id="hero-skill-pills" class="flex flex-wrap gap-2">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 4 Cols: 2x2 Quick-Stat Pastel Chips -->
+        <div class="lg:col-span-4 grid grid-cols-2 gap-3">
+          <div class="p-4 rounded-2xl bg-indigo-50/90 border border-indigo-200/70">
+            <div class="text-xs font-mono-code font-semibold text-indigo-600 mb-1">CURRICULUM</div>
+            <div class="text-2xl font-extrabold text-slate-900">9 Core</div>
+            <div class="text-xs text-slate-600">Structured Modules</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-sky-50/90 border border-sky-200/70">
+            <div class="text-xs font-mono-code font-semibold text-sky-700 mb-1">SPECIALTIES</div>
+            <div class="text-2xl font-extrabold text-slate-900">6 Focus</div>
+            <div class="text-xs text-slate-600">ZK Cryptography Domains</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200/70">
+            <div class="text-xs font-mono-code font-semibold text-emerald-700 mb-1">TECH STACK</div>
+            <div class="text-2xl font-extrabold text-slate-900">12 Tools</div>
+            <div class="text-xs text-slate-600">Industry Standard</div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-amber-50/90 border border-amber-200/70">
+            <div class="text-xs font-mono-code font-semibold text-amber-700 mb-1">EST. TIMELINE</div>
+            <div class="text-2xl font-extrabold text-slate-900">24–30 Wks</div>
+            <div class="text-xs text-slate-600">Expert-Ready Pace</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       BALANCED 2-COLUMN BENTO GRID
+       ======================================================================== -->
+  <main class="max-w-[1320px] mx-auto px-4 sm:px-6 py-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+      <!-- ====================================================================
+           LEFT COLUMN (8 COLS): OVERVIEW + 6-STEP WORKFLOW + 6 DOMAINS + 9 STEPS
+           ==================================================================== -->
+      <div class="lg:col-span-8 space-y-5">
+
+        <!-- CARD 1: ROLE OVERVIEW & 6-STEP WORKFLOW -->
+        <section class="bento-card p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">What does a Zero-Knowledge (ZK) Proof Developer do?</h2>
+                <p class="text-[11px] font-mono-code uppercase tracking-wider text-slate-500">Role Scope & End-to-End ZK Circuit & Proof Lifecycle</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border bg-sky-50 text-sky-700 border-sky-200/70">Circom & Noir</span>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border bg-emerald-50 text-emerald-700 border-emerald-200/70">zk-SNARKs & Plonk</span>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border bg-purple-50 text-purple-700 border-purple-200/70">Smart Contract Verifiers</span>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 leading-relaxed mb-5">
+            Zero-Knowledge Developers engineer cryptographic circuits that allow a prover to prove statement validity to a verifier without revealing underlying secret inputs, powering privacy coins, scaling rollups, and verifiable computation.
+          </p>
+
+          <!-- 6-Step Horizontal Pipeline -->
+          <div>
+            <div class="text-xs font-mono-code font-bold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              <span>ZK Circuit Design & Proof Verification Workflow</span>
+            </div>
+
+            <div id="workflow-grid" class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2.5">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </section>
+
+        <!-- CARD 2: 6 FOCUS DOMAINS (DENSE 3x2 GRID) -->
+        <section class="bento-card p-5 sm:p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 border border-sky-200 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">ZK Cryptography Focus Domains</h2>
+                <p class="text-[11px] font-mono-code uppercase tracking-wider text-slate-500">6 Core Pillars of Specialization</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="domains-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <!-- CARD 3: INTERACTIVE 9-STEP LEARNING ROADMAP -->
+        <section class="bento-card p-5 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-bold text-slate-900">Interactive Learning Roadmap</h2>
+                <p class="text-xs text-slate-500">Click the numbered badge to mark complete • Click any card for checklist & mini-project</p>
+              </div>
+            </div>
+
+            <button id="toggle-expand-all" class="self-start sm:self-auto px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 transition-colors">
+              Expand All
+            </button>
+          </div>
+
+          <!-- Search / Topic Filter Bar -->
+          <div class="relative mb-5">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input
+              id="topic-search-input"
+              type="text"
+              placeholder="Search modules, subtopics, or tools (e.g., Circom, Noir, R1CS, Plonk, zk-SNARKs, Solidity, Pairing, Halo2)..."
+              class="w-full pl-10 pr-20 py-2.5 rounded-xl text-xs sm:text-sm bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all"
+            />
+            <button id="clear-search-btn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-500 hover:text-indigo-600">
+              Clear
+            </button>
+          </div>
+
+          <div id="empty-search-msg" class="hidden text-center py-8 px-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300">
+            <p class="text-sm font-semibold text-slate-700 mb-1">No matching modules found</p>
+            <p class="text-xs text-slate-500">Try clearing your search filter to view all 9 ZK steps.</p>
+          </div>
+
+          <!-- 9-Step Timeline List -->
+          <div id="roadmap-list" class="timeline-container space-y-3">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ====================================================================
+           RIGHT SIDEBAR (4 COLS): 5 DENSE PURPOSEFUL WIDGETS
+           ==================================================================== -->
+      <aside class="lg:col-span-4 space-y-5">
+
+        <!-- WIDGET A: CIRCULAR LEARNING PROGRESS RING & MILESTONE -->
+        <section class="bento-card p-5 bg-gradient-to-br from-white via-indigo-50/40 to-sky-50/50">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              Your Learning Progress
+            </h3>
+            <button id="reset-progress-btn" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white border border-slate-200 text-slate-600 hover:border-rose-300 hover:text-rose-600 hover:bg-rose-50 transition-colors">
+              Reset
+            </button>
+          </div>
+
+          <div class="flex items-center gap-4 p-3.5 rounded-2xl bg-white/90 border border-indigo-100">
+            <div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
+              <svg class="w-16 h-16" viewBox="0 0 64 64">
+                <circle cx="32" cy="32" r="26" fill="none" stroke="#e2e8f0" stroke-width="6"></circle>
+                <circle id="sidebar-ring-circle" class="progress-ring-circle" cx="32" cy="32" r="26" fill="none" stroke="url(#pastelRingGrad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="163.36" stroke-dashoffset="163.36"></circle>
+                <defs>
+                  <linearGradient id="pastelRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#6366f1"/>
+                    <stop offset="50%" stop-color="#0ea5e9"/>
+                    <stop offset="100%" stop-color="#10b981"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span id="sidebar-ring-pct" class="absolute font-mono-code text-xs font-extrabold text-slate-900">0%</span>
+            </div>
+
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-semibold text-slate-500">Completed Steps</span>
+                <span id="sidebar-step-count" class="font-mono-code text-xs font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">0 / 9</span>
+              </div>
+              <div id="milestone-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200/80">
+                <span>🌱</span>
+                <span>Milestone: Getting Started</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- WIDGET B: CAREER LEVELS (L1 SKY, L2 MINT, L3 PEACH) -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">Career Levels</h3>
+            <button id="toggle-levels-view" class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors">
+              Show All Levels
+            </button>
+          </div>
+
+          <div id="level-tabs-bar" class="grid grid-cols-3 gap-1.5 mb-3">
+            <button class="level-pill-tab active py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l1">ZK Dev / L1</button>
+            <button class="level-pill-tab py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l2">ZK Architect / L2</button>
+            <button class="level-pill-tab py-1.5 px-2 rounded-xl text-xs font-bold text-center" data-lvl="l3">Principal / L3</button>
+          </div>
+
+          <div id="career-levels-container" class="space-y-2.5">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <!-- WIDGET C: 12 CORE TOOLS & TECH COVERED -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">ZK Tools Covered</h3>
+            <span class="text-[11px] font-mono-code font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">12 Essential</span>
+          </div>
+
+          <div id="tools-grid" class="grid grid-cols-2 gap-2">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <!-- WIDGET D: 3 HANDS-ON CAPSTONE PROJECTS -->
+        <section class="bento-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-900">Hands-On Capstone Projects</h3>
+            <span class="text-[11px] font-mono-code font-semibold text-indigo-600">Portfolio</span>
+          </div>
+
+          <div id="projects-list" class="space-y-2.5">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <!-- WIDGET E: ENGINEERING PRINCIPLE QUOTE CARD -->
+        <section class="rounded-2xl p-5 border border-indigo-200/80" style="background: linear-gradient(135deg, #eef2ff 0%, #f3e8ff 52%, #e0f2fe 100%);">
+          <div class="flex items-center gap-2 text-xs font-mono-code font-bold uppercase tracking-wider text-indigo-700 mb-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+            <span>ZK Engineering Principle</span>
+          </div>
+          <p class="text-sm font-semibold italic text-slate-800 leading-relaxed mb-3">
+            "A zero-knowledge circuit is not a traditional programming function; it is an arithmetic constraint system. Every conditional branch and loop must be proven in prime field arithmetic."
+          </p>
+          <div class="p-3 rounded-xl bg-white/75 border border-white text-xs text-slate-700 leading-relaxed">
+            <strong class="text-indigo-700">2026 Mastery Tip:</strong> Master R1CS vs PLONK arithmetization, secure trusted setups/transparent ceremonies, and smart contract verifier integration.
+          </div>
+        </section>
+
+      </aside>
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       COMPLETION CELEBRATION TOAST
+       ======================================================================== -->
+  <div id="toast-banner" class="fixed bottom-5 right-5 z-50 max-w-sm translate-y-28 opacity-0 pointer-events-none">
+    <div class="p-4 rounded-2xl bg-white border-2 border-emerald-300 shadow-xl flex items-start gap-3">
+      <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 text-base">
+        🎉
+      </div>
+      <div>
+        <div class="text-sm font-bold text-emerald-800">Zero-Knowledge (ZK) Developer Roadmap 100% Completed!</div>
+        <p class="text-xs text-slate-600 mt-0.5">Outstanding milestone! You have completed all 9 modules of the Zero-Knowledge Proof Developer roadmap.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       ZERO-KNOWLEDGE PROOF DEVELOPER ROADMAP DATA & INTERACTIVE ENGINE
+       ======================================================================== -->
+  <script>
+    const WF_STYLES = [
+      { bg: "bg-indigo-50/60 border-indigo-200/80", badge: "bg-indigo-100 text-indigo-700" },
+      { bg: "bg-sky-50/60 border-sky-200/80", badge: "bg-sky-100 text-sky-700" },
+      { bg: "bg-purple-50/60 border-purple-200/80", badge: "bg-purple-100 text-purple-700" },
+      { bg: "bg-emerald-50/60 border-emerald-200/80", badge: "bg-emerald-100 text-emerald-700" },
+      { bg: "bg-amber-50/60 border-amber-200/80", badge: "bg-amber-100 text-amber-700" },
+      { bg: "bg-rose-50/60 border-rose-200/80", badge: "bg-rose-100 text-rose-700" }
+    ];
+
+    const DOMAIN_STYLES = [
+      { iconBg: "bg-orange-100 text-orange-700", tagBg: "bg-orange-50 text-orange-700 border-orange-200/70" },
+      { iconBg: "bg-sky-100 text-sky-700", tagBg: "bg-sky-50 text-sky-700 border-sky-200/70" },
+      { iconBg: "bg-indigo-100 text-indigo-700", tagBg: "bg-indigo-50 text-indigo-700 border-indigo-200/70" },
+      { iconBg: "bg-emerald-100 text-emerald-700", tagBg: "bg-emerald-50 text-emerald-700 border-emerald-200/70" },
+      { iconBg: "bg-amber-100 text-amber-700", tagBg: "bg-amber-50 text-amber-700 border-amber-200/70" },
+      { iconBg: "bg-purple-100 text-purple-700", tagBg: "bg-purple-50 text-purple-700 border-purple-200/70" }
+    ];
+
+    const STEP_BADGE_COLORS = [
+      "bg-orange-50 text-orange-700 border-orange-200",
+      "bg-sky-50 text-sky-700 border-sky-200",
+      "bg-amber-50 text-amber-700 border-amber-200",
+      "bg-rose-50 text-rose-700 border-rose-200",
+      "bg-indigo-50 text-indigo-700 border-indigo-200",
+      "bg-purple-50 text-purple-700 border-purple-200",
+      "bg-emerald-50 text-emerald-700 border-emerald-200",
+      "bg-teal-50 text-teal-700 border-teal-200",
+      "bg-violet-50 text-violet-700 border-violet-200"
+    ];
+
+    const TOOL_PASTELS = [
+      { bg: "bg-orange-50", text: "text-orange-700" },
+      { bg: "bg-sky-50", text: "text-sky-700" },
+      { bg: "bg-amber-50", text: "text-amber-700" },
+      { bg: "bg-blue-50", text: "text-blue-700" },
+      { bg: "bg-cyan-50", text: "text-cyan-700" },
+      { bg: "bg-indigo-50", text: "text-indigo-700" },
+      { bg: "bg-teal-50", text: "text-teal-700" },
+      { bg: "bg-rose-50", text: "text-rose-700" },
+      { bg: "bg-purple-50", text: "text-purple-700" },
+      { bg: "bg-emerald-50", text: "text-emerald-700" },
+      { bg: "bg-pink-50", text: "text-pink-700" },
+      { bg: "bg-slate-100", text: "text-slate-700" }
+    ];
+
+    const ZK_DATA = {
+      skills: ["Applied Cryptography & Math", "ZK-SNARKs & Arithmetization", "Circom & R1CS Circuits", "Noir & Modern DSLs", "Plonk & Halo2 Proof Systems", "Trusted Setups & Ceremonies", "Smart Contract Verifiers", "zk-Rollups & L2 Scaling"],
+      workflow: [
+        ["Formulate", "Translate business logic or computation into arithmetic relations over finite fields."],
+        ["Constraint", "Write ZK circuits in Circom or Noir ensuring no under-constrained variables."],
+        ["Compile", "Generate R1CS constraints, witness generators, and proving/verification keys."],
+        ["Prove", "Execute the prover algorithm using private witness inputs to generate the cryptographic proof."],
+        ["Verify", "Check proof validity off-chain or deploy an auto-generated Solidity verifier on-chain."],
+        ["Deploy", "Integrate zero-knowledge proofs into dApps, privacy pools, or zk-rollups."]
+      ],
+      domains: [
+        ["Mathematical Foundations", "Finite fields, elliptic curves (BN254, BLS12-381), pairings, and modular arithmetic.", ["Applied Cryptography & Math"]],
+        ["ZK Scheme Architectures", "zk-SNARKs, zk-STARKs, Bulletproofs, PLONK, and Halo2 polynomial commitment schemes.", ["ZK-SNARKs & Arithmetization", "Plonk & Halo2 Proof Systems"]],
+        ["Circuit Development Languages", "Circom, Noir, Cairo, Leo, and ZoKrates for constraint programming.", ["Circom & R1CS Circuits", "Noir & Modern DSLs"]],
+        ["Trusted Setup Ceremonies", "Powers of Tau multi-party computation (MPC) ceremonies and transparent setups.", ["Trusted Setups & Ceremonies"]],
+        ["On-Chain Verification", "Solidity verifier contracts, gas optimization, and pairing precompiles on EVM.", ["Smart Contract Verifiers"]],
+        ["Rollups & Scalability", "zk-Rollups (zkSync, Scroll, Starknet), validity proofs, and data availability.", ["zk-Rollups & L2 Scaling"]]
+      ],
+      steps: [
+        [
+          "Applied Cryptography & Finite Field Math",
+          "3 Wks",
+          "Master the mathematical pillars underpinning zero-knowledge proofs: prime fields and elliptic curves.",
+          ["Applied Cryptography & Math"],
+          [
+            "Modular arithmetic, finite fields (Prime fields F_p), and algebraic groups",
+            "Elliptic curve cryptography (ECC): Weierstrass curves, Edwards curves, and pairings (BN254 / alt_bn128)",
+            "Hash functions friendly to ZK: Poseidon, MiMC, and Pedersen commitments",
+            "Polynomial arithmetic, interpolation, and Schwartz-Zippel lemma"
+          ],
+          "Implement a Python script performing finite field arithmetic and polynomial commitments over prime fields."
+        ],
+        [
+          "ZK-SNARKs Anatomy & Arithmetization",
+          "3 Wks",
+          "Understand how computations are converted into arithmetic circuits (R1CS and QAP).",
+          ["ZK-SNARKs & Arithmetization"],
+          [
+            "What is a zk-SNARK? Completeness, Soundness, and Zero-Knowledge properties",
+            "Arithmetic circuit representation: gates, wires, and multiplication constraints",
+            "Rank 1 Constraint Systems (R1CS) and Quadratic Arithmetic Programs (QAP)",
+            "Converting boolean logic and arithmetic into constraint matrices (A, B, C)"
+          ],
+          "Manually construct R1CS matrices for a quadratic equation and verify constraint satisfaction."
+        ],
+        [
+          "Circom & R1CS Circuit Development",
+          "4 Wks",
+          "Build production-grade ZK circuits using Circom and generate witness files with snarkjs.",
+          ["Circom & R1CS Circuits"],
+          [
+            "Circom syntax, signals, components, and signal immutability",
+            "Writing core cryptographic building blocks: Merkle trees, Poseidon hash checkers, and binary encoders",
+            "Avoiding common vulnerabilities: under-constrained signals, unconstrained inputs, and overflow",
+            "Generating witnesses with WebAssembly (Wasm) and C++ witness generators using snarkjs"
+          ],
+          "Build a Merkle tree membership proof circuit in Circom that proves knowledge of a secret without revealing it."
+        ],
+        [
+          "Noir & Modern ZK DSLs (Aztec)",
+          "3 Wks",
+          "Explore Noir, the privacy-focused ZK language designed for developer-friendly constraint programming.",
+          ["Noir & Modern DSLs"],
+          [
+            "Introduction to Noir: syntax resembling Rust and high-level abstractions",
+            "Writing generalized circuits without manual R1CS wiring",
+            "Debugging and testing circuits using Noir testing frameworks",
+            "Integrating Noir with Aztec network and EVM smart contracts"
+          ],
+          "Develop a decentralized identity (DID) credential verification circuit in Noir."
+        ],
+        [
+          "PLONK & Halo2 Polynomial Commitment Schemes",
+          "4 Wks",
+          "Master modern universal SNARK architectures like PLONK and Halo2 without trusted setups for every circuit.",
+          ["Plonk & Halo2 Proof Systems"],
+          [
+            "Limitations of Groth16 and the rise of universal SNARKs (PLONK)",
+            "Polynomial commitment schemes: KZG (Kate-Zaverucha-Goldberg) commitments",
+            "Halo2 architecture: custom gates, lookup arguments, and recursive proof composition",
+            "Building custom custom-gate gadgets in Halo2"
+          ],
+          "Implement a custom gadget and circuit in Halo2 using Rust."
+        ],
+        [
+          "Trusted Setups & Multi-Party Computation (MPC)",
+          "3 Wks",
+          "Understand toxic waste generation, Powers of Tau ceremonies, and transparent proving systems.",
+          ["Trusted Setups & Ceremonies"],
+          [
+            "The concept of 'toxic waste' in Groth16 and trusted setups",
+            "Powers of Tau multi-party computation (MPC) ceremonies and contribution security",
+            "Transition to transparent SNARKs (STARKs, Bulletproofs, Halo2) requiring no trusted setup",
+            "Participating in community ZK trusted setup ceremonies"
+          ],
+          "Participate in a simulated local Powers of Tau ceremony using snarkjs and contribute entropy."
+        ],
+        [
+          "Smart Contract Verifiers & EVM Integration",
+          "3 Wks",
+          "Deploy auto-generated Solidity verifier contracts and integrate ZK proofs into Ethereum dApps.",
+          ["Smart Contract Verifiers"],
+          [
+            "Exporting Groth16 / PLONK verifier smart contracts from Circom/snarkjs",
+            "EVM gas optimization for pairing precompiles (bn128 add/scalar mul/pairing)",
+            "Handling public inputs, calldata compression, and verification failure handling",
+            "Building end-to-end full-stack dApps combining React frontend, snarkjs prover, and Foundry smart contracts"
+          ],
+          "Deploy a Circom-generated Solidity verifier contract using Foundry and verify proof submission on a local Anvil node."
+        ],
+        [
+          "zk-Rollups & Layer 2 Scaling Architecture",
+          "3 Wks",
+          "Explore production zk-rollups, validity proofs, data availability, and state transition circuits.",
+          ["zk-Rollups & L2 Scaling"],
+          [
+            "Architecture of zk-Rollups: Sequencers, Provers, and Validators",
+            "State transition circuits: batching transactions and compressing state root updates",
+            "Comparing zkVMs (SP1, RISC Zero, Cairo) vs. application-specific ZK circuits",
+            "EVM-equivalence vs. zk-EVM architectures (zkSync, Scroll, Polygon zkEVM)"
+          ],
+          "Write a simple state transition batch-processing circuit modeling a mini-rollup ledger in Circom or Cairo."
+        ],
+        [
+          "Advanced Optimization, Recursion & ZK Security",
+          "2 Wks",
+          "Optimize circuit performance, implement recursive proof aggregation, and conduct ZK security audits.",
+          ["Circom & R1CS Circuits", "Plonk & Halo2 Proof Systems"],
+          [
+            "Circuit optimization techniques: minimizing constraints, reducing non-linear gates",
+            "Recursive SNARKs: proving a proof to compress infinite transaction history into a single proof",
+            "Auditing ZK circuits: spotting under-constrained signals, range check omissions, and soundness errors",
+            "Cutting-edge ZK cryptography trends in 2026: folding schemes (Nova) and lookup accelerators"
+          ],
+          "Audit a flawed Circom circuit containing under-constrained signals and write a secure patch."
+        ]
+      ],
+      levels: [
+        [
+          "ZK Developer / L1",
+          "Junior ZK Circuit Developer",
+          "Write basic arithmetic circuits in Circom or Noir, generate witnesses, and run snarkjs/Foundry tests.",
+          [
+            "Write basic ZK circuits in Circom and Noir for cryptographic hashing and Merkle proofs",
+            "Generate witness files and run snarkjs prover/verifier test suites",
+            "Deploy auto-generated Solidity verifiers to EVM testnets"
+          ]
+        ],
+        [
+          "ZK Architect / L2",
+          "Senior Zero-Knowledge Engineer",
+          "Architect complex PLONK/Halo2 circuits, optimize constraint systems, and build zk-rollup verifiers.",
+          [
+            "Design advanced Halo2 or PLONK custom gate circuits with lookup arguments",
+            "Optimize large R1CS constraint systems for minimal gas and proving latency",
+            "Integrate recursive proof aggregation and multi-prover workflows"
+          ]
+        ],
+        [
+          "Principal ZK Cryptographer / L3",
+          "Lead Cryptography Architect",
+          "Design novel ZK protocols, zkVM architectures, pairing-friendly curves, and secure cryptographic primitives.",
+          [
+            "Design novel cryptographic protocols and custom zkVM execution environments",
+            "Lead enterprise zero-knowledge security audits and protocol cryptography reviews",
+            "Contribute to core cryptographic libraries and ZK-rollup infrastructure standards"
+          ]
+        ]
+      ],
+      tools: [
+        ["Circom", "Circuit Language", ["Circom & R1CS Circuits"]],
+        ["snarkjs", "Prover & Verifier CLI", ["Circom & R1CS Circuits"]],
+        ["Noir (Aztec)", "High-Level ZK DSL", ["Noir & Modern DSLs"]],
+        ["Halo2 (Zcash/PSE)", "Polynomial Commitment System", ["Plonk & Halo2 Proof Systems"]],
+        ["Foundry / Forge", "Smart Contract Testing", ["Smart Contract Verifiers"]],
+        ["Solidity", "EVM Verifier Integration", ["Smart Contract Verifiers"]],
+        ["Cairo (Starknet)", "Provable VM Language", ["zk-Rollups & L2 Scaling"]],
+        ["RISC Zero / SP1", "zkVMs", ["zk-Rollups & L2 Scaling"]],
+        ["Python / SymPy", "Field Math & Scripting", ["Applied Cryptography & Math"]],
+        ["Rust", "ZK Tooling & Provers", ["Plonk & Halo2 Proof Systems"]],
+        ["Git / GitHub", "Version Control", ["Circom & R1CS Circuits"]],
+        ["Docker", "Containerized Provers", ["zk-Rollups & L2 Scaling"]]
+      ],
+      projects: [
+        [
+          "Private Token Transfer & Merkle Nullifier Circuit",
+          "Beginner",
+          "Circom circuit preventing double-spending in a private token transfer system using Poseidon hashing and Merkle trees.",
+          ["Applied Cryptography & Math", "ZK-SNARKs & Arithmetization", "Circom & R1CS Circuits"]
+        ],
+        [
+          "Full-Stack ZK Whitelist & Credential Verifier dApp",
+          "Intermediate",
+          "Noir or Circom circuit verifying eligibility without revealing identity, coupled with a React frontend and Foundry Solidity verifier.",
+          ["Circom & R1CS Circuits", "Noir & Modern DSLs", "Smart Contract Verifiers"]
+        ],
+        [
+          "Halo2 Custom Gate Polynomial Commitment Protocol",
+          "Advanced",
+          "Custom Halo2 circuit implementing custom arithmetic gates and lookup tables in Rust with recursive proof verification.",
+          ["Plonk & Halo2 Proof Systems", "Trusted Setups & Ceremonies", "Smart Contract Verifiers"]
+        ]
+      ]
+    };
+
+    // =================================================================       // APPLICATION STATE & STORAGE
+    // ========================================================================
+    const STORAGE_KEY = "careerpath_2026_zk_developer_progress";
+    let expandedSteps = new Set([1]);
+    let selectedSkill = null;
+    let searchQuery = "";
+    let activeLevelIdx = 0;
+    let showAllLevels = false;
+
+    function getCompletedSet() {
+      try {
+        return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+      } catch {
+        return new Set();
+      }
+    }
+
+    function saveCompletedSet(setObj) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...setObj]));
+    }
+
+    // =================================================================       // RENDER FUNCTIONS
+    // ========================================================================
+    function renderPage() {
+      const completedSet = getCompletedSet();
+
+      // Skill Filter Pills
+      const clearSkillBtn = document.getElementById("clear-skill-btn");
+      clearSkillBtn.classList.toggle("hidden", !selectedSkill);
+
+      document.getElementById("hero-skill-pills").innerHTML = ZK_DATA.skills.map(sk => `
+        <button
+          type="button"
+          onclick="toggleSkillFilter('${sk.replace(/'/g, "\\'")}')"
+          class="skill-pill px-3.5 py-1.5 rounded-full text-xs font-mono-code font-semibold ${selectedSkill === sk ? 'active' : ''}">
+          ${sk}
+        </button>
+      `).join("");
+
+      // 6-Step Workflow
+      document.getElementById("workflow-grid").innerHTML = ZK_DATA.workflow.map((wf, idx) => {
+        const st = WF_STYLES[idx % WF_STYLES.length];
+        return `
+          <div class="workflow-tile p-3 ${st.bg}">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[11px] font-mono-code font-bold px-1.5 py-0.5 rounded ${st.badge}">0${idx + 1}</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-400/60"></span>
+            </div>
+            <div class="text-xs font-bold uppercase text-slate-900 mb-0.5">${wf[0]}</div>
+            <p class="text-[11px] text-slate-600 leading-snug">${wf[1]}</p>
+          </div>
+        `;
+      }).join("");
+
+      // 6 Focus Domains
+      document.getElementById("domains-grid").innerHTML = ZK_DATA.domains.map((dom, idx) => {
+        const st = DOMAIN_STYLES[idx % DOMAIN_STYLES.length];
+        return `
+          <div class="domain-tile p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2.5 mb-2">
+                <div class="w-8 h-8 rounded-lg ${st.iconBg} flex items-center justify-center shrink-0 font-mono-code text-xs font-extrabold">
+                  0${idx + 1}
+                </div>
+                <h3 class="font-bold text-sm text-slate-900">${dom[0]}</h3>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed mb-3">${dom[1]}</p>
+            </div>
+            <div class="flex flex-wrap gap-1">
+              ${dom[2].map(tag => `<span class="text-[10px] font-mono-code px-2 py-0.5 rounded border ${st.tagBg}">${tag}</span>`).join("")}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // 9-Step Interactive Roadmap List
+      renderStepsTimeline(completedSet);
+
+      // Career Levels
+      renderCareerLevels();
+
+      // 12 Tools
+      document.getElementById("tools-grid").innerHTML = ZK_DATA.tools.map((tool, idx) => {
+        const st = TOOL_PASTELS[idx % TOOL_PASTELS.length];
+        const isHighlighted = selectedSkill && tool[2].includes(selectedSkill);
+        return `
+          <div class="tool-badge-card p-2.5 flex items-center gap-2 ${isHighlighted ? 'highlighted' : ''}">
+            <span class="w-6 h-6 rounded-lg ${st.bg} ${st.text} flex items-center justify-center text-xs font-bold shrink-0">✓</span>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-slate-900 truncate">${tool[0]}</div>
+              <div class="text-[10px] font-mono-code text-slate-500 truncate">${tool[1]}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      // 3 Capstone Projects
+      const diffBadges = [
+        "bg-sky-100 text-sky-700",
+        "bg-emerald-100 text-emerald-700",
+        "bg-purple-100 text-purple-700"
+      ];
+      document.getElementById("projects-list").innerHTML = ZK_DATA.projects.map((proj, idx) => `
+        <div class="project-mini-card p-3.5">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <span class="text-xs font-bold text-slate-900">${idx + 1}. ${proj[0]}</span>
+            <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded ${diffBadges[idx % 3]} shrink-0">${proj[1]}</span>
+          </div>
+          <p class="text-[11px] text-slate-600 mb-2">${proj[2]}</p>
+          <div class="flex flex-wrap gap-1">
+            ${proj[3].map(t => `<span class="text-[10px] font-mono-code px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600">${t}</span>`).join("")}
+          </div>
+        </div>
+      `).join("");
+
+      // Sync Progress UI
+      syncProgressUI(completedSet);
+    }
+
+    function renderStepsTimeline(completedSet) {
+      const listEl = document.getElementById("roadmap-list");
+      const emptyMsg = document.getElementById("empty-search-msg");
+      const q = searchQuery.trim().toLowerCase();
+
+      const stepsWithIndex = ZK_DATA.steps.map((s, idx) => ({
+        id: idx + 1,
+        title: s[0],
+        duration: s[1],
+        summary: s[2],
+        skills: s[3],
+        checklist: s[4],
+        miniProject: s[5],
+        badgeColor: STEP_BADGE_COLORS[idx % STEP_BADGE_COLORS.length]
+      }));
+
+      const filtered = stepsWithIndex.filter(step => {
+        if (!q) return true;
+        return step.title.toLowerCase().includes(q) ||
+               step.summary.toLowerCase().includes(q) ||
+               step.checklist.some(c => c.toLowerCase().includes(q)) ||
+               step.skills.some(sk => sk.toLowerCase().includes(q));
+      });
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = "";
+        emptyMsg.classList.remove("hidden");
+        return;
+      }
+
+      emptyMsg.classList.add("hidden");
+
+      const railHTML = `
+        <div class="timeline-rail">
+          <div id="timeline-rail-fill" class="timeline-rail-fill"></div>
+        </div>
+      `;
+
+      const rowsHTML = filtered.map(step => {
+        const isDone = completedSet.has(step.id);
+        const isOpen = expandedSteps.has(step.id);
+        const isMatch = selectedSkill && step.skills.includes(selectedSkill);
+
+        return `
+          <div class="step-row flex items-start gap-3.5 ${isDone ? 'completed' : ''} ${isOpen ? 'expanded' : ''} ${isMatch ? 'highlighted' : ''}">
+            <button
+              type="button"
+              onclick="toggleStepComplete(${step.id}, event)"
+              title="${isDone ? 'Mark incomplete' : 'Mark complete'}"
+              class="step-check-btn font-mono-code mt-1"
+              aria-label="Toggle step ${step.id}">
+              ${isDone
+                ? `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`
+                : step.id
+              }
+            </button>
+
+            <div class="step-card flex-1 p-4 cursor-pointer" onclick="toggleStepExpand(${step.id})">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h3 class="text-sm sm:text-base font-bold text-slate-900 ${isDone ? 'line-through text-slate-500' : ''}">
+                      ${step.title}
+                    </h3>
+                    <span class="text-[11px] font-mono-code font-semibold px-2 py-0.5 rounded-md border ${step.badgeColor}">
+                      ${step.duration}
+                    </span>
+                  </div>
+                  <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    ${step.summary}
+                  </p>
+                </div>
+
+                <span class="p-1 rounded-lg text-slate-400 hover:text-indigo-600 shrink-0">
+                  <svg class="w-4 h-4 step-chevron" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </span>
+              </div>
+
+              <div class="step-drawer">
+                <div class="step-drawer-inner">
+                  <div class="mt-3.5 pt-3.5 border-t border-slate-200/80 space-y-3">
+                    <div>
+                      <div class="text-[11px] font-mono-code font-bold uppercase tracking-wider text-indigo-700 mb-2">
+                        Sub-Topics & Actionable Checklist
+                      </div>
+                      <ul class="space-y-1.5">
+                        ${step.checklist.map(point => `
+                          <li class="flex items-start gap-2 text-xs text-slate-700">
+                            <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+                            </svg>
+                            <span>${point}</span>
+                          </li>
+                        `).join("")}
+                      </ul>
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-indigo-50/70 border border-indigo-100 flex items-start gap-2.5">
+                      <span class="text-sm shrink-0">🛠️</span>
+                      <div class="text-xs text-slate-700">
+                        <strong class="text-indigo-800">Recommended Mini-Project:</strong> ${step.miniProject}
+                      </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                      <div class="flex flex-wrap gap-1.5">
+                        ${step.skills.map(sk => `
+                          <span class="text-[10px] font-mono-code font-semibold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-600">
+                            #${sk}
+                          </span>
+                        `).join("")}
+                      </div>
+
+                      <button
+                        type="button"
+                        onclick="toggleStepComplete(${step.id}, event)"
+                        class="px-3 py-1 rounded-lg text-xs font-semibold transition-colors ${isDone
+                          ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                          : 'bg-indigo-600 text-white hover:bg-indigo-700'}">
+                        ${isDone ? '✓ Completed' : 'Mark Complete'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      listEl.innerHTML = railHTML + rowsHTML;
+    }
+
+    function renderCareerLevels() {
+      const container = document.getElementById("career-levels-container");
+      const tabsBar = document.getElementById("level-tabs-bar");
+      const toggleBtn = document.getElementById("toggle-levels-view");
+
+      tabsBar.classList.toggle("hidden", showAllLevels);
+      toggleBtn.textContent = showAllLevels ? "Tab View" : "Show All Levels";
+
+      document.querySelectorAll(".level-pill-tab").forEach((btn, idx) => {
+        btn.classList.toggle("active", idx === activeLevelIdx);
+      });
+
+      const levelStyles = [
+        { card: "bg-sky-50/80 border-sky-200", badge: "bg-sky-100 text-sky-800" },
+        { card: "bg-emerald-50/80 border-emerald-200", badge: "bg-emerald-100 text-emerald-800" },
+        { card: "bg-orange-50/80 border-orange-200", badge: "bg-orange-100 text-orange-800" }
+      ];
+
+      const levelsToShow = showAllLevels
+        ? ZK_DATA.levels.map((l, i) => ({ data: l, idx: i }))
+        : [{ data: ZK_DATA.levels[activeLevelIdx], idx: activeLevelIdx }];
+
+      container.innerHTML = levelsToShow.map(({ data, idx }) => {
+        const st = levelStyles[idx];
+        return `
+          <div class="p-3.5 rounded-xl border ${st.card}">
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <span class="text-xs font-extrabold text-slate-900">${data[0]}</span>
+              <span class="text-[10px] font-mono-code font-bold px-2 py-0.5 rounded-md ${st.badge}">${data[1]}</span>
+            </div>
+            <p class="text-xs text-slate-700 leading-relaxed mb-2.5">${data[2]}</p>
+            <ul class="space-y-1">
+              ${data[3].map(exp => `
+                <li class="flex items-start gap-1.5 text-[11px] text-slate-700">
+                  <span class="font-bold text-emerald-600">✓</span>
+                  <span>${exp}</span>
+                </li>
+              `).join("")}
+            </ul>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function syncProgressUI(completedSet) {
+      const done = completedSet.size;
+      const pct = Math.round((done / 9) * 100);
+
+      document.getElementById("nav-progress-text").textContent = `${pct}% (${done}/9)`;
+      document.getElementById("nav-progress-fill").style.width = `${pct}%`;
+
+      const railFill = document.getElementById("timeline-rail-fill");
+      if (railFill) railFill.style.height = `${pct}%`;
+
+      const circumference = 163.36;
+      const offset = circumference - (pct / 100) * circumference;
+      document.getElementById("sidebar-ring-circle").style.strokeDashoffset = offset;
+      document.getElementById("sidebar-ring-pct").textContent = `${pct}%`;
+      document.getElementById("sidebar-step-count").textContent = `${done} / 9`;
+
+      const milestoneEl = document.getElementById("milestone-badge");
+      if (done === 0) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200/80";
+        milestoneEl.innerHTML = `<span>🌱</span><span>Milestone: Getting Started</span>`;
+      } else if (done <= 3) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80";
+        milestoneEl.innerHTML = `<span>🧱</span><span>Milestone: Field Math & Circom</span>`;
+      } else if (done <= 6) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200/80";
+        milestoneEl.innerHTML = `<span>⚡</span><span>Milestone: Noir & Plonk Systems</span>`;
+      } else if (done < 9) {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200/80";
+        milestoneEl.innerHTML = `<span>🚀</span><span>Milestone: EVM Verifiers & Rollups</span>`;
+      } else {
+        milestoneEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/80";
+        milestoneEl.innerHTML = `<span>🏆</span><span>Milestone: ZK Mastery</span>`;
+      }
+    }
+
+    // ========================================================================
+    // INTERACTION HANDLERS
+    // ========================================================================
+    window.toggleStepComplete = function(stepId, event) {
+      if (event) event.stopPropagation();
+      const setObj = getCompletedSet();
+      const wasDone = setObj.size === 9;
+
+      if (setObj.has(stepId)) {
+        setObj.delete(stepId);
+      } else {
+        setObj.add(stepId);
+      }
+
+      saveCompletedSet(setObj);
+      renderPage();
+
+      if (setObj.size === 9 && !wasDone) {
+        showCelebrationToast();
+      }
+    };
+
+    window.toggleStepExpand = function(stepId) {
+      if (expandedSteps.has(stepId)) {
+        expandedSteps.delete(stepId);
+      } else {
+        expandedSteps.add(stepId);
+      }
+      const completedSet = getCompletedSet();
+      renderStepsTimeline(completedSet);
+      syncProgressUI(completedSet);
+    };
+
+    window.toggleSkillFilter = function(skill) {
+      selectedSkill = selectedSkill === skill ? null : skill;
+      renderPage();
+    };
+
+    // Clear Skill Filter
+    document.getElementById("clear-skill-btn").addEventListener("click", () => {
+      selectedSkill = null;
+      renderPage();
+    });
+
+    // Topic Search Input
+    const topicSearchInput = document.getElementById("topic-search-input");
+    const clearSearchBtn = document.getElementById("clear-search-btn");
+    topicSearchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      clearSearchBtn.classList.toggle("hidden", searchQuery.length === 0);
+      const completedSet = getCompletedSet();
+      renderStepsTimeline(completedSet);
+      syncProgressUI(completedSet);
+    });
+
+    clearSearchBtn.addEventListener("click", () => {
+      searchQuery = "";
+      topicSearchInput.value = "";
+      clearSearchBtn.classList.add("hidden");
+      const completedSet = getCompletedSet();
+      renderStepsTimeline(completedSet);
+      syncProgressUI(completedSet);
+    });
+
+    // Expand / Collapse All Steps
+    const expandAllBtn = document.getElementById("toggle-expand-all");
+    expandAllBtn.addEventListener("click", () => {
+      if (expandedSteps.size === 9) {
+        expandedSteps.clear();
+        expandAllBtn.textContent = "Expand All";
+      } else {
+        for (let i = 1; i <= 9; i++) expandedSteps.add(i);
+        expandAllBtn.textContent = "Collapse All";
+      }
+      const completedSet = getCompletedSet();
+      renderStepsTimeline(completedSet);
+      syncProgressUI(completedSet);
+    });
+
+    // Career Level Tabs & Show All Toggle
+    document.querySelectorAll(".level-pill-tab").forEach((btn, idx) => {
+      btn.addEventListener("click", () => {
+        activeLevelIdx = idx;
+        renderCareerLevels();
+      });
+    });
+
+    document.getElementById("toggle-levels-view").addEventListener("click", () => {
+      showAllLevels = !showAllLevels;
+      renderCareerLevels();
+    });
+
+    // Reset Progress
+    function handleReset() {
+      localStorage.removeItem(STORAGE_KEY);
+      renderPage();
+    }
+
+    document.getElementById("reset-progress-btn").addEventListener("click", handleReset);
+    document.getElementById("reset-nav-btn").addEventListener("click", handleReset);
+
+    // Toast Celebration
+    function showCelebrationToast() {
+      const toast = document.getElementById("toast-banner");
+      toast.classList.remove("translate-y-28", "opacity-0");
+      toast.classList.add("translate-y-0", "opacity-100");
+      setTimeout(() => {
+        toast.classList.add("translate-y-28", "opacity-0");
+        toast.classList.remove("translate-y-0", "opacity-100");
+      }, 4500);
+    }
+
+    // =================================================================       // INITIALIZATION
+    // =================================================================       renderPage();
+  </script>
+</body>
+</html>

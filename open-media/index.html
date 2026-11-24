@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Open Media — creative studio, digital marketing, camera rentals, workspace and AI Integrated Solutions.">
+  <meta name="description" content="Open Media — creative studio, digital marketing, camera rentals, workspace and AI Integrations.">
   <title>Open Media — Creative Agency</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -233,6 +233,23 @@
       grid-template-columns:.9fr 1.1fr;
       gap:48px;
       align-items:center;
+    }
+    #studio.section{padding:32px 0;scroll-margin-top:80px}
+    #services.section{padding:32px 0}
+    #portfolio.section{padding:32px 0}
+    #workspace.section{padding:32px 0}
+    #rentals.section{padding:32px 0}
+    #ai.section{padding-top:32px}
+    .studio-copy > .eyebrow{
+      font-size:30px;
+      color:#8a5a10;
+    }
+    #services .section-head > .eyebrow,
+    #portfolio .section-head > .eyebrow,
+    #rentals .section-head > .eyebrow,
+    #ai .section-head > .eyebrow{
+      font-size:35px;
+      color:#8a5a10;
     }
     .studio-copy h2{
       font-size:clamp(2.4rem,5vw,5rem);
@@ -632,6 +649,23 @@
       .rental img,.ai-card img{height:240px}
       .field.full{grid-column:auto}
       .footer-inner{flex-direction:column}
+      #services .section-head > .eyebrow{
+        letter-spacing:.01em;
+        white-space:nowrap;
+      }
+    }
+    @media (max-width:360px){
+      #services .section-head > .eyebrow{letter-spacing:-.1em}
+    }
+    @media (max-width:300px){
+      #services .section-head > .eyebrow{letter-spacing:-.16em}
+    }
+    @media (min-width:680px){
+      #ai .section-head{max-width:none}
+      #ai .section-head p:last-child{
+        font-size:clamp(.76rem,1.75vw,1.02rem);
+        white-space:nowrap;
+      }
     }
     @media (prefers-reduced-motion:reduce){
       html{scroll-behavior:auto}
@@ -918,12 +952,13 @@
 
   </style>
 
+<!-- sx:begin --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="../css/soxit-theme.css?v=20261120_direct_v5"><script src="../js/site-shell.js?v=20261120_direct_v5" defer></script><!-- sx:end -->
 </head>
 
 <body>
   <nav class="site-nav" aria-label="Primary navigation">
     <a class="site-nav-logo" href="../index.html" aria-label="SOXIT home">
-      <img src="../soxit.webp" alt="SOXIT Logo">
+      <img src="../resources/soxit.webp" alt="SOXIT Logo">
     </a>
     <div class="site-nav-links">
       <a href="../index.html">Home</a>
@@ -943,7 +978,7 @@
       <div class="hero-inner">
         <p class="eyebrow reveal">Premium Creative &amp; Digital Media</p>
         <h1 class="reveal">We Create Visual Experiences That Build Powerful Brands</h1>
-        <p class="hero-sub reveal">Photography • Digital Marketing • Cinema Gear Rentals • Branding • Creative Workspace • AI Integrated Solutions.</p>
+        <p class="hero-sub reveal">Photography • Digital Marketing • Camera & Lens Rental • Branding • Creative Workspace • AI Integrations.</p>
         <div class="hero-buttons reveal">
           <a class="btn btn-gold" href="#services">Explore Services</a>
           <a class="btn btn-outline" href="#portfolio">View Portfolio</a>
@@ -1001,7 +1036,7 @@
 
           <article class="card reveal">
             <div class="card-media"><img src="assets/images/ai-solutions.jpg" alt="Artificial intelligence solutions"></div>
-            <div class="card-body"><span class="card-tag">Technology</span><h3>AI Integrated Solutions</h3><p>AI content, automation, conversational experiences and custom machine-learning solutions.</p><a class="card-link" href="#ai">Explore AI →</a></div>
+            <div class="card-body"><span class="card-tag">Technology</span><h3>AI Integrations</h3><p>AI content, automation, conversational experiences and custom machine-learning solutions.</p><a class="card-link" href="#ai">Explore AI →</a></div>
           </article>
         </div>
       </div>
@@ -1054,7 +1089,7 @@
       <div class="wrap">
         <div class="section-head reveal">
           <p class="eyebrow">Equipment</p>
-          <h2>Camera &amp; Production Rentals</h2>
+          <h2>Camera &amp; Productions</h2>
           <p>Production-ready equipment and setups for professional shoots and creator projects.</p>
         </div>
         <div class="rental-grid">
@@ -1071,7 +1106,7 @@
       <div class="wrap">
         <div class="section-head reveal">
           <p class="eyebrow">Technology</p>
-          <h2>AI Integrated Solutions</h2>
+          <h2>AI Integrations</h2>
           <p>Creative technology designed to help brands generate, automate, engage and build smarter workflows.</p>
         </div>
         <div class="ai-grid">
@@ -1096,7 +1131,7 @@
             <div class="field"><label for="name">Full Name<input id="name" name="name" required placeholder="John Doe"></label></div>
             <div class="field"><label for="email">Email Address<input id="email" name="email" type="email" required placeholder="john@example.com"></label></div>
             <div class="field"><label for="phone">Phone Number<input id="phone" name="phone" type="tel" placeholder="+91 ..."></label></div>
-            <div class="field"><label for="service">Service<select id="service" name="service"><option>Photography</option><option>Digital Marketing</option><option>Branding &amp; UI</option><option>Camera Rental</option><option>Workspace</option><option>AI Integrated Solutions</option></select></label></div>
+            <div class="field"><label for="service">Service<select id="service" name="service"><option>Photography</option><option>Digital Marketing</option><option>Branding &amp; UI</option><option>Camera Rental</option><option>Workspace</option><option>AI Integrations</option></select></label></div>
             <div class="field full"><label for="details">Project Details<textarea id="details" name="details" placeholder="Tell us about your project, timeline and goals..."></textarea></label></div>
           </div>
           <div class="submit-row"><button class="btn btn-gold" type="submit">Submit Request</button></div>
@@ -1109,12 +1144,12 @@
     <div class="site-footer-inner">
       <div class="site-footer-grid">
         <div class="site-footer-brand">
-          <img src="../soxit.webp" alt="SOXIT Logo">
+          <img src="../resources/soxit.webp" alt="SOXIT Logo">
           <p>Unified enterprise platform delivering consulting solutions across industries.</p>
           <div class="site-footer-socials">
-            <a href="#" aria-label="Website"><span aria-hidden="true">◎</span></a>
-            <a href="#" aria-label="LinkedIn"><span aria-hidden="true">in</span></a>
-            <a href="mailto:info@soxit.com" aria-label="Email"><span aria-hidden="true">✉</span></a>
+            <a href="https://soxit.org" target="_blank" rel="noopener" aria-label="Website"><span aria-hidden="true">◎</span></a>
+            <a href="https://www.linkedin.com/company/soxit" target="_blank" rel="noopener" aria-label="LinkedIn"><span aria-hidden="true">in</span></a>
+            <a href="mailto:OpenMedia@soxit.org" aria-label="Email"><span aria-hidden="true">✉</span></a>
           </div>
         </div>
         <div class="site-footer-column">
@@ -1134,12 +1169,12 @@
         <div class="site-footer-column">
           <h4>Company</h4>
           <a href="#portfolio">Our Work</a>
-          <a href="mailto:info@soxit.com">Contact</a>
+          <a href="mailto:OpenMedia@soxit.org">Contact</a>
         </div>
       </div>
       <div class="site-footer-bottom">
         <p>&copy; 2026 SOXIT. All rights reserved.</p>
-        <p><a href="#">Privacy Policy</a> &nbsp; <a href="#">Terms of Service</a></p>
+        <p><a href="../privacy.html">Privacy Policy</a> &nbsp; <a href="../terms.html">Terms of Service</a></p>
       </div>
     </div>
   </footer>
@@ -1210,6 +1245,5 @@
       });
     })();
   </script>
-<script src="../site-shell.js"></script>
 </body>
 </html>

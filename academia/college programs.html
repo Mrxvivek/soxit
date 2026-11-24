@@ -690,6 +690,7 @@
             transform: translateX(0);
         }
     </style>
+<!-- sx:begin --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="../css/soxit-theme.css?v=20261120_direct_v5"><script src="../js/site-shell.js?v=20261120_direct_v5" defer></script><!-- sx:end -->
 </head>
 <body>
 
@@ -970,47 +971,12 @@
 
     <section id="partner" class="reveal-section">
         <div class="container">
-            <div class="partner-contact-wrapper">
-                <div class="partner-contact" aria-labelledby="partner-contact-title">
-                    <div class="partner-contact-info anim-element delay-2">
-                        <h2 id="partner-contact-title">Get in <span class="gradient-text">Touch</span></h2>
-                        <p>Whether you are looking for strategic advisory, workforce solutions, or creative infrastructure, our team is ready to help.</p>
-                        <div class="partner-details">
-                            <div class="partner-detail anim-element delay-6">
-                                <span class="partner-detail-icon">@</span>
-                                <span>info@soxit.com</span>
-                            </div>
-                            <div class="partner-detail anim-element delay-6">
-                                <span class="partner-detail-icon">&#9742;</span>
-                                <span>+1 (555) 123-4567</span>
-                            </div>
-                            <div class="partner-detail anim-element delay-6">
-                                <span class="partner-detail-icon">&#9678;</span>
-                                <span>Global HQ, Tech Park, Metropolis</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="partner-form-card card-anim card-delay-3">
-                        <form class="partner-form" id="partner-form">
-                            <label><input name="name" type="text" autocomplete="name" placeholder="Name" aria-label="Name" required></label>
-                            <label><input name="email" type="email" autocomplete="email" placeholder="Email" aria-label="Email" required></label>
-                            <label><textarea name="message" placeholder="Message" aria-label="Message" required minlength="10" maxlength="2000"></textarea></label>
-                            <button type="submit">Send Message</button>
-                            <p class="partner-form-status" id="partner-form-status" role="status" aria-live="polite"></p>
-                        </form>
-                    </div>
-                </div>
+            <div class="section-header">
+                <h2>College <span class="gradient-text">Partnerships</span></h2>
+                <a href="../index.html#contact" class="btn btn-primary">Contact Us</a>
             </div>
         </div>
     </section>
-
-    <script>
-        document.getElementById('partner-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            document.getElementById('partner-form-status').textContent = 'Thank you. Our partnerships team will contact you soon.';
-            this.reset();
-        });
-    </script>
 
     <script>
         // Hero Three.js Canvas
@@ -1195,6 +1161,5 @@
             initScrollAnimations();
         });
     </script>
-<script src="../site-shell.js"></script>
 </body>
 </html>

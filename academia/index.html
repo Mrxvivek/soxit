@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,8 +19,8 @@
             color: #ffffff;
         }
 
-        /* Navigation Header */
-        header {
+        /* Navigation Header (Legacy scoped) */
+        header:not(.sx-header) {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1327,7 +1327,7 @@
         }
 
         @media (max-width: 900px) {
-            header {
+            header:not(.sx-header) {
                 flex-direction: column;
                 gap: 15px;
             }
@@ -1401,6 +1401,7 @@
             .carousel-arrow { display: none; }
         }
     </style>
+<!-- sx:begin --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="../css/soxit-theme.css?v=20261120_direct_v5"><script src="../js/site-shell.js?v=20261120_direct_v5" defer></script><!-- sx:end -->
 </head>
 <body>
 
@@ -1414,34 +1415,48 @@
                     <div class="explore-links">
                         <div class="explore-group">
                             <span class="explore-group-title">Digital Engineering</span>
-                            <a href="Software Developer - Backend.html">Software Developer - Backend</a>
-                            <a href="full stack.html">Software Developer - Full Stack</a>
-                            <a href="cloud Infrasture.html">Cloud-Native Engineer</a>
-                        </div>
-                        <div class="explore-group">
-                            <span class="explore-group-title">Cyber &amp; Digital Trust</span>
-                            <a href="soc-an.html">SOC Analyst L1-L2</a>
-                            <a href="app.html">App Security Engineer</a>
-                            <a href="cloud secutiy.html">Cloud Security Engineer</a>
-                        </div>
-                        <div class="explore-group">
-                            <span class="explore-group-title">Data &amp; AI Enablement</span>
-                            <a href="data -an.html">Data Analyst</a>
-                            <a href="data -en.html">Data Engineer</a>
-                            <a href="AI.html">AI Workflow Engineer</a>
+                            <a href="roles/1-fronted.html">Frontend Developer</a>
+                            <a href="roles/2-backend.html">Backend Developer</a>
+                            <a href="roles/7-Full%20Stack%20Engineer.html">Full Stack Engineer</a>
+                            <a href="roles/8-Full%20Stack%20Java%20Developer.html">Full Stack Java Developer</a>
+                            <a href="roles/9-Full%20Stack%20Python%20Developer.html">Full Stack Python Developer</a>
+                            <a href="roles/10-software.html">Software Engineer</a>
+                            <a href="roles/11-Mobile%20App%20Developer.html">Mobile App Developer</a>
+                            <a href="roles/16-QA.html">QA / Software Tester</a>
                         </div>
                         <div class="explore-group">
                             <span class="explore-group-title">Platform &amp; Operations</span>
-                            <a href="devpo-e.html">DevOps/SRE</a>
-                            <a href="it-set.html">IT Service Management Analyst</a>
+                            <a href="roles/3-DevSecOps.html">DevOps Engineer</a>
+                            <a href="roles/4-DevSecOps%20Engineer.html">DevSecOps Engineer</a>
+                            <a href="roles/15-Cloud%20Arch.html">Cloud Architect</a>
                         </div>
                         <div class="explore-group">
-                            <span class="explore-group-title">Digital Growth &amp; Media Tech</span>
-                            <a href="Ditial market.html">Digital Marketing Technologist</a>
-                            <a href="media.html">Media Production Technologist</a>
+                            <span class="explore-group-title">Cyber &amp; Digital Trust</span>
+                            <a href="roles/5-Cybersecurity%20SOC%20Analyst.html">Cybersecurity / SOC Analyst</a>
+                            <a href="roles/6-Security%20Engineer.html">Security Engineer</a>
+                            <a href="roles/14-Cybersecurity%20Ops%20%26%20Zero-Trust%20Defense.html">Cybersecurity Ops &amp; Zero-Trust</a>
+                            <a href="roles/26-Knowledge%20Proof%20Developer.html">Zero-Knowledge (ZK) Proof Developer</a>
+                        </div>
+                        <div class="explore-group">
+                            <span class="explore-group-title">Data &amp; AI Enablement</span>
+                            <a href="roles/12-Data%20Analyst.html">Data Analyst</a>
+                            <a href="roles/18-Ai.html">AI &amp; ML Engineer</a>
+                            <a href="roles/19-LLM%20Generative%20AI%20Developer.html">LLM &amp; GenAI Developer</a>
+                            <a href="roles/23-Autonomous%20AI%20Agent%20Developer.html">Autonomous AI Agent Developer</a>
+                            <a href="roles/24-Bioinformatics%20Developer.html">Bioinformatics Developer</a>
+                        </div>
+                        <div class="explore-group">
+                            <span class="explore-group-title">Emerging Tech &amp; Growth</span>
+                            <a href="roles/17-UXSpatial%20Product%20Designer.html">UX &amp; Spatial Product Designer</a>
+                            <a href="roles/13-Digital%20Marketing%20%26%20Growth%20Specialist.html">Digital Marketing &amp; Growth</a>
+                            <a href="roles/21-Web3Blockchain.html">Web3 &amp; Blockchain Developer</a>
+                            <a href="roles/22-AR%20VR%20%20Spatial.html">AR / VR &amp; Spatial Developer</a>
+                            <a href="roles/20-Quantum%20Computing%20Enginee.html">Quantum Computing Engineer</a>
+                            <a href="roles/25-neuromorphic%20Engineer.html">Neuromorphic Hardware Engineer</a>
                         </div>
                     </div>
                 </details>
+                <a href="roles/index.html">Career Roadmaps</a>
                 <a href="career in.html">Career Insights</a>
                 <a href="knowlege.html">Knowledge Hub</a>
             </nav>
@@ -1463,7 +1478,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <video class="hero-video" autoplay muted loop playsinline aria-hidden="true">
-            <source src="BG.mp4" type="video/mp4">
+            <source src="../resources/BG.mp4" type="video/mp4">
         </video>
         <div class="hero-content">
             <h1>Build the Future<br><span>of Work, Ready.</span></h1>
@@ -1703,7 +1718,7 @@
                     <span class="program-label">✦ ROLE-BASED PROGRAM</span>
                     <h3 class="card-content-title">Role-Based Programs</h3>
                     <p class="card-content-description">Build industry-ready skills through structured learning paths designed for your target career role.</p>
-                    <a href="role based program.html" class="card-cta">Explore Roles →</a>
+                    <a href="roles/index.html" class="card-cta">Explore Roles →</a>
                 </div>
             </article>
 
@@ -1807,19 +1822,20 @@
             </div>
             <div class="footer-column">
                 <h3>Solutions</h3>
-                <a href="role based program.html">Role-Based Programs</a>
+                <a href="roles/index.html">Role-Based Programs</a>
                 <a href="internships.html">Internships &amp; Projects</a>
                 <a href="leraning.html">Learning</a>
                 <a href="ISkiil.html">iSkills</a>
                 <a href="LMS.html">LMS</a>
             </div>
             <div class="footer-column">
-                <h3>Industries</h3>
-                <a href="college programs.html">College Partnerships</a>
-                <a href="Business Intelligence.html">Business Intelligence</a>
-                <a href="cybersecurity.html">Cybersecurity</a>
-                <a href="data scientist.html">Data &amp; Analytics</a>
-                <a href="Ditial market.html">Digital Marketing</a>
+                <h3>Role Roadmaps</h3>
+                <a href="roles/index.html">All 26 Career Paths</a>
+                <a href="roles/1-fronted.html">Frontend Developer</a>
+                <a href="roles/2-backend.html">Backend Developer</a>
+                <a href="roles/12-Data%20Analyst.html">Data Analyst</a>
+                <a href="roles/5-Cybersecurity%20SOC%20Analyst.html">Cybersecurity / SOC</a>
+                <a href="roles/18-Ai.html">AI &amp; Machine Learning</a>
             </div>
             <div class="footer-column">
                 <h3>Company</h3>
@@ -1828,7 +1844,7 @@
                 <a href="heri from us.html">Hire from us</a>
                 <a href="questions.html">Contact &amp; FAQ</a>
                 <div class="footer-socials" aria-label="Social links">
-                    <a href="#linkedin" aria-label="LinkedIn">in</a>
+                    <a href="https://www.linkedin.com/company/soxit" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
                     <a href="#twitter" aria-label="Twitter">X</a>
                     <a href="mailto:academia@soxit.in" aria-label="Email">&#9993;</a>
                 </div>
@@ -1837,8 +1853,8 @@
         <div class="footer-bottom">
             <span>&copy; 2026 SOXIT. All rights reserved.</span>
             <div class="footer-bottom-links">
-                <a href="#privacy">Privacy Policy</a>
-                <a href="#terms">Terms of Service</a>
+                <a href="../privacy.html">Privacy Policy</a>
+                <a href="../terms.html">Terms of Service</a>
             </div>
         </div>
     </footer>
@@ -1850,27 +1866,46 @@
             if (!searchInput || !results) return;
 
             const pages = [
-                ['Data Analyst', 'data-analyst.html', 'data analysis, analytics, spreadsheets'],
-                ['Project Manager', 'project manager.html', 'project planning, management, leadership'],
-                ['Cyber Security Analyst', 'soc-an.html', 'cybersecurity, security, protection'],
-                ['Data Scientist', 'data scientist.html', 'data science, statistics, machine learning'],
-                ['Business Intelligence Analyst', 'Business Intelligence.html', 'business intelligence, dashboards, reporting'],
-                ['Digital Marketing Specialist', 'Digital marketing.html', 'digital marketing, campaigns, marketing'],
-                ['UI / UX Designer', 'ui designer.html', 'ui design, ux design, user experience'],
-                ['Machine Learning Engineer', 'machine-learning-engineer.html', 'machine learning, artificial intelligence, ai'],
-                ['Social Media Specialist', 'social-media-specialist.html', 'social media, content, community'],
-                ['Computer Support Specialist', 'computer-support-specialist.html', 'computer support, technical support, troubleshooting'],
+                ['Developer Roadmaps (All 26 Roles)', 'roles/index.html', 'roles, roadmaps, career paths, present, future, role based programs'],
+                ['Frontend Developer', 'roles/1-fronted.html', 'frontend, html, css, javascript, react, web'],
+                ['Backend Developer', 'roles/2-backend.html', 'backend, nodejs, python, databases, api, sql'],
+                ['DevOps Engineer', 'roles/3-DevSecOps.html', 'devops, linux, cicd, docker, kubernetes, cloud'],
+                ['DevSecOps Engineer', 'roles/4-DevSecOps%20Engineer.html', 'devsecops, security, cicd, automation, compliance'],
+                ['Cybersecurity / SOC Analyst', 'roles/5-Cybersecurity%20SOC%20Analyst.html', 'cybersecurity, soc, analyst, incident, defense, security operations'],
+                ['Security Engineer', 'roles/6-Security%20Engineer.html', 'security engineer, network security, identity, cloud security'],
+                ['Full Stack Engineer', 'roles/7-Full%20Stack%20Engineer.html', 'full stack, ui, api, web development, deployment'],
+                ['Full Stack Java Developer', 'roles/8-Full%20Stack%20Java%20Developer.html', 'java, spring boot, full stack, microservices'],
+                ['Full Stack Python Developer', 'roles/9-Full%20Stack%20Python%20Developer.html', 'python, django, fastapi, full stack, api'],
+                ['Software Engineer', 'roles/10-software.html', 'software engineer, algorithms, systems design, testing'],
+                ['Mobile App Developer', 'roles/11-Mobile%20App%20Developer.html', 'mobile, android, ios, flutter, react native, swift, kotlin'],
+                ['Data Analyst', 'roles/12-Data%20Analyst.html', 'data analysis, sql, excel, power bi, python, reporting, analytics'],
+                ['Digital Marketing & Growth Specialist', 'roles/13-Digital%20Marketing%20%26%20Growth%20Specialist.html', 'digital marketing, seo, campaigns, growth, analytics'],
+                ['Cybersecurity Ops & Zero-Trust Defense', 'roles/14-Cybersecurity%20Ops%20%26%20Zero-Trust%20Defense.html', 'cybersecurity, zero trust, network defense, compliance'],
+                ['Cloud Architect', 'roles/15-Cloud%20Arch.html', 'cloud architect, aws, azure, gcp, serverless, infrastructure'],
+                ['QA / Software Tester', 'roles/16-QA.html', 'qa, testing, quality assurance, automation, selenium'],
+                ['UX & Spatial Product Designer', 'roles/17-UXSpatial%20Product%20Designer.html', 'ux design, user experience, product design, figma, spatial'],
+                ['AI & ML Engineer', 'roles/18-Ai.html', 'machine learning, artificial intelligence, ai, ml, deep learning, pytorch'],
+                ['LLM & GenAI Developer', 'roles/19-LLM%20Generative%20AI%20Developer.html', 'llm, genai, langchain, rag, prompt engineering, fine tuning'],
+                ['Quantum Computing Engineer', 'roles/20-Quantum%20Computing%20Enginee.html', 'quantum computing, circuits, qubits, quantum physics'],
+                ['Web3 & Blockchain Developer', 'roles/21-Web3Blockchain.html', 'web3, blockchain, solidity, ethereum, smart contracts, dapps'],
+                ['AR / VR & Spatial Developer', 'roles/22-AR%20VR%20%20Spatial.html', 'ar, vr, spatial computing, unity, unreal engine, webxr'],
+                ['Autonomous AI Agent Developer', 'roles/23-Autonomous%20AI%20Agent%20Developer.html', 'autonomous ai, agents, ros, robotics, perception'],
+                ['Bioinformatics Developer', 'roles/24-Bioinformatics%20Developer.html', 'bioinformatics, genomics, biopython, computational biology'],
+                ['Neuromorphic Hardware Engineer', 'roles/25-neuromorphic%20Engineer.html', 'neuromorphic, hardware, snn, brain computer interface'],
+                ['Zero-Knowledge (ZK) Proof Developer', 'roles/26-Knowledge%20Proof%20Developer.html', 'zero knowledge, zk proofs, cryptography, circom, snarks'],
                 ['Career Insights', 'career in.html', 'careers, career insights, jobs'],
                 ['Knowledge Hub', 'knowlege.html', 'knowledge, resources, learning'],
-                ['College Programs', 'college programs.html', 'college, programs, education'],
-                ['Internships', 'internships.html', 'internship, projects, experience'],
-                ['Role-Based Programs', 'role based program.html', 'role based programs, training'],
+                ['College Programs', 'college programs.html', 'college, programs, education, partnerships'],
+                ['Internships & Projects', 'internships.html', 'internship, projects, experience'],
+                ['Role-Based Programs', 'roles/index.html', 'role based programs, roadmaps, training'],
                 ['Learning', 'leraning.html', 'learning, courses, lessons'],
                 ['iSkills', 'ISkiil.html', 'skills, assessments, practice'],
                 ['LMS', 'LMS.html', 'lms, learning management, dashboard'],
-                ['Questions', 'questions.html', 'questions, faq, help'],
+                ['Questions & FAQ', 'questions.html', 'questions, faq, help'],
                 ['Hire from us', 'heri from us.html', 'hire, employers, talent'],
-                ['Enroll Now', 'enroll now.html', 'enrollment, application, join program']
+                ['Enroll Now', 'enroll now.html', 'enrollment, application, join program'],
+                ['Check Your RRI Score', 'rri.html', 'rri, readiness index, score, evaluation'],
+                ['Partner as College', 'partner-college.html', 'partner, college, university, institutional']
             ];
 
             function showResults(query) {
@@ -2026,6 +2061,5 @@
         })();
     </script>
 
-<script src="../site-shell.js"></script>
 </body>
 </html>
